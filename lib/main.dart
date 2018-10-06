@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -34,7 +36,22 @@ setup() async {
   _board = Board(3, g);
 
   _solutions = solve(_board, dict);
-  print(_solutions);
+
+  compareWords(String a, String b) {
+    var compareLength = a.length.compareTo(b.length);
+    return (compareLength == 0) ? a.compareTo(b) : compareLength;
+  }
+
+//  solutions.map((s) => s.word).toSet().toList()
+//    ..sort((a, b) => compareWords(a, b))
+//    ..forEach(print);
+
+  var groupedByLength =
+      groupBy(_solutions.map((s) => s.word).toSet(), (s) => s.length);
+
+  groupedByLength.keys.toList()
+    ..sort()
+    ..forEach((e) => print('$e - ${groupedByLength[e]}'));
 }
 
 Map<String, int> getFreq(var config) {
@@ -165,22 +182,25 @@ class GridState extends State<Grid> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        _BoardWidget(),
-        Column(children: [Text('a'), Text('b')])
+        Row(children: [Text('a'), Text('b')]),
+        Row(children: [Text('a'), Text('b')]),
+        _boardWidget(),
       ],
     );
   }
 
-  _BoardWidget() {
+  _boardWidget() {
     return Listener(
       onPointerDown: _start,
       onPointerMove: _move,
       onPointerUp: _finish,
       child: Container(
-        width: 300.0,
+//        width: 300.0,
         child: GridView.builder(
+          shrinkWrap: true,
           key: _key,
           itemCount: 9,
           physics: NeverScrollableScrollPhysics(),
@@ -195,7 +215,7 @@ class GridState extends State<Grid> {
               decoration: new BoxDecoration(
                   border: new Border.all(color: Colors.blueAccent)),
               child: Padding(
-                padding: new EdgeInsets.all(12.0),
+                padding: new EdgeInsets.all(20.0),
                 child: _buildIndexedWidget(index),
               ),
             );
@@ -212,8 +232,10 @@ class GridState extends State<Grid> {
       index: index,
       child: Container(
         color: _selectedIndexes.contains(index) ? Colors.green : Colors.blue,
-        child:
-            Center(child: Text(_board.characterAt(Coordinate(xy[0], xy[1])))),
+        child: Center(
+            child: Text(
+                _board.characterAt(Coordinate(xy[0], xy[1])).toUpperCase(),
+                style: const TextStyle(fontSize: 40.0))),
       ),
     );
   }
