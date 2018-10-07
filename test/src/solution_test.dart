@@ -17,7 +17,7 @@ void main() {
   test('wordsPerSizeCount', () {
     Solution s = createSolution();
 
-    var wordsPerLengthCount = s.wordsPerLengthCount();
+    Map<int, int> wordsPerLengthCount = s.wordsPerLengthCount();
 
     expect(2, wordsPerLengthCount.keys.length);
     expect(2, wordsPerLengthCount[2]);

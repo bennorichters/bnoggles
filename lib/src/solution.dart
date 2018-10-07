@@ -25,8 +25,10 @@ class Solution {
   List<String> uniqueWordsSorted() =>
       _uniqueWords().toList()..sort((a, b) => _compareWords(a, b));
 
-  wordsPerLengthCount() => groupBy(_uniqueWords(), (w) => w.length)
-      .map((k, v) => MapEntry(k, v.length));
+  Map<int, int> wordsPerLengthCount() =>
+      groupBy(_uniqueWords(), (w) => w.length)
+          .map((k, v) => MapEntry(k, v.length))
+          .cast<int, int>();
 }
 
 class _Problem {
