@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:queries/collections.dart' as queries;
+import 'package:collection/collection.dart';
 
 import 'board.dart';
 import 'coordinate.dart';
@@ -19,13 +19,14 @@ class Solution {
     var compareLength = a.length.compareTo(b.length);
     return (compareLength == 0) ? a.compareTo(b) : compareLength;
   }
-  
-  List<String> uniqueWords() => _words.map((e) => e.text).toSet().toList()
-    ..sort((a, b) => _compareWords(a, b));
 
-  void wordsPerLengthCount() {
-    print(queries.Collection(_words.map((e) => e.text).toSet().toList()).groupBy((w) => w.length));
-  }
+  Set<String> _uniqueWords() => _words.map((e) => e.text).toSet();
+
+  List<String> uniqueWordsSorted() =>
+      _uniqueWords().toList()..sort((a, b) => _compareWords(a, b));
+
+  wordsPerLengthCount() => groupBy(_uniqueWords(), (w) => w.length)
+      .map((k, v) => MapEntry(k, v.length));
 }
 
 class _Problem {

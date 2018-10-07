@@ -37,7 +37,7 @@ setup() async {
 
   _solution = Solution(_board, dict);
 
-  print(_solution.uniqueWords());
+  print(_solution.uniqueWordsSorted());
   _solution.wordsPerLengthCount();
 }
 
