@@ -15,7 +15,7 @@ import 'src/dictionary.dart';
 import 'src/solution.dart';
 
 Board _board;
-Set<Solution> _solutions;
+Solution _solution;
 
 void main() async {
   await setup();
@@ -35,23 +35,10 @@ setup() async {
 
   _board = Board(3, g);
 
-  _solutions = solve(_board, dict);
+  _solution = Solution(_board, dict);
 
-  compareWords(String a, String b) {
-    var compareLength = a.length.compareTo(b.length);
-    return (compareLength == 0) ? a.compareTo(b) : compareLength;
-  }
-
-//  solutions.map((s) => s.word).toSet().toList()
-//    ..sort((a, b) => compareWords(a, b))
-//    ..forEach(print);
-
-  var groupedByLength =
-      groupBy(_solutions.map((s) => s.word).toSet(), (s) => s.length);
-
-  groupedByLength.keys.toList()
-    ..sort()
-    ..forEach((e) => print('$e - ${groupedByLength[e]}'));
+  print(_solution.uniqueWords());
+  _solution.wordsPerLengthCount();
 }
 
 Map<String, int> getFreq(var config) {

@@ -1,11 +1,31 @@
 import 'dart:collection';
 
+import 'package:queries/collections.dart' as queries;
+
 import 'board.dart';
 import 'coordinate.dart';
 import 'dictionary.dart';
 
-Set<Solution> solve(Board board, Dictionary dict) {
-  return _Problem(board, dict).find();
+class Solution {
+  final Set<Word> _words;
+
+  factory Solution(Board board, Dictionary dict) {
+    return Solution._internal(_Problem(board, dict).find());
+  }
+
+  Solution._internal(this._words);
+
+  num _compareWords(String a, String b) {
+    var compareLength = a.length.compareTo(b.length);
+    return (compareLength == 0) ? a.compareTo(b) : compareLength;
+  }
+  
+  List<String> uniqueWords() => _words.map((e) => e.text).toSet().toList()
+    ..sort((a, b) => _compareWords(a, b));
+
+  void wordsPerLengthCount() {
+    print(queries.Collection(_words.map((e) => e.text).toSet().toList()).groupBy((w) => w.length));
+  }
 }
 
 class _Problem {
@@ -13,8 +33,8 @@ class _Problem {
   final Dictionary dict;
   final Map neighbours;
 
-  Queue<Solution> candidates;
-  Set<Solution> words;
+  Queue<Word> candidates;
+  Set<Word> words;
 
   factory _Problem(Board board, Dictionary dict) {
     return _Problem._internal(board, dict, mapNeighbours(board));
@@ -28,7 +48,7 @@ class _Problem {
 
   _Problem._internal(this.board, this.dict, this.neighbours);
 
-  Set<Solution> find() {
+  Set<Word> find() {
     initialCandidates();
     words = Set();
 
@@ -46,17 +66,17 @@ class _Problem {
 
   initialCandidates() {
     candidates = ListQueue();
-    var blank = Solution._blank();
+    var blank = Word._blank();
     board.allCoordinates().forEach((c) => evaluateCandidate(blank, c));
   }
 
-  void evaluateCandidate(Solution baseCandidate, Coordinate coord) {
+  void evaluateCandidate(Word baseCandidate, Coordinate coord) {
     var character = board.characterAt(coord);
-    StringBuffer word = (StringBuffer(baseCandidate._word)..write(character));
+    StringBuffer word = (StringBuffer(baseCandidate._text)..write(character));
     var info = dict.getInfo(word.toString());
 
     if (info.canStartWith) {
-      var nextCandidate = Solution._extend(baseCandidate, coord, word);
+      var nextCandidate = Word._extend(baseCandidate, coord, word);
       candidates.add(nextCandidate);
 
       if (info.found) {
@@ -66,21 +86,21 @@ class _Problem {
   }
 }
 
-class Solution {
+class Word {
   final List<Coordinate> _chain;
-  final StringBuffer _word;
+  final StringBuffer _text;
 
-  get chain => List.from(_chain);
-  get word => _word.toString();
+  List<Coordinate> get chain => List.from(_chain);
+  String get text => _text.toString();
 
-  Solution._blank()
+  Word._blank()
       : _chain = [],
-        _word = StringBuffer();
+        _text = StringBuffer();
 
-  Solution._extend(Solution head, Coordinate next, StringBuffer word)
+  Word._extend(Word head, Coordinate next, StringBuffer word)
       : _chain = List.of(head._chain)..add(next),
-        _word = word;
+        _text = word;
 
   @override
-  toString() => '$_chain - $_word';
+  toString() => '$_chain - $_text';
 }
