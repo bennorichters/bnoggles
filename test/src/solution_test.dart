@@ -23,6 +23,10 @@ void main() {
     expect(2, wordsPerLengthCount[2]);
     expect(1, wordsPerLengthCount[3]);
   });
+
+  test('', () {
+    [2, 3, 4, 5, 6, 1, 0].toSet().where((e) => e > 4).forEach(print);
+  });
 }
 
 Solution createSolution() {

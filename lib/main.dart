@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:collection/collection.dart';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -36,9 +34,6 @@ setup() async {
   _board = Board(3, g);
 
   _solution = Solution(_board, dict);
-
-  print(_solution.uniqueWordsSorted());
-  _solution.wordsPerLengthCount();
 }
 
 Map<String, int> getFreq(var config) {
@@ -88,10 +83,58 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Grid(),
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            WordCountRow(),
+            Grid(),
+          ],
+        ));
+  }
+}
+
+class WordCountRow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    print(_solution.uniqueWordsSorted());
+    Map<int, int> info = _solution.wordsPerLengthCount();
+    int wordCount(int length) => info.containsKey(length) ? info[length] : 0;
+
+    List<Widget> infoCol = [];
+    for (int i = 2; i <= 9; i++) {
+      var wordCount2 = wordCount(i);
+      infoCol.add(WordCountColumn(i.toString(), wordCount2.toString()));
+    }
+
+    var iterable = info.keys.where((e) => e >= 10);
+    int sum10AndAbove = iterable.isEmpty
+        ? 0
+        : iterable.reduce((a, b) => wordCount(a) + wordCount(b));
+
+    infoCol.add(WordCountColumn("10 >", sum10AndAbove.toString()));
+
+    return Row(children: infoCol);
+  }
+}
+
+class WordCountColumn extends StatelessWidget {
+  final String size, count;
+
+  final textStyle = TextStyle(fontSize: 20.0);
+
+  WordCountColumn(this.size, this.count);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(size, style: textStyle),
+        Text(count, style: textStyle),
+        Text("0", style: textStyle),
+      ],
     );
   }
 }
@@ -169,17 +212,6 @@ class GridState extends State<Grid> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Row(children: [Text('a'), Text('b')]),
-        Row(children: [Text('a'), Text('b')]),
-        _boardWidget(),
-      ],
-    );
-  }
-
-  _boardWidget() {
     return Listener(
       onPointerDown: _start,
       onPointerMove: _move,
