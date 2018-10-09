@@ -17,12 +17,12 @@ import 'src/solution.dart';
 Board _board;
 Solution _solution;
 
+class GameProgress {
+  final String latestUserWord;
+  final bool latestCorrect;
 
-class AppState extends ValueNotifier {
-  AppState(value) : super(value);
+  GameProgress(this.latestUserWord, this.latestCorrect);
 }
-
-var appState = new AppState("some text");
 
 void main() async {
   await setup();
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: Provider(
-            data: appState,
+            data: ValueNotifier(GameProgress("___", false)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -154,8 +154,10 @@ class WordCountColumn extends StatelessWidget {
 class WordWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var data = Provider.of(context);
-   return Text("${data.value}");
+    var data = Provider.of(context).value;
+    return Text("${data.latestUserWord}",
+        style:
+            TextStyle(color: data.latestCorrect ? Colors.green : Colors.red));
   }
 }
 
@@ -212,9 +214,12 @@ class GridState extends State<Grid> {
         word.write(_board.characterAt(Coordinate(xy[0], xy[1])));
       }
 
-      Provider.of(_key.currentContext).value = word;
+      var candidate = word.toString();
 
-      print(word);
+      Provider.of(_key.currentContext).value =
+          GameProgress(candidate, _solution.isCorrect(candidate));
+
+      print(candidate);
     }
 
     _clearSelection();
