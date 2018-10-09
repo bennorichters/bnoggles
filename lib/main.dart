@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import 'provider.dart';
+
 import 'src/board.dart';
 import 'src/coordinate.dart';
 import 'src/dictionary.dart';
@@ -14,6 +16,13 @@ import 'src/solution.dart';
 
 Board _board;
 Solution _solution;
+
+
+class AppState extends ValueNotifier {
+  AppState(value) : super(value);
+}
+
+var appState = new AppState("some text");
 
 void main() async {
   await setup();
@@ -86,13 +95,16 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            WordCountRow(),
-            Grid(),
-          ],
-        ));
+        body: Provider(
+            data: appState,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                WordCountRow(),
+                WordWindow(),
+                Grid(),
+              ],
+            )));
   }
 }
 
@@ -136,6 +148,14 @@ class WordCountColumn extends StatelessWidget {
         Text("0", style: textStyle),
       ],
     );
+  }
+}
+
+class WordWindow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var data = Provider.of(context);
+   return Text("${data.value}");
   }
 }
 
@@ -191,6 +211,9 @@ class GridState extends State<Grid> {
         var xy = _indexToXY(index);
         word.write(_board.characterAt(Coordinate(xy[0], xy[1])));
       }
+
+      Provider.of(_key.currentContext).value = word;
+
       print(word);
     }
 
