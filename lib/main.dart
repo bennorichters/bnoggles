@@ -20,8 +20,21 @@ Solution _solution;
 class GameProgress {
   final String latestUserWord;
   final bool latestCorrect;
+  final Set<String> found;
 
-  GameProgress(this.latestUserWord, this.latestCorrect);
+  GameProgress._internal(this.latestUserWord, this.latestCorrect, this.found);
+
+  static GameProgress start() => GameProgress._internal("___", false, Set());
+
+  GameProgress.extend(GameProgress old, String latest, bool correct)
+      : latestUserWord = latest,
+        latestCorrect = correct,
+        found = correct ? (Set.from(old.found)..add(latest)) : old.found;
+
+  int countWords(int length) => found.where((w) => w.length == length).length;
+
+  int countWordsAndAbove(int minLength) =>
+      found.where((w) => w.length >= minLength).length;
 }
 
 void main() async {
@@ -96,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: Provider(
-            data: ValueNotifier(GameProgress("___", false)),
+            data: ValueNotifier(GameProgress.start()),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -118,7 +131,7 @@ class WordCountRow extends StatelessWidget {
     List<Widget> infoCol = [];
     for (int i = 2; i <= 9; i++) {
       var wordCount2 = wordCount(i);
-      infoCol.add(WordCountColumn(i.toString(), wordCount2.toString()));
+      infoCol.add(WordCountColumn(i, wordCount2, false));
     }
 
     var iterable = info.keys.where((e) => e >= 10);
@@ -126,26 +139,35 @@ class WordCountRow extends StatelessWidget {
         ? 0
         : iterable.reduce((a, b) => wordCount(a) + wordCount(b));
 
-    infoCol.add(WordCountColumn("10 >", sum10AndAbove.toString()));
+    infoCol.add(WordCountColumn(10, sum10AndAbove, true));
 
     return Row(children: infoCol);
   }
 }
 
 class WordCountColumn extends StatelessWidget {
-  final String size, count;
+  final int size, count;
+  final bool last;
 
   final textStyle = TextStyle(fontSize: 20.0);
 
-  WordCountColumn(this.size, this.count);
+  WordCountColumn(this.size, this.count, this.last);
 
   @override
   Widget build(BuildContext context) {
+    GameProgress data = Provider.of(context).value;
+    String found =
+        (last ? data.countWordsAndAbove(size) : data.countWords(size))
+            .toString();
+    if (last) {
+      found += " >";
+    }
+
     return Column(
       children: [
-        Text(size, style: textStyle),
-        Text(count, style: textStyle),
-        Text("0", style: textStyle),
+        Text(size.toString(), style: textStyle),
+        Text(count.toString(), style: textStyle),
+        Text(found, style: textStyle),
       ],
     );
   }
@@ -216,10 +238,9 @@ class GridState extends State<Grid> {
 
       var candidate = word.toString();
 
+      GameProgress old = Provider.of(_key.currentContext).value;
       Provider.of(_key.currentContext).value =
-          GameProgress(candidate, _solution.isCorrect(candidate));
-
-      print(candidate);
+          GameProgress.extend(old, candidate, _solution.isCorrect(candidate));
     }
 
     _clearSelection();
