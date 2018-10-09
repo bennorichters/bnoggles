@@ -29,6 +29,8 @@ class Solution {
       groupBy(_uniqueWords(), (w) => w.length)
           .map((k, v) => MapEntry(k, v.length))
           .cast<int, int>();
+
+  bool isCorrect(String text) => _uniqueWords().contains(text);
 }
 
 class _Problem {
