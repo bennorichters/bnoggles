@@ -1,7 +1,5 @@
 import 'dart:collection';
 
-import 'package:collection/collection.dart';
-
 import 'package:bnoggles/utils/board.dart';
 import 'package:bnoggles/utils/coordinate.dart';
 import 'package:bnoggles/utils/dictionary.dart';
@@ -16,6 +14,24 @@ abstract class Answer {
 
   int countForMinLength(int minLength) =>
       uniqueWords().where((w) => w.length >= minLength).length;
+}
+
+class UserAnswer extends Answer {
+  final String latestUserWord;
+  final bool latestCorrect;
+  final Set<String> found;
+
+  UserAnswer._internal(this.latestUserWord, this.latestCorrect, this.found);
+
+  static UserAnswer start() => UserAnswer._internal("___", false, Set());
+
+  UserAnswer.extend(UserAnswer old, String latest, bool correct)
+      : latestUserWord = latest,
+        latestCorrect = correct,
+        found = correct ? (Set.from(old.found)..add(latest)) : old.found;
+
+  @override
+  Set<String> uniqueWords() => found;
 }
 
 class Solution extends Answer {
