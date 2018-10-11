@@ -1,16 +1,24 @@
 import 'package:flutter/widgets.dart';
 
 class Provider extends StatefulWidget {
-  const Provider({this.data, this.child});
+  final immutableData;
+  final mutableData;
+  final child;
 
-  static of(BuildContext context) {
-    _InheritedProvider p =
-        context.inheritFromWidgetOfExactType(_InheritedProvider);
-    return p.data;
+  const Provider({this.immutableData, this.mutableData, this.child});
+
+  static immutableDataOf(BuildContext context) {
+    _InheritedProvider p = inheritedProvider(context);
+    return p.immutableData;
   }
 
-  final data;
-  final child;
+  static mutableDataOf(BuildContext context) {
+    _InheritedProvider p = inheritedProvider(context);
+    return p.mutableData;
+  }
+
+  static _InheritedProvider inheritedProvider(BuildContext context) =>
+      context.inheritFromWidgetOfExactType(_InheritedProvider);
 
   @override
   State<StatefulWidget> createState() => new _ProviderState();
@@ -20,7 +28,7 @@ class _ProviderState extends State<Provider> {
   @override
   initState() {
     super.initState();
-    widget.data.addListener(didValueChange);
+    widget.mutableData.addListener(didValueChange);
   }
 
   didValueChange() => setState(() {});
@@ -28,25 +36,28 @@ class _ProviderState extends State<Provider> {
   @override
   Widget build(BuildContext context) {
     return new _InheritedProvider(
-      data: widget.data,
+      immutableData: widget.immutableData,
+      mutableData: widget.mutableData,
       child: widget.child,
     );
   }
 
   @override
   dispose() {
-    widget.data.removeListener(didValueChange);
+    widget.mutableData.removeListener(didValueChange);
     super.dispose();
   }
 }
 
 class _InheritedProvider extends InheritedWidget {
-  _InheritedProvider({this.data, this.child})
-      : _dataValue = data.value,
-        super(child: child);
-  final data;
+  final immutableData;
+  final mutableData;
   final child;
   final _dataValue;
+
+  _InheritedProvider({this.immutableData, this.mutableData, this.child})
+      : _dataValue = mutableData.value,
+        super(child: child);
 
   @override
   bool updateShouldNotify(_InheritedProvider oldWidget) {

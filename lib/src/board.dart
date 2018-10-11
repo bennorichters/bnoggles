@@ -19,7 +19,7 @@ class Board {
 
   Board._internal(this.cell);
 
-  num get width => sqrt(cell.length);
+  int get width => sqrt(cell.length).floor();
 
   characterAt(Coordinate coordinate) => cell[coordinate];
 

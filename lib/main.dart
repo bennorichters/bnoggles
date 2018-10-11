@@ -85,29 +85,25 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: GamePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
+class GamePage extends StatelessWidget {
   final String title;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+  GamePage({Key key, this.title}) : super(key: key);
 
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(title),
         ),
         body: Provider(
-            data: ValueNotifier(UserAnswer.start()),
+            immutableData: {"board": _board, "solution": _solution},
+            mutableData: ValueNotifier(UserAnswer.start()),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -122,14 +118,16 @@ class _MyHomePageState extends State<MyHomePage> {
 class WordCountRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print(_solution.uniqueWordsSorted());
+    Solution solution = Provider.immutableDataOf(context)["solution"];
+
+    print(solution.uniqueWordsSorted());
 
     List<Widget> infoCol = [];
     for (int i = 2; i <= 9; i++) {
-      var wordCount2 = _solution.countForLength(i);
+      var wordCount2 = solution.countForLength(i);
       infoCol.add(WordCountColumn(i, wordCount2, false));
     }
-    infoCol.add(WordCountColumn(10, _solution.countForMinLength(10), true));
+    infoCol.add(WordCountColumn(10, solution.countForMinLength(10), true));
 
     return Row(children: infoCol);
   }
@@ -145,7 +143,7 @@ class WordCountColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserAnswer data = Provider.of(context).value;
+    UserAnswer data = Provider.mutableDataOf(context).value;
     String found =
         (last ? data.countForMinLength(size) : data.countForLength(size))
             .toString();
@@ -166,7 +164,7 @@ class WordCountColumn extends StatelessWidget {
 class WordWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var data = Provider.of(context).value;
+    var data = Provider.mutableDataOf(context).value;
     return Text("${data.latestUserWord}",
         style:
             TextStyle(color: data.latestCorrect ? Colors.green : Colors.red));
@@ -220,17 +218,21 @@ class GridState extends State<Grid> {
 
   void _finish(PointerUpEvent event) {
     if (_validStart) {
+      Board board = Provider.immutableDataOf(_key.currentContext)["board"];
+      Solution solution =
+          Provider.immutableDataOf(_key.currentContext)["solution"];
+
       var word = StringBuffer();
       for (var index in _selectedIndexes) {
-        var xy = _indexToXY(index);
-        word.write(_board.characterAt(Coordinate(xy[0], xy[1])));
+        var xy = _indexToXY(index, board.width);
+        word.write(board.characterAt(Coordinate(xy[0], xy[1])));
       }
 
       var candidate = word.toString();
 
-      UserAnswer old = Provider.of(_key.currentContext).value;
-      Provider.of(_key.currentContext).value =
-          UserAnswer.extend(old, candidate, _solution.isCorrect(candidate));
+      UserAnswer old = Provider.mutableDataOf(_key.currentContext).value;
+      Provider.mutableDataOf(_key.currentContext).value =
+          UserAnswer.extend(old, candidate, solution.isCorrect(candidate));
     }
 
     _clearSelection();
@@ -243,14 +245,16 @@ class GridState extends State<Grid> {
     });
   }
 
-  _indexToXY(int index) {
-    int y = (index / _board.width).floor();
-    int x = index - (y * _board.width).floor();
+  static _indexToXY(int index, int width) {
+    int y = (index / width).floor();
+    int x = index - (y * width).floor();
     return [x, y];
   }
 
   @override
   Widget build(BuildContext context) {
+    Board board = Provider.immutableDataOf(context)["board"];
+
     return Listener(
       onPointerDown: _start,
       onPointerMove: _move,
@@ -269,12 +273,14 @@ class GridState extends State<Grid> {
             mainAxisSpacing: 5.0,
           ),
           itemBuilder: (context, index) {
+            var xy = _indexToXY(index, board.width);
+            String character = board.characterAt(Coordinate(xy[0], xy[1]));
             return Container(
               decoration: new BoxDecoration(
                   border: new Border.all(color: Colors.blueAccent)),
               child: Padding(
                 padding: new EdgeInsets.all(20.0),
-                child: _buildIndexedWidget(index),
+                child: _buildIndexedWidget(index, character),
               ),
             );
           },
@@ -283,16 +289,13 @@ class GridState extends State<Grid> {
     );
   }
 
-  _IndexedWidget _buildIndexedWidget(int index) {
-    var xy = _indexToXY(index);
-
+  _IndexedWidget _buildIndexedWidget(int index, String character) {
     return _IndexedWidget(
       index: index,
       child: Container(
         color: _selectedIndexes.contains(index) ? Colors.green : Colors.blue,
         child: Center(
-            child: Text(
-                _board.characterAt(Coordinate(xy[0], xy[1])).toUpperCase(),
+            child: Text(character.toUpperCase(),
                 style: const TextStyle(fontSize: 40.0))),
       ),
     );
