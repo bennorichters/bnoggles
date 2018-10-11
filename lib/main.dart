@@ -125,21 +125,13 @@ class WordCountRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(_solution.uniqueWordsSorted());
-    Map<int, int> info = _solution.wordsPerLengthCount();
-    int wordCount(int length) => info.containsKey(length) ? info[length] : 0;
 
     List<Widget> infoCol = [];
     for (int i = 2; i <= 9; i++) {
-      var wordCount2 = wordCount(i);
+      var wordCount2 = _solution.countForLength(i);
       infoCol.add(WordCountColumn(i, wordCount2, false));
     }
-
-    var iterable = info.keys.where((e) => e >= 10);
-    int sum10AndAbove = iterable.isEmpty
-        ? 0
-        : iterable.reduce((a, b) => wordCount(a) + wordCount(b));
-
-    infoCol.add(WordCountColumn(10, sum10AndAbove, true));
+    infoCol.add(WordCountColumn(10, _solution.countForMinLength(10), true));
 
     return Row(children: infoCol);
   }

@@ -17,20 +17,22 @@ void main() {
   test('wordsPerSizeCount', () {
     Solution s = createSolution();
 
-    Map<int, int> wordsPerLengthCount = s.wordsPerLengthCount();
+    expect(0, s.countForLength(0));
+    expect(0, s.countForLength(1));
+    expect(2, s.countForLength(2));
+    expect(1, s.countForLength(3));
+    expect(0, s.countForLength(4));
 
-    expect(2, wordsPerLengthCount.keys.length);
-    expect(2, wordsPerLengthCount[2]);
-    expect(1, wordsPerLengthCount[3]);
-  });
-
-  test('', () {
-    [2, 3, 4, 5, 6, 1, 0].toSet().where((e) => e > 4).forEach(print);
+    expect(3, s.countForMinLength(0));
+    expect(3, s.countForMinLength(1));
+    expect(3, s.countForMinLength(2));
+    expect(1, s.countForMinLength(3));
+    expect(0, s.countForMinLength(4));
   });
 }
 
 Solution createSolution() {
-  var allCoords = [
+  var allCoordinates = [
     Coordinate(0, 0),
     Coordinate(0, 1),
     Coordinate(1, 0),
@@ -38,17 +40,16 @@ Solution createSolution() {
   ];
 
   var b = MockBoard();
-  when(b.characterAt(allCoords[0])).thenReturn('a');
-  when(b.characterAt(allCoords[1])).thenReturn('b');
-  when(b.characterAt(allCoords[2])).thenReturn('c');
-  when(b.characterAt(allCoords[3])).thenReturn('d');
+  when(b.characterAt(allCoordinates[0])).thenReturn('a');
+  when(b.characterAt(allCoordinates[1])).thenReturn('b');
+  when(b.characterAt(allCoordinates[2])).thenReturn('c');
+  when(b.characterAt(allCoordinates[3])).thenReturn('d');
 
   when(b.width).thenReturn(2);
 
-  when(b.allCoordinates()).thenReturn(allCoords);
+  when(b.allCoordinates()).thenReturn(allCoordinates);
 
   Dictionary dict = Dictionary(['ab', 'bc', 'dab', 'xyz']);
 
-  Solution s = Solution(b, dict);
-  return s;
+  return Solution(b, dict);
 }

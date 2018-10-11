@@ -6,8 +6,20 @@ import 'board.dart';
 import 'coordinate.dart';
 import 'dictionary.dart';
 
-class Solution {
-  final Set<Word> _words;
+abstract class Answer {
+  bool contains(String word);
+  int countForLength(int length);
+  int countForMinLength(int minLength);
+
+  int _countForLength(int length, Set<String> words) =>
+      words.where((w) => w.length == length).length;
+
+  int _countForMinLength(int minLength, Set<String> words) =>
+      words.where((w) => w.length >= minLength).length;
+}
+
+class Solution extends Answer {
+  final Set<Chain> _words;
 
   factory Solution(Board board, Dictionary dict) {
     return Solution._internal(_Problem(board, dict).find());
@@ -22,13 +34,19 @@ class Solution {
 
   Set<String> _uniqueWords() => _words.map((e) => e.text).toSet();
 
+  @override
+  bool contains(String word) => _words.map((e) => e.text).contains(word);
+
+  @override
+  int countForLength(int length) =>
+      _countForLength(length, _uniqueWords());
+
+  @override
+  int countForMinLength(int minLength) =>
+      _countForMinLength(minLength, _uniqueWords());
+
   List<String> uniqueWordsSorted() =>
       _uniqueWords().toList()..sort((a, b) => _compareWords(a, b));
-
-  Map<int, int> wordsPerLengthCount() =>
-      groupBy(_uniqueWords(), (w) => w.length)
-          .map((k, v) => MapEntry(k, v.length))
-          .cast<int, int>();
 
   bool isCorrect(String text) => _uniqueWords().contains(text);
 }
@@ -38,8 +56,8 @@ class _Problem {
   final Dictionary dict;
   final Map neighbours;
 
-  Queue<Word> candidates;
-  Set<Word> words;
+  Queue<Chain> candidates;
+  Set<Chain> words;
 
   factory _Problem(Board board, Dictionary dict) {
     return _Problem._internal(board, dict, mapNeighbours(board));
@@ -53,16 +71,16 @@ class _Problem {
 
   _Problem._internal(this.board, this.dict, this.neighbours);
 
-  Set<Word> find() {
+  Set<Chain> find() {
     initialCandidates();
     words = Set();
 
     while (candidates.isNotEmpty) {
       var candidate = candidates.removeFirst();
-      var last = candidate._chain.last;
-      var allNeigbours = neighbours[last];
-      allNeigbours
-          .where((c) => !candidate._chain.contains(c))
+      var last = candidate._coordinates.last;
+      var allNeighbours = neighbours[last];
+      allNeighbours
+          .where((c) => !candidate._coordinates.contains(c))
           .forEach((c) => evaluateCandidate(candidate, c));
     }
 
@@ -71,17 +89,17 @@ class _Problem {
 
   initialCandidates() {
     candidates = ListQueue();
-    var blank = Word._blank();
+    var blank = Chain._blank();
     board.allCoordinates().forEach((c) => evaluateCandidate(blank, c));
   }
 
-  void evaluateCandidate(Word baseCandidate, Coordinate coord) {
-    var character = board.characterAt(coord);
+  void evaluateCandidate(Chain baseCandidate, Coordinate coordinate) {
+    var character = board.characterAt(coordinate);
     StringBuffer word = (StringBuffer(baseCandidate._text)..write(character));
     var info = dict.getInfo(word.toString());
 
     if (info.canStartWith) {
-      var nextCandidate = Word._extend(baseCandidate, coord, word);
+      var nextCandidate = Chain._extend(baseCandidate, coordinate, word);
       candidates.add(nextCandidate);
 
       if (info.found) {
@@ -91,21 +109,21 @@ class _Problem {
   }
 }
 
-class Word {
-  final List<Coordinate> _chain;
+class Chain {
+  final List<Coordinate> _coordinates;
   final StringBuffer _text;
 
-  List<Coordinate> get chain => List.from(_chain);
+  List<Coordinate> get chain => List.from(_coordinates);
   String get text => _text.toString();
 
-  Word._blank()
-      : _chain = [],
+  Chain._blank()
+      : _coordinates = [],
         _text = StringBuffer();
 
-  Word._extend(Word head, Coordinate next, StringBuffer word)
-      : _chain = List.of(head._chain)..add(next),
+  Chain._extend(Chain head, Coordinate next, StringBuffer word)
+      : _coordinates = List.of(head._coordinates)..add(next),
         _text = word;
 
   @override
-  toString() => '$_chain - $_text';
+  toString() => '$_coordinates - $_text';
 }
