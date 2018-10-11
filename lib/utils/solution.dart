@@ -2,9 +2,9 @@ import 'dart:collection';
 
 import 'package:collection/collection.dart';
 
-import 'board.dart';
-import 'coordinate.dart';
-import 'dictionary.dart';
+import 'package:bnoggles/utils/board.dart';
+import 'package:bnoggles/utils/coordinate.dart';
+import 'package:bnoggles/utils/dictionary.dart';
 
 abstract class Answer {
   Set<String> uniqueWords();

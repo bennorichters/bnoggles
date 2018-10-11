@@ -9,10 +9,10 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import 'provider.dart';
 
-import 'src/board.dart';
-import 'src/coordinate.dart';
-import 'src/dictionary.dart';
-import 'src/solution.dart';
+import 'package:bnoggles/utils/board.dart';
+import 'package:bnoggles/utils/coordinate.dart';
+import 'package:bnoggles/utils/dictionary.dart';
+import 'package:bnoggles/utils/solution.dart';
 
 Board _board;
 Solution _solution;

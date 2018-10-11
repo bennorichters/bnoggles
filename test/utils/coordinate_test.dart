@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:bnoggles/src/coordinate.dart';
+import 'package:bnoggles/utils/coordinate.dart';
 
 void main() {
   var origin = Coordinate(0, 0);

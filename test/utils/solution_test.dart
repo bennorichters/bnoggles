@@ -1,10 +1,10 @@
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:bnoggles/src/board.dart';
-import 'package:bnoggles/src/coordinate.dart';
-import 'package:bnoggles/src/dictionary.dart';
-import 'package:bnoggles/src/solution.dart';
+import 'package:bnoggles/utils/board.dart';
+import 'package:bnoggles/utils/coordinate.dart';
+import 'package:bnoggles/utils/dictionary.dart';
+import 'package:bnoggles/utils/solution.dart';
 
 class MockBoard extends Mock implements Board {}
 
