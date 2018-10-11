@@ -7,15 +7,15 @@ import 'coordinate.dart';
 import 'dictionary.dart';
 
 abstract class Answer {
-  bool contains(String word);
-  int countForLength(int length);
-  int countForMinLength(int minLength);
+  Set<String> uniqueWords();
 
-  int _countForLength(int length, Set<String> words) =>
-      words.where((w) => w.length == length).length;
+  bool contains(String word) => uniqueWords().contains(word);
 
-  int _countForMinLength(int minLength, Set<String> words) =>
-      words.where((w) => w.length >= minLength).length;
+  int countForLength(int length) =>
+      uniqueWords().where((w) => w.length == length).length;
+
+  int countForMinLength(int minLength) =>
+      uniqueWords().where((w) => w.length >= minLength).length;
 }
 
 class Solution extends Answer {
@@ -27,28 +27,17 @@ class Solution extends Answer {
 
   Solution._internal(this._words);
 
+  Set<String> uniqueWords() => _words.map((e) => e.text).toSet();
+
   num _compareWords(String a, String b) {
     var compareLength = a.length.compareTo(b.length);
     return (compareLength == 0) ? a.compareTo(b) : compareLength;
   }
 
-  Set<String> _uniqueWords() => _words.map((e) => e.text).toSet();
-
-  @override
-  bool contains(String word) => _words.map((e) => e.text).contains(word);
-
-  @override
-  int countForLength(int length) =>
-      _countForLength(length, _uniqueWords());
-
-  @override
-  int countForMinLength(int minLength) =>
-      _countForMinLength(minLength, _uniqueWords());
-
   List<String> uniqueWordsSorted() =>
-      _uniqueWords().toList()..sort((a, b) => _compareWords(a, b));
+      uniqueWords().toList()..sort((a, b) => _compareWords(a, b));
 
-  bool isCorrect(String text) => _uniqueWords().contains(text);
+  bool isCorrect(String text) => uniqueWords().contains(text);
 }
 
 class _Problem {

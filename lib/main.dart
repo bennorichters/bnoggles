@@ -17,24 +17,22 @@ import 'src/solution.dart';
 Board _board;
 Solution _solution;
 
-class GameProgress {
+class UserAnswer extends Answer {
   final String latestUserWord;
   final bool latestCorrect;
   final Set<String> found;
 
-  GameProgress._internal(this.latestUserWord, this.latestCorrect, this.found);
+  UserAnswer._internal(this.latestUserWord, this.latestCorrect, this.found);
 
-  static GameProgress start() => GameProgress._internal("___", false, Set());
+  static UserAnswer start() => UserAnswer._internal("___", false, Set());
 
-  GameProgress.extend(GameProgress old, String latest, bool correct)
+  UserAnswer.extend(UserAnswer old, String latest, bool correct)
       : latestUserWord = latest,
         latestCorrect = correct,
         found = correct ? (Set.from(old.found)..add(latest)) : old.found;
 
-  int countWords(int length) => found.where((w) => w.length == length).length;
-
-  int countWordsAndAbove(int minLength) =>
-      found.where((w) => w.length >= minLength).length;
+  @override
+  Set<String> uniqueWords() => found;
 }
 
 void main() async {
@@ -109,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: Provider(
-            data: ValueNotifier(GameProgress.start()),
+            data: ValueNotifier(UserAnswer.start()),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -147,9 +145,9 @@ class WordCountColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GameProgress data = Provider.of(context).value;
+    UserAnswer data = Provider.of(context).value;
     String found =
-        (last ? data.countWordsAndAbove(size) : data.countWords(size))
+        (last ? data.countForMinLength(size) : data.countForLength(size))
             .toString();
     if (last) {
       found += " >";
@@ -230,9 +228,9 @@ class GridState extends State<Grid> {
 
       var candidate = word.toString();
 
-      GameProgress old = Provider.of(_key.currentContext).value;
+      UserAnswer old = Provider.of(_key.currentContext).value;
       Provider.of(_key.currentContext).value =
-          GameProgress.extend(old, candidate, _solution.isCorrect(candidate));
+          UserAnswer.extend(old, candidate, _solution.isCorrect(candidate));
     }
 
     _clearSelection();
