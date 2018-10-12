@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:bnoggles/screens/game/widgets/game_board_grid.dart';
-import 'package:bnoggles/screens/game/widgets/game_word_count_row.dart';
+import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
 import 'package:bnoggles/screens/game/widgets/provider.dart';
 
@@ -33,7 +33,7 @@ class GamePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                WordCountOverview(),
+                GameProgress(),
                 WordWindow(),
                 Grid(),
               ],

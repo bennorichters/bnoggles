@@ -8,7 +8,8 @@ class WordWindow extends StatelessWidget {
   Widget build(BuildContext context) {
     var data = Provider.mutableDataOf(context).value;
     return Text("${data.latestUserWord}",
-        style:
-        TextStyle(color: data.latestCorrect ? Colors.green : Colors.red));
+        style: TextStyle(
+            fontSize: 40.0,
+            color: data.latestCorrect ? Colors.green : Colors.red));
   }
 }

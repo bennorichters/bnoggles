@@ -15,7 +15,7 @@ class WordCountOverview extends StatelessWidget {
     print(solution.uniqueWordsSorted());
 
     return GridView.builder(
-      shrinkWrap: true,
+//      shrinkWrap: true,
       itemCount: ((_maxLength - 1) * 3),
       physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
