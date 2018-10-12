@@ -5,6 +5,8 @@ import 'package:bnoggles/screens/game/widgets/provider.dart';
 
 import 'package:bnoggles/utils/solution.dart';
 
+const int _maxLength = 8;
+
 class WordCountRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -12,41 +14,72 @@ class WordCountRow extends StatelessWidget {
 
     print(solution.uniqueWordsSorted());
 
-    List<Widget> infoCol = [];
-    for (int i = 2; i <= 9; i++) {
-      var wordCount2 = solution.countForLength(i);
-      infoCol.add(WordCountColumn(i, wordCount2, false));
-    }
-    infoCol.add(WordCountColumn(10, solution.countForMinLength(10), true));
+    return GridView.builder(
+      shrinkWrap: true,
+      itemCount: ((_maxLength - 1) * 3),
+      physics: NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: (_maxLength - 1),
+        childAspectRatio: 1.0,
+        crossAxisSpacing: 3.0,
+        mainAxisSpacing: 3.0,
+      ),
+      itemBuilder: (context, index) {
+        return Container(
+          decoration:
+              new BoxDecoration(border: new Border.all(color: Colors.orange)),
+          child: Padding(
+            padding: new EdgeInsets.all(2.0),
+            child: fromIndex(index, solution),
+          ),
+        );
+      },
+    );
+  }
 
-    return Row(children: infoCol);
+  Widget fromIndex(int index, Solution solution) {
+    int rowSize = (_maxLength - 1);
+    int lastIndexRow1 = rowSize - 1;
+    int lastIndexRow2 = lastIndexRow1 + rowSize;
+
+    int length = (index % (_maxLength - 1)) + 2;
+
+    if (index <= lastIndexRow1) {
+      return NumberInfo(length.toString(), Colors.cyan);
+    } else if (index <= lastIndexRow2) {
+      return NumberInfo(
+          solution.countForLength(length).toString(), Colors.orange);
+    }
+
+    return UserAnswerNumberInfo(length);
   }
 }
 
-class WordCountColumn extends StatelessWidget {
-  final int size, count;
-  final bool last;
-
-  final textStyle = TextStyle(fontSize: 20.0);
-
-  WordCountColumn(this.size, this.count, this.last);
+class NumberInfo extends StatelessWidget {
+  final String number;
+  final Color color;
+  NumberInfo(this.number, this.color);
 
   @override
-  Widget build(BuildContext context) {
-    UserAnswer data = Provider.mutableDataOf(context).value;
-    String found =
-    (last ? data.countForMinLength(size) : data.countForLength(size))
-        .toString();
-    if (last) {
-      found += " >";
-    }
+  build(BuildContext context) {
+    return Container(
+      color: color,
+      child: Center(child: Text(number)),
+    );
+  }
+}
 
-    return Column(
-      children: [
-        Text(size.toString(), style: textStyle),
-        Text(count.toString(), style: textStyle),
-        Text(found, style: textStyle),
-      ],
+class UserAnswerNumberInfo extends StatelessWidget {
+  final int length;
+  UserAnswerNumberInfo(this.length);
+
+  @override
+  build(BuildContext context) {
+    UserAnswer userAnswer = Provider.mutableDataOf(context).value;
+
+    return Container(
+      color: Colors.amber,
+      child: Center(child: Text(userAnswer.countForLength(length).toString())),
     );
   }
 }
