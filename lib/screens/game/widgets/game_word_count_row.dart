@@ -37,7 +37,7 @@ class WordCountOverview extends StatelessWidget {
     );
   }
 
-  Widget fromIndex(int index, Solution solution) {
+  Widget fromIndex(int index, Answer solution) {
     int rowSize = (_maxLength - 1);
     int lastIndexRow1 = rowSize - 1;
     int lastIndexRow2 = lastIndexRow1 + rowSize;
@@ -45,10 +45,14 @@ class WordCountOverview extends StatelessWidget {
     int length = (index % (_maxLength - 1)) + 2;
 
     if (index <= lastIndexRow1) {
-      return NumberInfo(length.toString(), Colors.cyan);
+      String text = length.toString();
+      if (length == _maxLength) {
+        text = ">= " + text;
+      }
+      return NumberInfo(text, Colors.cyan);
     } else if (index <= lastIndexRow2) {
       return NumberInfo(
-          solution.countForLength(length).toString(), Colors.orange);
+          countForLength(solution, length).toString(), Colors.orange);
     }
 
     return UserAnswerNumberInfo(length);
@@ -71,15 +75,20 @@ class NumberInfo extends StatelessWidget {
 
 class UserAnswerNumberInfo extends StatelessWidget {
   final int length;
+
   UserAnswerNumberInfo(this.length);
 
   @override
   build(BuildContext context) {
-    UserAnswer userAnswer = Provider.mutableDataOf(context).value;
+    Answer answer = Provider.mutableDataOf(context).value;
 
     return Container(
       color: Colors.amber,
-      child: Center(child: Text(userAnswer.countForLength(length).toString())),
+      child: Center(child: Text(countForLength(answer, length).toString())),
     );
   }
 }
+
+int countForLength(Answer answer, int length) => (length == _maxLength)
+    ? answer.countForMinLength(length)
+    : answer.countForLength(length);
