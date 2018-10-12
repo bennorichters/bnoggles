@@ -56,7 +56,7 @@ class GridState extends State<Grid> {
     if (_validStart) {
       Board board = Provider.immutableDataOf(_key.currentContext)["board"];
       Solution solution =
-      Provider.immutableDataOf(_key.currentContext)["solution"];
+          Provider.immutableDataOf(_key.currentContext)["solution"];
 
       var word = StringBuffer();
       for (var index in _selectedIndexes) {
@@ -91,48 +91,55 @@ class GridState extends State<Grid> {
   Widget build(BuildContext context) {
     Board board = Provider.immutableDataOf(context)["board"];
 
-    return Listener(
-      onPointerDown: _start,
-      onPointerMove: _move,
-      onPointerUp: _finish,
-      child: Container(
+    return Container(
+        margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
+        child: Listener(
+          onPointerDown: _start,
+          onPointerMove: _move,
+          onPointerUp: _finish,
+          child: Container(
 //        width: 300.0,
-        child: GridView.builder(
-          shrinkWrap: true,
-          key: _key,
-          itemCount: 9,
-          physics: NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 1.0,
-            crossAxisSpacing: 5.0,
-            mainAxisSpacing: 5.0,
-          ),
-          itemBuilder: (context, index) {
-            var xy = _indexToXY(index, board.width);
-            String character = board.characterAt(Coordinate(xy[0], xy[1]));
-            return Container(
-              decoration: new BoxDecoration(
-                  border: new Border.all(color: Colors.blueAccent)),
-              child: Padding(
-                padding: new EdgeInsets.all(20.0),
-                child: _buildIndexedWidget(index, character),
+            child: GridView.builder(
+              shrinkWrap: true,
+              key: _key,
+              itemCount: 9,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 1.0,
+                crossAxisSpacing: 15.0,
+                mainAxisSpacing: 15.0,
               ),
-            );
-          },
-        ),
-      ),
-    );
+              itemBuilder: (context, index) {
+                var xy = _indexToXY(index, board.width);
+                String character = board.characterAt(Coordinate(xy[0], xy[1]));
+                return Container(
+                  decoration: new BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(35.0)),
+                      border: new Border.all(color: Colors.blueAccent)),
+                  child: Padding(
+                    padding: new EdgeInsets.all(35.0),
+                    child: _buildIndexedWidget(index, character),
+                  ),
+                );
+              },
+            ),
+          ),
+        ));
   }
 
   _IndexedWidget _buildIndexedWidget(int index, String character) {
+    bool selected = _selectedIndexes.contains(index);
     return _IndexedWidget(
       index: index,
       child: Container(
-        color: _selectedIndexes.contains(index) ? Colors.green : Colors.blue,
+        color: selected ? Colors.lightBlueAccent : Colors.deepPurple,
         child: Center(
             child: Text(character.toUpperCase(),
-                style: const TextStyle(fontSize: 40.0))),
+                style: TextStyle(
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold,
+                    color: (selected ? Colors.black : Colors.white)))),
       ),
     );
   }

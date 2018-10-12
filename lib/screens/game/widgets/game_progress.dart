@@ -10,7 +10,7 @@ class GameProgress extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(width: 300.0, height: 130.0, child: WordCountOverview()),
+          Container(width: 300.0, height: 127.0, child: WordCountOverview()),
           Container(
             padding: EdgeInsets.all(10.0),
             color: Colors.black,

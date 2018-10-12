@@ -7,7 +7,7 @@ class WordWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var data = Provider.mutableDataOf(context).value;
-    return Text("${data.latestUserWord}",
+    return Text("${data.latestUserWord.toUpperCase()}",
         style: TextStyle(
             fontSize: 40.0,
             color: data.latestCorrect ? Colors.green : Colors.red));
