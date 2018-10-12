@@ -33,7 +33,7 @@ class GamePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                WordCountRow(),
+                WordCountOverview(),
                 WordWindow(),
                 Grid(),
               ],

@@ -7,7 +7,7 @@ import 'package:bnoggles/utils/solution.dart';
 
 const int _maxLength = 8;
 
-class WordCountRow extends StatelessWidget {
+class WordCountOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Solution solution = Provider.immutableDataOf(context)["solution"];
