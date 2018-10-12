@@ -111,15 +111,18 @@ class GridState extends State<Grid> {
                 mainAxisSpacing: 15.0,
               ),
               itemBuilder: (context, index) {
+                bool selected = _selectedIndexes.contains(index);
                 var xy = _indexToXY(index, board.width);
                 String character = board.characterAt(Coordinate(xy[0], xy[1]));
                 return Container(
                   decoration: new BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(35.0)),
-                      border: new Border.all(color: Colors.blueAccent)),
+                      border: new Border.all(color: Colors.blueAccent),
+                      color: (selected ? Colors.lightBlueAccent : Colors.deepPurple),
+                  ),
                   child: Padding(
                     padding: new EdgeInsets.all(35.0),
-                    child: _buildIndexedWidget(index, character),
+                    child: _buildIndexedWidget(index, character, selected),
                   ),
                 );
               },
@@ -128,12 +131,14 @@ class GridState extends State<Grid> {
         ));
   }
 
-  _IndexedWidget _buildIndexedWidget(int index, String character) {
-    bool selected = _selectedIndexes.contains(index);
+  _IndexedWidget _buildIndexedWidget(int index, String character, bool selected) {
     return _IndexedWidget(
       index: index,
       child: Container(
+
+        // Without this line the interface is unresponsive. Not sure why.
         color: selected ? Colors.lightBlueAccent : Colors.deepPurple,
+
         child: Center(
             child: Text(character.toUpperCase(),
                 style: TextStyle(
