@@ -16,22 +16,40 @@ abstract class Answer {
       uniqueWords().where((w) => w.length >= minLength).length;
 }
 
+enum Evaluation { good, wrong, goodAgain }
+
+class UserWord {
+  final String word;
+  final Evaluation eval;
+
+  UserWord(this.word, this.eval);
+}
+
 class UserAnswer extends Answer {
-  final String latestUserWord;
-  final bool latestCorrect;
-  final Set<String> found;
+  final List<UserWord> found;
 
-  UserAnswer._internal(this.latestUserWord, this.latestCorrect, this.found);
+  factory UserAnswer(UserAnswer old, String word, bool isCorrect) {
+    Evaluation eval;
 
-  static UserAnswer start() => UserAnswer._internal("___", false, Set());
+    if (isCorrect && old.contains(word)) {
+      eval = Evaluation.goodAgain;
+    } else if (isCorrect) {
+      eval = Evaluation.good;
+    } else {
+      eval = Evaluation.wrong;
+    }
 
-  UserAnswer.extend(UserAnswer old, String latest, bool correct)
-      : latestUserWord = latest,
-        latestCorrect = correct,
-        found = correct ? (Set.from(old.found)..add(latest)) : old.found;
+    return UserAnswer._internal(List.unmodifiable(old.found
+      .toList()
+      ..add(UserWord(word, eval))));
+  }
+
+  UserAnswer._internal(this.found);
+
+  static UserAnswer start() => UserAnswer._internal(List.unmodifiable([]));
 
   @override
-  Set<String> uniqueWords() => found;
+  Set<String> uniqueWords() => found.map((f) => f.word).toSet();
 }
 
 class Solution extends Answer {

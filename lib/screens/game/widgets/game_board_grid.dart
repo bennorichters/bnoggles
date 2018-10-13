@@ -68,7 +68,7 @@ class GridState extends State<Grid> {
 
       UserAnswer old = Provider.mutableDataOf(_key.currentContext).value;
       Provider.mutableDataOf(_key.currentContext).value =
-          UserAnswer.extend(old, candidate, solution.isCorrect(candidate));
+          UserAnswer(old, candidate, solution.isCorrect(candidate));
     }
 
     _clearSelection();
@@ -98,7 +98,6 @@ class GridState extends State<Grid> {
           onPointerMove: _move,
           onPointerUp: _finish,
           child: Container(
-//        width: 300.0,
             child: GridView.builder(
               shrinkWrap: true,
               key: _key,
@@ -116,9 +115,10 @@ class GridState extends State<Grid> {
                 String character = board.characterAt(Coordinate(xy[0], xy[1]));
                 return Container(
                   decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(35.0)),
-                      border: new Border.all(color: Colors.blueAccent),
-                      color: (selected ? Colors.lightBlueAccent : Colors.deepPurple),
+                    borderRadius: BorderRadius.all(Radius.circular(35.0)),
+                    border: new Border.all(color: Colors.blueAccent),
+                    color:
+                        (selected ? Colors.lightBlueAccent : Colors.deepPurple),
                   ),
                   child: Padding(
                     padding: new EdgeInsets.all(35.0),
@@ -131,11 +131,11 @@ class GridState extends State<Grid> {
         ));
   }
 
-  _IndexedWidget _buildIndexedWidget(int index, String character, bool selected) {
+  _IndexedWidget _buildIndexedWidget(
+      int index, String character, bool selected) {
     return _IndexedWidget(
       index: index,
       child: Container(
-
         // Without this line the interface is unresponsive. Not sure why.
         color: selected ? Colors.lightBlueAccent : Colors.deepPurple,
 

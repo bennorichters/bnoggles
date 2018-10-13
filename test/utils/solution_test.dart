@@ -17,17 +17,43 @@ void main() {
   test('wordsPerSizeCount', () {
     Solution s = createSolution();
 
-    expect(0, s.countForLength(0));
-    expect(0, s.countForLength(1));
-    expect(2, s.countForLength(2));
-    expect(1, s.countForLength(3));
-    expect(0, s.countForLength(4));
+    expect(s.countForLength(0), 0);
+    expect(s.countForLength(1), 0);
+    expect(s.countForLength(2), 2);
+    expect(s.countForLength(3), 1);
+    expect(s.countForLength(4), 0);
 
-    expect(3, s.countForMinLength(0));
-    expect(3, s.countForMinLength(1));
-    expect(3, s.countForMinLength(2));
-    expect(1, s.countForMinLength(3));
-    expect(0, s.countForMinLength(4));
+    expect(s.countForMinLength(0), 3);
+    expect(s.countForMinLength(1), 3);
+    expect(s.countForMinLength(2), 3);
+    expect(s.countForMinLength(3), 1);
+    expect(s.countForMinLength(4), 0);
+  });
+
+  test('userAnswer', () {
+    var a = UserAnswer.start();
+    expect(a.found.length, 0);
+
+    a = UserAnswer(a, "abc", true);
+    expect(a.found.length, 1);
+    expect(a.found[0].word, "abc");
+    expect(a.found[0].eval, Evaluation.good);
+
+    a = UserAnswer(a, "def", false);
+    expect(a.found.length, 2);
+    expect(a.found[0].word, "abc");
+    expect(a.found[0].eval, Evaluation.good);
+    expect(a.found[1].word, "def");
+    expect(a.found[1].eval, Evaluation.wrong);
+    
+    a = UserAnswer(a, "abc", true);
+    expect(a.found.length, 3);
+    expect(a.found[0].word, "abc");
+    expect(a.found[0].eval, Evaluation.good);
+    expect(a.found[1].word, "def");
+    expect(a.found[1].eval, Evaluation.wrong);
+    expect(a.found[2].word, "abc");
+    expect(a.found[2].eval, Evaluation.goodAgain);
   });
 }
 
