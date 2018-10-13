@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'package:bnoggles/screens/game/game_screen.dart';
+import 'package:bnoggles/screens/game/game_page.dart';
 
 import 'package:bnoggles/utils/board.dart';
 import 'package:bnoggles/utils/dictionary.dart';
