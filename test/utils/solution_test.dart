@@ -30,7 +30,7 @@ void main() {
     expect(s.countForMinLength(4), 0);
   });
 
-  test('userAnswer', () {
+  test('userAnswer.found', () {
     var a = UserAnswer.start();
     expect(a.found.length, 0);
 
@@ -54,6 +54,16 @@ void main() {
     expect(a.found[1].eval, Evaluation.wrong);
     expect(a.found[2].word, "abc");
     expect(a.found[2].eval, Evaluation.goodAgain);
+  });
+
+  test('userAnswer.uniqueWords', () {
+    UserAnswer a = UserAnswer.start();
+    a = UserAnswer(a, "abc", true);
+    a = UserAnswer(a, "def", false);
+    a = UserAnswer(a, "abc", true);
+    a = UserAnswer(a, "ghi", true);
+
+    expect(a.uniqueWords(), ["abc", "ghi"].toSet());
   });
 }
 

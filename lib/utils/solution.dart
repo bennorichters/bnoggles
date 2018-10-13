@@ -39,9 +39,8 @@ class UserAnswer extends Answer {
       eval = Evaluation.wrong;
     }
 
-    return UserAnswer._internal(List.unmodifiable(old.found
-      .toList()
-      ..add(UserWord(word, eval))));
+    return UserAnswer._internal(
+        List.unmodifiable(old.found.toList()..add(UserWord(word, eval))));
   }
 
   UserAnswer._internal(this.found);
@@ -49,7 +48,8 @@ class UserAnswer extends Answer {
   static UserAnswer start() => UserAnswer._internal(List.unmodifiable([]));
 
   @override
-  Set<String> uniqueWords() => found.map((f) => f.word).toSet();
+  Set<String> uniqueWords() =>
+      found.where((f) => f.eval == Evaluation.good).map((f) => f.word).toSet();
 }
 
 class Solution extends Answer {

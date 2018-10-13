@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -12,13 +10,16 @@ class WordWindow extends StatelessWidget {
   Widget build(BuildContext context) {
     UserAnswer userAnswer = Provider.mutableDataOf(context).value;
 
-    return Row(
-      children: userAnswer.found
-          .sublist(max(0, userAnswer.found.length - 5))
-          .reversed
-          .map((a) => _UserWordFeedback(a))
-          .toList(),
-    );
+    return Container(
+        height: 50.0,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: userAnswer
+              .found
+              .reversed
+              .map((a) => _UserWordFeedback(a))
+              .toList(),
+        ));
   }
 }
 
@@ -42,9 +43,10 @@ class _UserWordFeedback extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           color: _colors[_userWord.eval],
         ),
-        child: Text(_userWord.word.toUpperCase(),
-            style: TextStyle(
-              fontSize: 20.0,
-            )));
+        child: Center(
+            child: Text(_userWord.word.toUpperCase(),
+                style: TextStyle(
+                  fontSize: 20.0,
+                ))));
   }
 }

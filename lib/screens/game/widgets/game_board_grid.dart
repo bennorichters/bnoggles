@@ -64,11 +64,17 @@ class GridState extends State<Grid> {
         word.write(board.characterAt(Coordinate(xy[0], xy[1])));
       }
 
-      var candidate = word.toString();
+      if (word.length >= 2) {
+        var candidate = word.toString();
 
-      UserAnswer old = Provider.mutableDataOf(_key.currentContext).value;
-      Provider.mutableDataOf(_key.currentContext).value =
-          UserAnswer(old, candidate, solution.isCorrect(candidate));
+        UserAnswer old = Provider
+            .mutableDataOf(_key.currentContext)
+            .value;
+        Provider
+            .mutableDataOf(_key.currentContext)
+            .value =
+            UserAnswer(old, candidate, solution.isCorrect(candidate));
+      }
     }
 
     _clearSelection();
