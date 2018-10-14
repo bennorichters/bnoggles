@@ -127,7 +127,7 @@ class GridState extends State<Grid> {
                         (selected ? Colors.lightBlueAccent : Colors.deepPurple),
                   ),
                   child: Padding(
-                    padding: new EdgeInsets.all(35.0),
+                    padding: new EdgeInsets.all(25.0),
                     child: _buildIndexedWidget(index, character, selected),
                   ),
                 );
