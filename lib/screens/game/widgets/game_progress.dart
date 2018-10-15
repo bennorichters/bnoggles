@@ -2,7 +2,7 @@ import 'package:bnoggles/screens/game/widgets/game_clock.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_count_row.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/solution.dart';
-import 'package:bnoggles/widgets/provider.dart';
+import 'package:bnoggles/screens/game/widgets/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 

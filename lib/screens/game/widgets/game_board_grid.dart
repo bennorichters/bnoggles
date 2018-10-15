@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:bnoggles/widgets/provider.dart';
+import 'package:bnoggles/screens/game/widgets/provider.dart';
 
 import 'package:bnoggles/utils/board.dart';
 import 'package:bnoggles/utils/coordinate.dart';
