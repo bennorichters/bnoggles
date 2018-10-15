@@ -5,19 +5,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'package:bnoggles/screens/game/game_page.dart';
+import 'package:bnoggles/screens/start/start_screen.dart';
 
-import 'package:bnoggles/utils/board.dart';
 import 'package:bnoggles/utils/dictionary.dart';
-import 'package:bnoggles/utils/solution.dart';
-
-Board _board;
-Solution _solution;
 
 void main() async {
-  await setup();
+  var res = await setup();
 
-  runApp(MyApp());
+  runApp(MyApp(res[0], res[1]));
 }
 
 setup() async {
@@ -25,14 +20,12 @@ setup() async {
   var config = json.decode(configJson);
 
   Map<String, int> _freq = getFreq(config);
-  var g = RandomLetterGenerator(_freq);
+  var generator = RandomLetterGenerator(_freq);
 
   String words = await loadDictionary();
   Dictionary dict = Dictionary(words.split("\n")..sort());
 
-  _board = Board(3, g);
-
-  _solution = Solution(_board, dict);
+  return [generator, dict];
 }
 
 Map<String, int> getFreq(var config) {
@@ -59,13 +52,18 @@ Future<Dictionary> readDutchWords(String fileName) async {
 }
 
 class MyApp extends StatelessWidget {
+
+  final RandomLetterGenerator generator;
+  final Dictionary dictionary;
+
+  MyApp(this.generator, this.dictionary);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: GamePage(
-          title: 'Flutter Demo Home Page', board: _board, solution: _solution),
+      home: StartScreen(dictionary: dictionary, generator: generator),
     );
   }
 }

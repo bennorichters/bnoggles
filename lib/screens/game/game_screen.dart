@@ -4,19 +4,17 @@ import 'package:flutter/rendering.dart';
 import 'package:bnoggles/screens/game/widgets/game_board_grid.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
-import 'package:bnoggles/screens/game/widgets/provider.dart';
+import 'package:bnoggles/widgets/provider.dart';
 
 import 'package:bnoggles/utils/board.dart';
 import 'package:bnoggles/utils/solution.dart';
 
-class GamePage extends StatelessWidget {
-  final String title;
+class GameScreen extends StatelessWidget {
   final Board board;
   final Solution solution;
 
-  GamePage(
+  GameScreen(
       {Key key,
-      @required this.title,
       @required this.board,
       @required this.solution})
       : super(key: key);
@@ -25,7 +23,7 @@ class GamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text("Bnoggles"),
         ),
         body: Provider(
             immutableData: {"board": board, "solution": solution},
