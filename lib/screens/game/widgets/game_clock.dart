@@ -1,3 +1,6 @@
+import 'package:bnoggles/screens/result/result_screen.dart';
+import 'package:bnoggles/utils/solution.dart';
+import 'package:bnoggles/widgets/provider.dart';
 import 'package:flutter/material.dart';
 
 class Clock extends StatefulWidget {
@@ -7,7 +10,7 @@ class Clock extends StatefulWidget {
 class _ClockState extends State<Clock> with TickerProviderStateMixin {
   AnimationController _controller;
 
-  static const int _startValue = 150;
+  static const int _startValue = 5;
 
   @override
   void initState() {
@@ -22,13 +25,28 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    var animation = StepTween(
+            begin: _startValue,
+            end: 0,
+          ).animate(_controller);
+
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Solution solution = Provider.immutableDataOf(context)["solution"];
+        UserAnswer userAnswer = Provider.mutableDataOf(context).value;
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+            builder: (context) =>
+            ResultScreen(solution, userAnswer)));
+      }
+    });
+
     return Container(
       child: Center(
         child: Countdown(
-          animation: StepTween(
-            begin: _startValue,
-            end: 0,
-          ).animate(_controller),
+          animation: animation,
         ),
       ),
     );
