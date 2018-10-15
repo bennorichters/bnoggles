@@ -42,11 +42,11 @@ class _GameProgressState extends State<GameProgress>
     };
 
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
-          Container(width: 300.0, height: 127.0, child: WordCountOverview()),
-          Clock(showResultScreen, _controller, _startValue),
+          Container(width: 350.0, height: 100.0, child: WordCountOverview()),
+          Expanded(child: Container(height: 100.0, child: Clock(showResultScreen, _controller, _startValue))),
           IconButton(
             icon: Icon(Icons.stop),
             onPressed: () {

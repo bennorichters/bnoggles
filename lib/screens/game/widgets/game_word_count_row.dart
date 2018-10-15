@@ -15,23 +15,17 @@ class WordCountOverview extends StatelessWidget {
     print(solution.uniqueWordsSorted());
 
     return GridView.builder(
-//      shrinkWrap: true,
-      itemCount: ((_maxLength - 1) * 3),
+      itemCount: ((_maxLength - 1) * 2),
       physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: (_maxLength - 1),
         childAspectRatio: 1.0,
-        crossAxisSpacing: 3.0,
-        mainAxisSpacing: 3.0,
       ),
       itemBuilder: (context, index) {
         return Container(
           decoration:
-              new BoxDecoration(border: new Border.all(color: Colors.orange)),
-          child: Padding(
-            padding: new EdgeInsets.all(2.0),
-            child: fromIndex(index, solution),
-          ),
+              new BoxDecoration(border: new Border.all(color: Colors.black)),
+          child: fromIndex(index, solution),
         );
       },
     );
@@ -40,7 +34,6 @@ class WordCountOverview extends StatelessWidget {
   Widget fromIndex(int index, Answer solution) {
     int rowSize = (_maxLength - 1);
     int lastIndexRow1 = rowSize - 1;
-    int lastIndexRow2 = lastIndexRow1 + rowSize;
 
     int length = (index % (_maxLength - 1)) + 2;
 
@@ -49,10 +42,7 @@ class WordCountOverview extends StatelessWidget {
       if (length == _maxLength) {
         text = ">= " + text;
       }
-      return NumberInfo(text, Colors.cyan);
-    } else if (index <= lastIndexRow2) {
-      return NumberInfo(
-          countForLength(solution, length).toString(), Colors.orange);
+      return NumberInfo(text);
     }
 
     return UserAnswerNumberInfo(length);
@@ -61,14 +51,13 @@ class WordCountOverview extends StatelessWidget {
 
 class NumberInfo extends StatelessWidget {
   final String number;
-  final Color color;
-  NumberInfo(this.number, this.color);
+  NumberInfo(this.number);
 
   @override
   build(BuildContext context) {
     return Container(
-      color: color,
-      child: Center(child: Text(number)),
+      color: Colors.blueGrey,
+      child: Center(child: Text(number, style: TextStyle(color: Colors.white))),
     );
   }
 }
@@ -80,15 +69,24 @@ class UserAnswerNumberInfo extends StatelessWidget {
 
   @override
   build(BuildContext context) {
-    Answer answer = Provider.of(context).userAnswer.value;
+    var gameInfo = Provider.of(context);
+    Solution solution = gameInfo.solution;
+    Answer answer = gameInfo.userAnswer.value;
+
+    int remaining =
+        _countForLength(solution, length) - _countForLength(answer, length);
 
     return Container(
-      color: Colors.amber,
-      child: Center(child: Text(countForLength(answer, length).toString())),
+      color: Colors.blue,
+      child: Center(
+          child: Text(remaining.toString(),
+              style: TextStyle(color: Colors.black))),
     );
   }
+
+  int _countForLength(Answer answer, int length) => (length == _maxLength)
+      ? answer.countForMinLength(length)
+      : answer.countForLength(length);
 }
 
-int countForLength(Answer answer, int length) => (length == _maxLength)
-    ? answer.countForMinLength(length)
-    : answer.countForLength(length);
+

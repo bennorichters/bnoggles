@@ -120,10 +120,10 @@ class GridState extends State<Grid> {
                 String character = board.characterAt(Coordinate(xy[0], xy[1]));
                 return Container(
                   decoration: new BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(35.0)),
-                    border: new Border.all(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    border: new Border.all(width: 5.0, color: Colors.blueAccent),
                     color:
-                        (selected ? Colors.lightBlueAccent : Colors.deepPurple),
+                        (selected ? Colors.lightBlueAccent : Colors.white),
                   ),
                   child: Padding(
                     padding: new EdgeInsets.all(25.0),
@@ -142,14 +142,14 @@ class GridState extends State<Grid> {
       index: index,
       child: Container(
         // Without this line the interface is unresponsive. Not sure why.
-        color: selected ? Colors.lightBlueAccent : Colors.deepPurple,
+        color: selected ? Colors.lightBlueAccent : Colors.white,
 
         child: Center(
             child: Text(character.toUpperCase(),
                 style: TextStyle(
                     fontSize: 40.0,
                     fontWeight: FontWeight.bold,
-                    color: (selected ? Colors.black : Colors.white)))),
+                    color: (selected ? Colors.white : Colors.black)))),
       ),
     );
   }

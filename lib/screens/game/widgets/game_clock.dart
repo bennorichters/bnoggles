@@ -21,6 +21,7 @@ class Clock extends StatelessWidget {
     });
 
     return Container(
+      color: Colors.lightBlueAccent,
       child: Center(
         child: Countdown(
           animation: animation,
