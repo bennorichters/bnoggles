@@ -21,8 +21,11 @@ class GridState extends State<Grid> {
   bool _validStart = false;
 
   _start(PointerEvent event) {
-    _validStart = true;
-    _detectTapedItem(event);
+    _validStart = Provider.of(_key.currentContext).gameOngoing;
+
+    if(_validStart) {
+      _detectTapedItem(event);
+    }
   }
 
   _move(PointerEvent event) {

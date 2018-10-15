@@ -7,7 +7,7 @@ class GameInfo {
   final Board board;
   final Solution solution;
   final ValueNotifier<UserAnswer> userAnswer;
-  final bool gameOngoing;
+  bool gameOngoing;
 
   GameInfo(
       {this.board, this.solution, this.userAnswer, this.gameOngoing = true});

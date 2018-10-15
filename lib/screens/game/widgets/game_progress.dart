@@ -33,6 +33,7 @@ class _GameProgressState extends State<GameProgress>
       GameInfo gameInfo = Provider.of(context);
       Solution solution = gameInfo.solution;
       UserAnswer userAnswer = gameInfo.userAnswer.value;
+      gameInfo.gameOngoing = false;
 
       Navigator.push(
           context,
