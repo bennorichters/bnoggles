@@ -8,7 +8,7 @@ import 'package:bnoggles/utils/solution.dart';
 class WordWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    UserAnswer userAnswer = Provider.mutableDataOf(context).value;
+    UserAnswer userAnswer = Provider.of(context).userAnswer.value;
 
     return Container(
         height: 50.0,

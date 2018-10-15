@@ -13,10 +13,7 @@ class GameScreen extends StatelessWidget {
   final Board board;
   final Solution solution;
 
-  GameScreen(
-      {Key key,
-      @required this.board,
-      @required this.solution})
+  GameScreen({Key key, @required this.board, @required this.solution})
       : super(key: key);
 
   @override
@@ -26,8 +23,10 @@ class GameScreen extends StatelessWidget {
           title: Text("Bnoggles"),
         ),
         body: Provider(
-            immutableData: {"board": board, "solution": solution},
-            mutableData: ValueNotifier(UserAnswer.start()),
+            gameInfo: GameInfo(
+                board: board,
+                solution: solution,
+                userAnswer: ValueNotifier(UserAnswer.start())),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

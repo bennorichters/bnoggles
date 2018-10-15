@@ -10,7 +10,7 @@ const int _maxLength = 8;
 class WordCountOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Solution solution = Provider.immutableDataOf(context)["solution"];
+    Solution solution = Provider.of(context).solution;
 
     print(solution.uniqueWordsSorted());
 
@@ -80,7 +80,7 @@ class UserAnswerNumberInfo extends StatelessWidget {
 
   @override
   build(BuildContext context) {
-    Answer answer = Provider.mutableDataOf(context).value;
+    Answer answer = Provider.of(context).userAnswer.value;
 
     return Container(
       color: Colors.amber,

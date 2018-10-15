@@ -1,24 +1,37 @@
 import 'package:flutter/widgets.dart';
 
+import 'package:bnoggles/utils/board.dart';
+import 'package:bnoggles/utils/solution.dart';
+
+class GameInfo {
+  final Board board;
+  final Solution solution;
+  final ValueNotifier<UserAnswer> userAnswer;
+  final bool gameOngoing;
+
+  GameInfo(
+      {this.board, this.solution, this.userAnswer, this.gameOngoing = true});
+
+  void addListener(listener) {
+    userAnswer.addListener(listener);
+  }
+
+  void removeListener(listener) {
+    userAnswer.removeListener(listener);
+  }
+}
+
 class Provider extends StatefulWidget {
-  final immutableData;
-  final mutableData;
+  final GameInfo gameInfo;
   final child;
 
-  const Provider({this.immutableData, this.mutableData, this.child});
+  const Provider({this.gameInfo, this.child});
 
-  static immutableDataOf(BuildContext context) {
-    _InheritedProvider p = inheritedProvider(context);
-    return p.immutableData;
+  static GameInfo of(BuildContext context) {
+    _InheritedProvider ip =
+        context.inheritFromWidgetOfExactType(_InheritedProvider);
+    return ip.gameInfo;
   }
-
-  static mutableDataOf(BuildContext context) {
-    _InheritedProvider p = inheritedProvider(context);
-    return p.mutableData;
-  }
-
-  static _InheritedProvider inheritedProvider(BuildContext context) =>
-      context.inheritFromWidgetOfExactType(_InheritedProvider);
 
   @override
   State<StatefulWidget> createState() => new _ProviderState();
@@ -28,7 +41,7 @@ class _ProviderState extends State<Provider> {
   @override
   initState() {
     super.initState();
-    widget.mutableData.addListener(didValueChange);
+    widget.gameInfo.addListener(didValueChange);
   }
 
   didValueChange() => setState(() {});
@@ -36,31 +49,29 @@ class _ProviderState extends State<Provider> {
   @override
   Widget build(BuildContext context) {
     return new _InheritedProvider(
-      immutableData: widget.immutableData,
-      mutableData: widget.mutableData,
+      gameInfo: widget.gameInfo,
       child: widget.child,
     );
   }
 
   @override
   dispose() {
-    widget.mutableData.removeListener(didValueChange);
+    widget.gameInfo.removeListener(didValueChange);
     super.dispose();
   }
 }
 
 class _InheritedProvider extends InheritedWidget {
-  final immutableData;
-  final mutableData;
+  final GameInfo gameInfo;
   final child;
-  final _dataValue;
+  final UserAnswer _value;
 
-  _InheritedProvider({this.immutableData, this.mutableData, this.child})
-      : _dataValue = mutableData.value,
+  _InheritedProvider({this.gameInfo, this.child})
+      : _value = gameInfo.userAnswer.value,
         super(child: child);
 
   @override
   bool updateShouldNotify(_InheritedProvider oldWidget) {
-    return _dataValue != oldWidget._dataValue;
+    return _value != oldWidget._value;
   }
 }

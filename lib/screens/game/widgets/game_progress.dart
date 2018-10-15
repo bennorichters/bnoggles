@@ -30,8 +30,9 @@ class _GameProgressState extends State<GameProgress>
   @override
   build(BuildContext context) {
     var showResultScreen = () {
-      Solution solution = Provider.immutableDataOf(context)["solution"];
-      UserAnswer userAnswer = Provider.mutableDataOf(context).value;
+      GameInfo gameInfo = Provider.of(context);
+      Solution solution = gameInfo.solution;
+      UserAnswer userAnswer = gameInfo.userAnswer.value;
 
       Navigator.push(
           context,

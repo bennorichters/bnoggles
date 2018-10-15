@@ -23,6 +23,9 @@ class UserWord {
   final Evaluation eval;
 
   UserWord(this.word, this.eval);
+
+  @override
+  String toString() => "$word - $eval";
 }
 
 class UserAnswer extends Answer {
@@ -50,6 +53,9 @@ class UserAnswer extends Answer {
   @override
   Set<String> uniqueWords() =>
       found.where((f) => f.eval == Evaluation.good).map((f) => f.word).toSet();
+
+  @override
+  String toString() => found.toString();
 }
 
 class Solution extends Answer {

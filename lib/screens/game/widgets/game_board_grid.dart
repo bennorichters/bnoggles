@@ -54,9 +54,9 @@ class GridState extends State<Grid> {
 
   void _finish(PointerUpEvent event) {
     if (_validStart) {
-      Board board = Provider.immutableDataOf(_key.currentContext)["board"];
-      Solution solution =
-          Provider.immutableDataOf(_key.currentContext)["solution"];
+      GameInfo gameInfo = Provider.of(_key.currentContext);
+      Board board = gameInfo.board;
+      Solution solution = gameInfo.solution;
 
       var word = StringBuffer();
       for (var index in _selectedIndexes) {
@@ -67,12 +67,8 @@ class GridState extends State<Grid> {
       if (word.length >= 2) {
         var candidate = word.toString();
 
-        UserAnswer old = Provider
-            .mutableDataOf(_key.currentContext)
-            .value;
-        Provider
-            .mutableDataOf(_key.currentContext)
-            .value =
+        UserAnswer old = gameInfo.userAnswer.value;
+        gameInfo.userAnswer.value =
             UserAnswer(old, candidate, solution.isCorrect(candidate));
       }
     }
@@ -95,7 +91,7 @@ class GridState extends State<Grid> {
 
   @override
   Widget build(BuildContext context) {
-    Board board = Provider.immutableDataOf(context)["board"];
+    Board board = Provider.of(context).board;
 
     return Container(
         margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
