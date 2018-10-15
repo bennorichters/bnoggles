@@ -64,14 +64,14 @@ class _ProviderState extends State<Provider> {
 class _InheritedProvider extends InheritedWidget {
   final GameInfo gameInfo;
   final child;
-  final UserAnswer _value;
+  final UserAnswer _userAnswerValue;
 
   _InheritedProvider({this.gameInfo, this.child})
-      : _value = gameInfo.userAnswer.value,
+      : _userAnswerValue = gameInfo.userAnswer.value,
         super(child: child);
 
   @override
   bool updateShouldNotify(_InheritedProvider oldWidget) {
-    return _value != oldWidget._value;
+    return _userAnswerValue != oldWidget._userAnswerValue;
   }
 }
