@@ -1,16 +1,19 @@
-import 'package:bnoggles/screens/result/result_screen.dart';
-import 'package:bnoggles/utils/solution.dart';
-import 'package:bnoggles/widgets/provider.dart';
 import 'package:flutter/material.dart';
 
 class Clock extends StatefulWidget {
-  State createState() => _ClockState();
+  final showResultScreen;
+  Clock(this.showResultScreen);
+
+  State createState() => _ClockState(showResultScreen);
 }
 
 class _ClockState extends State<Clock> with TickerProviderStateMixin {
+  final showResultScreen;
   AnimationController _controller;
 
-  static const int _startValue = 5;
+  _ClockState(this.showResultScreen);
+
+  static const int _startValue = 150;
 
   @override
   void initState() {
@@ -31,16 +34,7 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
           ).animate(_controller);
 
     animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        Solution solution = Provider.immutableDataOf(context)["solution"];
-        UserAnswer userAnswer = Provider.mutableDataOf(context).value;
-
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-            builder: (context) =>
-            ResultScreen(solution, userAnswer)));
-      }
+      if (status == AnimationStatus.completed) {showResultScreen();}
     });
 
     return Container(

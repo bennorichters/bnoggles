@@ -10,9 +10,13 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var tiles = solution
-        .uniqueWords()
-        .map((w) => ListTile(title: new Text(w.toUpperCase())));
+    var tiles = solution.uniqueWordsSorted().map((w) {
+      return ListTile(
+          title: new Text(w.toUpperCase(),
+              style: TextStyle(
+                  color:
+                      userAnswer.contains(w) ? Colors.green : Colors.black)));
+    });
 
     final List<Widget> divided = ListTile.divideTiles(
       context: context,
