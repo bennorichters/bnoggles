@@ -1,40 +1,23 @@
 import 'package:flutter/material.dart';
 
-class Clock extends StatefulWidget {
+class Clock extends StatelessWidget {
   final showResultScreen;
-  Clock(this.showResultScreen);
+  final AnimationController _controller;
+  final int startTime;
 
-  State createState() => _ClockState(showResultScreen);
-}
-
-class _ClockState extends State<Clock> with TickerProviderStateMixin {
-  final showResultScreen;
-  AnimationController _controller;
-
-  _ClockState(this.showResultScreen);
-
-  static const int _startValue = 150;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: _startValue),
-    );
-
-    _controller.forward(from: 0.0);
-  }
+  Clock(this.showResultScreen, this._controller, this.startTime);
 
   @override
   Widget build(BuildContext context) {
     var animation = StepTween(
-            begin: _startValue,
-            end: 0,
-          ).animate(_controller);
+      begin: startTime,
+      end: 0,
+    ).animate(_controller);
 
     animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {showResultScreen();}
+      if (status == AnimationStatus.completed) {
+        showResultScreen();
+      }
     });
 
     return Container(
@@ -48,8 +31,8 @@ class _ClockState extends State<Clock> with TickerProviderStateMixin {
 }
 
 class Countdown extends AnimatedWidget {
+  final Animation<int> animation;
   Countdown({Key key, this.animation}) : super(key: key, listenable: animation);
-  Animation<int> animation;
 
   @override
   build(BuildContext context) {
@@ -65,4 +48,3 @@ class Countdown extends AnimatedWidget {
     return "$minutes:$restSeconds";
   }
 }
-
