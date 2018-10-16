@@ -2,6 +2,7 @@ import 'package:bnoggles/screens/game/widgets/game_board_grid.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
 import 'package:bnoggles/screens/game/widgets/provider.dart';
+import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/board.dart';
 import 'package:bnoggles/utils/solution.dart';
 import 'package:flutter/material.dart';
@@ -38,21 +39,35 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
+    var gameInfo = GameInfo(
+        board: board,
+        solution: solution,
+        userAnswer: ValueNotifier(UserAnswer.start()));
+
+    showResultScreen() {
+      UserAnswer userAnswer = gameInfo.userAnswer.value;
+      gameInfo.gameOngoing = false;
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ResultScreen(solution, userAnswer)));
+    };
+
     return Scaffold(
         appBar: AppBar(
           title: Text("Bnoggles"),
         ),
         body: Provider(
-            gameInfo: GameInfo(
-                board: board,
-                solution: solution,
-                userAnswer: ValueNotifier(UserAnswer.start())),
+            gameInfo: gameInfo,
             child: Column(
               children: [
-                GameProgress(_controller, _startValue),
+                GameProgress(_controller, _startValue, showResultScreen),
                 Expanded(child: WordWindow()),
                 Grid(board.mapNeighbours()),
               ],
             )));
   }
 }
+
