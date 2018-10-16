@@ -19,12 +19,15 @@ class GameScreen extends StatefulWidget {
 }
 
 class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
-  final Board board;
-  final Solution solution;
+  final GameInfo gameInfo;
   AnimationController _controller;
   static const int _startValue = 150;
 
-  GameScreenState({@required this.board, @required this.solution});
+  GameScreenState({@required board, solution})
+      : gameInfo = GameInfo(
+            board: board,
+            solution: solution,
+            userAnswer: ValueNotifier(UserAnswer.start()));
 
   @override
   void initState() {
@@ -39,11 +42,6 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var gameInfo = GameInfo(
-        board: board,
-        solution: solution,
-        userAnswer: ValueNotifier(UserAnswer.start()));
-
     showResultScreen() {
       UserAnswer userAnswer = gameInfo.userAnswer.value;
       gameInfo.gameOngoing = false;
@@ -53,7 +51,8 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ResultScreen(solution, userAnswer)));
+              builder: (context) =>
+                  ResultScreen(gameInfo.solution, userAnswer)));
     }
 
     return Scaffold(
@@ -71,7 +70,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
               children: [
                 GameProgress(_controller, _startValue, showResultScreen),
                 Expanded(child: WordWindow()),
-                Grid(board.mapNeighbours()),
+                Grid(gameInfo.board.mapNeighbours()),
               ],
             )));
   }
