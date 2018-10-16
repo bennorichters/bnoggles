@@ -16,17 +16,18 @@ class Grid extends StatefulWidget {
 }
 
 class GridState extends State<Grid> {
-  final Map<Coordinate, Iterable<Coordinate>> neighbours;
+  final Map<Coordinate, Iterable<Coordinate>> neigbours;
   final List<Coordinate> _selectedPositions = [];
   final _key = GlobalKey();
+
   bool _validStart = false;
 
-  GridState(this.neighbours);
+  GridState(this.neigbours);
 
   _start(PointerEvent event) {
     _validStart = Provider.of(_key.currentContext).gameOngoing;
 
-    if(_validStart) {
+    if (_validStart) {
       _itemHit(event);
     }
   }
@@ -45,17 +46,21 @@ class GridState extends State<Grid> {
       for (final hit in result.path) {
         final target = hit.target;
         if (target is _PositionedRenderObject) {
-          if (!_selectedPositions.contains(target.position)) {
+          Coordinate position = target.position;
+          if (_canBeNext(position)) {
             setState(() {
-              _selectedPositions.add(target.position);
+              _selectedPositions.add(position);
             });
-          } else if (_selectedPositions.last != target.position) {
-            _clearSelection();
           }
         }
       }
     }
   }
+
+  bool _canBeNext(Coordinate position) =>
+      _selectedPositions.isEmpty ||
+      (!_selectedPositions.contains(position) &&
+          neigbours[_selectedPositions.last].contains(position));
 
   void _finish(PointerUpEvent event) {
     if (_validStart) {
@@ -95,8 +100,7 @@ class GridState extends State<Grid> {
 
   @override
   Widget build(BuildContext context) {
-    GameInfo gameInfo = Provider.of(_key.currentContext);
-    Board board = gameInfo.board;
+    Board board = Provider.of(context).board;
 
     return Container(
         margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
@@ -124,13 +128,14 @@ class GridState extends State<Grid> {
                 return Container(
                   decoration: new BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                    border: new Border.all(width: 5.0, color: Colors.blueAccent),
-                    color:
-                        (selected ? Colors.lightBlueAccent : Colors.white),
+                    border:
+                        new Border.all(width: 5.0, color: Colors.blueAccent),
+                    color: (selected ? Colors.lightBlueAccent : Colors.white),
                   ),
                   child: Padding(
                     padding: new EdgeInsets.all(25.0),
-                    child: _buildPositionedWidget(position, character, selected),
+                    child:
+                        _buildPositionedWidget(position, character, selected),
                   ),
                 );
               },
