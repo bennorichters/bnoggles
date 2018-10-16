@@ -101,6 +101,7 @@ class GridState extends State<Grid> {
   @override
   Widget build(BuildContext context) {
     Board board = Provider.of(context).board;
+    int width = board.width;
 
     return Container(
         margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
@@ -112,16 +113,16 @@ class GridState extends State<Grid> {
             child: GridView.builder(
               shrinkWrap: true,
               key: _key,
-              itemCount: 9,
+              itemCount: (width * width),
               physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+                crossAxisCount: width,
                 childAspectRatio: 1.0,
                 crossAxisSpacing: 15.0,
                 mainAxisSpacing: 15.0,
               ),
               itemBuilder: (context, index) {
-                var xy = _indexToXY(index, board.width);
+                var xy = _indexToXY(index, width);
                 Coordinate position = Coordinate(xy[0], xy[1]);
                 bool selected = _selectedPositions.contains(position);
                 String character = board.characterAt(position);
