@@ -37,7 +37,7 @@ class _UserWordFeedback extends StatelessWidget {
   build(BuildContext context) {
     return Container(
         margin:
-            const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0, top: 2.0),
+            const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 5.0),
         padding: new EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),

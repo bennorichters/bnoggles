@@ -103,6 +103,8 @@ class GridState extends State<Grid> {
     Board board = Provider.of(context).board;
     int width = board.width;
 
+//    print(MediaQuery.of(context).size.width);
+
     return Container(
         margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
         child: Listener(

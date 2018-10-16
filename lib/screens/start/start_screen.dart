@@ -24,7 +24,7 @@ class StartScreen extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           onPressed: () {
-            var board = Board(4, generator);
+            var board = Board(3, generator);
             var solution = Solution(board, dictionary);
 
             Navigator.push(

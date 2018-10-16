@@ -57,7 +57,7 @@ class NumberInfo extends StatelessWidget {
   build(BuildContext context) {
     return Container(
       color: Colors.blueGrey,
-      child: Center(child: Text(number, style: TextStyle(color: Colors.white))),
+      child: Center(child: Text(number, style: TextStyle(color: Colors.white70))),
     );
   }
 }
@@ -80,7 +80,7 @@ class UserAnswerNumberInfo extends StatelessWidget {
       color: Colors.blue,
       child: Center(
           child: Text(remaining.toString(),
-              style: TextStyle(color: Colors.black))),
+              style: TextStyle(color: Colors.white))),
     );
   }
 

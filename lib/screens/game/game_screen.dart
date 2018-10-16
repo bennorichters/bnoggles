@@ -21,6 +21,7 @@ class GameScreen extends StatefulWidget {
 class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   final GameInfo gameInfo;
   AnimationController _controller;
+  bool controllerDisposed = false;
   static const int _startValue = 150;
 
   GameScreenState({@required board, solution})
@@ -46,7 +47,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
       UserAnswer userAnswer = gameInfo.userAnswer.value;
       gameInfo.gameOngoing = false;
 
-      _controller.stop();
+      disposeController();
 
       Navigator.push(
           context,
@@ -69,7 +70,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
             child: Column(
               children: [
                 GameProgress(_controller, _startValue, showResultScreen),
-                Expanded(child: WordWindow()),
+                Expanded(child: Center(child: WordWindow())),
                 Grid(gameInfo.board.mapNeighbours()),
               ],
             )));
@@ -77,7 +78,14 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   dispose() {
-    _controller.dispose();
+    disposeController();
     super.dispose();
+  }
+
+  disposeController() {
+    if (!controllerDisposed) {
+      _controller.dispose();
+      controllerDisposed = true;
+    }
   }
 }
