@@ -1,13 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-
 import 'package:bnoggles/screens/game/widgets/game_board_grid.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
 import 'package:bnoggles/screens/game/widgets/provider.dart';
-
 import 'package:bnoggles/utils/board.dart';
 import 'package:bnoggles/utils/solution.dart';
+import 'package:flutter/material.dart';
 
 class GameScreen extends StatelessWidget {
   final Board board;
