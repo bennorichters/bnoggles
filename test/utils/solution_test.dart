@@ -9,7 +9,7 @@ import 'package:bnoggles/utils/solution.dart';
 class MockBoard extends Mock implements Board {}
 
 void main() {
-  test('', () {
+  test('unqueWordsSorted', () {
     Solution s = createSolution();
     expect(s.uniqueWordsSorted().toSet(), Set.from(['ab', 'bc', 'dab']));
   });
@@ -67,6 +67,8 @@ void main() {
   });
 }
 
+class MockRandomLetterGenerator extends Mock implements RandomLetterGenerator {}
+
 Solution createSolution() {
   var allCoordinates = [
     Coordinate(0, 0),
@@ -75,17 +77,23 @@ Solution createSolution() {
     Coordinate(1, 1)
   ];
 
-  var b = MockBoard();
-  when(b.characterAt(allCoordinates[0])).thenReturn('a');
-  when(b.characterAt(allCoordinates[1])).thenReturn('b');
-  when(b.characterAt(allCoordinates[2])).thenReturn('c');
-  when(b.characterAt(allCoordinates[3])).thenReturn('d');
+  var rlg = MockRandomLetterGenerator();
+  when(rlg.next()).thenAnswer((s) => 'a');
+  Board realBoard = Board(2, rlg);
 
-  when(b.width).thenReturn(2);
+  var mockBoard = MockBoard();
+  when(mockBoard.characterAt(allCoordinates[0])).thenReturn('a');
+  when(mockBoard.characterAt(allCoordinates[1])).thenReturn('b');
+  when(mockBoard.characterAt(allCoordinates[2])).thenReturn('c');
+  when(mockBoard.characterAt(allCoordinates[3])).thenReturn('d');
 
-  when(b.allCoordinates()).thenReturn(allCoordinates);
+  when(mockBoard.width).thenReturn(2);
+
+  when(mockBoard.allCoordinates()).thenReturn(allCoordinates);
+
+  when(mockBoard.mapNeighbours()).thenReturn(realBoard.mapNeighbours());
 
   Dictionary dict = Dictionary(['ab', 'bc', 'dab', 'xyz']);
 
-  return Solution(b, dict);
+  return Solution(mockBoard, dict);
 }

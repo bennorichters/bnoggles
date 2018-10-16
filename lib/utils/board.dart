@@ -25,6 +25,11 @@ class Board {
 
   Iterable<Coordinate> allCoordinates() => cell.keys;
 
+  Map<Coordinate, Iterable<Coordinate>> mapNeighbours() =>
+      Map.unmodifiable(Map.fromIterable(allCoordinates(),
+          key: (item) => item,
+          value: (item) => item.allNeigbours(0, width - 1)));
+
   @override
   toString() {
     var result = [];

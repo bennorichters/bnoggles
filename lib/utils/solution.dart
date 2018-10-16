@@ -89,13 +89,7 @@ class _Problem {
   Set<Chain> words;
 
   factory _Problem(Board board, Dictionary dict) {
-    return _Problem._internal(board, dict, mapNeighbours(board));
-  }
-
-  static Map<Coordinate, Iterable<Coordinate>> mapNeighbours(Board board) {
-    return Map.unmodifiable(Map.fromIterable(board.allCoordinates(),
-        key: (item) => item,
-        value: (item) => item.allNeigbours(0, board.width - 1)));
+    return _Problem._internal(board, dict, board.mapNeighbours());
   }
 
   _Problem._internal(this.board, this.dict, this.neighbours);
