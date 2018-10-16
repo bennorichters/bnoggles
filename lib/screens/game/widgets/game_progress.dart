@@ -18,13 +18,6 @@ class GameProgress extends StatelessWidget {
           child: Container(
               height: 100.0,
               child: Clock(_showResultScreen, _controller, _startValue))),
-      IconButton(
-        icon: Icon(Icons.stop),
-        onPressed: () {
-          _controller.stop();
-          _showResultScreen();
-        },
-      )
     ]);
   }
 }

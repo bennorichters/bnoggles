@@ -39,7 +39,6 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     var gameInfo = GameInfo(
         board: board,
         solution: solution,
@@ -49,16 +48,23 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
       UserAnswer userAnswer = gameInfo.userAnswer.value;
       gameInfo.gameOngoing = false;
 
+      _controller.stop();
+
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => ResultScreen(solution, userAnswer)));
-    };
+    }
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Bnoggles"),
-        ),
+        appBar: AppBar(title: Text("Bnoggles"), actions: [
+          IconButton(
+            icon: Icon(Icons.stop),
+            onPressed: () {
+              showResultScreen();
+            },
+          ),
+        ]),
         body: Provider(
             gameInfo: gameInfo,
             child: Column(
@@ -69,5 +75,10 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
               ],
             )));
   }
-}
 
+  @override
+  dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+}
