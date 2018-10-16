@@ -8,15 +8,20 @@ import 'package:bnoggles/utils/coordinate.dart';
 import 'package:bnoggles/utils/solution.dart';
 
 class Grid extends StatefulWidget {
+  final Map<Coordinate, Iterable<Coordinate>> neighbours;
+  Grid(this.neighbours);
+
   @override
-  GridState createState() => GridState();
+  GridState createState() => GridState(neighbours);
 }
 
 class GridState extends State<Grid> {
+  final Map<Coordinate, Iterable<Coordinate>> neighbours;
   final List<Coordinate> _selectedPositions = [];
   final _key = GlobalKey();
-
   bool _validStart = false;
+
+  GridState(this.neighbours);
 
   _start(PointerEvent event) {
     _validStart = Provider.of(_key.currentContext).gameOngoing;
@@ -90,7 +95,8 @@ class GridState extends State<Grid> {
 
   @override
   Widget build(BuildContext context) {
-    Board board = Provider.of(context).board;
+    GameInfo gameInfo = Provider.of(_key.currentContext);
+    Board board = gameInfo.board;
 
     return Container(
         margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),

@@ -28,11 +28,10 @@ class GameScreen extends StatelessWidget {
                 solution: solution,
                 userAnswer: ValueNotifier(UserAnswer.start())),
             child: Column(
-//              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 GameProgress(),
                 Expanded(child: WordWindow()),
-                Grid(),
+                Grid(board.mapNeighbours()),
               ],
             )));
   }
