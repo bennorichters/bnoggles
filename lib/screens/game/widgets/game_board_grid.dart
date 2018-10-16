@@ -9,13 +9,11 @@ import 'package:bnoggles/utils/solution.dart';
 
 class Grid extends StatefulWidget {
   @override
-  GridState createState() {
-    return new GridState();
-  }
+  GridState createState() => GridState();
 }
 
 class GridState extends State<Grid> {
-  final List<int> _selectedIndexes = [];
+  final List<Coordinate> _selectedPositions = [];
   final _key = GlobalKey();
 
   bool _validStart = false;
@@ -24,30 +22,29 @@ class GridState extends State<Grid> {
     _validStart = Provider.of(_key.currentContext).gameOngoing;
 
     if(_validStart) {
-      _detectTapedItem(event);
+      _itemHit(event);
     }
   }
 
   _move(PointerEvent event) {
     if (_validStart) {
-      _detectTapedItem(event);
+      _itemHit(event);
     }
   }
 
-  _detectTapedItem(PointerEvent event) {
+  _itemHit(PointerEvent event) {
     final RenderBox box = _key.currentContext.findRenderObject();
     final result = HitTestResult();
     Offset local = box.globalToLocal(event.position);
     if (box.hitTest(result, position: local)) {
       for (final hit in result.path) {
-        /// temporary variable so that the [is] allows access of [index]
         final target = hit.target;
-        if (target is _IndexedRenderObject) {
-          if (!_selectedIndexes.contains(target.index)) {
+        if (target is _PositionedRenderObject) {
+          if (!_selectedPositions.contains(target.position)) {
             setState(() {
-              _selectedIndexes.add(target.index);
+              _selectedPositions.add(target.position);
             });
-          } else if (_selectedIndexes.last != target.index) {
+          } else if (_selectedPositions.last != target.position) {
             _clearSelection();
           }
         }
@@ -62,9 +59,8 @@ class GridState extends State<Grid> {
       Solution solution = gameInfo.solution;
 
       var word = StringBuffer();
-      for (var index in _selectedIndexes) {
-        var xy = _indexToXY(index, board.width);
-        word.write(board.characterAt(Coordinate(xy[0], xy[1])));
+      for (Coordinate position in _selectedPositions) {
+        word.write(board.characterAt(position));
       }
 
       if (word.length >= 2) {
@@ -82,7 +78,7 @@ class GridState extends State<Grid> {
   void _clearSelection() {
     setState(() {
       _validStart = false;
-      _selectedIndexes.clear();
+      _selectedPositions.clear();
     });
   }
 
@@ -115,9 +111,10 @@ class GridState extends State<Grid> {
                 mainAxisSpacing: 15.0,
               ),
               itemBuilder: (context, index) {
-                bool selected = _selectedIndexes.contains(index);
                 var xy = _indexToXY(index, board.width);
-                String character = board.characterAt(Coordinate(xy[0], xy[1]));
+                Coordinate position = Coordinate(xy[0], xy[1]);
+                bool selected = _selectedPositions.contains(position);
+                String character = board.characterAt(position);
                 return Container(
                   decoration: new BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -127,7 +124,7 @@ class GridState extends State<Grid> {
                   ),
                   child: Padding(
                     padding: new EdgeInsets.all(25.0),
-                    child: _buildIndexedWidget(index, character, selected),
+                    child: _buildPositionedWidget(position, character, selected),
                   ),
                 );
               },
@@ -136,10 +133,10 @@ class GridState extends State<Grid> {
         ));
   }
 
-  _IndexedWidget _buildIndexedWidget(
-      int index, String character, bool selected) {
-    return _IndexedWidget(
-      index: index,
+  _PositionedWidget _buildPositionedWidget(
+      Coordinate position, String character, bool selected) {
+    return _PositionedWidget(
+      position: position,
       child: Container(
         // Without this line the interface is unresponsive. Not sure why.
         color: selected ? Colors.lightBlueAccent : Colors.white,
@@ -155,24 +152,24 @@ class GridState extends State<Grid> {
   }
 }
 
-class _IndexedWidget extends SingleChildRenderObjectWidget {
-  final int index;
+class _PositionedWidget extends SingleChildRenderObjectWidget {
+  final Coordinate position;
 
-  _IndexedWidget({Widget child, this.index, Key key})
+  _PositionedWidget({Widget child, this.position, Key key})
       : super(child: child, key: key);
 
   @override
-  _IndexedRenderObject createRenderObject(BuildContext context) {
-    return _IndexedRenderObject()..index = index;
+  _PositionedRenderObject createRenderObject(BuildContext context) {
+    return _PositionedRenderObject()..position = position;
   }
 
   @override
   void updateRenderObject(
-      BuildContext context, _IndexedRenderObject renderObject) {
-    renderObject..index = index;
+      BuildContext context, _PositionedRenderObject renderObject) {
+    renderObject.position = position;
   }
 }
 
-class _IndexedRenderObject extends RenderProxyBox {
-  int index;
+class _PositionedRenderObject extends RenderProxyBox {
+  Coordinate position;
 }
