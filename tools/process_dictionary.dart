@@ -36,7 +36,7 @@ main(List<String> arguments) {
 }
 
 process() async {
-  var input = File('D:/dev/Dutch.dic');
+  var input = File('assets/index_nl.dic');
   var contents = await input.readAsLines();
 
   Map<String, String> result = Map();
@@ -55,7 +55,7 @@ process() async {
 
   print(result.keys.length);
 
-  var output = File('D:/dev/Dutch-out.txt');
+  var output = File('assets/index_nl_clean.dic');
   var sink = output.openWrite();
 
   for (String word in result.keys.toList()..sort()) {
