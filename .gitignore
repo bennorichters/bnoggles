@@ -17,3 +17,6 @@ android/
 ios/
 
 /assets/words_nl.txt
+
+*.dic
+*.aff
