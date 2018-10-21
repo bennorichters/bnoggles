@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class BoardIcon extends StatelessWidget {
   @override
   build(BuildContext context) {
-    return Icon(Icons.grid_on);
+    return Icon(Icons.grid_on, size: 40.0,);
   }
 }
 
@@ -28,7 +28,8 @@ class BoardTextState extends State<BoardText> {
 
   @override
   build(BuildContext context) {
-    return Text('${widget.size.value} x ${widget.size.value}');
+    return Text('${widget.size.value} x ${widget.size.value}',
+        style: TextStyle(fontSize: 20.0));
   }
 }
 

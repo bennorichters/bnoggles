@@ -27,7 +27,7 @@ class StartScreenState extends State<StartScreen> {
 
   StartScreenState({@required this.generator, @required this.dictionary});
 
-  setBoardWidth(int value) {
+    setBoardWidth(int value) {
     size.value = value;
   }
 
@@ -41,7 +41,9 @@ class StartScreenState extends State<StartScreen> {
       appBar: AppBar(
         title: Text("Bnoggles"),
       ),
-      body: Column(
+      body: Center(child: Container(
+        width: 500.0,
+      child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -65,7 +67,7 @@ class StartScreenState extends State<StartScreen> {
                 child: Icon(Icons.forward),
               ),
             ),
-          ]),
+          ]))),
     );
   }
 }

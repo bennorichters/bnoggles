@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class TimeIcon extends StatelessWidget {
   @override
   build(BuildContext context) {
-    return Icon(Icons.timer);
+    return Icon(Icons.timer, size: 40.0);
   }
 }
 
@@ -28,7 +28,10 @@ class _TimeTextState extends State<TimeText> {
 
   @override
   build(BuildContext context) {
-    return Text(formatTime(widget.time.value));
+    return Text(
+      formatTime(widget.time.value),
+      style: TextStyle(fontSize: 20.0),
+    );
   }
 }
 

@@ -18,18 +18,16 @@ class SettingsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration:
-            new BoxDecoration(border: new Border.all(color: Colors.red)),
         padding: EdgeInsets.all(15.0),
-        height: 600.0,
+        margin: EdgeInsets.all(25.0),
         child: Table(
-          border: TableBorder.all(width: 1.0, color: Colors.orange),
           columnWidths: {
-            0: FixedColumnWidth(35.0),
+            0: FixedColumnWidth(50.0),
             1: FixedColumnWidth(60.0),
             2: FlexColumnWidth(),
           },
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+
           children: [
             TableRow(
               children: [
@@ -40,9 +38,23 @@ class SettingsGrid extends StatelessWidget {
             ),
             TableRow(
               children: [
+                Container(height: 50.0),
+                Container(),
+                Container(),
+              ],
+            ),
+            TableRow(
+              children: [
                 TableCell(child: BoardIcon()),
                 TableCell(child: BoardText(size: _size)),
                 TableCell(child: BoardSizeSlider()),
+              ],
+            ),
+            TableRow(
+              children: [
+                Container(height: 50.0),
+                Container(),
+                Container(),
               ],
             ),
           ],
