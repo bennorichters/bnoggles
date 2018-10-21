@@ -1,19 +1,40 @@
 import 'package:bnoggles/screens/game/game_screen.dart';
+import 'package:bnoggles/screens/start/widgets/board_size_slider.dart';
+import 'package:bnoggles/screens/start/widgets/time_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bnoggles/utils/board.dart';
 import 'package:bnoggles/utils/dictionary.dart';
 import 'package:bnoggles/utils/solution.dart';
 
-class StartScreen extends StatelessWidget {
+class StartScreen extends StatefulWidget {
   final RandomLetterGenerator generator;
   final Dictionary dictionary;
 
-  StartScreen(
-      {Key key,
-        @required this.generator,
-        @required this.dictionary})
+  StartScreen({Key key, @required this.generator, @required this.dictionary})
       : super(key: key);
+
+  @override
+  State createState() =>
+      StartScreenState(generator: generator, dictionary: dictionary);
+}
+
+class StartScreenState extends State<StartScreen> {
+  final RandomLetterGenerator generator;
+  final Dictionary dictionary;
+
+  int boardWidth = 3;
+  int time = 150;
+
+  StartScreenState({@required this.generator, @required this.dictionary});
+
+  setBoardWidth(int value) {
+    boardWidth = value;
+  }
+
+  setTime(int value) {
+    time = value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,22 +42,32 @@ class StartScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Bnoggles"),
       ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            var board = Board(6, generator);
-            var solution = Solution(board, dictionary);
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            BoardSizeSlider(),
+            TimeSlider(),
+            Center(
+              child: FloatingActionButton(
+                onPressed: () {
+                  var board = Board(boardWidth, generator);
+                  var solution = Solution(board, dictionary);
 
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      GameScreen(board: board, solution: solution)),
-            );
-          },
-          child: Text('>'),
-        ),
-      ),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => GameScreen(
+                              board: board,
+                              solution: solution,
+                              startValue: time,
+                            )),
+                  );
+                },
+                child: Icon(Icons.forward),
+              ),
+            ),
+          ]),
     );
   }
 }

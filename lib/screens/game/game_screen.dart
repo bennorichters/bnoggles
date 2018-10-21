@@ -10,25 +10,33 @@ import 'package:flutter/material.dart';
 class GameScreen extends StatefulWidget {
   final Board board;
   final Solution solution;
+  final int startValue;
 
-  GameScreen({Key key, @required this.board, @required this.solution})
+  GameScreen(
+      {Key key,
+      @required this.board,
+      @required this.solution,
+      @required this.startValue})
       : super(key: key);
 
   @override
-  State createState() => GameScreenState(board: board, solution: solution);
+  State createState() =>
+      GameScreenState(board: board, solution: solution, startValue: startValue);
 }
 
 class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   final GameInfo gameInfo;
+  final int _startValue;
+
   AnimationController _controller;
   bool controllerDisposed = false;
-  static const int _startValue = 150;
 
-  GameScreenState({@required board, solution})
+  GameScreenState({@required board, solution, startValue})
       : gameInfo = GameInfo(
             board: board,
             solution: solution,
-            userAnswer: ValueNotifier(UserAnswer.start()));
+            userAnswer: ValueNotifier(UserAnswer.start())),
+        _startValue = startValue;
 
   @override
   void initState() {

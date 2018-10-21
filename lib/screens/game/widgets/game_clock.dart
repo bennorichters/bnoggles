@@ -1,3 +1,4 @@
+import 'package:bnoggles/utils/helper/helper.dart';
 import 'package:flutter/material.dart';
 
 class Clock extends StatelessWidget {
@@ -41,11 +42,5 @@ class Countdown extends AnimatedWidget {
       formatTime(animation.value),
       style: new TextStyle(fontSize: 30.0),
     );
-  }
-
-  formatTime(int seconds) {
-    int minutes = (seconds / 60).floor();
-    String restSeconds = (seconds - 60 * minutes).toString().padLeft(2, "0");
-    return "$minutes:$restSeconds";
   }
 }
