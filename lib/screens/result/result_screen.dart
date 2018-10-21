@@ -10,12 +10,24 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int score = calculateScore(solution, userAnswer);
+
     var tiles = solution.uniqueWordsSorted().map((w) {
       return ListTile(
-          title: new Text(w.toUpperCase(),
-              style: TextStyle(
-                  color:
-                      userAnswer.contains(w) ? Colors.green : Colors.black)));
+          dense: true,
+          contentPadding: EdgeInsets.all(5.0),
+          title: Container(
+              padding: EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                  color: userAnswer.contains(w)
+                      ? Colors.green
+                      : Colors.lightBlueAccent,
+                  borderRadius: BorderRadius.all(Radius.circular(5.0))),
+              child: Text(w.toUpperCase(),
+                  style: TextStyle(
+                      color: userAnswer.contains(w)
+                          ? Colors.white
+                          : Colors.black))));
     });
 
     final List<Widget> divided = ListTile.divideTiles(
@@ -28,8 +40,30 @@ class ResultScreen extends StatelessWidget {
         title: Text("Bnoggles"),
       ),
       body: Center(
-        child: new ListView(children: divided),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.black)),
+              width: 150.0,
+              child: ListView(children: divided)),
+          Center(child: Container(child: Text("$score"))),
+        ]),
       ),
     );
+  }
+
+  int calculateScore(Solution solution, UserAnswer userAnswer) {
+    int result = 0;
+    for (String word in solution.uniqueWordsSorted()) {
+      if (userAnswer.contains(word)) {
+        result += 1 + word.length * 2;
+      }
+    }
+
+    print(result);
+
+    return (result *
+            (userAnswer.uniqueWords().length / solution.uniqueWords().length))
+        .floor();
   }
 }
