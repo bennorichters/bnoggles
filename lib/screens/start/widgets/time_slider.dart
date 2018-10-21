@@ -40,19 +40,14 @@ class _TimeSliderState extends State<TimeSlider> {
 
   @override
   build(BuildContext context) {
-    return Container(
-      width: 400.0,
-        height: 200.0,
-        padding: EdgeInsets.all(15.0),
-
-        child: Slider(
-          value: _value,
-          min: 30.0,
-          max: 600.0,
-          divisions: 19,
-          label: formatTime(_value.floor()),
-          onChanged: _onChanged,
-          onChangeEnd: (double value) => _onChangedEnd(value, context),
-        ));
+    return Slider(
+      value: _value,
+      min: 30.0,
+      max: 600.0,
+      divisions: 19,
+      label: formatTime(_value.floor()),
+      onChanged: _onChanged,
+      onChangeEnd: (double value) => _onChangedEnd(value, context),
+    );
   }
 }
