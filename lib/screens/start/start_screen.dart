@@ -25,7 +25,7 @@ class StartScreenState extends State<StartScreen> {
   final Dictionary dictionary;
 
   int boardWidth = 3;
-  int time = 150;
+  ValueNotifier<int> time = ValueNotifier(150);
 
   StartScreenState({@required this.generator, @required this.dictionary});
 
@@ -34,7 +34,7 @@ class StartScreenState extends State<StartScreen> {
   }
 
   setTime(int value) {
-    time = value;
+    time.value = value;
   }
 
   @override
@@ -47,7 +47,7 @@ class StartScreenState extends State<StartScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SettingsGrid(),
+            SettingsGrid(time),
             Center(
               child: FloatingActionButton(
                 onPressed: () {
@@ -60,7 +60,7 @@ class StartScreenState extends State<StartScreen> {
                         builder: (context) => GameScreen(
                               board: board,
                               solution: solution,
-                              startValue: time,
+                              startValue: time.value,
                             )),
                   );
                 },

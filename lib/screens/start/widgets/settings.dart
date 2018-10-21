@@ -10,6 +10,10 @@ import 'package:bnoggles/utils/solution.dart';
 const int _maxLength = 8;
 
 class SettingsGrid extends StatelessWidget {
+  final ValueNotifier<int> _time;
+
+  SettingsGrid(this._time);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +27,7 @@ class SettingsGrid extends StatelessWidget {
             TableRow(
               children: [
                 TableCell(child: TimeIcon()),
-                TableCell(child: TimeText()),
+                TableCell(child: TimeText(time: _time)),
                 TableCell(child: TimeSlider()),
               ],
             ),

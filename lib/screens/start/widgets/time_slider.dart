@@ -9,10 +9,26 @@ class TimeIcon extends StatelessWidget {
   }
 }
 
-class TimeText extends StatelessWidget {
+class TimeText extends StatefulWidget {
+  ValueNotifier<int> time;
+  TimeText({Key key, this.time}) : super(key: key);
+
+  @override
+  _TimeTextState createState() => _TimeTextState();
+}
+
+class _TimeTextState extends State<TimeText> {
+  @override
+  initState() {
+    super.initState();
+    widget.time.addListener(didValueChange);
+  }
+
+  didValueChange() => setState(() {});
+
   @override
   build(BuildContext context) {
-    return Text("YES!");
+    return Text(formatTime(widget.time.value));
   }
 }
 
