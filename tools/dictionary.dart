@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:quiver/core.dart';
 
 main(List<String> arguments) {
 //  Affix pa = Prefix("aan");
@@ -22,17 +23,14 @@ process() async {
 
 abstract class Affix {
   final String _toAdd;
-  final String _condition;
 
-  Affix(this._toAdd, this._condition);
-
-  String get condition => _condition;
+  Affix(this._toAdd);
 
   String apply(String text);
 }
 
 class Prefix extends Affix {
-  Prefix(String toAdd, String condition) : super(toAdd, condition);
+  Prefix(String toAdd) : super(toAdd);
 
   @override
   String apply(String text) => _toAdd + text;
@@ -44,14 +42,34 @@ class Prefix extends Affix {
 class Suffix extends Affix {
   final int _toStrip;
 
-  Suffix(toAdd, condition, this._toStrip): super(toAdd, condition);
+  Suffix(toAdd, this._toStrip) : super(toAdd);
 
   @override
   String apply(String text) =>
       text.substring(0, text.length - _toStrip) + _toAdd;
 
   @override
-  String toString() => "SFX $_toAdd, $_condition, $_toStrip";
+  String toString() => "SFX $_toAdd $_toStrip";
+}
+
+class AffixCategory {
+  final String _name;
+  final String _condition;
+
+  AffixCategory(this._name, this._condition);
+
+  String get name => _name;
+  String get condition => _condition;
+
+  bool operator ==(other) =>
+      other is AffixCategory &&
+      other._name == _name &&
+      other._condition == _condition;
+
+  int get hashCode => hash2(_name.hashCode, _condition.hashCode);
+
+  @override
+  toString() => "[$_name, $_condition]";
 }
 
 class AffixedWordContainer {

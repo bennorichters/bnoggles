@@ -13,6 +13,8 @@ process() async {
   var interpreter = _AffixInterpreter(contents.iterator);
   interpreter.process();
 
+  print(interpreter._prefixes);
+
   return [interpreter._prefixes, interpreter._suffixes];
 }
 
@@ -24,8 +26,9 @@ Future<List<String>> readFile() async {
 
 class _AffixInterpreter {
   final Iterator<String> _lines;
-  final Set<Affix> _prefixes = Set();
-  final Set<Affix> _suffixes = Set();
+
+  final Map<AffixCategory, List<Affix>> _prefixes = Map();
+  final Map<AffixCategory, List<Affix>> _suffixes = Map();
 
   _AffixInterpreter(this._lines);
 
@@ -103,7 +106,7 @@ class _AffixInterpreter {
 
       if (!isProperNameAffix(name) && !isContinuationAffix(toAdd)) {
         var condition = elements.length >= 5 ? elements[4] : "";
-        affixAdder(toRemove, toAdd, condition);
+        affixAdder(name, toRemove, toAdd, condition);
       }
     }
   }
@@ -113,18 +116,22 @@ class _AffixInterpreter {
   bool isContinuationAffix(String toAdd) => toAdd.contains("/");
 
   void startPrefix(String header) {
-    prefixAdder(String toRemove, String toAdd, String condition) {
+    prefixAdder(String name, String toRemove, String toAdd, String condition) {
       assert(toRemove == "0", "expected 0 for remove option in prefix");
-      _prefixes.add(Prefix(toAdd, condition));
+      assert(condition.isEmpty || condition == '.',
+          'expected no condition for prefix. $condition');
+
+      var cat = AffixCategory(name, "");
+      _prefixes.putIfAbsent(cat, () => []).add(Prefix(toAdd));
     }
 
     parseAffixLines(header, prefixAdder);
   }
 
   void startSuffix(String header) {
-    suffixAdder(String toRemove, String toAdd, String condition) {
-      var suffix = Suffix(toAdd, condition, toRemove.length);
-      _suffixes.add(suffix);
+    suffixAdder(String name, String toRemove, String toAdd, String condition) {
+      var cat = AffixCategory(name, condition);
+      _suffixes.putIfAbsent(cat, () => []).add(Suffix(toAdd, toRemove.length));
     }
 
     parseAffixLines(header, suffixAdder);
