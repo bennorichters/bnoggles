@@ -98,8 +98,6 @@ class AffixedWordContainer {
     int y = (index / rowLength).floor();
     int x = index - y * rowLength;
 
-    print("$index, $x, $y");
-
     String result = _base;
     if (x > 0) {
       result = _prefixes[x - 1].apply(result);

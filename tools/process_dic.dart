@@ -6,17 +6,39 @@ import 'dictionary.dart';
 import 'process_aff.dart';
 
 main(List<String> arguments) async {
+  processDic();
+}
+
+processDic() async {
+  List<String> words = await readFile();
 
   List<Map<String, Set<Affix>>> affixes = await processAff();
   Map<String, Set<Affix>> prefixes = affixes[0];
   Map<String, Set<Affix>> suffixes = affixes[1];
 
-  var int = DictInterpreter([], prefixes, suffixes);
-  int.process();
+  _DictInterpreter dict = _DictInterpreter(words, prefixes, suffixes);
+  dict.process();
+
+  await writeAll(dict.result);
 }
 
-processDic() async {
-  List<String> words = await readFile();
+writeAll(Set<AffixedWordContainer> containers) async {
+  List<AffixedWord> all = [];
+  for (var container in containers) {
+    for (int i = 0; i < container.length; i++) {
+      all.add(AffixedWord(container, i));
+    }
+  }
+
+  all.sort();
+
+  var output = File('assets/index_nl_clean_unmunched.dic');
+  var sink = output.openWrite();
+
+  all.forEach(sink.writeln);
+
+  await sink.flush();
+  sink.close();
 }
 
 Future<List<String>> readFile() async {
@@ -25,18 +47,17 @@ Future<List<String>> readFile() async {
   return contents;
 }
 
-class DictInterpreter {
+class _DictInterpreter {
   final List<String> _lines;
   final Map<String, Set<Affix>> _prefixes;
   final Map<String, Set<Affix>> _suffixes;
 
-  DictInterpreter(this._lines, this._prefixes, this._suffixes);
+  final Set<AffixedWordContainer> result = Set();
+
+  _DictInterpreter(this._lines, this._prefixes, this._suffixes);
 
   process() {
-    var ac = parseLine("agenda/CcCeYeZcC1");
-    for (int i = 0; i < ac.length; i++) {
-      print(AffixedWord(ac, i));
-    }
+    _lines.forEach((e) => result.add(parseLine(e)));
   }
 
   AffixedWordContainer parseLine(String line) {
@@ -56,10 +77,8 @@ class DictInterpreter {
     for (int i = 0; i < affixNames.length; i += 2) {
       String name = affixNames.substring(i, i + 2);
       if (affixes.containsKey(name)) {
-        var list = affixes[name].where((a) => a.canBeAppliedTo(word)).toList();
-        print(list);
         result.addAll(
-            list);
+            affixes[name].where((a) => a.canBeAppliedTo(word)).toList());
       }
     }
 
