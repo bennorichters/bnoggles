@@ -61,16 +61,17 @@ class ResultScreen extends StatelessWidget {
 
   int calculateScore(Solution solution, UserAnswer userAnswer) {
     int result = 0;
-    for (String word in solution.uniqueWordsSorted()) {
-      if (userAnswer.contains(word)) {
-        result += 1 + word.length * 2;
-      }
+    for (String word in userAnswer.uniqueWords()) {
+        result += word.length * 2;
     }
 
-    print(result);
+    var percentageFound =
+        (userAnswer.uniqueWords().length / solution.uniqueWords().length);
 
-    return (result *
-            (userAnswer.uniqueWords().length / solution.uniqueWords().length))
-        .floor();
+    result =  (result * percentageFound * percentageFound).round();
+
+    result += userAnswer.uniqueWords().length;
+
+    return result;
   }
 }
