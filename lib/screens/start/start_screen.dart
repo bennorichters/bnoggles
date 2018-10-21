@@ -1,7 +1,5 @@
 import 'package:bnoggles/screens/game/game_screen.dart';
-import 'package:bnoggles/screens/start/widgets/board_size_slider.dart';
 import 'package:bnoggles/screens/start/widgets/settings.dart';
-import 'package:bnoggles/screens/start/widgets/time_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bnoggles/utils/board.dart';
@@ -24,13 +22,13 @@ class StartScreenState extends State<StartScreen> {
   final RandomLetterGenerator generator;
   final Dictionary dictionary;
 
-  int boardWidth = 3;
   ValueNotifier<int> time = ValueNotifier(150);
+  ValueNotifier<int> size = ValueNotifier(3);
 
   StartScreenState({@required this.generator, @required this.dictionary});
 
   setBoardWidth(int value) {
-    boardWidth = value;
+    size.value = value;
   }
 
   setTime(int value) {
@@ -47,11 +45,11 @@ class StartScreenState extends State<StartScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SettingsGrid(time),
+            SettingsGrid(time, size),
             Center(
               child: FloatingActionButton(
                 onPressed: () {
-                  var board = Board(boardWidth, generator);
+                  var board = Board(size.value, generator);
                   var solution = Solution(board, dictionary);
 
                   Navigator.push(

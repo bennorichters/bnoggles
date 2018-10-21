@@ -9,10 +9,26 @@ class BoardIcon extends StatelessWidget {
   }
 }
 
-class BoardText extends StatelessWidget {
+class BoardText extends StatefulWidget {
+  final ValueNotifier<int> size;
+  BoardText({Key key, this.size}) : super(key: key);
+
+  @override
+  BoardTextState createState() => BoardTextState();
+}
+
+class BoardTextState extends State<BoardText> {
+  @override
+  initState() {
+    super.initState();
+    widget.size.addListener(didValueChange);
+  }
+
+  didValueChange() => setState(() {});
+
   @override
   build(BuildContext context) {
-    return Text("NO!");
+    return Text('${widget.size.value} x ${widget.size.value}');
   }
 }
 
@@ -41,13 +57,13 @@ class _BoardSizeSliderState extends State<BoardSizeSlider> {
   @override
   build(BuildContext context) {
     return Slider(
-        value: _value,
-        min: 3.0,
-        max: 6.0,
-        divisions: 3,
-        label: '${_value.floor()} x ${_value.floor()}',
-        onChanged: _onChanged,
-        onChangeEnd: (double value) => _onChangedEnd(value, context),
-      );
+      value: _value,
+      min: 3.0,
+      max: 6.0,
+      divisions: 3,
+      label: '${_value.floor()} x ${_value.floor()}',
+      onChanged: _onChanged,
+      onChangeEnd: (double value) => _onChangedEnd(value, context),
+    );
   }
 }

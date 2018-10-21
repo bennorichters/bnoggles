@@ -11,8 +11,9 @@ const int _maxLength = 8;
 
 class SettingsGrid extends StatelessWidget {
   final ValueNotifier<int> _time;
+  final ValueNotifier<int> _size;
 
-  SettingsGrid(this._time);
+  SettingsGrid(this._time, this._size);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class SettingsGrid extends StatelessWidget {
             TableRow(
               children: [
                 TableCell(child: BoardIcon()),
-                TableCell(child: BoardText()),
+                TableCell(child: BoardText(size: _size)),
                 TableCell(child: BoardSizeSlider()),
               ],
             ),
