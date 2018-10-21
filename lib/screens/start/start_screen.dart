@@ -1,5 +1,6 @@
 import 'package:bnoggles/screens/game/game_screen.dart';
 import 'package:bnoggles/screens/start/widgets/board_size_slider.dart';
+import 'package:bnoggles/screens/start/widgets/settings.dart';
 import 'package:bnoggles/screens/start/widgets/time_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -46,8 +47,7 @@ class StartScreenState extends State<StartScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            BoardSizeSlider(),
-            TimeSlider(),
+            SettingsGrid(),
             Center(
               child: FloatingActionButton(
                 onPressed: () {

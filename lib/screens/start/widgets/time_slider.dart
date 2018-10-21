@@ -2,6 +2,20 @@ import 'package:bnoggles/screens/start/start_screen.dart';
 import 'package:bnoggles/utils/helper/helper.dart';
 import 'package:flutter/material.dart';
 
+class TimeIcon extends StatelessWidget {
+  @override
+  build(BuildContext context) {
+    return Icon(Icons.timer);
+  }
+}
+
+class TimeText extends StatelessWidget {
+  @override
+  build(BuildContext context) {
+    return Text("YES!");
+  }
+}
+
 class TimeSlider extends StatefulWidget {
   @override
   _TimeSliderState createState() => _TimeSliderState();
@@ -11,12 +25,10 @@ class _TimeSliderState extends State<TimeSlider> {
   static const int _startTime = 150;
 
   double _value = _startTime + .0;
-  String _clock = formatTime(_startTime);
 
   _onChanged(double value) {
     setState(() {
       _value = value;
-      _clock = formatTime(value.floor());
     });
   }
 
@@ -28,18 +40,19 @@ class _TimeSliderState extends State<TimeSlider> {
 
   @override
   build(BuildContext context) {
-    return Row(children: [
-      Expanded(
-          child: Slider(
-        value: _value,
-        min: 30.0,
-        max: 600.0,
-        divisions: 19,
-        label: formatTime(_value.floor()),
-        onChanged: _onChanged,
-        onChangeEnd: (double value) => _onChangedEnd(value, context),
-      )),
-      Container(child: Text(_clock))
-    ]);
+    return Container(
+      width: 400.0,
+        height: 200.0,
+        padding: EdgeInsets.all(15.0),
+
+        child: Slider(
+          value: _value,
+          min: 30.0,
+          max: 600.0,
+          divisions: 19,
+          label: formatTime(_value.floor()),
+          onChanged: _onChanged,
+          onChangeEnd: (double value) => _onChangedEnd(value, context),
+        ));
   }
 }
