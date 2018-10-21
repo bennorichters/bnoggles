@@ -41,7 +41,7 @@ Future<String> loadConfigJson() async {
 }
 
 Future<String> loadDictionary() async {
-  return await rootBundle.loadString('assets/words_nl.txt');
+  return await rootBundle.loadString('assets/index_nl_clean_unmunched.dic');
 }
 
 Future<Dictionary> readDutchWords(String fileName) async {

@@ -103,7 +103,10 @@ class GridState extends State<Grid> {
     Board board = Provider.of(context).board;
     int width = board.width;
 
-//    print(MediaQuery.of(context).size.width);
+    num mediaWidth = MediaQuery.of(context).size.width;
+    num cellWidth = mediaWidth / width;
+    num padding = cellWidth / 10;
+    num textSize = cellWidth / 4;
 
     return Container(
         margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
@@ -120,8 +123,8 @@ class GridState extends State<Grid> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: width,
                 childAspectRatio: 1.0,
-                crossAxisSpacing: 15.0,
-                mainAxisSpacing: 15.0,
+                crossAxisSpacing: 5.0,
+                mainAxisSpacing: 5.0,
               ),
               itemBuilder: (context, index) {
                 var xy = _indexToXY(index, width);
@@ -130,15 +133,15 @@ class GridState extends State<Grid> {
                 String character = board.characterAt(position);
                 return Container(
                   decoration: new BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     border:
                         new Border.all(width: 5.0, color: Colors.blueAccent),
                     color: (selected ? Colors.lightBlueAccent : Colors.white),
                   ),
                   child: Padding(
-                    padding: new EdgeInsets.all(25.0),
-                    child:
-                        _buildPositionedWidget(position, character, selected),
+                    padding: new EdgeInsets.all(padding),
+                    child: _buildPositionedWidget(
+                        position, character, selected, textSize),
                   ),
                 );
               },
@@ -148,17 +151,17 @@ class GridState extends State<Grid> {
   }
 
   _PositionedWidget _buildPositionedWidget(
-      Coordinate position, String character, bool selected) {
+      Coordinate position, String character, bool selected, num textSize) {
     return _PositionedWidget(
       position: position,
       child: Container(
         // Without this line the interface is unresponsive. Not sure why.
-        color: selected ? Colors.lightBlueAccent : Colors.white,
+        color: selected ? Colors.lightBlueAccent : Colors.red,
 
         child: Center(
             child: Text(character.toUpperCase(),
                 style: TextStyle(
-                    fontSize: 40.0,
+                    fontSize: textSize,
                     fontWeight: FontWeight.bold,
                     color: (selected ? Colors.white : Colors.black)))),
       ),
