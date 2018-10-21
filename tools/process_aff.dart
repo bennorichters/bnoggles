@@ -44,18 +44,18 @@ class _AffixInterpreter {
     }
 
     if (line.startsWith("PFX ")) {
-      startPrefix(line);
+      return startPrefix(line);
     }
 
     if (line.startsWith("SFX ")) {
-      startSuffix(line);
+      return startSuffix(line);
     }
 
-    throw FormatException("cannot parse line '$line'");
+    throw FormatException("cannot parse line '$current'");
   }
 
   List<String> splitLine(String line) {
-    String singleSpaces = line;
+    String singleSpaces = line.trim();
     while (singleSpaces.contains("  ")) {
       singleSpaces = singleSpaces.replaceAll("  ", " ");
     }
@@ -70,7 +70,8 @@ class _AffixInterpreter {
     var type = elements[0];
     var name = elements[1];
     var combineYN = elements[2];
-    assert(combineYN == 'Y', "expected Y in header '$line'");
+    assert(combineYN == 'Y' || isProperNameAffix(name),
+        "expected Y in header '$line'");
 
     try {
       int length = int.parse(elements[3]);
@@ -85,23 +86,29 @@ class _AffixInterpreter {
 
   void parseAffixLines(String header, affixAdder) {
     var headerInfo = parseHeader(header);
+
     for (int i = 0; i < headerInfo["linesToFollow"]; i++) {
       assert(_lines.moveNext(), "not enough lines below header '$header'");
       var elements = splitLine(_lines.current);
-      assert(elements.length >= 5,
-          "less elements in line as expected '${_lines.current}'");
       assert(elements[0] == headerInfo["type"],
           "unexpected line header '$header', line ${_lines.current}");
-      assert(elements[1] == headerInfo["name"],
+      var name = elements[1];
+      assert(name == headerInfo["name"],
           "unexpected line header '$header', line ${_lines.current}");
 
       var toRemove = elements[2];
       var toAdd = elements[3];
-      var condition = elements[4];
 
-      affixAdder(toRemove, toAdd, condition, _lines.current);
+      if (!isProperNameAffix(name) && !isContinuationAffix(toAdd)) {
+        var condition = elements.length >= 5 ? elements[4] : "";
+        affixAdder(toRemove, toAdd, condition);
+      }
     }
   }
+
+  bool isProperNameAffix(String name) => ['PN', 'PI', 'PJ'].contains(name);
+
+  bool isContinuationAffix(String toAdd) => toAdd.contains("/");
 
   void startPrefix(String header) {
     prefixAdder(String toRemove, String toAdd, String condition) {
@@ -114,7 +121,9 @@ class _AffixInterpreter {
 
   void startSuffix(String header) {
     suffixAdder(String toRemove, String toAdd, String condition) {
-      _suffixes.add(Suffix(toAdd, condition, toRemove.length));
+      var suffix = Suffix(toAdd, condition, toRemove.length);
+      print(suffix);
+      _suffixes.add(suffix);
     }
 
     parseAffixLines(header, suffixAdder);
