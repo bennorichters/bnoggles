@@ -23,6 +23,12 @@ class SettingsGrid extends StatelessWidget {
         height: 600.0,
         child: Table(
           border: TableBorder.all(width: 1.0, color: Colors.orange),
+          columnWidths: {
+            0: FixedColumnWidth(35.0),
+            1: FixedColumnWidth(60.0),
+            2: FlexColumnWidth(),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: [
             TableRow(
               children: [
