@@ -7,20 +7,25 @@ main(List<String> arguments) {
   process();
 }
 
-Future process() async {
-  var input = File('assets/index_nl.aff');
-  var contents = await input.readAsLines();
+process() async {
+  List<String> contents = await readFile();
 
   var interpreter = _AffixInterpreter(contents.iterator);
   interpreter.process();
-  print(interpreter._prefixes.length);
-  print(interpreter._suffixes.length);
+
+  return [interpreter._prefixes, interpreter._suffixes];
+}
+
+Future<List<String>> readFile() async {
+  var input = File('assets/index_nl.aff');
+  var contents = await input.readAsLines();
+  return contents;
 }
 
 class _AffixInterpreter {
   final Iterator<String> _lines;
-  final Set<Prefix> _prefixes = Set();
-  final Set<Suffix> _suffixes = Set();
+  final Set<Affix> _prefixes = Set();
+  final Set<Affix> _suffixes = Set();
 
   _AffixInterpreter(this._lines);
 
@@ -32,7 +37,7 @@ class _AffixInterpreter {
 
   void route(String current) {
     String line = current.trim();
-    if (line.replaceAll(" ", "").isEmpty) {
+    if (line.isEmpty) {
       return;
     }
 
@@ -119,7 +124,6 @@ class _AffixInterpreter {
   void startSuffix(String header) {
     suffixAdder(String toRemove, String toAdd, String condition) {
       var suffix = Suffix(toAdd, condition, toRemove.length);
-      print(suffix);
       _suffixes.add(suffix);
     }
 
