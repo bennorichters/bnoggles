@@ -46,7 +46,7 @@ process() async {
     String code = (parts.length > 1) ? parts[1] : '';
 
     if (isCodeAllowed(code) && (isWordAllowed(word))) {
-      String fixed = fixWord(word);
+      String fixed = clean(word);
       if (!result.containsKey(fixed)) {
         result[fixed] = code;
       }
@@ -85,7 +85,7 @@ bool isCodeAllowed(String code) {
   return !forbiddenCodes.contains(code);
 }
 
-String fixWord(String word) {
+String clean(String word) {
   String result = word;
   for (String toReplace in replacements.keys) {
     result = result.replaceAll(toReplace, replacements[toReplace]);

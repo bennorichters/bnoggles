@@ -1,32 +1,13 @@
-import 'dart:io';
 import 'package:quiver/core.dart';
-
-main(List<String> arguments) {
-//  Affix pa = Prefix("aan");
-//  Affix pb = Prefix("af");
-//
-//  Affix Sa = Suffix(2, "ze");
-//  Affix Sb = Suffix(0, "d");
-//  Affix Sc = Suffix(1, "s");
-//
-//  var c = AffixedWordContainer("hoed", [pa, pb], [Sa, Sb, Sc]);
-//
-//  for (int i = 0; i < c.length; i++) {
-//    print("$i - ${c.word(i)}");
-//  }
-}
-
-process() async {
-  var affFile = File('D:/dev/Dutch.aff');
-  var aff = await affFile.readAsLines();
-}
 
 abstract class Affix {
   final String _toAdd;
 
   Affix(this._toAdd);
 
-  String apply(String text);
+  bool canBeAppliedTo(String word);
+
+  String apply(String word);
 }
 
 class Prefix extends Affix {
@@ -36,41 +17,72 @@ class Prefix extends Affix {
   String apply(String text) => _toAdd + text;
 
   @override
+  bool canBeAppliedTo(String word) => true;
+
+  @override
   String toString() => "PFX $_toAdd";
+
+  @override
+  bool operator ==(other) => other is Suffix && other._toAdd == _toAdd;
+
+  @override
+  int get hashCode => _toAdd.hashCode;
 }
 
 class Suffix extends Affix {
   final int _toStrip;
+  final SuffixCondition _condition;
 
-  Suffix(toAdd, this._toStrip) : super(toAdd);
+  Suffix(toAdd, this._toStrip, this._condition) : super(toAdd);
+
+  @override
+  bool canBeAppliedTo(String word) => _condition.match(word);
 
   @override
   String apply(String text) =>
       text.substring(0, text.length - _toStrip) + _toAdd;
 
   @override
-  String toString() => "SFX $_toAdd $_toStrip";
-}
-
-class AffixCategory {
-  final String _name;
-  final String _condition;
-
-  AffixCategory(this._name, this._condition);
-
-  String get name => _name;
-  String get condition => _condition;
-
   bool operator ==(other) =>
-      other is AffixCategory &&
-      other._name == _name &&
+      other is Suffix &&
+      other._toAdd == _toAdd &&
+      other._toStrip == _toStrip &&
       other._condition == _condition;
 
-  int get hashCode => hash2(_name.hashCode, _condition.hashCode);
+  @override
+  int get hashCode =>
+      hash3(_toAdd.hashCode, _toStrip.hashCode, _condition.hashCode);
 
   @override
-  toString() => "[$_name, $_condition]";
+  String toString() => "SFX $_toAdd $_toStrip $_condition";
 }
+
+class SuffixCondition {
+  final String _toMatch;
+  final bool _negated;
+
+  const SuffixCondition(this._toMatch, this._negated);
+
+  match(String word) {
+    var endsWith = word.endsWith(_toMatch);
+    return (_negated) ? !endsWith : endsWith;
+  }
+
+  @override
+  bool operator ==(other) =>
+      other is SuffixCondition &&
+          other._toMatch == _toMatch &&
+          other._negated == _negated;
+
+  @override
+  int get hashCode =>
+      hash2(_toMatch.hashCode, _negated.hashCode);
+
+  @override
+  toString() => '[$_toMatch - $_negated]';
+}
+
+const SuffixCondition emptyCondition = SuffixCondition("", false);
 
 class AffixedWordContainer {
   final String _base;
@@ -81,7 +93,7 @@ class AffixedWordContainer {
 
   int get length => (_prefixes.length + 1) * (_suffixes.length + 1);
 
-  String word(int index) {
+  String _word(int index) {
     int rowLength = _prefixes.length + 1;
     int y = (index / rowLength).floor();
     int x = index - y * rowLength;
@@ -98,6 +110,9 @@ class AffixedWordContainer {
 
     return result;
   }
+
+  @override
+  toString() => '$_base $_prefixes $_suffixes';
 }
 
 class AffixedWord implements Comparable<AffixedWord> {
@@ -108,8 +123,8 @@ class AffixedWord implements Comparable<AffixedWord> {
 
   @override
   int compareTo(AffixedWord other) =>
-      _container.word(_index).compareTo(other._container.word(other._index));
+      _container._word(_index).compareTo(other._container._word(other._index));
 
   @override
-  toString() => _container.word(_index);
+  toString() => _container._word(_index);
 }

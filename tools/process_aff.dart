@@ -2,18 +2,17 @@ import 'dart:async';
 import 'dart:io';
 
 import 'dictionary.dart';
+import 'clean_dict_file.dart';
 
 main(List<String> arguments) {
-  process();
+  processAff();
 }
 
-process() async {
+Future<List<Map<String, Set<Affix>>>> processAff() async {
   List<String> contents = await readFile();
 
   var interpreter = _AffixInterpreter(contents.iterator);
   interpreter.process();
-
-  print(interpreter._prefixes);
 
   return [interpreter._prefixes, interpreter._suffixes];
 }
@@ -27,8 +26,8 @@ Future<List<String>> readFile() async {
 class _AffixInterpreter {
   final Iterator<String> _lines;
 
-  final Map<AffixCategory, List<Affix>> _prefixes = Map();
-  final Map<AffixCategory, List<Affix>> _suffixes = Map();
+  final Map<String, Set<Affix>> _prefixes = Map();
+  final Map<String, Set<Affix>> _suffixes = Map();
 
   _AffixInterpreter(this._lines);
 
@@ -101,37 +100,60 @@ class _AffixInterpreter {
       assert(name == headerInfo["name"],
           "unexpected line header '$header', line ${_lines.current}");
 
-      var toRemove = elements[2];
-      var toAdd = elements[3];
+      var toRemove = createRemoveLength(elements[2]);
+      var toAdd = clean(stripContinuation(elements[3]));
 
-      if (!isProperNameAffix(name) && !isContinuationAffix(toAdd)) {
-        var condition = elements.length >= 5 ? elements[4] : "";
-        affixAdder(name, toRemove, toAdd, condition);
+      if (!isProperNameAffix(name) && toAdd.isNotEmpty) {
+        affixAdder(name, toRemove, toAdd, createCondition(elements));
       }
     }
   }
 
+  int createRemoveLength(String element) =>
+      (element == "0") ? 0 : element.length;
+
+  SuffixCondition createCondition(List<String> elements) {
+    var text = elements.length >= 5 ? clean(elements[4]) : "";
+    if (text == ".") {
+      return emptyCondition;
+    }
+
+    if (text.startsWith("[")) {
+      text = text.substring(1, text.length - 1);
+    }
+
+    bool negated = text.startsWith("^");
+    if (negated) {
+      text = text.substring(1);
+      assert(text.length == 1, "length negated condition not equal to 1 $text");
+    }
+
+    return SuffixCondition(text, negated);
+  }
+
+  String stripContinuation(String toAdd) => toAdd.split("/")[0];
+
   bool isProperNameAffix(String name) => ['PN', 'PI', 'PJ'].contains(name);
 
-  bool isContinuationAffix(String toAdd) => toAdd.contains("/");
-
   void startPrefix(String header) {
-    prefixAdder(String name, String toRemove, String toAdd, String condition) {
-      assert(toRemove == "0", "expected 0 for remove option in prefix");
-      assert(condition.isEmpty || condition == '.',
+    prefixAdder(
+        String name, int toRemove, String toAdd, SuffixCondition condition) {
+      assert(toRemove == 0, "expected 0 for remove option in prefix");
+      assert(condition == emptyCondition,
           'expected no condition for prefix. $condition');
 
-      var cat = AffixCategory(name, "");
-      _prefixes.putIfAbsent(cat, () => []).add(Prefix(toAdd));
+      _prefixes.putIfAbsent(name, () => Set()).add(Prefix(toAdd));
     }
 
     parseAffixLines(header, prefixAdder);
   }
 
   void startSuffix(String header) {
-    suffixAdder(String name, String toRemove, String toAdd, String condition) {
-      var cat = AffixCategory(name, condition);
-      _suffixes.putIfAbsent(cat, () => []).add(Suffix(toAdd, toRemove.length));
+    suffixAdder(
+        String name, int toRemove, String toAdd, SuffixCondition condition) {
+      _suffixes
+          .putIfAbsent(name, () => Set())
+          .add(Suffix(toAdd, toRemove, condition));
     }
 
     parseAffixLines(header, suffixAdder);
