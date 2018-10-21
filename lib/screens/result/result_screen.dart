@@ -46,7 +46,14 @@ class ResultScreen extends StatelessWidget {
                   BoxDecoration(border: Border.all(color: Colors.black)),
               width: 150.0,
               child: ListView(children: divided)),
-          Center(child: Container(child: Text("$score"))),
+          Expanded(child: Container()),
+          Center(
+              child: Container(
+                  child: Text(
+            "$score",
+            style: TextStyle(fontSize: 100.0),
+          ))),
+          Expanded(child: Container()),
         ]),
       ),
     );
