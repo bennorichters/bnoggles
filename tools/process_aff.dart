@@ -3,9 +3,6 @@ import 'dart:io';
 
 import 'dictionary.dart';
 
-Map<String, Suffix> prefixes = Map();
-Map<String, Suffix> suffixes = Map();
-
 main(List<String> arguments) {
   process();
 }
