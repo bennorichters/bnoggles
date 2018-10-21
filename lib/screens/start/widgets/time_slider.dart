@@ -10,7 +10,7 @@ class TimeIcon extends StatelessWidget {
 }
 
 class TimeText extends StatefulWidget {
-  ValueNotifier<int> time;
+  final ValueNotifier<int> time;
   TimeText({Key key, this.time}) : super(key: key);
 
   @override
