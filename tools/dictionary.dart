@@ -1,18 +1,18 @@
 import 'dart:io';
 
 main(List<String> arguments) {
-  Affix pa = Prefix("aan");
-  Affix pb = Prefix("af");
-
-  Affix Sa = Suffix(2, "ze");
-  Affix Sb = Suffix(0, "d");
-  Affix Sc = Suffix(1, "s");
-
-  var c = AffixedWordContainer("hoed", [pa, pb], [Sa, Sb, Sc]);
-
-  for (int i = 0; i < c.length; i++) {
-    print("$i - ${c.word(i)}");
-  }
+//  Affix pa = Prefix("aan");
+//  Affix pb = Prefix("af");
+//
+//  Affix Sa = Suffix(2, "ze");
+//  Affix Sb = Suffix(0, "d");
+//  Affix Sc = Suffix(1, "s");
+//
+//  var c = AffixedWordContainer("hoed", [pa, pb], [Sa, Sb, Sc]);
+//
+//  for (int i = 0; i < c.length; i++) {
+//    print("$i - ${c.word(i)}");
+//  }
 }
 
 process() async {
@@ -21,27 +21,37 @@ process() async {
 }
 
 abstract class Affix {
+  final String _toAdd;
+  final String _condition;
+
+  Affix(this._toAdd, this._condition);
+
+  String get condition => _condition;
+
   String apply(String text);
 }
 
-class Prefix implements Affix {
-  final String _toAdd;
-
-  Prefix(this._toAdd);
+class Prefix extends Affix {
+  Prefix(String toAdd, String condition) : super(toAdd, condition);
 
   @override
   String apply(String text) => _toAdd + text;
+
+  @override
+  String toString() => "PFX $_toAdd";
 }
 
-class Suffix implements Affix {
+class Suffix extends Affix {
   final int _toStrip;
-  final String _toAdd;
 
-  Suffix(this._toStrip, this._toAdd);
+  Suffix(toAdd, condition, this._toStrip): super(toAdd, condition);
 
   @override
   String apply(String text) =>
       text.substring(0, text.length - _toStrip) + _toAdd;
+
+  @override
+  String toString() => "SFX $_toAdd, $_condition, $_toStrip";
 }
 
 class AffixedWordContainer {
