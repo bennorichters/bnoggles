@@ -21,14 +21,7 @@ class Clock extends StatelessWidget {
       }
     });
 
-    return Container(
-      color: Colors.lightBlueAccent,
-      child: Center(
-        child: Countdown(
-          animation: animation,
-        ),
-      ),
-    );
+    return Countdown(animation: animation);
   }
 }
 
@@ -38,9 +31,18 @@ class Countdown extends AnimatedWidget {
 
   @override
   build(BuildContext context) {
-    return new Text(
-      formatTime(animation.value),
-      style: new TextStyle(fontSize: 30.0),
+    return Container(
+      color: animation.value <= 30
+          ? (animation.value <= 10 ? Colors.red : Colors.orange)
+          : Colors.lightBlueAccent,
+      child: Center(
+        child: new Text(
+          formatTime(animation.value),
+          style: new TextStyle(
+              fontSize: 30.0,
+              color: animation.value <= 10 ? Colors.white : Colors.black),
+        ),
+      ),
     );
   }
 }
