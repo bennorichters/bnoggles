@@ -11,8 +11,8 @@ class Clock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var animation = StepTween(
-      begin: startTime,
-      end: 0,
+      begin: startTime + 1,
+      end: 1,
     ).animate(_controller);
 
     animation.addStatusListener((status) {
@@ -37,7 +37,9 @@ class Countdown extends AnimatedWidget {
           : Colors.lightBlueAccent,
       child: Center(
         child: new Text(
-          formatTime(animation.value),
+          formatTime(animation.status == AnimationStatus.completed
+              ? 0
+              : animation.value),
           style: new TextStyle(
               fontSize: 30.0,
               color: animation.value <= 10 ? Colors.white : Colors.black),
