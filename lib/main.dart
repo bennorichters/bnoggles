@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome, rootBundle;
 
 import 'package:bnoggles/screens/start/start_screen.dart';
 
@@ -60,6 +60,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
