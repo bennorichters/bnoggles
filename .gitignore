@@ -18,5 +18,5 @@ ios/
 
 /assets/words_nl.txt
 
-*.dic
-*.aff
+index_nl_clean.dic
+index_nl_clean_unmunched.dic

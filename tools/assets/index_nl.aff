@@ -1,0 +1,591 @@
+# FLAG FOR FIRST WORDS THAT CAN BE FIRST PART OF COMPOUND AND HAVE AN S WHEN COMPOUNDED
+# (unfortunately, I haven't found a method to suppress the affix s at the compound end
+#  also, there is no method as far as I know to make affixes specific for a compound flag)
+
+# accept an optional  - when compounding, first part
+# the second line allows for the optional hyphen
+SFX CA Y 2
+SFX CA 0 /CaCp
+SFX CA 0 -/CaCp
+
+# accept an optional - when compounding, middle part
+# the second line allows for the optional hyphen
+SFX CB Y 2
+SFX CB 0 /CbCp
+SFX CB 0 -/CbCp
+
+# for words that have a plural s and an s when compounding
+# the second one allows for the optional hyphen
+SFX Cd Y 2
+SFX Cd 0 s/CaCbCcCp .
+SFX Cd 0 s-/CaCbCcCp .
+
+# for reasons of good results, parts that could have a compounding s
+# but no plural s
+# have to have separate (!) entries in the dictionary
+# using the Ch flag
+SFX Ch Y 2
+SFX Ch 0 s/CaCbCxCp .
+SFX Ch 0 s-/CaCbCcCp .
+
+# FLAG FOR WORDS THAT CAN BE FIRST PART AND COULD HAVE A HYPHEN BECAUSE OF SONANT COLLISIONS (END WITH A, E, I, O, U)
+SFX Ce Y 2
+SFX Ce 0 /CaCbCp .
+SFX Ce 0 -/CaCbCcCp .
+
+# FLAGS FOR LETTERWORDS AND WORD THAT NEED A HYPHEN WHEN COMPOUNDING
+SFX Cl Y 1
+SFX Cl 0 -/CaCbCp .
+
+PFX Cw Y 1
+PFX Cw 0 -/CbCcCp .
+
+# FLAGS FOR NOUN DIMINITIVES
+# tuin=>tuintje
+SFX Ya Y 3
+SFX Ya 0 tje .				
+SFX Ya 0 tjes/CaCbCp .			
+SFX Ya 0 tjes-/CaCbCp .			
+
+# huis=>huisje
+SFX Yb Y 6
+SFX Yb 0 je [^m]			
+SFX Yb 0 jes/CaCbCp [^m] 		
+SFX Yb 0 jes-/CaCbCp [^m] 		
+SFX Yb 0 pje [m]			
+SFX Yb 0 pjes/CaCbCp [m]		
+SFX Yb 0 pjes-/CaCbCp [m]		
+
+# opleiding=>opleidinkje
+SFX Yc Y 3
+SFX Yc g kje .				
+SFX Yc g kjes/CaCbCp .			
+SFX Yc g kjes-/CaCbCp .			
+
+# ding=>dingetje
+SFX Yd Y 3
+SFX Yd 0 etje .				
+SFX Yd 0 etjes/CaCbCp .			
+SFX Yd 0 etjes-/CaCbCp .		
+
+# auto=>autootje
+SFX Ye Y 15
+SFX Ye 0 atje a				
+SFX Ye 0 utje u				
+SFX Ye 0 otje o				
+SFX Ye 0 etje i				
+SFX Ye é eetje é			
+SFX Ye 0 atjes/CaCbCp a			
+SFX Ye 0 atjes-/CaCbCp a		
+SFX Ye 0 utjes/CaCbCp u			
+SFX Ye 0 utjes-/CaCbCp u		
+SFX Ye 0 otjes/CaCbCp o			
+SFX Ye 0 otjes-/CaCbCp o		
+SFX Ye 0 etjes/CaCbCp i			
+SFX Ye 0 etjes-/CaCbCp i		
+SFX Ye é eetjes/CaCbCp é		
+SFX Ye é eetjes-/CaCbCp é		
+
+# bal=>balletje
+SFX Yf Y 27
+SFX Yf 0 betje b			
+SFX Yf 0 getje g			
+SFX Yf 0 ketje k			
+SFX Yf 0 letje l			
+SFX Yf 0 metje m			
+SFX Yf 0 netje n			
+SFX Yf 0 petje p			
+SFX Yf 0 retje r			
+SFX Yf 0 setje s			
+SFX Yf 0 betjes/CaCbCp b		
+SFX Yf 0 getjes/CaCbCp g		
+SFX Yf 0 ketjes/CaCbCp k		
+SFX Yf 0 letjes/CaCbCp l		
+SFX Yf 0 metjes/CaCbCp m		
+SFX Yf 0 netjes/CaCbCp n		
+SFX Yf 0 petjes/CaCbCp p		
+SFX Yf 0 retjes/CaCbCp r		
+SFX Yf 0 setjes/CaCbCp s		
+SFX Yf 0 betjes-/CaCbCp b		
+SFX Yf 0 getjes-/CaCbCp g		
+SFX Yf 0 ketjes-/CaCbCp k		
+SFX Yf 0 letjes-/CaCbCp l		
+SFX Yf 0 metjes-/CaCbCp m		
+SFX Yf 0 netjes-/CaCbCp n		
+SFX Yf 0 petjes-/CaCbCp p		
+SFX Yf 0 retjes-/CaCbCp r		
+SFX Yf 0 setjes-/CaCbCp s		
+
+# AOW=>AOW'tje
+SFX Yg Y 2
+SFX Yg 0 'tje .				
+SFX Yg 0 'tjes .			
+
+# FLAGS FOR PLURALS (COMPOUNDING END)
+# team=>teams
+SFX Za Y 1
+SFX Za 0 s .				
+
+# ium => iums, ia, icus->ici
+SFX Zu Y 4
+SFX Zu 0 s ium
+SFX Zu ium ia ium			
+SFX Zu icus ici icus			
+SFX Zu icus ica icus			
+
+# tuin=>tuinen
+SFX Zb Y 1
+SFX Zb 0 en
+
+# auto=>auto's, cd => cd's
+SFX Zc Y 1
+SFX Zc 0 's .				
+
+# schoonheid=>schoonheden
+SFX Zd Y 2
+SFX Zd heid heden/CaCbCp .		
+SFX Zd heid heden-/CaCbCp .		
+
+# tas=>tassen
+SFX Ze Y 24
+SFX Ze 0 ben/CaCbCp b		
+SFX Ze 0 den/CaCbCp d		
+SFX Ze 0 fen/CaCbCp f		
+SFX Ze 0 gen/CaCbCp g		
+SFX Ze 0 ken/CaCbCp k		
+SFX Ze 0 len/CaCbCp l		
+SFX Ze 0 men/CaCbCp m		
+SFX Ze 0 nen/CaCbCp n		
+SFX Ze 0 pen/CaCbCp p		
+SFX Ze 0 sen/CaCbCp s		
+SFX Ze 0 ren/CaCbCp r		
+SFX Ze 0 ten/CaCbCp t		
+SFX Ze 0 ben-/CaCbCp b		
+SFX Ze 0 den-/CaCbCp d		
+SFX Ze 0 fen-/CaCbCp f		
+SFX Ze 0 gen-/CaCbCp g		
+SFX Ze 0 ken-/CaCbCp k		
+SFX Ze 0 len-/CaCbCp l		
+SFX Ze 0 men-/CaCbCp m		
+SFX Ze 0 nen-/CaCbCp n		
+SFX Ze 0 pen-/CaCbCp p		
+SFX Ze 0 sen-/CaCbCp s		
+SFX Ze 0 ren-/CaCbCp r		
+SFX Ze 0 ten-/CaCbCp t		
+
+# baal=>balen
+SFX Zf Y 88
+SFX Zf al len/CaCbCp l		
+SFX Zf ar ren/CaCbCp r		
+SFX Zf an nen/CaCbCp n		
+SFX Zf ad den/CaCbCp d		
+SFX Zf ak ken/CaCbCp k		
+SFX Zf ap pen/CaCbCp p		
+SFX Zf as zen/CaCbCp s		
+SFX Zf af ven/CaCbCp f		
+SFX Zf am men/CaCbCp m		
+SFX Zf at ten/CaCbCp t		
+SFX Zf ag gen/CaCbCp g		
+SFX Zf el len/CaCbCp l		
+SFX Zf er ren/CaCbCp r		
+SFX Zf en nen/CaCbCp n		
+SFX Zf ed den/CaCbCp d		
+SFX Zf ek ken/CaCbCp k		
+SFX Zf ep pen/CaCbCp p		
+SFX Zf es zen/CaCbCp s		
+SFX Zf ef ven/CaCbCp f		
+SFX Zf em men/CaCbCp m		
+SFX Zf et ten/CaCbCp t		
+SFX Zf eg gen/CaCbCp g		
+SFX Zf ol len/CaCbCp l		
+SFX Zf or ren/CaCbCp r		
+SFX Zf on nen/CaCbCp n		
+SFX Zf od den/CaCbCp d		
+SFX Zf ok ken/CaCbCp k		
+SFX Zf op pen/CaCbCp p		
+SFX Zf os zen/CaCbCp s		
+SFX Zf of ven/CaCbCp f		
+SFX Zf om men/CaCbCp m		
+SFX Zf ot ten/CaCbCp t		
+SFX Zf og gen/CaCbCp g		
+SFX Zf ul len/CaCbCp l		
+SFX Zf ur ren/CaCbCp r		
+SFX Zf un nen/CaCbCp n		
+SFX Zf ud den/CaCbCp d		
+SFX Zf uk ken/CaCbCp k		
+SFX Zf up pen/CaCbCp p		
+SFX Zf us zen/CaCbCp s		
+SFX Zf uf ven/CaCbCp f		
+SFX Zf um men/CaCbCp m		
+SFX Zf ut ten/CaCbCp t		
+SFX Zf ug gen/CaCbCp g		
+SFX Zf al len-/CaCbCd l		
+SFX Zf ar ren-/CaCbCp r		
+SFX Zf an nen-/CaCbCp n		
+SFX Zf ad den-/CaCbCp d		
+SFX Zf ak ken-/CaCbCp k		
+SFX Zf ap pen-/CaCbCp p		
+SFX Zf as zen-/CaCbCp s		
+SFX Zf af ven-/CaCbCp f		
+SFX Zf am men-/CaCbCp m		
+SFX Zf at ten-/CaCbCp t		
+SFX Zf ag gen-/CaCbCp g		
+SFX Zf el len-/CaCbCp l		
+SFX Zf er ren-/CaCbCp r		
+SFX Zf en nen-/CaCbCp n		
+SFX Zf ed den-/CaCbCp d		
+SFX Zf ek ken-/CaCbCp k		
+SFX Zf ep pen-/CaCbCp p		
+SFX Zf es zen-/CaCbCp s		
+SFX Zf ef ven-/CaCbCp f		
+SFX Zf em men-/CaCbCp m		
+SFX Zf et ten-/CaCbCp t		
+SFX Zf eg gen-/CaCbCp g		
+SFX Zf ol len-/CaCbCp l		
+SFX Zf or ren-/CaCbCp r		
+SFX Zf on nen-/CaCbCp n		
+SFX Zf od den-/CaCbCp d		
+SFX Zf ok ken-/CaCbCp k		
+SFX Zf op pen-/CaCbCp p		
+SFX Zf os zen-/CaCbCp s		
+SFX Zf of ven-/CaCbCp f		
+SFX Zf om men-/CaCbCp m		
+SFX Zf ot ten-/CaCbCp t		
+SFX Zf og gen-/CaCbCp g		
+SFX Zf ul len-/CaCbCp l		
+SFX Zf ur ren-/CaCbCp r		
+SFX Zf un nen-/CaCbCp n		
+SFX Zf ud den-/CaCbCp d		
+SFX Zf uk ken-/CaCbCp k		
+SFX Zf up pen-/CaCbCp p		
+SFX Zf us zen-/CaCbCp s		
+SFX Zf uf ven-/CaCbCp f		
+SFX Zf um men-/CaCbCp m		
+SFX Zf ut ten-/CaCbCp t		
+SFX Zf ug gen-/CaCbCp g		
+
+# paragraaf => paragrafen
+SFX Zg Y 2
+SFX Zg af fen/CaCbCp .		
+SFX Zg af fen-/CaCbCp .		
+
+#lens=>lenzen
+SFX Zh Y 4
+SFX Zh s zen/CaCbCp s		
+SFX Zh f ven/CaCbCp f		
+SFX Zh s zen-/CaCbCp s		
+SFX Zh f ven-/CaCbCp f		
+
+# legende=>legenden (non-compounding)
+SFX Zi Y 1
+SFX Zi 0 n .		
+
+# dode=>doden (compounding)
+SFX Zj Y 2
+SFX Zj 0 n/CaCbCp .		
+SFX Zj 0 n-/CaCbCp .		
+
+# FLAGS FOR VERBS
+
+# flags for more or less common prefixes in verbs
+PFX Pa Y 1
+PFX Pa 0 aaneen .
+PFX Pb Y 1
+PFX Pb 0 aan .
+PFX Pc Y 1
+PFX Pc 0 achtereen .
+PFX Pd Y 1
+PFX Pd 0 achter .
+PFX Pe Y 1
+PFX Pe 0 achterna .
+PFX Pf Y 1
+PFX Pf 0 achterop .
+PFX Pg Y 1
+PFX Pg 0 achterover .
+PFX Ph Y 1
+PFX Ph 0 achteruit .
+PFX Pi Y 1
+PFX Pi 0 achterom .
+PFX Pj Y 1
+PFX Pj 0 af .
+PFX Pk Y 1
+PFX Pk 0 uiteen .
+PFX Pl Y 1
+PFX Pl 0 bĳ .
+PFX Pm Y 1
+PFX Pm 0 over .
+PFX Pn Y 1
+PFX Pn 0 voor .
+PFX Po Y 1
+PFX Po 0 binnen .
+PFX Pp Y 1
+PFX Pp 0 door .
+PFX Pq Y 1
+PFX Pq 0 dicht .
+PFX Pr Y 1
+PFX Pr 0 mee .
+PFX Ps Y 1
+PFX Ps 0 uit .
+PFX Pt Y 1
+PFX Pt 0 na .
+
+
+# 3d person, add a t to the stem
+SFX V3 Y 1
+SFX V3 0 t .		
+
+# past tense, add de or den to the stem
+SFX Vp Y 2
+SFX Vp 0 de .		
+SFX Vp 0 den .		
+
+# past tense, add te or ten to the stem
+SFX Vq Y 2
+SFX Vq 0 te .		
+SFX Vq 0 ten .		
+
+# verb +d, +de
+SFX Vi Y 2
+SFX Vi 0 d .		
+SFX Vi 0 de .		
+
+# aangetekend => aangetekende
+SFX Ve Y 1
+SFX Ve 0 e .		
+
+# FLAGS FOR ADJECTIVES
+# viezig => viezige, moe => moeë
+SFX Aa Y 2
+SFX Aa 0 e [^e]		
+SFX Aa 0 ë [e]		
+
+# lelijk => lelijker, raar => raarder
+SFX Ab Y 2
+SFX Ab 0 er [^r]	
+SFX Ab 0 der r		
+
+# lelijk => lelijkere, dor => dordere
+SFX Ac Y 2
+SFX Ac 0 ere [^r]	
+SFX Ac 0 dere r		
+
+# lelijk => lelijkst
+SFX Ad Y 2
+SFX Ad 0 st/A0 [^s]	
+SFX Ad 0 t/A0 [s]		
+
+# lelijkst => allerlijkst
+PFX A0 Y 1
+PFX A0 0 aller
+
+# lelijk => lelijkste
+SFX Ae Y 2
+SFX Ae 0 ste/A0 [^s]	
+SFX Ae 0 te/A0 [s]		
+
+# lelijk => lelijks
+SFX Ai Y 1
+SFX Ai 0 s .		
+
+# baar => bare, boos=> boze
+SFX Al Y 29
+SFX Al ob be oob	
+SFX Al ad de aad	
+SFX Al ed de eed	
+SFX Al od de ood	
+SFX Al af ve aaf	
+SFX Al of ve oof	
+SFX Al ag ge aag	
+SFX Al eg ge eeg	
+SFX Al og ge oog	
+SFX Al ak ke aak	
+SFX Al ek ke eek	
+SFX Al ok ke ook	
+SFX Al al le aal	
+SFX Al el le eel	
+SFX Al ol le ool	
+SFX Al am me aam	
+SFX Al om me oom	
+SFX Al um me uum	
+SFX Al an ne aan	
+SFX Al en ne een	
+SFX Al on ne oon	
+SFX Al ar re aar	
+SFX Al or re oor	
+SFX Al es se ees	
+SFX Al at te aat	
+SFX Al et te eet	
+SFX Al ot te oot	
+SFX Al os ze oos	
+SFX Al us se uus	
+
+
+# industrieel => industriële
+SFX Am Y 1
+SFX Am eel ële ieel	
+
+# zwak => zwakke
+SFX An Y 11
+SFX An 0 de d	
+SFX An 0 fe f	
+SFX An 0 ge g	
+SFX An 0 ke k	
+SFX An 0 le l	
+SFX An 0 me m	
+SFX An 0 ne n	
+SFX An 0 pe p	
+SFX An 0 re r	
+SFX An 0 se s	
+SFX An 0 te t	
+
+# zwak => zwakker
+SFX Ao Y 11
+SFX Ao 0 der d		
+SFX Ao 0 fer f		
+SFX Ao 0 ger g		
+SFX Ao 0 ker k		
+SFX Ao 0 ler l		
+SFX Ao 0 mer m		
+SFX Ao 0 ner n		
+SFX Ao 0 per p		
+SFX Ao 0 rer r		
+SFX Ao 0 ser s		
+SFX Ao 0 ter t		
+
+# zwak => zwakkere
+SFX Ap Y 11
+SFX Ap 0 dere d		
+SFX Ap 0 fere f		
+SFX Ap 0 gere g		
+SFX Ap 0 kere k		
+SFX Ap 0 lere l		
+SFX Ap 0 mere m		
+SFX Ap 0 nere n		
+SFX Ap 0 pere p		
+SFX Ap 0 rere r		
+SFX Ap 0 sere s		
+SFX Ap 0 tere t		
+
+# kaad => kwader, boos=> bozer
+SFX Aq Y 27
+SFX Aq ob ber oob	
+SFX Aq ad der aad	
+SFX Aq ed der eed	
+SFX Aq od der ood	
+SFX Aq af ver aaf	
+SFX Aq of ver oof	
+SFX Aq ag ger aag	
+SFX Aq eg ger eeg	
+SFX Aq og ger oog	
+SFX Aq ak ker aak	
+SFX Aq ek ker eek	
+SFX Aq ok ker ook	
+SFX Aq al ler aal	
+SFX Aq el ler eel	
+SFX Aq ol ler ool	
+SFX Aq am mer aam	
+SFX Aq om mer oom	
+SFX Aq um mer uum	
+SFX Aq an ner aan	
+SFX Aq en ner een	
+SFX Aq on ner oon	
+SFX Aq es ser ees	
+SFX Aq at ter aat	
+SFX Aq et ter eet	
+SFX Aq ot ter oot	
+SFX Aq os zer oos	
+SFX Aq us ser uus	
+
+# lief => lieve, precicieus => precisieuze
+SFX Ar Y 2
+SFX Ar f ve f	
+SFX Ar s ze s	
+
+# lief => liever
+SFX As Y 2
+SFX As f ver f	
+SFX As s zer s	
+
+# kaad => kwaders, boos=> bozers
+SFX At Y 27
+SFX At ob bers oob	
+SFX At ad ders aad	
+SFX At ed ders eed	
+SFX At od ders ood	
+SFX At af vers aaf	
+SFX At of vers oof	
+SFX At ag gers aag	
+SFX At eg gers eeg	
+SFX At og gers oog	
+SFX At ak kers aak	
+SFX At ek kers eek	
+SFX At ok kers ook	
+SFX At al lers aal	
+SFX At el lers eel	
+SFX At ol lers ool	
+SFX At am mers aam	
+SFX At om mers oom	
+SFX At um mers uum	
+SFX At an ners aan	
+SFX At en ners een	
+SFX At on ners oon	
+SFX At es sers ees	
+SFX At at ters aat	
+SFX At et ters eet	
+SFX At ot ters oot	
+SFX At os zers oos	
+SFX At us sers uus	
+
+# lief => lievers
+SFX Au Y 2
+SFX Au f vers f	
+SFX Au s zers s	
+
+# zwak => zwakkers
+SFX Av Y 11
+SFX Av 0 ders d	
+SFX Av 0 fers f	
+SFX Av 0 gers g	
+SFX Av 0 kers k	
+SFX Av 0 lers l	
+SFX Av 0 mers m	
+SFX Av 0 ners n	
+SFX Av 0 pers p	
+SFX Av 0 rers r	
+SFX Av 0 sers s	
+SFX Av 0 ters t	
+
+# lelijk => lelijkers, raar => raarders
+SFX Aw Y 2
+SFX Aw 0 ers [^r]	
+SFX Aw 0 ders r	
+
+# kaad => kwadere, boos=> bozere
+SFX Ax Y 27
+SFX Ax ob bere oob	
+SFX Ax ad dere aad	
+SFX Ax ed dere eed	
+SFX Ax od dere ood	
+SFX Ax af vere aaf	
+SFX Ax of vere oof	
+SFX Ax ag gere aag	
+SFX Ax eg gere eeg	
+SFX Ax og gere oog	
+SFX Ax ak kere aak	
+SFX Ax ek kere eek	
+SFX Ax ok kere ook	
+SFX Ax al lere aal	
+SFX Ax el lere eel	
+SFX Ax ol lere ool	
+SFX Ax am mere aam	
+SFX Ax om mere oom	
+SFX Ax um mere uum	
+SFX Ax an nere aan	
+SFX Ax en nere een	
+SFX Ax on nere oon	
+SFX Ax es sere ees	
+SFX Ax at tere aat	
+SFX Ax et tere eet	
+SFX Ax ot tere oot	
+SFX Ax os zere oos	
+SFX Ax us sere uus	

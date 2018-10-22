@@ -39,10 +39,12 @@ writeAll(Set<AffixedWordContainer> containers) async {
 
   await sink.flush();
   sink.close();
+
+  print('ready');
 }
 
 Future<List<String>> readFile() async {
-  var input = File('assets/index_nl_clean.dic');
+  var input = File('tools/assets/index_nl_clean.dic');
   var contents = await input.readAsLines();
   return contents;
 }

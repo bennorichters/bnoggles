@@ -36,26 +36,33 @@ main(List<String> arguments) {
 }
 
 process() async {
-  var input = File('assets/index_nl.dic');
-  var contents = await input.readAsLines();
+  List<String> contents = await linesFromFile('tools/assets/index_nl.dic');
+  List<String> twoCharWords =
+      await linesFromFile('tools/assets/tweeletterwoorden.txt');
+  List<String> threeCharWords =
+      await linesFromFile('tools/assets/drieletterwoorden.txt');
+
+  List<String> twoThreeCharWords = List.from(twoCharWords)
+    ..addAll(threeCharWords);
+
+  contents.addAll(twoThreeCharWords);
 
   Map<String, String> result = Map();
   for (var line in contents) {
     var parts = line.split('/');
-    String word = parts[0].toLowerCase();
+    String word = clean(parts[0]);
     String code = (parts.length > 1) ? parts[1] : '';
 
-    if (isCodeAllowed(code) && (isWordAllowed(word))) {
-      String fixed = clean(word);
-      if (!result.containsKey(fixed)) {
-        result[fixed] = code;
+    if (isCodeAllowed(code) && (isWordAllowed(word, twoThreeCharWords))) {
+      if (!result.containsKey(word)) {
+        result[word] = code;
       }
     }
   }
 
   print(result.keys.length);
 
-  var output = File('assets/index_nl_clean.dic');
+  var output = File('tools/assets/index_nl_clean.dic');
   var sink = output.openWrite();
 
   for (String word in result.keys.toList()..sort()) {
@@ -66,7 +73,20 @@ process() async {
   sink.close();
 }
 
-bool isWordAllowed(String word) {
+Future<List<String>> linesFromFile(String name) async {
+  var input = File(name);
+  var contents = await input.readAsLines();
+  return contents;
+}
+
+bool isWordAllowed(String word, List<String> twoThreeCharWords) {
+  if (word.length < 2) return false;
+
+  if (word.toLowerCase() != word) return false;
+
+  if (word.length >= 2 && word.length <= 3 && !twoThreeCharWords.contains(word))
+    return false;
+
   for (int i = 0; i < word.length; i++) {
     var char = word.substring(i, i + 1);
     if (!allowedChars.contains(char) && !replacements.keys.contains(char)) {
@@ -81,9 +101,7 @@ bool isWordAllowed(String word) {
   return true;
 }
 
-bool isCodeAllowed(String code) {
-  return !forbiddenCodes.contains(code);
-}
+bool isCodeAllowed(String code) => !forbiddenCodes.contains(code);
 
 String clean(String word) {
   String result = word;
