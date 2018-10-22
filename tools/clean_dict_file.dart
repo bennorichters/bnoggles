@@ -89,7 +89,7 @@ bool isWordAllowed(String word, List<String> twoThreeCharWords) {
 
   for (int i = 0; i < word.length; i++) {
     var char = word.substring(i, i + 1);
-    if (!allowedChars.contains(char) && !replacements.keys.contains(char)) {
+    if (!allowedChars.contains(char)) {
       if (disallowed.add(char)) {
         print('$char - $word');
       }
