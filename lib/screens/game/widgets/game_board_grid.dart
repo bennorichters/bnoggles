@@ -156,7 +156,7 @@ class GridState extends State<Grid> {
       position: position,
       child: Container(
         // Without this line the interface is unresponsive. Not sure why.
-        color: selected ? Colors.lightBlueAccent : Colors.red,
+        color: selected ? Colors.lightBlueAccent : Colors.white,
 
         child: Center(
             child: Text(character.toUpperCase(),
