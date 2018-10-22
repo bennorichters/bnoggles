@@ -20,13 +20,13 @@ class Prefix extends Affix {
   bool canBeAppliedTo(String word) => true;
 
   @override
-  String toString() => "PFX $_toAdd";
-
-  @override
-  bool operator ==(other) => other is Suffix && other._toAdd == _toAdd;
+  bool operator ==(other) => other is Prefix && other._toAdd == _toAdd;
 
   @override
   int get hashCode => _toAdd.hashCode;
+
+  @override
+  String toString() => "PFX $_toAdd";
 }
 
 class Suffix extends Affix {
