@@ -13305,6 +13305,9 @@ apenbosjes
 apenbossen
 apend
 apende
+apenkooi
+apenkooien
+apenkooiend
 apenkop
 apenkopje
 apenkopjes

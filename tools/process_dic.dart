@@ -32,7 +32,7 @@ writeAll(Set<AffixedWordContainer> containers) async {
 
   all.sort();
 
-  var output = File('assets/index_nl_clean_unmunched.dic');
+  var output = File('assets/words-nl.txt');
   var sink = output.openWrite();
 
   all.forEach(sink.writeln);

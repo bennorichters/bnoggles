@@ -42,10 +42,13 @@ process() async {
   List<String> threeCharWords =
       await linesFromFile('tools/assets/drieletterwoorden.txt');
 
+  List<String> extraWords =
+      await linesFromFile('tools/assets/extraWords.txt');
+
   List<String> twoThreeCharWords = List.from(twoCharWords)
     ..addAll(threeCharWords);
 
-  contents.addAll(twoThreeCharWords);
+  contents..addAll(twoThreeCharWords)..addAll(extraWords);
 
   Map<String, String> result = Map();
   for (var line in contents) {
