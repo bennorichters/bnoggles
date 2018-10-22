@@ -105,7 +105,7 @@ class GridState extends State<Grid> {
 
     num mediaWidth = MediaQuery.of(context).size.width;
     num cellWidth = mediaWidth / width;
-    num padding = cellWidth / 10;
+    num padding = cellWidth / 8;
     num textSize = cellWidth / 4;
 
     return Container(
@@ -156,7 +156,7 @@ class GridState extends State<Grid> {
       position: position,
       child: Container(
         // Without this line the interface is unresponsive. Not sure why.
-        color: selected ? Colors.lightBlueAccent : Colors.white,
+        color: selected ? Colors.lightBlueAccent : Colors.red,
 
         child: Center(
             child: Text(character.toUpperCase(),
