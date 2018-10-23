@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
     ]);
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Bnoggles',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: StartScreen(dictionary: dictionary, generator: generator),
     );
