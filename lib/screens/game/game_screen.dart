@@ -57,7 +57,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
       disposeController();
 
-      Navigator.push(
+      Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) =>
