@@ -69,6 +69,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
             AppBar(title: Text("Bnoggles"), leading: new Container(), actions: [
           IconButton(
             icon: Icon(Icons.stop),
+            color: Colors.red,
             onPressed: () {
               showResultScreen();
             },
