@@ -37,7 +37,6 @@ class ResultScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: new Container(),
         title: Text("Bnoggles"),
       ),
       body: Center(
