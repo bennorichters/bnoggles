@@ -37,6 +37,7 @@ class ResultScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: new Container(),
         title: Text("Bnoggles"),
       ),
       body: Center(
@@ -47,12 +48,21 @@ class ResultScreen extends StatelessWidget {
               width: 150.0,
               child: ListView(children: divided)),
           Expanded(child: Container()),
-          Center(
-              child: Container(
-                  child: Text(
-            "$score",
-            style: TextStyle(fontSize: 100.0),
-          ))),
+          Column(children: [
+            Center(
+                child: Container(
+                    child: Text(
+              "$score",
+              style: TextStyle(fontSize: 100.0),
+            ))),
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.popUntil(
+                    context, ModalRoute.withName(Navigator.defaultRouteName));
+              },
+              child: Icon(Icons.home),
+            ),
+          ]),
           Expanded(child: Container()),
         ]),
       ),
@@ -62,13 +72,13 @@ class ResultScreen extends StatelessWidget {
   int calculateScore(Solution solution, UserAnswer userAnswer) {
     int result = 0;
     for (String word in userAnswer.uniqueWords()) {
-        result += word.length * 2;
+      result += word.length * 2;
     }
 
     var percentageFound =
         (userAnswer.uniqueWords().length / solution.uniqueWords().length);
 
-    result =  (result * percentageFound * percentageFound).round();
+    result = (result * percentageFound * percentageFound).round();
 
     result += userAnswer.uniqueWords().length;
 

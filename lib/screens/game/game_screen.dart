@@ -65,7 +65,8 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     }
 
     return Scaffold(
-        appBar: AppBar(title: Text("Bnoggles"), actions: [
+        appBar:
+            AppBar(title: Text("Bnoggles"), leading: new Container(), actions: [
           IconButton(
             icon: Icon(Icons.stop),
             onPressed: () {
