@@ -108,6 +108,8 @@ class GridState extends State<Grid> {
     num padding = cellWidth / 8;
     num textSize = cellWidth / 4;
 
+    CenteredCharacter cc = HittableCenteredCharacter(padding, textSize);
+
     return Container(
         margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
         child: Listener(
@@ -138,34 +140,15 @@ class GridState extends State<Grid> {
                         new Border.all(width: 5.0, color: Colors.blueAccent),
                     color: (selected ? Colors.lightBlueAccent : Colors.white),
                   ),
-                  child: Padding(
-                    padding: new EdgeInsets.all(padding),
-                    child: _buildPositionedWidget(
-                        position, character, selected, textSize),
-                  ),
+                  child: cc.create(
+                      position: position,
+                      selected: selected,
+                      character: character),
                 );
               },
             ),
           ),
         ));
-  }
-
-  _PositionedWidget _buildPositionedWidget(
-      Coordinate position, String character, bool selected, num textSize) {
-    return _PositionedWidget(
-      position: position,
-      child: Container(
-        // Without this line the interface is unresponsive. Not sure why.
-        color: selected ? Colors.lightBlueAccent : Colors.white,
-
-        child: Center(
-            child: Text(character.toUpperCase(),
-                style: TextStyle(
-                    fontSize: textSize,
-                    fontWeight: FontWeight.bold,
-                    color: (selected ? Colors.white : Colors.black)))),
-      ),
-    );
   }
 }
 
@@ -189,4 +172,51 @@ class _PositionedWidget extends SingleChildRenderObjectWidget {
 
 class _PositionedRenderObject extends RenderProxyBox {
   Coordinate position;
+}
+
+class CenteredCharacter {
+  final double textSize;
+
+  CenteredCharacter(this.textSize);
+
+  Widget create({
+    Coordinate position,
+    String character,
+    bool selected,
+  }) {
+    return Center(
+        child: Text(character.toUpperCase(),
+            style: TextStyle(
+                fontSize: textSize,
+                fontWeight: FontWeight.bold,
+                color: (selected ? Colors.white : Colors.black))));
+  }
+}
+
+class HittableCenteredCharacter extends CenteredCharacter {
+  final double padding;
+
+  HittableCenteredCharacter(this.padding, textSize) : super(textSize);
+
+  Widget create({
+    Coordinate position,
+    String character,
+    bool selected,
+  }) {
+    Widget child = super
+        .create(position: position, character: character, selected: selected);
+
+    return Padding(
+      padding: new EdgeInsets.all(padding),
+      child: _PositionedWidget(
+        position: position,
+        child: Container(
+          // Without this line the interface is unresponsive. Not sure why.
+          color: selected ? Colors.lightBlueAccent : Colors.white,
+
+          child: child,
+        ),
+      ),
+    );
+  }
 }
