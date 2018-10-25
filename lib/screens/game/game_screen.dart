@@ -61,7 +61,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  ResultScreen(gameInfo.solution, userAnswer)));
+                  ResultScreen(gameInfo.board, gameInfo.solution, userAnswer)));
     }
 
     return Scaffold(
