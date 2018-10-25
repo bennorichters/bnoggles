@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
-main(List<String> arguments) {
+void main(List<String> arguments) async {
   process();
 }
-
-process() async {
+void process() async {
   List<String> original = await fileContents('assets/index_nl.dic');
 //  List<String> clean = await fileContents('assets/index_nl_clean.dic');
 

@@ -32,19 +32,18 @@ const forbiddenCodes = ['PN', 'Fw'];
 
 Set<String> disallowed = Set();
 
-main(List<String> arguments) {
+void main(List<String> arguments) async {
   process();
 }
 
-process() async {
+void process() async {
   List<String> contents = await linesFromFile('tools/assets/index_nl.dic');
   List<String> twoCharWords =
       await linesFromFile('tools/assets/tweeletterwoorden.txt');
   List<String> threeCharWords =
       await linesFromFile('tools/assets/drieletterwoorden.txt');
 
-  List<String> extraWords =
-      await linesFromFile('tools/assets/extraWords.txt');
+  List<String> extraWords = await linesFromFile('tools/assets/extraWords.txt');
 
   List<String> twoThreeCharWords = List.from(twoCharWords)
     ..addAll(threeCharWords);

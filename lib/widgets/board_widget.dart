@@ -8,10 +8,7 @@ class BoardWidget extends StatelessWidget {
   final CenteredCharacter centeredCharacter;
 
   const BoardWidget(
-      {Key key,
-      this.selectedPositions,
-      this.board,
-      this.centeredCharacter})
+      {Key key, this.selectedPositions, this.board, this.centeredCharacter})
       : super(key: key);
 
   @override
@@ -49,7 +46,7 @@ class BoardWidget extends StatelessWidget {
     );
   }
 
-  static _indexToXY(int index, int width) {
+  static List<int> _indexToXY(int index, int width) {
     int y = (index / width).floor();
     int x = index - (y * width).floor();
     return [x, y];

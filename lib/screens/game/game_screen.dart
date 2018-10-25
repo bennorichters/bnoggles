@@ -31,7 +31,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   AnimationController _controller;
   bool controllerDisposed = false;
 
-  GameScreenState({@required board, solution, startValue})
+  GameScreenState({@required Board board, Solution solution, int startValue})
       : gameInfo = GameInfo(
             board: board,
             solution: solution,
@@ -51,7 +51,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    showResultScreen() {
+    void showResultScreen() {
       UserAnswer userAnswer = gameInfo.userAnswer.value;
       gameInfo.gameOngoing = false;
 
@@ -59,7 +59,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
       Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
+          MaterialPageRoute<Null>(
               builder: (context) =>
                   ResultScreen(gameInfo.board, gameInfo.solution, userAnswer)));
     }
@@ -87,12 +87,12 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   }
 
   @override
-  dispose() {
+  void dispose() {
     disposeController();
     super.dispose();
   }
 
-  disposeController() {
+  void disposeController() {
     if (!controllerDisposed) {
       _controller.dispose();
       controllerDisposed = true;

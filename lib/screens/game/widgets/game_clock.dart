@@ -2,7 +2,7 @@ import 'package:bnoggles/utils/helper/helper.dart';
 import 'package:flutter/material.dart';
 
 class Clock extends StatelessWidget {
-  final showResultScreen;
+  final VoidCallback showResultScreen;
   final AnimationController _controller;
   final int startTime;
 
@@ -30,7 +30,7 @@ class Countdown extends AnimatedWidget {
   Countdown({Key key, this.animation}) : super(key: key, listenable: animation);
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Container(
       color: animation.value <= 30
           ? (animation.value <= 10 ? Colors.red : Colors.orange)

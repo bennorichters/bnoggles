@@ -16,13 +16,13 @@ void main() {
 
     Board b = Board(2, rlg);
 
-    Set allChars = Set();
+    var allChars = Set<String>();
     allChars.add(b.characterAt(Coordinate(0, 0)));
     allChars.add(b.characterAt(Coordinate(0, 1)));
     allChars.add(b.characterAt(Coordinate(1, 0)));
     allChars.add(b.characterAt(Coordinate(1, 1)));
 
-    expect(allChars, Set.from(['a', 'b', 'c', 'd']));
+    expect(allChars, Set.of(['a', 'b', 'c', 'd']));
   });
 
   test('mapNeighbours', () {
@@ -32,7 +32,7 @@ void main() {
     Board b = Board(3, rlg);
     var neighbours = b.mapNeighbours();
 
-    e(Coordinate actual, List<Coordinate> expected) {
+    void e(Coordinate actual, List<Coordinate> expected) {
       expect(neighbours[actual].toSet(), expected.toSet());
     }
 

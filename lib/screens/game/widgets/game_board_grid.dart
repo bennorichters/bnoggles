@@ -25,7 +25,7 @@ class GridState extends State<Grid> {
 
   GridState(this.neigbours);
 
-  _start(PointerEvent event) {
+  void _start(PointerEvent event) {
     _validStart = Provider.of(_key.currentContext).gameOngoing;
 
     if (_validStart) {
@@ -33,13 +33,13 @@ class GridState extends State<Grid> {
     }
   }
 
-  _move(PointerEvent event) {
+  void _move(PointerEvent event) {
     if (_validStart) {
       _itemHit(event);
     }
   }
 
-  _itemHit(PointerEvent event) {
+  void _itemHit(PointerEvent event) {
     final RenderBox box = _key.currentContext.findRenderObject();
     final result = HitTestResult();
     Offset local = box.globalToLocal(event.position);
@@ -99,8 +99,8 @@ class GridState extends State<Grid> {
 
     num mediaWidth = MediaQuery.of(context).size.width;
     num cellWidth = mediaWidth / board.width;
-    num padding = cellWidth / 8;
-    num textSize = cellWidth / 4;
+    double padding = cellWidth / 8;
+    double textSize = cellWidth / 4;
 
     return Container(
         key: _key,
@@ -123,8 +123,9 @@ class GridState extends State<Grid> {
 class HittableCenteredCharacter extends CenteredCharacter {
   final double padding;
 
-  HittableCenteredCharacter(this.padding, textSize) : super(textSize);
+  HittableCenteredCharacter(this.padding, double textSize) : super(textSize);
 
+  @override
   Widget create({
     String character,
     bool selected,

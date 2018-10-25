@@ -14,9 +14,7 @@ class WordWindow extends StatelessWidget {
         height: 50.0,
         child: ListView(
           scrollDirection: Axis.horizontal,
-          children: userAnswer
-              .found
-              .reversed
+          children: userAnswer.found.reversed
               .map((a) => _UserWordFeedback(a))
               .toList(),
         ));
@@ -34,10 +32,9 @@ class _UserWordFeedback extends StatelessWidget {
   _UserWordFeedback(this._userWord);
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Container(
-        margin:
-            const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 5.0),
+        margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 5.0),
         padding: new EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),

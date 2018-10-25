@@ -5,11 +5,11 @@ import 'dictionary.dart';
 
 import 'process_aff.dart';
 
-main(List<String> arguments) async {
+void main(List<String> arguments) async {
   processDic();
 }
 
-processDic() async {
+void processDic() async {
   List<String> words = await readFile();
 
   List<Map<String, Set<Affix>>> affixes = await processAff();
@@ -19,10 +19,10 @@ processDic() async {
   _DictInterpreter dict = _DictInterpreter(words, prefixes, suffixes);
   dict.process();
 
-  await writeAll(dict.result);
+  writeAll(dict.result);
 }
 
-writeAll(Set<AffixedWordContainer> containers) async {
+void writeAll(Set<AffixedWordContainer> containers) async {
   List<AffixedWord> all = [];
   for (var container in containers) {
     for (int i = 0; i < container.length; i++) {
@@ -58,7 +58,7 @@ class _DictInterpreter {
 
   _DictInterpreter(this._lines, this._prefixes, this._suffixes);
 
-  process() {
+  void process() {
     _lines.forEach((e) => result.add(parseLine(e)));
   }
 
