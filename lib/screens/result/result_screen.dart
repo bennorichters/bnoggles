@@ -14,6 +14,7 @@ class ResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int score = calculateScore(solution, userAnswer);
+    int maxScore = calculateScore(solution, solution);
 
     var tiles = solution.uniqueWordsSorted().map((w) {
       return ListTile(
@@ -54,7 +55,7 @@ class ResultScreen extends StatelessWidget {
               Center(
                   child: Container(
                       child: Text(
-                "$score",
+                "$score / $maxScore",
                 style: TextStyle(fontSize: 100.0),
               ))),
               Container(
