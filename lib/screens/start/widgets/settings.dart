@@ -1,4 +1,5 @@
 import 'package:bnoggles/screens/start/widgets/board_size_slider.dart';
+import 'package:bnoggles/screens/start/widgets/length_slider.dart';
 import 'package:bnoggles/screens/start/widgets/time_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -12,8 +13,9 @@ const int _maxLength = 8;
 class SettingsGrid extends StatelessWidget {
   final ValueNotifier<int> _time;
   final ValueNotifier<int> _size;
+  final ValueNotifier<int> _length;
 
-  SettingsGrid(this._time, this._size);
+  SettingsGrid(this._time, this._size, this._length);
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,20 @@ class SettingsGrid extends StatelessWidget {
                 TableCell(child: BoardIcon()),
                 TableCell(child: BoardText(size: _size)),
                 TableCell(child: BoardSizeSlider()),
+              ],
+            ),
+            TableRow(
+              children: [
+                Container(height: 50.0),
+                Container(),
+                Container(),
+              ],
+            ),
+            TableRow(
+              children: [
+                TableCell(child: LengthIcon()),
+                TableCell(child: LengthText(length: _length)),
+                TableCell(child: LengthSlider()),
               ],
             ),
             TableRow(
