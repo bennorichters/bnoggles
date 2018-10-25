@@ -1,3 +1,4 @@
+import 'package:bnoggles/widgets/board_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -92,12 +93,6 @@ class GridState extends State<Grid> {
     });
   }
 
-  static _indexToXY(int index, int width) {
-    int y = (index / width).floor();
-    int x = index - (y * width).floor();
-    return [x, y];
-  }
-
   @override
   Widget build(BuildContext context) {
     Board board = Provider.of(context).board;
@@ -110,45 +105,54 @@ class GridState extends State<Grid> {
 
     CenteredCharacter cc = HittableCenteredCharacter(padding, textSize);
 
+    return buildContainer(board, cc);
+  }
+
+  Container buildContainer(Board board, CenteredCharacter cc) {
+    int width = board.width;
     return Container(
+        key: _key,
         margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
         child: Listener(
           onPointerDown: _start,
           onPointerMove: _move,
           onPointerUp: _finish,
           child: Container(
-            child: GridView.builder(
-              shrinkWrap: true,
-              key: _key,
-              itemCount: (width * width),
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: width,
-                childAspectRatio: 1.0,
-                crossAxisSpacing: 5.0,
-                mainAxisSpacing: 5.0,
-              ),
-              itemBuilder: (context, index) {
-                var xy = _indexToXY(index, width);
-                Coordinate position = Coordinate(xy[0], xy[1]);
-                bool selected = _selectedPositions.contains(position);
-                String character = board.characterAt(position);
-                return Container(
-                  decoration: new BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    border:
-                        new Border.all(width: 5.0, color: Colors.blueAccent),
-                    color: (selected ? Colors.lightBlueAccent : Colors.white),
-                  ),
-                  child: cc.create(
-                      position: position,
-                      selected: selected,
-                      character: character),
-                );
-              },
+            child: BoardWidget(
+              board: board,
+              centeredCharacter: cc,
+              selectedPositions: _selectedPositions,
             ),
           ),
         ));
+  }
+}
+
+class HittableCenteredCharacter extends CenteredCharacter {
+  final double padding;
+
+  HittableCenteredCharacter(this.padding, textSize) : super(textSize);
+
+  Widget create({
+    String character,
+    bool selected,
+    Coordinate position,
+  }) {
+    Widget child = super
+        .create(character: character, selected: selected, position: position);
+
+    return Padding(
+      padding: new EdgeInsets.all(padding),
+      child: _PositionedWidget(
+        position: position,
+        child: Container(
+          // Without this line the interface is unresponsive. Not sure why.
+          color: selected ? Colors.lightBlueAccent : Colors.white,
+
+          child: child,
+        ),
+      ),
+    );
   }
 }
 
@@ -172,51 +176,4 @@ class _PositionedWidget extends SingleChildRenderObjectWidget {
 
 class _PositionedRenderObject extends RenderProxyBox {
   Coordinate position;
-}
-
-class CenteredCharacter {
-  final double textSize;
-
-  CenteredCharacter(this.textSize);
-
-  Widget create({
-    Coordinate position,
-    String character,
-    bool selected,
-  }) {
-    return Center(
-        child: Text(character.toUpperCase(),
-            style: TextStyle(
-                fontSize: textSize,
-                fontWeight: FontWeight.bold,
-                color: (selected ? Colors.white : Colors.black))));
-  }
-}
-
-class HittableCenteredCharacter extends CenteredCharacter {
-  final double padding;
-
-  HittableCenteredCharacter(this.padding, textSize) : super(textSize);
-
-  Widget create({
-    Coordinate position,
-    String character,
-    bool selected,
-  }) {
-    Widget child = super
-        .create(position: position, character: character, selected: selected);
-
-    return Padding(
-      padding: new EdgeInsets.all(padding),
-      child: _PositionedWidget(
-        position: position,
-        child: Container(
-          // Without this line the interface is unresponsive. Not sure why.
-          color: selected ? Colors.lightBlueAccent : Colors.white,
-
-          child: child,
-        ),
-      ),
-    );
-  }
 }
