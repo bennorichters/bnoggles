@@ -1,12 +1,15 @@
+import 'package:bnoggles/utils/board.dart';
+import 'package:bnoggles/widgets/board_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bnoggles/utils/solution.dart';
 
 class ResultScreen extends StatelessWidget {
+  final Board board;
   final Solution solution;
   final UserAnswer userAnswer;
 
-  ResultScreen(this.solution, this.userAnswer);
+  ResultScreen(this.board, this.solution, this.userAnswer);
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +57,13 @@ class ResultScreen extends StatelessWidget {
               "$score",
               style: TextStyle(fontSize: 100.0),
             ))),
+            Container(
+              width: 300.0,
+                child: BoardWidget(
+              selectedPositions: [],
+              board: board,
+              centeredCharacter: CenteredCharacter(20.0),
+            )),
             FloatingActionButton(
               onPressed: () {
                 Navigator.popUntil(
