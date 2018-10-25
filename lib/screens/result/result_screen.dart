@@ -49,36 +49,36 @@ class ResultScreen extends StatelessWidget {
                   BoxDecoration(border: Border.all(color: Colors.black)),
               width: 150.0,
               child: ListView(children: divided)),
-          Expanded(child: Container()),
-          Column(children: [
-            Center(
-                child: Container(
-                    child: Text(
-              "$score",
-              style: TextStyle(fontSize: 100.0),
-            ))),
-            Container(
-              width: 300.0,
-                child: BoardWidget(
-              selectedPositions: [],
-              board: board,
-              centeredCharacter: CenteredCharacter(20.0),
-            )),
-            FloatingActionButton(
-              onPressed: () {
-                Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName));
-              },
-              child: Icon(Icons.home),
-            ),
-          ]),
-          Expanded(child: Container()),
+          Expanded(
+            child: Column(children: [
+              Center(
+                  child: Container(
+                      child: Text(
+                "$score",
+                style: TextStyle(fontSize: 100.0),
+              ))),
+              Container(
+                  margin: const EdgeInsets.all(10.0),
+                  child: BoardWidget(
+                    selectedPositions: [],
+                    board: board,
+                    centeredCharacter: CenteredCharacter(20.0),
+                  )),
+              FloatingActionButton(
+                onPressed: () {
+                  Navigator.popUntil(
+                      context, ModalRoute.withName(Navigator.defaultRouteName));
+                },
+                child: Icon(Icons.home),
+              ),
+            ]),
+          ),
         ]),
       ),
     );
   }
 
-  int calculateScore(Solution solution, UserAnswer userAnswer) {
+  int calculateScore(Solution solution, Answer userAnswer) {
     int result = 0;
     for (String word in userAnswer.uniqueWords()) {
       result += word.length * 2;
