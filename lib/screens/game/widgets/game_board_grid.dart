@@ -96,20 +96,12 @@ class GridState extends State<Grid> {
   @override
   Widget build(BuildContext context) {
     Board board = Provider.of(context).board;
-    int width = board.width;
 
     num mediaWidth = MediaQuery.of(context).size.width;
-    num cellWidth = mediaWidth / width;
+    num cellWidth = mediaWidth / board.width;
     num padding = cellWidth / 8;
     num textSize = cellWidth / 4;
 
-    CenteredCharacter cc = HittableCenteredCharacter(padding, textSize);
-
-    return buildContainer(board, cc);
-  }
-
-  Container buildContainer(Board board, CenteredCharacter cc) {
-    int width = board.width;
     return Container(
         key: _key,
         margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
@@ -120,7 +112,7 @@ class GridState extends State<Grid> {
           child: Container(
             child: BoardWidget(
               board: board,
-              centeredCharacter: cc,
+              centeredCharacter: HittableCenteredCharacter(padding, textSize),
               selectedPositions: _selectedPositions,
             ),
           ),
