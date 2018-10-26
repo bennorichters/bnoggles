@@ -1,15 +1,30 @@
 import 'package:bnoggles/utils/board.dart';
+import 'package:bnoggles/utils/coordinate.dart';
 import 'package:bnoggles/widgets/board_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bnoggles/utils/solution.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget {
   final Board board;
   final Solution solution;
   final UserAnswer userAnswer;
 
   ResultScreen(this.board, this.solution, this.userAnswer);
+
+  @override
+  State<StatefulWidget> createState() =>
+      ResultScreenState(board, solution, userAnswer);
+}
+
+class ResultScreenState extends State<ResultScreen> {
+  final Board board;
+  final Solution solution;
+  final UserAnswer userAnswer;
+
+  List<Coordinate> highlightedTiles = [];
+
+  ResultScreenState(this.board, this.solution, this.userAnswer);
 
   @override
   Widget build(BuildContext context) {
@@ -18,26 +33,39 @@ class ResultScreen extends StatelessWidget {
 
     double wordViewWidth = 150.0;
     double mediaWidth = MediaQuery.of(context).size.width;
-    var secondColumnWidth = (mediaWidth - wordViewWidth);
+    double secondColumnWidth = (mediaWidth - wordViewWidth);
     double cellWidth = secondColumnWidth / board.width;
 
-    var tiles = solution.uniqueWordsSorted().map((w) {
-      return ListTile(
+    Map<String, List<Coordinate>> optionPerWord = Map.fromIterable(
+        solution.chains,
+        key: (dynamic chain) => (chain as Chain).text,
+        value: (dynamic chain) => (chain as Chain).chain);
+
+    void doSomething(String word) {
+      setState(() {
+        highlightedTiles = optionPerWord[word];
+      });
+    }
+
+    var tiles = solution.uniqueWordsSorted().map((word) => ListTile(
           dense: true,
           contentPadding: EdgeInsets.all(5.0),
           title: Container(
               padding: EdgeInsets.all(5.0),
               decoration: BoxDecoration(
-                  color: userAnswer.contains(w)
+                  color: userAnswer.contains(word)
                       ? Colors.green
                       : Colors.lightBlueAccent,
                   borderRadius: BorderRadius.all(Radius.circular(5.0))),
-              child: Text(w.toUpperCase(),
+              child: Text(word.toUpperCase(),
                   style: TextStyle(
-                      color: userAnswer.contains(w)
+                      color: userAnswer.contains(word)
                           ? Colors.white
-                          : Colors.black))));
-    });
+                          : Colors.black))),
+          onTap: () {
+            doSomething(word);
+          },
+        ));
 
     final List<Widget> divided = ListTile.divideTiles(
       context: context,
@@ -66,7 +94,7 @@ class ResultScreen extends StatelessWidget {
               Container(
                   margin: const EdgeInsets.all(10.0),
                   child: BoardWidget(
-                    selectedPositions: [],
+                    selectedPositions: highlightedTiles,
                     board: board,
                     centeredCharacter: CenteredCharacter(cellWidth),
                   )),

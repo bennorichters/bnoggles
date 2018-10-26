@@ -59,7 +59,7 @@ class UserAnswer extends Answer {
 }
 
 class Solution extends Answer {
-  final Set<Chain> _words;
+  final Set<Chain> _chains;
   final int minimalLength;
 
   factory Solution(Board board, Dictionary dict, int minimalLength) {
@@ -67,10 +67,12 @@ class Solution extends Answer {
         _Problem(board, dict, minimalLength).find(), minimalLength);
   }
 
-  Solution._internal(this._words, this.minimalLength);
+  Solution._internal(this._chains, this.minimalLength);
+
+  Set<Chain> get chains => Set.from(_chains);
 
   @override
-  Set<String> uniqueWords() => _words.map((e) => e.text).toSet();
+  Set<String> uniqueWords() => _chains.map((e) => e.text).toSet();
 
   int _compareWords(String a, String b) {
     var compareLength = a.length.compareTo(b.length);
