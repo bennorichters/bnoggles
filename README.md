@@ -1,8 +1,7 @@
-# bnoggles
+# Bnoggles
 
-A new Flutter application.
+A word game for iOS and Android based on [Boggle](https://en.wikipedia.org/wiki/Boggle). It is based on the [Flutter](https://flutter.io/) application development SDK.
 
-## Getting Started
+## Status
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+This project is work in progress. 
