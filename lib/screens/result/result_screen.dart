@@ -80,13 +80,18 @@ class ResultScreen extends StatelessWidget {
   }
 
   int calculateScore(Solution solution, Answer userAnswer) {
+    var goodAnswerCount = solution.uniqueWords().length;
+    if (goodAnswerCount == 0) {
+      return 0;
+    }
+
     int result = 0;
     for (String word in userAnswer.uniqueWords()) {
       result += word.length * 2;
     }
 
     var percentageFound =
-        (userAnswer.uniqueWords().length / solution.uniqueWords().length);
+        (userAnswer.uniqueWords().length / goodAnswerCount);
 
     result = (result * percentageFound * percentageFound).round();
 
