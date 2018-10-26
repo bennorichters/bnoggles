@@ -9,9 +9,9 @@ import 'package:bnoggles/utils/solution.dart';
 class MockBoard extends Mock implements Board {}
 
 void main() {
-  test('unqueWordsSorted', () {
+  test('uniqueWordsSorted', () {
     Solution s = createSolution();
-    expect(s.uniqueWordsSorted().toSet(), Set.from(['ab', 'bc', 'dab']));
+    expect(s.uniqueWordsSorted().toSet(), Set.of(<String>['ab', 'bc', 'dab']));
   });
 
   test('wordsPerSizeCount', () {
@@ -45,7 +45,7 @@ void main() {
     expect(a.found[0].eval, Evaluation.good);
     expect(a.found[1].word, "def");
     expect(a.found[1].eval, Evaluation.wrong);
-    
+
     a = UserAnswer(a, "abc", true);
     expect(a.found.length, 3);
     expect(a.found[0].word, "abc");

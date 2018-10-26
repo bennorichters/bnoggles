@@ -56,10 +56,11 @@ class NumberInfo extends StatelessWidget {
   NumberInfo(this.number);
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Container(
       color: Colors.blueGrey,
-      child: Center(child: Text(number, style: TextStyle(color: Colors.white70))),
+      child:
+          Center(child: Text(number, style: TextStyle(color: Colors.white70))),
     );
   }
 }
@@ -85,7 +86,7 @@ class UserAnswerNumberInfo extends StatelessWidget {
   UserAnswerNumberInfo(this.length);
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     var gameInfo = Provider.of(context);
     Solution solution = gameInfo.solution;
     Answer answer = gameInfo.userAnswer.value;
@@ -105,5 +106,3 @@ class UserAnswerNumberInfo extends StatelessWidget {
       ? answer.countForMinLength(length)
       : answer.countForLength(length);
 }
-
-

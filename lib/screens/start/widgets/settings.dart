@@ -4,12 +4,6 @@ import 'package:bnoggles/screens/start/widgets/time_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:bnoggles/screens/game/widgets/provider.dart';
-
-import 'package:bnoggles/utils/solution.dart';
-
-const int _maxLength = 8;
-
 class SettingsGrid extends StatelessWidget {
   final ValueNotifier<int> _time;
   final ValueNotifier<int> _size;
@@ -29,7 +23,6 @@ class SettingsGrid extends StatelessWidget {
             2: FlexColumnWidth(),
           },
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-
           children: [
             TableRow(
               children: [

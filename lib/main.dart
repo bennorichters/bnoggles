@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome, rootBundle;
+import 'package:flutter/services.dart'
+    show DeviceOrientation, SystemChrome, rootBundle;
 
 import 'package:bnoggles/screens/start/start_screen.dart';
 
@@ -12,12 +13,12 @@ import 'package:bnoggles/utils/dictionary.dart';
 void main() async {
   var res = await setup();
 
-  runApp(MyApp(res[0], res[1]));
+  runApp(MyApp(res));
 }
 
-setup() async {
+Future<Configuration> setup() async {
   String configJson = await loadConfigJson();
-  var config = json.decode(configJson);
+  Map<String, dynamic> config = json.decode(configJson);
 
   Map<String, int> _freq = getFreq(config);
   var generator = RandomLetterGenerator(_freq);
@@ -25,13 +26,13 @@ setup() async {
   String words = await loadDictionary();
   Dictionary dict = Dictionary(words.split("\n")..sort());
 
-  return [generator, dict];
+  return Configuration(generator, dict);
 }
 
-Map<String, int> getFreq(var config) {
-  Map<String, int> result = Map();
+Map<String, int> getFreq(Map<String, dynamic> config) {
+  var result = <String, int>{};
   Map<String, dynamic> m = config['letterFrequencies'];
-  m.forEach((k, e) => result[k] = e);
+  m.forEach((k, dynamic e) => result[k] = e as int);
 
   return result;
 }
@@ -51,12 +52,17 @@ Future<Dictionary> readDutchWords(String fileName) async {
   return Dictionary(contents);
 }
 
-class MyApp extends StatelessWidget {
-
+class Configuration {
   final RandomLetterGenerator generator;
   final Dictionary dictionary;
 
-  MyApp(this.generator, this.dictionary);
+  Configuration(this.generator, this.dictionary);
+}
+
+class MyApp extends StatelessWidget {
+  final Configuration configuration;
+
+  MyApp(this.configuration);
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +74,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Bnoggles',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: StartScreen(dictionary: dictionary, generator: generator),
+      home: StartScreen(
+          dictionary: configuration.dictionary,
+          generator: configuration.generator),
     );
   }
 }

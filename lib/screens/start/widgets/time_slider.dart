@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class TimeIcon extends StatelessWidget {
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Icon(Icons.timer, size: 40.0);
   }
 }
@@ -19,15 +19,15 @@ class TimeText extends StatefulWidget {
 
 class _TimeTextState extends State<TimeText> {
   @override
-  initState() {
+  void initState() {
     super.initState();
     widget.time.addListener(didValueChange);
   }
 
-  didValueChange() => setState(() {});
+  void didValueChange() => setState(() {});
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Text(
       formatTime(widget.time.value),
       style: TextStyle(fontSize: 20.0),
@@ -45,20 +45,20 @@ class _TimeSliderState extends State<TimeSlider> {
 
   double _value = _startTime + .0;
 
-  _onChanged(double value) {
+  void _onChanged(double value) {
     setState(() {
       _value = value;
     });
   }
 
-  _onChangedEnd(double value, BuildContext context) {
+  void _onChangedEnd(double value, BuildContext context) {
     StartScreenState startScreen =
         context.ancestorStateOfType(const TypeMatcher<StartScreenState>());
     startScreen.setTime(value.floor());
   }
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Slider(
       value: _value,
       min: 30.0,

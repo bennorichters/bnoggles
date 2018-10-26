@@ -6,9 +6,9 @@ void main() {
   var origin = Coordinate(0, 0);
 
   test('+', () {
-     expect(origin + Coordinate(0, -1), Coordinate(0, -1));
-     expect(origin + Coordinate(1, 0), Coordinate(1, 0));
-     expect(origin + Coordinate(1, 5), Coordinate(1, 5));
+    expect(origin + Coordinate(0, -1), Coordinate(0, -1));
+    expect(origin + Coordinate(1, 0), Coordinate(1, 0));
+    expect(origin + Coordinate(1, 5), Coordinate(1, 5));
   });
 
   test('allNeighbours simple', () {
@@ -37,6 +37,6 @@ void main() {
   });
 }
 
-testEqualSets(Iterable actual, Iterable matcher) {
+void testEqualSets(Iterable actual, Iterable matcher) {
   expect(actual.toSet(), matcher.toSet());
 }

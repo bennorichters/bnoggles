@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 class LengthIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Icon(Icons.text_rotation_none, size: 40.0,);
+    return Icon(
+      Icons.text_rotation_none,
+      size: 40.0,
+    );
   }
 }
 
@@ -27,8 +30,7 @@ class LengthTextState extends State<LengthText> {
 
   @override
   Widget build(BuildContext context) {
-    return Text('${widget.length.value}+',
-        style: TextStyle(fontSize: 20.0));
+    return Text('${widget.length.value}+', style: TextStyle(fontSize: 20.0));
   }
 }
 

@@ -48,7 +48,7 @@ class UserAnswer extends Answer {
 
   UserAnswer._internal(this.found);
 
-  static UserAnswer start() => UserAnswer._internal(List.unmodifiable([]));
+  static UserAnswer start() => UserAnswer._internal(const <UserWord>[]);
 
   @override
   Set<String> uniqueWords() =>
@@ -63,14 +63,16 @@ class Solution extends Answer {
   final int minimalLength;
 
   factory Solution(Board board, Dictionary dict, int minimalLength) {
-    return Solution._internal(_Problem(board, dict, minimalLength).find(), minimalLength);
+    return Solution._internal(
+        _Problem(board, dict, minimalLength).find(), minimalLength);
   }
 
   Solution._internal(this._words, this.minimalLength);
 
+  @override
   Set<String> uniqueWords() => _words.map((e) => e.text).toSet();
 
-  num _compareWords(String a, String b) {
+  int _compareWords(String a, String b) {
     var compareLength = a.length.compareTo(b.length);
     return (compareLength == 0) ? a.compareTo(b) : compareLength;
   }
@@ -85,16 +87,18 @@ class _Problem {
   final Board board;
   final Dictionary dict;
   final int minimalLength;
-  final Map neighbours;
+  final Map<Coordinate, Iterable<Coordinate>> neighbours;
 
   Queue<Chain> candidates;
   Set<Chain> words;
 
   factory _Problem(Board board, Dictionary dict, int minimalLength) {
-    return _Problem._internal(board, dict, minimalLength, board.mapNeighbours());
+    return _Problem._internal(
+        board, dict, minimalLength, board.mapNeighbours());
   }
 
-  _Problem._internal(this.board, this.dict, this.minimalLength, this.neighbours);
+  _Problem._internal(
+      this.board, this.dict, this.minimalLength, this.neighbours);
 
   Set<Chain> find() {
     initialCandidates();
@@ -103,7 +107,7 @@ class _Problem {
     while (candidates.isNotEmpty) {
       var candidate = candidates.removeFirst();
       var last = candidate._coordinates.last;
-      var allNeighbours = neighbours[last];
+      Iterable<Coordinate> allNeighbours = neighbours[last];
       allNeighbours
           .where((c) => !candidate._coordinates.contains(c))
           .forEach((c) => evaluateCandidate(candidate, c));
@@ -112,7 +116,7 @@ class _Problem {
     return words;
   }
 
-  initialCandidates() {
+  void initialCandidates() {
     candidates = ListQueue();
     var blank = Chain._blank();
     board.allCoordinates().forEach((c) => evaluateCandidate(blank, c));
@@ -138,17 +142,16 @@ class Chain {
   final List<Coordinate> _coordinates;
   final StringBuffer _text;
 
-  List<Coordinate> get chain => List.from(_coordinates);
-  String get text => _text.toString();
-
   Chain._blank()
       : _coordinates = [],
         _text = StringBuffer();
-
   Chain._extend(Chain head, Coordinate next, StringBuffer word)
       : _coordinates = List.of(head._coordinates)..add(next),
         _text = word;
 
+  List<Coordinate> get chain => List.from(_coordinates);
+  String get text => _text.toString();
+
   @override
-  toString() => '$_coordinates - $_text';
+  String toString() => '$_coordinates - $_text';
 }

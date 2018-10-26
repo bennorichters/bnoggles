@@ -7,7 +7,7 @@ class Board {
   final Map<Coordinate, String> cell;
 
   factory Board(int width, RandomLetterGenerator gen) {
-    var cell = {};
+    var cell = <Coordinate, String>{};
     for (var x = 0; x < width; x++) {
       for (var y = 0; y < width; y++) {
         cell[Coordinate(x, y)] = gen.next();
@@ -21,18 +21,19 @@ class Board {
 
   int get width => sqrt(cell.length).floor();
 
-  characterAt(Coordinate coordinate) => cell[coordinate];
+  String characterAt(Coordinate coordinate) => cell[coordinate];
 
   Iterable<Coordinate> allCoordinates() => cell.keys;
 
-  Map<Coordinate, Iterable<Coordinate>> mapNeighbours() =>
-      Map.unmodifiable(Map.fromIterable(allCoordinates(),
-          key: (item) => item,
-          value: (item) => item.allNeigbours(0, width - 1)));
+  Map<Coordinate, Iterable<Coordinate>> mapNeighbours() {
+    var contents = <Coordinate, Iterable<Coordinate>>{};
+    allCoordinates().forEach((c) => contents[c] = c.allNeigbours(0, width - 1));
+    return Map.unmodifiable(contents);
+  }
 
   @override
-  toString() {
-    var result = [];
+  String toString() {
+    var result = <String>[];
     for (var y = 0; y < width; y++) {
       var line = StringBuffer();
       for (var x = 0; x < width; x++) {

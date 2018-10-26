@@ -1,11 +1,13 @@
 import 'package:bnoggles/screens/start/start_screen.dart';
-import 'package:bnoggles/utils/helper/helper.dart';
 import 'package:flutter/material.dart';
 
 class BoardIcon extends StatelessWidget {
   @override
-  build(BuildContext context) {
-    return Icon(Icons.grid_on, size: 40.0,);
+  Widget build(BuildContext context) {
+    return Icon(
+      Icons.grid_on,
+      size: 40.0,
+    );
   }
 }
 
@@ -19,15 +21,15 @@ class BoardText extends StatefulWidget {
 
 class BoardTextState extends State<BoardText> {
   @override
-  initState() {
+  void initState() {
     super.initState();
     widget.size.addListener(didValueChange);
   }
 
-  didValueChange() => setState(() {});
+  void didValueChange() => setState(() {});
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Text('${widget.size.value} x ${widget.size.value}',
         style: TextStyle(fontSize: 20.0));
   }
@@ -43,20 +45,20 @@ class _BoardSizeSliderState extends State<BoardSizeSlider> {
 
   double _value = _startSize + .0;
 
-  _onChanged(double value) {
+  void _onChanged(double value) {
     setState(() {
       _value = value;
     });
   }
 
-  _onChangedEnd(double value, BuildContext context) {
+  void _onChangedEnd(double value, BuildContext context) {
     StartScreenState startScreen =
         context.ancestorStateOfType(const TypeMatcher<StartScreenState>());
     startScreen.setBoardWidth(value.floor());
   }
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Slider(
       value: _value,
       min: 3.0,

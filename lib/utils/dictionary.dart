@@ -8,7 +8,7 @@ class Dictionary {
   Dictionary(this._words);
 
   WordInfo getInfo(String word) {
-    num index = lowerBound(_words, word);
+    int index = lowerBound(_words, word);
 
     if (index == _words.length) return _notFoundDeadEnd;
 

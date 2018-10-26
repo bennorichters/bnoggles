@@ -4,8 +4,8 @@ import 'dart:io';
 import 'dictionary.dart';
 import 'clean_dict_file.dart';
 
-main(List<String> arguments) {
-  processAff();
+void main(List<String> arguments) async {
+  await processAff();
 }
 
 Future<List<Map<String, Set<Affix>>>> processAff() async {
@@ -31,7 +31,7 @@ class _AffixInterpreter {
 
   _AffixInterpreter(this._lines);
 
-  process() {
+  void process() {
     while (_lines.moveNext()) {
       route(_lines.current);
     }
@@ -67,7 +67,7 @@ class _AffixInterpreter {
     return singleSpaces.split(" ");
   }
 
-  parseHeader(String line) {
+  Map<String, dynamic> parseHeader(String line) {
     var elements = splitLine(line);
     assert(elements.length == 4, "unexpected format in header '$line'");
 
@@ -81,17 +81,24 @@ class _AffixInterpreter {
       int length = int.parse(elements[3]);
       assert(length > 0, "unexpected number of lines to follow '$line'");
 
-      return {"type": type, "name": name, "linesToFollow": length};
-    } on Exception catch (e) {
+      return <String, dynamic>{
+        "type": type,
+        "name": name,
+        "linesToFollow": length
+      };
+    } on Exception catch (_) {
       print("error parsing '$line'");
-      throw e;
+      rethrow;
     }
   }
 
-  void parseAffixLines(String header, affixAdder) {
+  void parseAffixLines(
+      String header,
+      void affixAdder(
+          String name, int toRemove, String toAdd, SuffixCondition condition)) {
     var headerInfo = parseHeader(header);
 
-    for (int i = 0; i < headerInfo["linesToFollow"]; i++) {
+    for (int i = 0; i < (headerInfo["linesToFollow"] as int); i++) {
       assert(_lines.moveNext(), "not enough lines below header '$header'");
       var elements = splitLine(_lines.current);
       assert(elements[0] == headerInfo["type"],
@@ -136,7 +143,7 @@ class _AffixInterpreter {
   bool isProperNameAffix(String name) => ['PN', 'PI', 'PJ'].contains(name);
 
   void startPrefix(String header) {
-    prefixAdder(
+    void prefixAdder(
         String name, int toRemove, String toAdd, SuffixCondition condition) {
       assert(toRemove == 0, "expected 0 for remove option in prefix");
       assert(condition == emptyCondition,
@@ -149,7 +156,7 @@ class _AffixInterpreter {
   }
 
   void startSuffix(String header) {
-    suffixAdder(
+    void suffixAdder(
         String name, int toRemove, String toAdd, SuffixCondition condition) {
       _suffixes
           .putIfAbsent(name, () => Set())
