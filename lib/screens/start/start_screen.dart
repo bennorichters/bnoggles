@@ -28,14 +28,15 @@ class StartScreenState extends State<StartScreen> {
 
   StartScreenState({@required this.generator, @required this.dictionary});
 
-  setBoardWidth(int value) {
+  void setBoardWidth(int value) {
     size.value = value;
   }
 
-  setTime(int value) {
+  void setTime(int value) {
     time.value = value;
   }
-  setLength(int value) {
+
+  void setLength(int value) {
     length.value = value;
   }
 
@@ -45,33 +46,35 @@ class StartScreenState extends State<StartScreen> {
       appBar: AppBar(
         title: Text("Bnoggles"),
       ),
-      body: Center(child: Container(
-        width: 500.0,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SettingsGrid(time, size, length),
-            Center(
-              child: FloatingActionButton(
-                onPressed: () {
-                  var board = Board(size.value, generator);
-                  var solution = Solution(board, dictionary, length.value);
+      body: Center(
+          child: Container(
+              width: 500.0,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SettingsGrid(time, size, length),
+                    Center(
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          var board = Board(size.value, generator);
+                          var solution =
+                              Solution(board, dictionary, length.value);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => GameScreen(
-                              board: board,
-                              solution: solution,
-                              startValue: time.value,
-                            )),
-                  );
-                },
-                child: Icon(Icons.forward),
-              ),
-            ),
-          ]))),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<Null>(
+                                builder: (context) => GameScreen(
+                                      board: board,
+                                      solution: solution,
+                                      startValue: time.value,
+                                    )),
+                          );
+                        },
+                        child: Icon(Icons.forward),
+                      ),
+                    ),
+                  ]))),
     );
   }
 }

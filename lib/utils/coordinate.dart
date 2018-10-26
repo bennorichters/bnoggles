@@ -29,7 +29,7 @@ class Coordinate {
       .map((d) => _neighbour(d))
       .where((c) => _withinBoundaries(c, min, max));
 
-  _withinBoundaries(Coordinate coordinate, num min, num max) =>
+  bool _withinBoundaries(Coordinate coordinate, num min, num max) =>
       ((coordinate.x >= min) &&
           (coordinate.x <= max) &&
           (coordinate.y >= min) &&
@@ -41,22 +41,22 @@ class Coordinate {
 
 enum _Direction {
   north,
-  north_east,
+  northEast,
   east,
-  south_east,
+  southEast,
   south,
-  south_west,
+  southWest,
   west,
-  north_west
+  northWest
 }
 
 final _neighbourVector = {
   _Direction.north: Coordinate(0, -1),
-  _Direction.north_east: Coordinate(1, -1),
+  _Direction.northEast: Coordinate(1, -1),
   _Direction.east: Coordinate(1, 0),
-  _Direction.south_east: Coordinate(1, 1),
+  _Direction.southEast: Coordinate(1, 1),
   _Direction.south: Coordinate(0, 1),
-  _Direction.south_west: Coordinate(-1, 1),
+  _Direction.southWest: Coordinate(-1, 1),
   _Direction.west: Coordinate(-1, 0),
-  _Direction.north_west: Coordinate(-1, -1),
+  _Direction.northWest: Coordinate(-1, -1),
 };

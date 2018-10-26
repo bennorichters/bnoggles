@@ -6,12 +6,12 @@ import 'package:flutter/rendering.dart';
 class GameProgress extends StatelessWidget {
   final AnimationController _controller;
   final int _startValue;
-  final _showResultScreen;
+  final VoidCallback _showResultScreen;
 
   GameProgress(this._controller, this._startValue, this._showResultScreen);
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(width: 280.0, height: 80.0, child: WordCountOverview()),
       Expanded(

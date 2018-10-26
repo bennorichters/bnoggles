@@ -20,7 +20,7 @@ class Prefix extends Affix {
   bool canBeAppliedTo(String word) => true;
 
   @override
-  bool operator ==(other) => other is Prefix && other._toAdd == _toAdd;
+  bool operator ==(dynamic other) => other is Prefix && other._toAdd == _toAdd;
 
   @override
   int get hashCode => _toAdd.hashCode;
@@ -33,7 +33,7 @@ class Suffix extends Affix {
   final int _toStrip;
   final SuffixCondition _condition;
 
-  Suffix(toAdd, this._toStrip, this._condition) : super(toAdd);
+  Suffix(String toAdd, this._toStrip, this._condition) : super(toAdd);
 
   @override
   bool canBeAppliedTo(String word) => _condition.match(word);
@@ -43,7 +43,7 @@ class Suffix extends Affix {
       text.substring(0, text.length - _toStrip) + _toAdd;
 
   @override
-  bool operator ==(other) =>
+  bool operator ==(dynamic other) =>
       other is Suffix &&
       other._toAdd == _toAdd &&
       other._toStrip == _toStrip &&
@@ -63,23 +63,22 @@ class SuffixCondition {
 
   const SuffixCondition(this._toMatch, this._negated);
 
-  match(String word) {
+  bool match(String word) {
     var endsWith = word.endsWith(_toMatch);
     return (_negated) ? !endsWith : endsWith;
   }
 
   @override
-  bool operator ==(other) =>
+  bool operator ==(dynamic other) =>
       other is SuffixCondition &&
-          other._toMatch == _toMatch &&
-          other._negated == _negated;
+      other._toMatch == _toMatch &&
+      other._negated == _negated;
 
   @override
-  int get hashCode =>
-      hash2(_toMatch.hashCode, _negated.hashCode);
+  int get hashCode => hash2(_toMatch.hashCode, _negated.hashCode);
 
   @override
-  toString() => '[$_toMatch - $_negated]';
+  String toString() => '[$_toMatch - $_negated]';
 }
 
 const SuffixCondition emptyCondition = SuffixCondition("", false);
@@ -110,7 +109,7 @@ class AffixedWordContainer {
   }
 
   @override
-  toString() => '$_base $_prefixes $_suffixes';
+  String toString() => '$_base $_prefixes $_suffixes';
 }
 
 class AffixedWord implements Comparable<AffixedWord> {
@@ -124,5 +123,5 @@ class AffixedWord implements Comparable<AffixedWord> {
       _container._word(_index).compareTo(other._container._word(other._index));
 
   @override
-  toString() => _container._word(_index);
+  String toString() => _container._word(_index);
 }

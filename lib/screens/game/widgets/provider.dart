@@ -12,18 +12,18 @@ class GameInfo {
   GameInfo(
       {this.board, this.solution, this.userAnswer, this.gameOngoing = true});
 
-  void addListener(listener) {
+  void addListener(VoidCallback listener) {
     userAnswer.addListener(listener);
   }
 
-  void removeListener(listener) {
+  void removeListener(VoidCallback listener) {
     userAnswer.removeListener(listener);
   }
 }
 
 class Provider extends StatefulWidget {
   final GameInfo gameInfo;
-  final child;
+  final Widget child;
 
   const Provider({this.gameInfo, this.child});
 
@@ -39,12 +39,12 @@ class Provider extends StatefulWidget {
 
 class _ProviderState extends State<Provider> {
   @override
-  initState() {
+  void initState() {
     super.initState();
     widget.gameInfo.addListener(didValueChange);
   }
 
-  didValueChange() => setState(() {});
+  void didValueChange() => setState(() {});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class _ProviderState extends State<Provider> {
   }
 
   @override
-  dispose() {
+  void dispose() {
     widget.gameInfo.removeListener(didValueChange);
     super.dispose();
   }
@@ -63,10 +63,9 @@ class _ProviderState extends State<Provider> {
 
 class _InheritedProvider extends InheritedWidget {
   final GameInfo gameInfo;
-  final child;
   final UserAnswer _userAnswerValue;
 
-  _InheritedProvider({this.gameInfo, this.child})
+  _InheritedProvider({this.gameInfo, Widget child})
       : _userAnswerValue = gameInfo.userAnswer.value,
         super(child: child);
 
