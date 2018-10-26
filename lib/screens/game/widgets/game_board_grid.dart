@@ -74,7 +74,7 @@ class GridState extends State<Grid> {
         word.write(board.characterAt(position));
       }
 
-      if (word.length >= 2) {
+      if (word.length >= gameInfo.solution.minimalLength) {
         var candidate = word.toString();
 
         UserAnswer old = gameInfo.userAnswer.value;

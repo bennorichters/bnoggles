@@ -60,12 +60,13 @@ class UserAnswer extends Answer {
 
 class Solution extends Answer {
   final Set<Chain> _words;
+  final int minimalLength;
 
-  factory Solution(Board board, Dictionary dict) {
-    return Solution._internal(_Problem(board, dict).find());
+  factory Solution(Board board, Dictionary dict, int minimalLength) {
+    return Solution._internal(_Problem(board, dict, minimalLength).find(), minimalLength);
   }
 
-  Solution._internal(this._words);
+  Solution._internal(this._words, this.minimalLength);
 
   Set<String> uniqueWords() => _words.map((e) => e.text).toSet();
 
@@ -83,16 +84,17 @@ class Solution extends Answer {
 class _Problem {
   final Board board;
   final Dictionary dict;
+  final int minimalLength;
   final Map neighbours;
 
   Queue<Chain> candidates;
   Set<Chain> words;
 
-  factory _Problem(Board board, Dictionary dict) {
-    return _Problem._internal(board, dict, board.mapNeighbours());
+  factory _Problem(Board board, Dictionary dict, int minimalLength) {
+    return _Problem._internal(board, dict, minimalLength, board.mapNeighbours());
   }
 
-  _Problem._internal(this.board, this.dict, this.neighbours);
+  _Problem._internal(this.board, this.dict, this.minimalLength, this.neighbours);
 
   Set<Chain> find() {
     initialCandidates();
@@ -125,7 +127,7 @@ class _Problem {
       var nextCandidate = Chain._extend(baseCandidate, coordinate, word);
       candidates.add(nextCandidate);
 
-      if (info.found) {
+      if (info.found && word.length >= minimalLength) {
         words.add(nextCandidate);
       }
     }

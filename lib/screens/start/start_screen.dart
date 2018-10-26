@@ -24,15 +24,19 @@ class StartScreenState extends State<StartScreen> {
 
   ValueNotifier<int> time = ValueNotifier(150);
   ValueNotifier<int> size = ValueNotifier(3);
+  ValueNotifier<int> length = ValueNotifier(2);
 
   StartScreenState({@required this.generator, @required this.dictionary});
 
-    setBoardWidth(int value) {
+  setBoardWidth(int value) {
     size.value = value;
   }
 
   setTime(int value) {
     time.value = value;
+  }
+  setLength(int value) {
+    length.value = value;
   }
 
   @override
@@ -47,12 +51,12 @@ class StartScreenState extends State<StartScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SettingsGrid(time, size),
+            SettingsGrid(time, size, length),
             Center(
               child: FloatingActionButton(
                 onPressed: () {
                   var board = Board(size.value, generator);
-                  var solution = Solution(board, dictionary);
+                  var solution = Solution(board, dictionary, length.value);
 
                   Navigator.push(
                     context,
