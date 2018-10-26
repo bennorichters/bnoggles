@@ -30,6 +30,22 @@ void main() {
     expect(s.countForMinLength(4), 0);
   });
 
+  test('wordsPerSizeCount minimal Length = 3', () {
+    Solution s = createSolution(minimalLength: 3);
+
+    expect(s.countForLength(0), 0);
+    expect(s.countForLength(1), 0);
+    expect(s.countForLength(2), 0);
+    expect(s.countForLength(3), 1);
+    expect(s.countForLength(4), 0);
+
+    expect(s.countForMinLength(0), 1);
+    expect(s.countForMinLength(1), 1);
+    expect(s.countForMinLength(2), 1);
+    expect(s.countForMinLength(3), 1);
+    expect(s.countForMinLength(4), 0);
+  });
+
   test('userAnswer.found', () {
     var a = UserAnswer.start();
     expect(a.found.length, 0);
@@ -69,7 +85,7 @@ void main() {
 
 class MockRandomLetterGenerator extends Mock implements RandomLetterGenerator {}
 
-Solution createSolution() {
+Solution createSolution({int minimalLength = 2}) {
   var allCoordinates = [
     Coordinate(0, 0),
     Coordinate(0, 1),
@@ -95,5 +111,5 @@ Solution createSolution() {
 
   Dictionary dict = Dictionary(['ab', 'bc', 'dab', 'xyz']);
 
-  return Solution(mockBoard, dict, 2);
+  return Solution(mockBoard, dict, minimalLength);
 }
