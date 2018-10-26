@@ -95,5 +95,5 @@ Solution createSolution() {
 
   Dictionary dict = Dictionary(['ab', 'bc', 'dab', 'xyz']);
 
-  return Solution(mockBoard, dict);
+  return Solution(mockBoard, dict, 2);
 }

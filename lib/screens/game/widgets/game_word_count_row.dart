@@ -31,7 +31,7 @@ class WordCountOverview extends StatelessWidget {
     );
   }
 
-  Widget fromIndex(int index, Answer solution) {
+  Widget fromIndex(int index, Solution solution) {
     int rowSize = (_maxLength - 1);
     int lastIndexRow1 = rowSize - 1;
 
@@ -44,7 +44,9 @@ class WordCountOverview extends StatelessWidget {
       }
       return NumberInfo(text);
     }
-
+    if (length < solution.minimalLength) {
+      return NoNumberInfo();
+    }
     return UserAnswerNumberInfo(length);
   }
 }
@@ -61,6 +63,21 @@ class NumberInfo extends StatelessWidget {
     );
   }
 }
+
+
+class NoNumberInfo extends StatelessWidget {
+  NoNumberInfo();
+
+  @override
+  build(BuildContext context) {
+    return Container(
+      color: Colors.blueGrey,
+      child: Center(child: Text('x', style: TextStyle(color: Colors.white70))),
+    );
+  }
+}
+
+
 
 class UserAnswerNumberInfo extends StatelessWidget {
   final int length;
