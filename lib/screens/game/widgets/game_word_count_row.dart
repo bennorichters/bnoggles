@@ -65,20 +65,17 @@ class NumberInfo extends StatelessWidget {
   }
 }
 
-
 class NoNumberInfo extends StatelessWidget {
   NoNumberInfo();
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Container(
       color: Colors.blueGrey,
       child: Center(child: Text('x', style: TextStyle(color: Colors.white70))),
     );
   }
 }
-
-
 
 class UserAnswerNumberInfo extends StatelessWidget {
   final int length;

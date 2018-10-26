@@ -95,11 +95,8 @@ class ResultScreen extends StatelessWidget {
       result += word.length * 2;
     }
 
-    var percentageFound =
-        (userAnswer.uniqueWords().length / goodAnswerCount);
-
+    var percentageFound = (userAnswer.uniqueWords().length / goodAnswerCount);
     result = (result * percentageFound * percentageFound).round();
-
     result += userAnswer.uniqueWords().length;
 
     return result;
