@@ -54,9 +54,8 @@ class BoardWidget extends StatelessWidget {
 }
 
 class CenteredCharacter {
-  final double textSize;
-
-  CenteredCharacter(this.textSize);
+  final double cellWidth;
+  CenteredCharacter(this.cellWidth);
 
   Widget create({
     String character,
@@ -66,7 +65,7 @@ class CenteredCharacter {
     return Center(
         child: Text(character.toUpperCase(),
             style: TextStyle(
-                fontSize: textSize,
+                fontSize: cellWidth / 4,
                 fontWeight: FontWeight.bold,
                 color: (selected ? Colors.white : Colors.black))));
   }

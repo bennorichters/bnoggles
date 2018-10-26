@@ -16,6 +16,11 @@ class ResultScreen extends StatelessWidget {
     int score = calculateScore(solution, userAnswer);
     int maxScore = calculateScore(solution, solution);
 
+    double wordViewWidth = 150.0;
+    double mediaWidth = MediaQuery.of(context).size.width;
+    var secondColumnWidth = (mediaWidth - wordViewWidth);
+    double cellWidth = secondColumnWidth / board.width;
+
     var tiles = solution.uniqueWordsSorted().map((w) {
       return ListTile(
           dense: true,
@@ -48,7 +53,7 @@ class ResultScreen extends StatelessWidget {
           Container(
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black)),
-              width: 150.0,
+              width: wordViewWidth,
               child: ListView(children: divided)),
           Expanded(
             child: Column(children: [
@@ -56,14 +61,14 @@ class ResultScreen extends StatelessWidget {
                   child: Container(
                       child: Text(
                 "$score / $maxScore",
-                style: TextStyle(fontSize: 100.0),
+                style: TextStyle(fontSize: secondColumnWidth / 8),
               ))),
               Container(
                   margin: const EdgeInsets.all(10.0),
                   child: BoardWidget(
                     selectedPositions: [],
                     board: board,
-                    centeredCharacter: CenteredCharacter(20.0),
+                    centeredCharacter: CenteredCharacter(cellWidth),
                   )),
               FloatingActionButton(
                 onPressed: () {
