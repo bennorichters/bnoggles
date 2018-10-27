@@ -1,12 +1,13 @@
+import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/widgets/board_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:bnoggles/screens/game/widgets/provider.dart';
 
-import 'package:bnoggles/utils/board.dart';
-import 'package:bnoggles/utils/coordinate.dart';
-import 'package:bnoggles/utils/solution.dart';
+import 'package:bnoggles/utils/gamelogic/board.dart';
+import 'package:bnoggles/utils/gamelogic/coordinate.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class Grid extends StatefulWidget {
   final Map<Coordinate, Iterable<Coordinate>> neighbours;

@@ -1,38 +1,35 @@
-import 'package:bnoggles/utils/board.dart';
-import 'package:bnoggles/utils/coordinate.dart';
+import 'package:bnoggles/screens/result/widgets/score.dart';
+import 'package:bnoggles/utils/game_info.dart';
+import 'package:bnoggles/utils/gamelogic/board.dart';
+import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/widgets/board_widget.dart';
+import 'package:bnoggles/widgets/start_game_button.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bnoggles/utils/solution.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class ResultScreen extends StatefulWidget {
-  final Board board;
-  final Solution solution;
-  final UserAnswer userAnswer;
-
-  ResultScreen(this.board, this.solution, this.userAnswer);
+  final GameInfo gameInfo;
+  ResultScreen({@required this.gameInfo});
 
   @override
-  State<StatefulWidget> createState() =>
-      ResultScreenState(board, solution, userAnswer);
+  State<StatefulWidget> createState() => ResultScreenState(gameInfo: gameInfo);
 }
 
 class ResultScreenState extends State<ResultScreen> {
-  final Board board;
-  final Solution solution;
-  final UserAnswer userAnswer;
-
+  final GameInfo gameInfo;
   List<Coordinate> highlightedTiles = [];
 
-  ResultScreenState(this.board, this.solution, this.userAnswer);
+  ResultScreenState({@required this.gameInfo});
 
   @override
   Widget build(BuildContext context) {
-    int score = calculateScore(solution, userAnswer);
-    int maxScore = calculateScore(solution, solution);
+    Solution solution = gameInfo.solution;
+    UserAnswer userAnswer = gameInfo.userAnswer.value;
+    Board board = gameInfo.board;
 
-    double wordViewWidth = 150.0;
     double mediaWidth = MediaQuery.of(context).size.width;
+    double wordViewWidth = mediaWidth / 6;
     double secondColumnWidth = (mediaWidth - wordViewWidth);
     double cellWidth = secondColumnWidth / board.width;
 
@@ -75,6 +72,7 @@ class ResultScreenState extends State<ResultScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bnoggles"),
+        leading: new Container(),
       ),
       body: Center(
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -84,49 +82,48 @@ class ResultScreenState extends State<ResultScreen> {
               width: wordViewWidth,
               child: ListView(children: divided)),
           Expanded(
-            child: Column(children: [
-              Center(
-                  child: Container(
-                      child: Text(
-                "$score / $maxScore",
-                style: TextStyle(fontSize: secondColumnWidth / 8),
-              ))),
-              Container(
-                  margin: const EdgeInsets.all(10.0),
-                  child: BoardWidget(
-                    selectedPositions: highlightedTiles,
-                    board: board,
-                    centeredCharacter: CenteredCharacter(cellWidth),
-                  )),
-              FloatingActionButton(
-                onPressed: () {
-                  Navigator.popUntil(
-                      context, ModalRoute.withName(Navigator.defaultRouteName));
-                },
-                child: Icon(Icons.home),
-              ),
-            ]),
-          ),
+            child: Column(
+              children: [
+                Expanded(
+                    child: Center(
+                        child: ScoreOverview(
+                  solution: solution,
+                  userAnswer: userAnswer,
+                  fontSize: secondColumnWidth / 25,
+                ))),
+                Container(
+                    margin: const EdgeInsets.all(10.0),
+                    child: BoardWidget(
+                      selectedPositions: highlightedTiles,
+                      board: board,
+                      centeredCharacter: CenteredCharacter(cellWidth),
+                    )),
+                Container(
+                    padding: EdgeInsets.all(20.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FloatingActionButton(
+                            heroTag: "home",
+                            onPressed: () {
+                              Navigator.popUntil(
+                                  context,
+                                  ModalRoute.withName(
+                                      Navigator.defaultRouteName));
+                            },
+                            child: Icon(Icons.home),
+                          ),
+                          Container(
+                            width: 20.0,
+                          ),
+                          StartGameButton(
+                              configuration: gameInfo.configuration),
+                        ]))
+              ],
+            ),
+          )
         ]),
       ),
     );
-  }
-
-  int calculateScore(Solution solution, Answer userAnswer) {
-    var goodAnswerCount = solution.uniqueWords().length;
-    if (goodAnswerCount == 0) {
-      return 0;
-    }
-
-    int result = 0;
-    for (String word in userAnswer.uniqueWords()) {
-      result += word.length * 2;
-    }
-
-    var percentageFound = (userAnswer.uniqueWords().length / goodAnswerCount);
-    result = (result * percentageFound * percentageFound).round();
-    result += userAnswer.uniqueWords().length;
-
-    return result;
   }
 }

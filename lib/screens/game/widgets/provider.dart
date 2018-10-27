@@ -1,28 +1,7 @@
+import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:bnoggles/utils/board.dart';
-import 'package:bnoggles/utils/solution.dart';
-
-class GameInfo {
-  final Board board;
-  final Solution solution;
-  final ValueNotifier<UserAnswer> userAnswer;
-  final List<String> randomWords;
-  bool gameOngoing;
-
-  GameInfo(
-      {this.board, Solution solution, this.userAnswer, this.gameOngoing = true})
-      : this.solution = solution,
-        randomWords = solution.uniqueWords().toList()..shuffle();
-
-  void addListener(VoidCallback listener) {
-    userAnswer.addListener(listener);
-  }
-
-  void removeListener(VoidCallback listener) {
-    userAnswer.removeListener(listener);
-  }
-}
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class Provider extends StatefulWidget {
   final GameInfo gameInfo;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:bnoggles/utils/solution.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class WordWindow extends StatefulWidget {
   final WordsProvider provider;

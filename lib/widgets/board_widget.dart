@@ -1,5 +1,5 @@
-import 'package:bnoggles/utils/board.dart';
-import 'package:bnoggles/utils/coordinate.dart';
+import 'package:bnoggles/utils/gamelogic/board.dart';
+import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:flutter/material.dart';
 
 class BoardWidget extends StatelessWidget {

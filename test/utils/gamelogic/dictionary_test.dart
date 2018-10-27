@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:bnoggles/utils/dictionary.dart';
+import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 
 void main() {
   test('RandomLetterGenerator', () {

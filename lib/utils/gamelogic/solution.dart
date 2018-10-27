@@ -1,8 +1,8 @@
 import 'dart:collection';
 
-import 'package:bnoggles/utils/board.dart';
-import 'package:bnoggles/utils/coordinate.dart';
-import 'package:bnoggles/utils/dictionary.dart';
+import 'package:bnoggles/utils/gamelogic/board.dart';
+import 'package:bnoggles/utils/gamelogic/coordinate.dart';
+import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 
 abstract class Answer {
   Set<String> uniqueWords();
