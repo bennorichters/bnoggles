@@ -7,10 +7,13 @@ class GameInfo {
   final Board board;
   final Solution solution;
   final ValueNotifier<UserAnswer> userAnswer;
+  final List<String> randomWords;
   bool gameOngoing;
 
   GameInfo(
-      {this.board, this.solution, this.userAnswer, this.gameOngoing = true});
+      {this.board, Solution solution, this.userAnswer, this.gameOngoing = true})
+      : this.solution = solution,
+        randomWords = solution.uniqueWords().toList()..shuffle();
 
   void addListener(VoidCallback listener) {
     userAnswer.addListener(listener);

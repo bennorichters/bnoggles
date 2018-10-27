@@ -27,18 +27,6 @@ class StartScreenState extends State<StartScreen> {
         dictionary = config.dictionary,
         generator = config.generator;
 
-  void setBoardWidth(int value) {
-    prefs.size.value = value;
-  }
-
-  void setTime(int value) {
-    prefs.time.value = value;
-  }
-
-  void setLength(int value) {
-    prefs.length.value = value;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

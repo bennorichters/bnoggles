@@ -54,7 +54,6 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     void showResultScreen() {
       UserAnswer userAnswer = gameInfo.userAnswer.value;
       gameInfo.gameOngoing = false;
-
       disposeController();
 
       Navigator.pushReplacement(
@@ -65,25 +64,52 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     }
 
     return Scaffold(
-        appBar:
-            AppBar(title: Text("Bnoggles"), leading: new Container(), actions: [
-          IconButton(
-            icon: Icon(Icons.stop),
-            color: Colors.red,
-            onPressed: () {
-              showResultScreen();
-            },
-          ),
-        ]),
-        body: Provider(
-            gameInfo: gameInfo,
-            child: Column(
-              children: [
-                GameProgress(_controller, _startValue, showResultScreen),
-                Expanded(child: Center(child: WordWindow())),
-                Grid(gameInfo.board.mapNeighbours()),
-              ],
-            )));
+      appBar:
+          AppBar(title: Text("Bnoggles"), leading: new Container(), actions: [
+        IconButton(
+          icon: Icon(Icons.stop),
+          color: Colors.red,
+          onPressed: () {
+            showResultScreen();
+          },
+        ),
+      ]),
+      body: Provider(
+        gameInfo: gameInfo,
+        child: Column(
+          children: [
+            GameProgress(_controller, _startValue, showResultScreen),
+            Expanded(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: _wordLines(true),
+            )),
+            Grid(gameInfo.board.mapNeighbours()),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _wordLines(bool hints) {
+    WordsProvider byUser = () => gameInfo.userAnswer.value.found.reversed
+        .map((a) => Word.fromUser(a))
+        .toList();
+
+    if (!hints) {
+      return [WordWindow(byUser, gameInfo.userAnswer)];
+    }
+
+    WordsProvider byGame = () => gameInfo.randomWords
+        .where((w) =>
+            !gameInfo.userAnswer.value.found.map((w) => w.word).contains(w))
+        .map((a) => Word.neutral(a))
+        .toList();
+
+    return [
+      WordWindow(byUser, gameInfo.userAnswer),
+      WordWindow(byGame, gameInfo.userAnswer),
+    ];
   }
 
   @override
