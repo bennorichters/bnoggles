@@ -1,3 +1,4 @@
+import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/widgets/board_widget.dart';
@@ -6,28 +7,25 @@ import 'package:flutter/material.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class ResultScreen extends StatefulWidget {
-  final Board board;
-  final Solution solution;
-  final UserAnswer userAnswer;
-
-  ResultScreen(this.board, this.solution, this.userAnswer);
+  final GameInfo gameInfo;
+  ResultScreen({@required this.gameInfo});
 
   @override
-  State<StatefulWidget> createState() =>
-      ResultScreenState(board, solution, userAnswer);
+  State<StatefulWidget> createState() => ResultScreenState(gameInfo: gameInfo);
 }
 
 class ResultScreenState extends State<ResultScreen> {
-  final Board board;
-  final Solution solution;
-  final UserAnswer userAnswer;
-
+  final GameInfo gameInfo;
   List<Coordinate> highlightedTiles = [];
 
-  ResultScreenState(this.board, this.solution, this.userAnswer);
+  ResultScreenState({@required this.gameInfo});
 
   @override
   Widget build(BuildContext context) {
+    Solution solution = gameInfo.solution;
+    UserAnswer userAnswer = gameInfo.userAnswer.value;
+    Board board = gameInfo.board;
+
     int score = calculateScore(solution, userAnswer);
     int maxScore = calculateScore(solution, solution);
 
@@ -48,24 +46,24 @@ class ResultScreenState extends State<ResultScreen> {
     }
 
     var tiles = solution.uniqueWordsSorted().map((word) => ListTile(
-      dense: true,
-      contentPadding: EdgeInsets.all(5.0),
-      title: Container(
-          padding: EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
-              color: userAnswer.contains(word)
-                  ? Colors.green
-                  : Colors.lightBlueAccent,
-              borderRadius: BorderRadius.all(Radius.circular(5.0))),
-          child: Text(word.toUpperCase(),
-              style: TextStyle(
+          dense: true,
+          contentPadding: EdgeInsets.all(5.0),
+          title: Container(
+              padding: EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
                   color: userAnswer.contains(word)
-                      ? Colors.white
-                      : Colors.black))),
-      onTap: () {
-        doSomething(word);
-      },
-    ));
+                      ? Colors.green
+                      : Colors.lightBlueAccent,
+                  borderRadius: BorderRadius.all(Radius.circular(5.0))),
+              child: Text(word.toUpperCase(),
+                  style: TextStyle(
+                      color: userAnswer.contains(word)
+                          ? Colors.white
+                          : Colors.black))),
+          onTap: () {
+            doSomething(word);
+          },
+        ));
 
     final List<Widget> divided = ListTile.divideTiles(
       context: context,
@@ -81,7 +79,7 @@ class ResultScreenState extends State<ResultScreen> {
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
               decoration:
-              BoxDecoration(border: Border.all(color: Colors.black)),
+                  BoxDecoration(border: Border.all(color: Colors.black)),
               width: wordViewWidth,
               child: ListView(children: divided)),
           Expanded(
@@ -89,9 +87,9 @@ class ResultScreenState extends State<ResultScreen> {
               Center(
                   child: Container(
                       child: Text(
-                        "$score / $maxScore",
-                        style: TextStyle(fontSize: secondColumnWidth / 8),
-                      ))),
+                "$score / $maxScore",
+                style: TextStyle(fontSize: secondColumnWidth / 8),
+              ))),
               Container(
                   margin: const EdgeInsets.all(10.0),
                   child: BoardWidget(
