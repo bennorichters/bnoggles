@@ -1,14 +1,15 @@
-import 'package:bnoggles/screens/start/widgets/integer_slider.dart';
-import 'package:bnoggles/utils/helper/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class SettingsGrid extends StatelessWidget {
-  final ValueNotifier<int> _time;
-  final ValueNotifier<int> _size;
-  final ValueNotifier<int> _length;
+import 'package:bnoggles/screens/start/widgets/integer_slider.dart';
+import 'package:bnoggles/screens/start/widgets/toggle_setting.dart';
+import 'package:bnoggles/utils/helper/helper.dart';
+import 'package:bnoggles/utils/preferences.dart';
 
-  SettingsGrid(this._time, this._size, this._length);
+class SettingsGrid extends StatelessWidget {
+  final Preferences preferences;
+
+  SettingsGrid(this.preferences);
 
   TableRow _emptyLine() => TableRow(
         children: [
@@ -21,29 +22,55 @@ class SettingsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(15.0),
-        margin: EdgeInsets.all(25.0),
-        child: Table(
-          columnWidths: {
-            0: FixedColumnWidth(50.0),
-            1: FixedColumnWidth(60.0),
-            2: FlexColumnWidth(),
-          },
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: [
-            TableRow(
-                children: IntSlider.create(
-                    _time, Icons.timer, formatTime, 30, 600, 19)),
-            _emptyLine(),
-            TableRow(
-                children: IntSlider.create(
-                    _size, Icons.grid_on, (i) => '$i x $i', 3, 6, 3)),
-            _emptyLine(),
-            TableRow(
-                children: IntSlider.create(
-                    _length, Icons.text_rotation_none, (i) => '$i+', 2, 4, 2)),
-            _emptyLine(),
-          ],
-        ));
+      padding: EdgeInsets.all(15.0),
+      margin: EdgeInsets.all(25.0),
+      child: Table(
+        columnWidths: {
+          0: FixedColumnWidth(50.0),
+          1: FixedColumnWidth(60.0),
+          2: FlexColumnWidth(),
+        },
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: [
+          TableRow(
+            children: IntSlider.create(
+              preferences.time,
+              Icons.timer,
+              formatTime,
+              min: 30,
+              max: 600,
+              stepSize: 30,
+            ),
+          ),
+          _emptyLine(),
+          TableRow(
+            children: IntSlider.create(
+              preferences.size,
+              Icons.grid_on,
+              (i) => '$i x $i',
+              min: 3,
+              max: 6,
+            ),
+          ),
+          _emptyLine(),
+          TableRow(
+            children: IntSlider.create(
+              preferences.length,
+              Icons.text_rotation_none,
+              (i) => '$i+',
+              min: 2,
+              max: 4,
+            ),
+          ),
+          _emptyLine(),
+          TableRow(
+            children: ToggleSetting.create(
+              preferences.hints,
+              Icons.assistant,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

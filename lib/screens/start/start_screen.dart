@@ -31,9 +31,7 @@ class StartScreenState extends State<StartScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SettingsGrid(
-                configuration.preferences.time,
-                configuration.preferences.size,
-                configuration.preferences.length,
+                configuration.preferences
               ),
               Center(
                 child: StartGameButton(configuration: configuration),

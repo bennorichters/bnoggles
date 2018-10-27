@@ -15,11 +15,17 @@ class StartGameButton extends StatelessWidget {
     return FloatingActionButton(
       heroTag: "playgame",
       onPressed: () {
+        var parameters = configuration.preferences.toParameters();
         var board = Board(
-            configuration.preferences.size.value, configuration.generator);
+          parameters.size,
+          configuration.generator,
+        );
 
-        var solution = Solution(board, configuration.dictionary,
-            configuration.preferences.length.value);
+        var solution = Solution(
+          board,
+          configuration.dictionary,
+          parameters.length,
+        );
 
         GameInfo gameInfo = GameInfo(
             configuration: configuration,

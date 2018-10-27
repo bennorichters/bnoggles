@@ -74,7 +74,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: _wordLines(true),
+                children: _wordLines(gameInfo.configuration.preferences.hints.value),
               ),
             ),
             Grid(gameInfo.board.mapNeighbours()),
