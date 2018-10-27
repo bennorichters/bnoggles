@@ -30,19 +30,13 @@ class ResultScreenState extends State<ResultScreen> {
 
     double mediaWidth = MediaQuery.of(context).size.width;
     double wordViewWidth = mediaWidth / 6;
-    double secondColumnWidth = (mediaWidth - wordViewWidth);
+    double secondColumnWidth = mediaWidth - wordViewWidth;
     double cellWidth = secondColumnWidth / board.width;
 
     Map<String, List<Coordinate>> optionPerWord = Map.fromIterable(
         solution.chains,
         key: (dynamic chain) => (chain as Chain).text,
         value: (dynamic chain) => (chain as Chain).chain);
-
-    void doSomething(String word) {
-      setState(() {
-        highlightedTiles = optionPerWord[word];
-      });
-    }
 
     List<Widget> tiles = solution.uniqueWordsSorted().map((word) => GestureDetector(
           child: Container(
@@ -60,7 +54,9 @@ class ResultScreenState extends State<ResultScreen> {
                           ? Colors.white
                           : Colors.black))),
           onTap: () {
-            doSomething(word);
+            setState(() {
+              highlightedTiles = optionPerWord[word];
+            });
           },
         )).toList();
 
