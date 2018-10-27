@@ -26,7 +26,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   AnimationController _controller;
   bool controllerDisposed = false;
 
-  GameScreenState({@required GameInfo this.gameInfo});
+  GameScreenState({@required this.gameInfo});
 
   @override
   void initState() {
