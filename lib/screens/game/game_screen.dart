@@ -4,7 +4,6 @@ import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
 import 'package:bnoggles/screens/game/widgets/provider.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
-import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:flutter/material.dart';
 

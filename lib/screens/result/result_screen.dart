@@ -2,6 +2,7 @@ import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/widgets/board_widget.dart';
+import 'package:bnoggles/widgets/start_game_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bnoggles/utils/gamelogic/solution.dart';
@@ -83,41 +84,38 @@ class ResultScreenState extends State<ResultScreen> {
               width: wordViewWidth,
               child: ListView(children: divided)),
           Expanded(
-            child: Column(children: [
-              Center(
-                  child: Container(
-                      child: Text(
-                "$score / $maxScore",
-                style: TextStyle(fontSize: secondColumnWidth / 8),
-              ))),
-              Container(
-                  margin: const EdgeInsets.all(10.0),
-                  child: BoardWidget(
-                    selectedPositions: highlightedTiles,
-                    board: board,
-                    centeredCharacter: CenteredCharacter(cellWidth),
-                  )),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                FloatingActionButton(
-                  onPressed: () {
-                    Navigator.popUntil(context,
-                        ModalRoute.withName(Navigator.defaultRouteName));
-                  },
-                  child: Icon(Icons.home),
-                ),
+            child: Column(
+              children: [
+                Center(
+                    child: Container(
+                        child: Text(
+                  "$score / $maxScore",
+                  style: TextStyle(fontSize: secondColumnWidth / 8),
+                ))),
                 Container(
-                  width: 20.0,
-                ),
-                FloatingActionButton(
-                  onPressed: () {
-                    Navigator.popUntil(context,
-                        ModalRoute.withName(Navigator.defaultRouteName));
-                  },
-                  child: Icon(Icons.forward),
-                ),
-              ]),
-            ]),
-          ),
+                    margin: const EdgeInsets.all(10.0),
+                    child: BoardWidget(
+                      selectedPositions: highlightedTiles,
+                      board: board,
+                      centeredCharacter: CenteredCharacter(cellWidth),
+                    )),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  FloatingActionButton(
+                    heroTag: "home",
+                    onPressed: () {
+                      Navigator.popUntil(context,
+                          ModalRoute.withName(Navigator.defaultRouteName));
+                    },
+                    child: Icon(Icons.home),
+                  ),
+                  Container(
+                    width: 20.0,
+                  ),
+                  StartGameButton(configuration: gameInfo.configuration),
+                ])
+              ],
+            ),
+          )
         ]),
       ),
     );
