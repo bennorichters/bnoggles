@@ -3,41 +3,40 @@ import 'package:bnoggles/screens/start/widgets/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bnoggles/utils/board.dart';
+import 'package:bnoggles/utils/configuration.dart';
 import 'package:bnoggles/utils/dictionary.dart';
+import 'package:bnoggles/utils/preferences.dart';
 import 'package:bnoggles/utils/solution.dart';
 
 class StartScreen extends StatefulWidget {
-  final RandomLetterGenerator generator;
-  final Dictionary dictionary;
+  final Configuration configuration;
 
-  StartScreen({Key key, @required this.generator, @required this.dictionary})
-      : super(key: key);
+  StartScreen({Key key, @required this.configuration}) : super(key: key);
 
   @override
-  State createState() =>
-      StartScreenState(generator: generator, dictionary: dictionary);
+  State createState() => StartScreenState(config: configuration);
 }
 
 class StartScreenState extends State<StartScreen> {
   final RandomLetterGenerator generator;
   final Dictionary dictionary;
+  final Preferences prefs;
 
-  ValueNotifier<int> time = ValueNotifier(150);
-  ValueNotifier<int> size = ValueNotifier(3);
-  ValueNotifier<int> length = ValueNotifier(2);
-
-  StartScreenState({@required this.generator, @required this.dictionary});
+  StartScreenState({@required Configuration config})
+      : prefs = config.preferences,
+        dictionary = config.dictionary,
+        generator = config.generator;
 
   void setBoardWidth(int value) {
-    size.value = value;
+    prefs.size.value = value;
   }
 
   void setTime(int value) {
-    time.value = value;
+    prefs.time.value = value;
   }
 
   void setLength(int value) {
-    length.value = value;
+    prefs.length.value = value;
   }
 
   @override
@@ -53,13 +52,13 @@ class StartScreenState extends State<StartScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SettingsGrid(time, size, length),
+                    SettingsGrid(prefs.time, prefs.size, prefs.length),
                     Center(
                       child: FloatingActionButton(
                         onPressed: () {
-                          var board = Board(size.value, generator);
+                          var board = Board(prefs.size.value, generator);
                           var solution =
-                              Solution(board, dictionary, length.value);
+                              Solution(board, dictionary, prefs.length.value);
 
                           Navigator.push(
                             context,
@@ -67,7 +66,7 @@ class StartScreenState extends State<StartScreen> {
                                 builder: (context) => GameScreen(
                                       board: board,
                                       solution: solution,
-                                      startValue: time.value,
+                                      startValue: prefs.time.value,
                                     )),
                           );
                         },

@@ -8,7 +8,9 @@ import 'package:flutter/services.dart'
 
 import 'package:bnoggles/screens/start/start_screen.dart';
 
+import 'package:bnoggles/utils/configuration.dart';
 import 'package:bnoggles/utils/dictionary.dart';
+import 'package:bnoggles/utils/preferences.dart';
 
 void main() async {
   var res = await setup();
@@ -26,7 +28,8 @@ Future<Configuration> setup() async {
   String words = await loadDictionary();
   Dictionary dict = Dictionary(words.split("\n")..sort());
 
-  return Configuration(generator, dict);
+  var prefs = await Preferences.load();
+  return Configuration(generator, dict, prefs);
 }
 
 Map<String, int> getFreq(Map<String, dynamic> config) {
@@ -52,13 +55,6 @@ Future<Dictionary> readDutchWords(String fileName) async {
   return Dictionary(contents);
 }
 
-class Configuration {
-  final RandomLetterGenerator generator;
-  final Dictionary dictionary;
-
-  Configuration(this.generator, this.dictionary);
-}
-
 class MyApp extends StatelessWidget {
   final Configuration configuration;
 
@@ -72,11 +68,8 @@ class MyApp extends StatelessWidget {
     ]);
 
     return MaterialApp(
-      title: 'Bnoggles',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: StartScreen(
-          dictionary: configuration.dictionary,
-          generator: configuration.generator),
-    );
+        title: 'Bnoggles',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: StartScreen(configuration: configuration));
   }
 }

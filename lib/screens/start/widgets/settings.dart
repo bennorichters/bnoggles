@@ -1,6 +1,5 @@
-import 'package:bnoggles/screens/start/widgets/board_size_slider.dart';
-import 'package:bnoggles/screens/start/widgets/length_slider.dart';
-import 'package:bnoggles/screens/start/widgets/time_slider.dart';
+import 'package:bnoggles/screens/start/widgets/integer_slider.dart';
+import 'package:bnoggles/utils/helper/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -10,6 +9,14 @@ class SettingsGrid extends StatelessWidget {
   final ValueNotifier<int> _length;
 
   SettingsGrid(this._time, this._size, this._length);
+
+  TableRow _emptyLine() => TableRow(
+        children: [
+          Container(height: 50.0),
+          Container(),
+          Container(),
+        ],
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -25,47 +32,17 @@ class SettingsGrid extends StatelessWidget {
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: [
             TableRow(
-              children: [
-                TableCell(child: TimeIcon()),
-                TableCell(child: TimeText(time: _time)),
-                TableCell(child: TimeSlider()),
-              ],
-            ),
+                children: IntSlider.create(
+                    _time, Icons.timer, formatTime, 30, 600, 19)),
+            _emptyLine(),
             TableRow(
-              children: [
-                Container(height: 50.0),
-                Container(),
-                Container(),
-              ],
-            ),
+                children: IntSlider.create(
+                    _size, Icons.grid_on, (i) => '$i x $i', 3, 6, 3)),
+            _emptyLine(),
             TableRow(
-              children: [
-                TableCell(child: BoardIcon()),
-                TableCell(child: BoardText(size: _size)),
-                TableCell(child: BoardSizeSlider()),
-              ],
-            ),
-            TableRow(
-              children: [
-                Container(height: 50.0),
-                Container(),
-                Container(),
-              ],
-            ),
-            TableRow(
-              children: [
-                TableCell(child: LengthIcon()),
-                TableCell(child: LengthText(length: _length)),
-                TableCell(child: LengthSlider()),
-              ],
-            ),
-            TableRow(
-              children: [
-                Container(height: 50.0),
-                Container(),
-                Container(),
-              ],
-            ),
+                children: IntSlider.create(
+                    _length, Icons.text_rotation_none, (i) => '$i+', 2, 4, 2)),
+            _emptyLine(),
           ],
         ));
   }
