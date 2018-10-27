@@ -1,3 +1,4 @@
+import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/widgets/board_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

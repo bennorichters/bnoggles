@@ -1,8 +1,9 @@
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:bnoggles/widgets/board_widget.dart';
 import 'package:flutter/material.dart';
+
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class ResultScreen extends StatefulWidget {
   final Board board;
@@ -47,24 +48,24 @@ class ResultScreenState extends State<ResultScreen> {
     }
 
     var tiles = solution.uniqueWordsSorted().map((word) => ListTile(
-          dense: true,
-          contentPadding: EdgeInsets.all(5.0),
-          title: Container(
-              padding: EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
+      dense: true,
+      contentPadding: EdgeInsets.all(5.0),
+      title: Container(
+          padding: EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+              color: userAnswer.contains(word)
+                  ? Colors.green
+                  : Colors.lightBlueAccent,
+              borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          child: Text(word.toUpperCase(),
+              style: TextStyle(
                   color: userAnswer.contains(word)
-                      ? Colors.green
-                      : Colors.lightBlueAccent,
-                  borderRadius: BorderRadius.all(Radius.circular(5.0))),
-              child: Text(word.toUpperCase(),
-                  style: TextStyle(
-                      color: userAnswer.contains(word)
-                          ? Colors.white
-                          : Colors.black))),
-          onTap: () {
-            doSomething(word);
-          },
-        ));
+                      ? Colors.white
+                      : Colors.black))),
+      onTap: () {
+        doSomething(word);
+      },
+    ));
 
     final List<Widget> divided = ListTile.divideTiles(
       context: context,
@@ -74,12 +75,13 @@ class ResultScreenState extends State<ResultScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bnoggles"),
+        leading: new Container(),
       ),
       body: Center(
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
               decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
+              BoxDecoration(border: Border.all(color: Colors.black)),
               width: wordViewWidth,
               child: ListView(children: divided)),
           Expanded(
@@ -87,9 +89,9 @@ class ResultScreenState extends State<ResultScreen> {
               Center(
                   child: Container(
                       child: Text(
-                "$score / $maxScore",
-                style: TextStyle(fontSize: secondColumnWidth / 8),
-              ))),
+                        "$score / $maxScore",
+                        style: TextStyle(fontSize: secondColumnWidth / 8),
+                      ))),
               Container(
                   margin: const EdgeInsets.all(10.0),
                   child: BoardWidget(
@@ -97,13 +99,25 @@ class ResultScreenState extends State<ResultScreen> {
                     board: board,
                     centeredCharacter: CenteredCharacter(cellWidth),
                   )),
-              FloatingActionButton(
-                onPressed: () {
-                  Navigator.popUntil(
-                      context, ModalRoute.withName(Navigator.defaultRouteName));
-                },
-                child: Icon(Icons.home),
-              ),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                FloatingActionButton(
+                  onPressed: () {
+                    Navigator.popUntil(context,
+                        ModalRoute.withName(Navigator.defaultRouteName));
+                  },
+                  child: Icon(Icons.home),
+                ),
+                Container(
+                  width: 20.0,
+                ),
+                FloatingActionButton(
+                  onPressed: () {
+                    Navigator.popUntil(context,
+                        ModalRoute.withName(Navigator.defaultRouteName));
+                  },
+                  child: Icon(Icons.forward),
+                ),
+              ]),
             ]),
           ),
         ]),

@@ -1,11 +1,10 @@
 import 'package:bnoggles/screens/game/game_screen.dart';
 import 'package:bnoggles/screens/start/widgets/settings.dart';
+import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/configuration.dart';
-import 'package:bnoggles/utils/gamelogic/dictionary.dart';
-import 'package:bnoggles/utils/preferences.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class StartScreen extends StatefulWidget {
@@ -14,29 +13,24 @@ class StartScreen extends StatefulWidget {
   StartScreen({Key key, @required this.configuration}) : super(key: key);
 
   @override
-  State createState() => StartScreenState(config: configuration);
+  State createState() => StartScreenState(configuration: configuration);
 }
 
 class StartScreenState extends State<StartScreen> {
-  final RandomLetterGenerator generator;
-  final Dictionary dictionary;
-  final Preferences prefs;
+  final Configuration configuration;
 
-  StartScreenState({@required Configuration config})
-      : prefs = config.preferences,
-        dictionary = config.dictionary,
-        generator = config.generator;
+  StartScreenState({@required this.configuration});
 
   void setBoardWidth(int value) {
-    prefs.size.value = value;
+    configuration.preferences.size.value = value;
   }
 
   void setTime(int value) {
-    prefs.time.value = value;
+    configuration.preferences.time.value = value;
   }
 
   void setLength(int value) {
-    prefs.length.value = value;
+    configuration.preferences.length.value = value;
   }
 
   @override
@@ -52,21 +46,33 @@ class StartScreenState extends State<StartScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SettingsGrid(prefs.time, prefs.size, prefs.length),
+                    SettingsGrid(
+                        configuration.preferences.time,
+                        configuration.preferences.size,
+                        configuration.preferences.length),
                     Center(
                       child: FloatingActionButton(
                         onPressed: () {
-                          var board = Board(prefs.size.value, generator);
-                          var solution =
-                              Solution(board, dictionary, prefs.length.value);
+                          var board = Board(
+                              configuration.preferences.size.value,
+                              configuration.generator);
+
+                          var solution = Solution(
+                              board,
+                              configuration.dictionary,
+                              configuration.preferences.length.value);
+
+                          GameInfo gameInfo = GameInfo(
+                              configuration: configuration,
+                              board: board,
+                              solution: solution,
+                              userAnswer: ValueNotifier(UserAnswer.start()));
 
                           Navigator.push(
                             context,
                             MaterialPageRoute<Null>(
                                 builder: (context) => GameScreen(
-                                      board: board,
-                                      solution: solution,
-                                      startValue: prefs.time.value,
+                                      gameInfo: gameInfo,
                                     )),
                           );
                         },
