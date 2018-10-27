@@ -5,11 +5,14 @@ class ToggleSetting {
       <Widget>[
         Icon(icon, size: 40.0),
         Container(),
-        Container(
-          child: Switch(
-            value: notifier.value,
-            onChanged: (bool value) => notifier.value = value,
-          ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Switch(
+              value: notifier.value,
+              onChanged: (bool value) => notifier.value = value,
+            ),
+          ],
         ),
       ];
 }

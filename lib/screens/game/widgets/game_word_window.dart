@@ -18,10 +18,10 @@ class WordWindowState extends State<WordWindow> {
   @override
   void initState() {
     super.initState();
-    widget.stateNotifier.addListener(didValueChange);
+    widget.stateNotifier.addListener(_didValueChange);
   }
 
-  void didValueChange() => setState(() {});
+  void _didValueChange() => setState(() {});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class WordWindowState extends State<WordWindow> {
 
   @override
   void dispose() {
-    widget.stateNotifier.removeListener(didValueChange);
+    widget.stateNotifier.removeListener(_didValueChange);
     super.dispose();
   }
 }

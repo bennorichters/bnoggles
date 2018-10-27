@@ -46,6 +46,12 @@ class _LabelState extends State<_Label> {
       style: TextStyle(fontSize: 20.0),
     );
   }
+
+  @override
+  void dispose() {
+    widget.notifier.removeListener(_didValueChange);
+    super.dispose();
+  }
 }
 
 class _Slider extends StatefulWidget {
