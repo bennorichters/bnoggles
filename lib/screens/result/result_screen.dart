@@ -28,8 +28,8 @@ class ResultScreenState extends State<ResultScreen> {
     UserAnswer userAnswer = gameInfo.userAnswer.value;
     Board board = gameInfo.board;
 
-    double wordViewWidth = 150.0;
     double mediaWidth = MediaQuery.of(context).size.width;
+    double wordViewWidth = mediaWidth / 6;
     double secondColumnWidth = (mediaWidth - wordViewWidth);
     double cellWidth = secondColumnWidth / board.width;
 
