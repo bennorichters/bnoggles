@@ -44,10 +44,9 @@ class ResultScreenState extends State<ResultScreen> {
       });
     }
 
-    var tiles = solution.uniqueWordsSorted().map((word) => ListTile(
-          dense: true,
-          contentPadding: EdgeInsets.all(5.0),
-          title: Container(
+    List<Widget> tiles = solution.uniqueWordsSorted().map((word) => GestureDetector(
+          child: Container(
+              margin: EdgeInsets.fromLTRB(3.0, 5.0, 3.0, 5.0),
               padding: EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                   color: userAnswer.contains(word)
@@ -56,18 +55,14 @@ class ResultScreenState extends State<ResultScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(5.0))),
               child: Text(word.toUpperCase(),
                   style: TextStyle(
+                      fontSize: 10.0,
                       color: userAnswer.contains(word)
                           ? Colors.white
                           : Colors.black))),
           onTap: () {
             doSomething(word);
           },
-        ));
-
-    final List<Widget> divided = ListTile.divideTiles(
-      context: context,
-      tiles: tiles,
-    ).toList();
+        )).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -80,7 +75,7 @@ class ResultScreenState extends State<ResultScreen> {
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black)),
               width: wordViewWidth,
-              child: ListView(children: divided)),
+              child: ListView(children: tiles)),
           Expanded(
             child: Column(
               children: [
