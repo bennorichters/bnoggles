@@ -1,3 +1,4 @@
+import 'package:bnoggles/screens/result/widgets/score.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
@@ -26,9 +27,6 @@ class ResultScreenState extends State<ResultScreen> {
     Solution solution = gameInfo.solution;
     UserAnswer userAnswer = gameInfo.userAnswer.value;
     Board board = gameInfo.board;
-
-    int score = calculateScore(solution, userAnswer);
-    int maxScore = calculateScore(solution, solution);
 
     double wordViewWidth = 150.0;
     double mediaWidth = MediaQuery.of(context).size.width;
@@ -86,11 +84,12 @@ class ResultScreenState extends State<ResultScreen> {
           Expanded(
             child: Column(
               children: [
-                Center(
-                    child: Container(
-                        child: Text(
-                  "$score / $maxScore",
-                  style: TextStyle(fontSize: secondColumnWidth / 8),
+                Expanded(
+                    child: Center(
+                        child: ScoreOverview(
+                  solution: solution,
+                  userAnswer: userAnswer,
+                  fontSize: secondColumnWidth / 25,
                 ))),
                 Container(
                     margin: const EdgeInsets.all(10.0),
@@ -99,43 +98,32 @@ class ResultScreenState extends State<ResultScreen> {
                       board: board,
                       centeredCharacter: CenteredCharacter(cellWidth),
                     )),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  FloatingActionButton(
-                    heroTag: "home",
-                    onPressed: () {
-                      Navigator.popUntil(context,
-                          ModalRoute.withName(Navigator.defaultRouteName));
-                    },
-                    child: Icon(Icons.home),
-                  ),
-                  Container(
-                    width: 20.0,
-                  ),
-                  StartGameButton(configuration: gameInfo.configuration),
-                ])
+                Container(
+                    padding: EdgeInsets.all(20.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FloatingActionButton(
+                            heroTag: "home",
+                            onPressed: () {
+                              Navigator.popUntil(
+                                  context,
+                                  ModalRoute.withName(
+                                      Navigator.defaultRouteName));
+                            },
+                            child: Icon(Icons.home),
+                          ),
+                          Container(
+                            width: 20.0,
+                          ),
+                          StartGameButton(
+                              configuration: gameInfo.configuration),
+                        ]))
               ],
             ),
           )
         ]),
       ),
     );
-  }
-
-  int calculateScore(Solution solution, Answer userAnswer) {
-    var goodAnswerCount = solution.uniqueWords().length;
-    if (goodAnswerCount == 0) {
-      return 0;
-    }
-
-    int result = 0;
-    for (String word in userAnswer.uniqueWords()) {
-      result += word.length * 2;
-    }
-
-    var percentageFound = (userAnswer.uniqueWords().length / goodAnswerCount);
-    result = (result * percentageFound * percentageFound).round();
-    result += userAnswer.uniqueWords().length;
-
-    return result;
   }
 }
