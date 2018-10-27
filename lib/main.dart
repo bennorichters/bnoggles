@@ -9,13 +9,13 @@ import 'package:flutter/services.dart'
 import 'package:bnoggles/screens/start/start_screen.dart';
 
 import 'package:bnoggles/utils/configuration.dart';
-import 'package:bnoggles/utils/dictionary.dart';
+import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/preferences.dart';
 
 void main() async {
-  var res = await setup();
+  var configuration = await setup();
 
-  runApp(MyApp(res));
+  runApp(MyApp(configuration));
 }
 
 Future<Configuration> setup() async {

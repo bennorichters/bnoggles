@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 
 import 'package:bnoggles/screens/game/widgets/provider.dart';
 
-import 'package:bnoggles/utils/solution.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class WordWindow extends StatelessWidget {
   @override

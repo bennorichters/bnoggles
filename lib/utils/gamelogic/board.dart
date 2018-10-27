@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:bnoggles/utils/coordinate.dart';
-import 'package:bnoggles/utils/dictionary.dart';
+import 'package:bnoggles/utils/gamelogic/coordinate.dart';
+import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 
 class Board {
   final Map<Coordinate, String> cell;

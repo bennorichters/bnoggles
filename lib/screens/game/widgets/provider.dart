@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:bnoggles/utils/board.dart';
-import 'package:bnoggles/utils/solution.dart';
+import 'package:bnoggles/utils/gamelogic/board.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class GameInfo {
   final Board board;

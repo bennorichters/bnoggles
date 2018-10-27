@@ -1,4 +1,4 @@
-import 'package:bnoggles/utils/dictionary.dart';
+import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/preferences.dart';
 
 class Configuration {

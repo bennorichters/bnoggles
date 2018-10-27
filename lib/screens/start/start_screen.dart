@@ -2,11 +2,11 @@ import 'package:bnoggles/screens/game/game_screen.dart';
 import 'package:bnoggles/screens/start/widgets/settings.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bnoggles/utils/board.dart';
+import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/configuration.dart';
-import 'package:bnoggles/utils/dictionary.dart';
+import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/preferences.dart';
-import 'package:bnoggles/utils/solution.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class StartScreen extends StatefulWidget {
   final Configuration configuration;
