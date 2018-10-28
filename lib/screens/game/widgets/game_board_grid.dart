@@ -22,22 +22,14 @@ class GridState extends State<Grid> {
   final List<Coordinate> _selectedPositions = [];
   final _key = GlobalKey();
 
-  bool _validStart = false;
-
   GridState(this.neigbours);
 
   void _start(PointerEvent event) {
-    _validStart = Provider.of(_key.currentContext).gameOngoing;
-
-    if (_validStart) {
-      _itemHit(event);
-    }
+    _itemHit(event);
   }
 
   void _move(PointerEvent event) {
-    if (_validStart) {
-      _itemHit(event);
-    }
+    _itemHit(event);
   }
 
   void _itemHit(PointerEvent event) {
@@ -65,23 +57,21 @@ class GridState extends State<Grid> {
           neigbours[_selectedPositions.last].contains(position));
 
   void _finish(PointerUpEvent event) {
-    if (_validStart) {
-      GameInfo gameInfo = Provider.of(_key.currentContext);
-      Board board = gameInfo.board;
-      Solution solution = gameInfo.solution;
+    GameInfo gameInfo = Provider.of(_key.currentContext);
+    Board board = gameInfo.board;
+    Solution solution = gameInfo.solution;
 
-      var word = StringBuffer();
-      for (Coordinate position in _selectedPositions) {
-        word.write(board.characterAt(position));
-      }
+    var word = StringBuffer();
+    for (Coordinate position in _selectedPositions) {
+      word.write(board.characterAt(position));
+    }
 
-      if (word.length >= gameInfo.solution.minimalLength) {
-        var candidate = word.toString();
+    if (word.length >= gameInfo.solution.minimalLength) {
+      var candidate = word.toString();
 
-        UserAnswer old = gameInfo.userAnswer.value;
-        gameInfo.userAnswer.value =
-            UserAnswer(old, candidate, solution.isCorrect(candidate));
-      }
+      UserAnswer old = gameInfo.userAnswer.value;
+      gameInfo.userAnswer.value =
+          UserAnswer(old, candidate, solution.isCorrect(candidate));
     }
 
     _clearSelection();
@@ -89,7 +79,6 @@ class GridState extends State<Grid> {
 
   void _clearSelection() {
     setState(() {
-      _validStart = false;
       _selectedPositions.clear();
     });
   }

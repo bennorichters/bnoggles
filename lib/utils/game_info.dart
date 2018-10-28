@@ -10,15 +10,12 @@ class GameInfo {
   final ValueNotifier<UserAnswer> userAnswer;
   final List<String> randomWords;
 
-  bool gameOngoing;
-
-  GameInfo(
-      {@required this.configuration,
-      @required this.board,
-      @required Solution solution,
-      @required this.userAnswer,
-      this.gameOngoing = true})
-      : this.solution = solution,
+  GameInfo({
+    @required this.configuration,
+    @required this.board,
+    @required Solution solution,
+    @required this.userAnswer,
+  })  : this.solution = solution,
         randomWords = solution.uniqueWords().toList()..shuffle();
 
   void addListener(VoidCallback listener) {

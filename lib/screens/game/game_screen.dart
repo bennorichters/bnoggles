@@ -41,7 +41,6 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     void showResultScreen() {
-      gameInfo.gameOngoing = false;
       disposeController();
 
       Navigator.pushReplacement(
