@@ -83,8 +83,9 @@ SFX P   y     iness      [^aeiou]y
 SFX P   0     ness       [aeiou]y
 SFX P   0     ness       [^y]
 
-SFX M Y 1
-SFX M   0     's         .
+# BNOGGLES - ignoring '
+# SFX M Y 1
+# SFX M   0     's         .
 
 SFX B Y 3
 SFX B   0     able       [^aeiou]

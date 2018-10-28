@@ -44,7 +44,7 @@ void writeAll(Set<AffixedWordContainer> containers) async {
 }
 
 Future<List<String>> readFile() async {
-  var input = File('tools/nl/assets/index_nl_clean.dic');
+  var input = File('tools/en/assets/index_clean.dic');
   var contents = await input.readAsLines();
   return contents;
 }
@@ -76,8 +76,8 @@ class _DictInterpreter {
   List<Affix> findAffixes(
       String word, String affixNames, Map<String, Set<Affix>> affixes) {
     List<Affix> result = [];
-    for (int i = 0; i < affixNames.length; i += 2) {
-      String name = affixNames.substring(i, i + 2);
+    for (int i = 0; i < affixNames.length; i++) {
+      String name = affixNames.substring(i, i + 1);
       if (affixes.containsKey(name)) {
         result.addAll(
             affixes[name].where((a) => a.canBeAppliedTo(word)).toList());
