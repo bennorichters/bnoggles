@@ -1,3 +1,4 @@
+import 'package:bnoggles/screens/settings/widgets/radio_seting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -32,6 +33,10 @@ class SettingsGrid extends StatelessWidget {
         },
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         children: [
+          TableRow(
+            children: RadioSetting.create(preferences.language, Icons.language),
+          ),
+          _emptyLine(),
           TableRow(
             children: IntSlider.create(
               preferences.time,
