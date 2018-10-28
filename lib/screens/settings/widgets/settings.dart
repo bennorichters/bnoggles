@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:bnoggles/screens/start/widgets/integer_slider.dart';
-import 'package:bnoggles/screens/start/widgets/toggle_setting.dart';
+import 'package:bnoggles/screens/settings/widgets/integer_slider.dart';
+import 'package:bnoggles/screens/settings/widgets/toggle_setting.dart';
 import 'package:bnoggles/utils/helper/helper.dart';
 import 'package:bnoggles/utils/preferences.dart';
 

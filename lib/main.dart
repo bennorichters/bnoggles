@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'
     show DeviceOrientation, SystemChrome, rootBundle;
 
-import 'package:bnoggles/screens/start/start_screen.dart';
+import 'package:bnoggles/screens/settings/settings_screen.dart';
 
 import 'package:bnoggles/utils/configuration.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Bnoggles',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: StartScreen(configuration: configuration),
+      home: SettingsScreen(configuration: configuration),
     );
   }
 }
