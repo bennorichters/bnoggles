@@ -1,47 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:bnoggles/screens/game/widgets/provider.dart';
-
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
-class WordWindow extends StatelessWidget {
+class WordWindow extends StatefulWidget {
+  final WordsProvider provider;
+  final ValueNotifier stateNotifier;
+
+  WordWindow(this.provider, this.stateNotifier);
+
+  @override
+  State<WordWindow> createState() => WordWindowState();
+
+}
+
+class WordWindowState extends State<WordWindow> {
+  @override
+  void initState() {
+    super.initState();
+    widget.stateNotifier.addListener(_didValueChange);
+  }
+
+  void _didValueChange() => setState(() {});
+
   @override
   Widget build(BuildContext context) {
-    UserAnswer userAnswer = Provider.of(context).userAnswer.value;
-
     return Container(
-        height: 50.0,
+        height: 48.0,
         child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: userAnswer.found.reversed
-              .map((a) => _UserWordFeedback(a))
-              .toList(),
+            scrollDirection: Axis.horizontal,
+            children: widget.provider().map((w) => _UserWordFeedback(w)).toList()
         ));
+  }
+
+  @override
+  void dispose() {
+    widget.stateNotifier.removeListener(_didValueChange);
+    super.dispose();
   }
 }
 
-class _UserWordFeedback extends StatelessWidget {
-  static const Map<Evaluation, Color> _colors = {
-    Evaluation.good: Colors.green,
-    Evaluation.wrong: Colors.red,
-    Evaluation.goodAgain: Colors.orange
-  };
+typedef List<Word> WordsProvider();
 
-  final UserWord _userWord;
-  _UserWordFeedback(this._userWord);
+class Word {
+  final String value;
+  final Color color;
+
+  Word._(this.value, this.color);
+
+  Word.fromUser(UserWord userWord)
+      : this._(userWord.word, _colors[userWord.eval]);
+
+  Word.neutral(String word) : this._(word, Colors.blue);
+}
+
+const Map<Evaluation, Color> _colors = {
+  Evaluation.good: Colors.green,
+  Evaluation.wrong: Colors.red,
+  Evaluation.goodAgain: Colors.orange
+};
+
+class _UserWordFeedback extends StatelessWidget {
+  final Word _word;
+  _UserWordFeedback(this._word);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 5.0),
+        margin: const EdgeInsets.all(4.0),
         padding: new EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          color: _colors[_userWord.eval],
+          color: _word.color,
         ),
         child: Center(
-            child: Text(_userWord.word.toUpperCase(),
+            child: Text(_word.value.toUpperCase(),
                 style: TextStyle(
                   fontSize: 20.0,
                 ))));

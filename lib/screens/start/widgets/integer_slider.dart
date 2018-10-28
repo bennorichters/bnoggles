@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class IntSlider {
-  static List<Widget> create(ValueNotifier<int> notifier, IconData icon,
-      LabelRenderer label, int min, int max, int divisions) {
+  static List<Widget> create(
+      ValueNotifier<int> notifier, IconData icon, LabelRenderer label,
+      {int min, int max, int stepSize = 1}) {
+    var divisions = (max - min) ~/ stepSize;
+    assert(min + stepSize * divisions == max,
+        'Inconsistent slider parameters: $max - $min is not divisible by $stepSize');
     return [
       Icon(icon, size: 40.0),
       _Label(label: label, notifier: notifier),
@@ -41,6 +45,12 @@ class _LabelState extends State<_Label> {
       widget.label(widget.notifier.value),
       style: TextStyle(fontSize: 20.0),
     );
+  }
+
+  @override
+  void dispose() {
+    widget.notifier.removeListener(_didValueChange);
+    super.dispose();
   }
 }
 

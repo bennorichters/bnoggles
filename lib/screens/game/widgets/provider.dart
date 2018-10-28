@@ -1,7 +1,6 @@
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class Provider extends StatefulWidget {

@@ -17,18 +17,6 @@ class StartScreenState extends State<StartScreen> {
 
   StartScreenState({@required this.configuration});
 
-  void setBoardWidth(int value) {
-    configuration.preferences.size.value = value;
-  }
-
-  void setTime(int value) {
-    configuration.preferences.time.value = value;
-  }
-
-  void setLength(int value) {
-    configuration.preferences.length.value = value;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,20 +24,22 @@ class StartScreenState extends State<StartScreen> {
         title: Text("Bnoggles"),
       ),
       body: Center(
-          child: Container(
-              width: 500.0,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SettingsGrid(
-                        configuration.preferences.time,
-                        configuration.preferences.size,
-                        configuration.preferences.length),
-                    Center(
-                      child: StartGameButton(configuration: configuration),
-                    ),
-                  ]))),
+        child: Container(
+          width: 500.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SettingsGrid(
+                configuration.preferences
+              ),
+              Center(
+                child: StartGameButton(configuration: configuration),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

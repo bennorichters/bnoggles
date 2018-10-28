@@ -8,14 +8,18 @@ class GameInfo {
   final Board board;
   final Solution solution;
   final ValueNotifier<UserAnswer> userAnswer;
+  final List<String> randomWords;
+
   bool gameOngoing;
 
   GameInfo(
       {@required this.configuration,
       @required this.board,
-      @required this.solution,
+      @required Solution solution,
       @required this.userAnswer,
-      this.gameOngoing = true});
+      this.gameOngoing = true})
+      : this.solution = solution,
+        randomWords = solution.uniqueWords().toList()..shuffle();
 
   void addListener(VoidCallback listener) {
     userAnswer.addListener(listener);

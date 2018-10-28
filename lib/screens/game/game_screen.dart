@@ -4,7 +4,6 @@ import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
 import 'package:bnoggles/screens/game/widgets/provider.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatefulWidget {
@@ -42,9 +41,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     void showResultScreen() {
-      UserAnswer userAnswer = gameInfo.userAnswer.value;
       gameInfo.gameOngoing = false;
-
       disposeController();
 
       Navigator.pushReplacement(
@@ -54,28 +51,57 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     }
 
     return Scaffold(
-        appBar:
-            AppBar(title: Text("Bnoggles"), leading: new Container(), actions: [
-          IconButton(
-            icon: Icon(Icons.stop),
-            color: Colors.red,
-            onPressed: () {
-              showResultScreen();
-            },
-          ),
-        ]),
-        body: Provider(
-            gameInfo: gameInfo,
-            child: Column(
-              children: [
-                GameProgress(
-                    _controller,
-                    gameInfo.configuration.preferences.time.value,
-                    showResultScreen),
-                Expanded(child: Center(child: WordWindow())),
-                Grid(gameInfo.board.mapNeighbours()),
-              ],
-            )));
+      appBar:
+          AppBar(title: Text("Bnoggles"), leading: new Container(), actions: [
+        IconButton(
+          icon: Icon(Icons.stop),
+          color: Colors.red,
+          onPressed: () {
+            showResultScreen();
+          },
+        ),
+      ]),
+      body: Provider(
+        gameInfo: gameInfo,
+        child: Column(
+          children: [
+            GameProgress(
+              _controller,
+              gameInfo.configuration.preferences.time.value,
+              showResultScreen,
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: _wordLines(gameInfo.configuration.preferences.hints.value),
+              ),
+            ),
+            Grid(gameInfo.board.mapNeighbours()),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _wordLines(bool hints) {
+    WordsProvider byUser = () => gameInfo.userAnswer.value.found.reversed
+        .map((a) => Word.fromUser(a))
+        .toList();
+
+    if (!hints) {
+      return [WordWindow(byUser, gameInfo.userAnswer)];
+    }
+
+    WordsProvider byGame = () => gameInfo.randomWords
+        .where((w) =>
+            !gameInfo.userAnswer.value.found.map((w) => w.word).contains(w))
+        .map((a) => Word.neutral(a))
+        .toList();
+
+    return [
+      WordWindow(byUser, gameInfo.userAnswer),
+      WordWindow(byGame, gameInfo.userAnswer),
+    ];
   }
 
   @override

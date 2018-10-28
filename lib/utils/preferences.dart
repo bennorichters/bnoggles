@@ -6,23 +6,49 @@ class Preferences {
   final ValueNotifier<int> time;
   final ValueNotifier<int> size;
   final ValueNotifier<int> length;
+  final ValueNotifier<bool> hints;
 
-  Preferences(this.time, this.size, this.length);
+  Preferences(this.time, this.size, this.length, {ValueNotifier<bool> hints})
+      : this.hints = hints ?? ValueNotifier(false);
 
   static Future<Preferences> load() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    ValueNotifier<int> notifier(String name, int defaultValue) {
+    ValueNotifier<int> intNotifier(String name, int defaultValue) {
       var value = prefs.getInt(name) ?? defaultValue;
       var result = ValueNotifier(value);
       result.addListener(() => prefs.setInt(name, result.value));
       return result;
     }
 
+    ValueNotifier<bool> boolNotifier(String name, bool defaultValue) {
+      var value = prefs.getBool(name) ?? defaultValue;
+      var result = ValueNotifier(value);
+      result.addListener(() => prefs.setBool(name, result.value));
+      return result;
+    }
+
     return Preferences(
-      notifier('time', 150),
-      notifier('size', 3),
-      notifier('length', 2),
+      intNotifier('time', 150),
+      intNotifier('size', 3),
+      intNotifier('length', 2),
+      hints: boolNotifier('hints', false),
     );
   }
+
+  GameParameters toParameters() => GameParameters(
+        time: time.value,
+        size: size.value,
+        length: length.value,
+        hints: hints.value,
+      );
+}
+
+class GameParameters {
+  final int time;
+  final int size;
+  final int length;
+  final bool hints;
+
+  const GameParameters({this.time, this.size, this.length, this.hints});
 }
