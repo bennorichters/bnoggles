@@ -77,30 +77,6 @@ class SuffixCondition {
   int get hashCode => _pattern.hashCode;
 }
 
-//class SuffixCondition {
-//  final String _toMatch;
-//  final bool _negated;
-//
-//  const SuffixCondition(this._toMatch, this._negated);
-//
-//  bool match(String word) {
-//    var endsWith = word.endsWith(_toMatch);
-//    return (_negated) ? !endsWith : endsWith;
-//  }
-//
-//  @override
-//  bool operator ==(dynamic other) =>
-//      other is SuffixCondition &&
-//      other._toMatch == _toMatch &&
-//      other._negated == _negated;
-//
-//  @override
-//  int get hashCode => hash2(_toMatch.hashCode, _negated.hashCode);
-//
-//  @override
-//  String toString() => '[$_toMatch - $_negated]';
-//}
-
 const SuffixCondition emptyCondition = SuffixCondition("");
 
 class AffixedWordContainer {
