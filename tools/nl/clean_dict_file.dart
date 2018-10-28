@@ -37,7 +37,7 @@ void main(List<String> arguments) async {
 }
 
 void process() async {
-  List<String> contents = await linesFromFile('tools/nl/assets/index_nl.dic');
+  List<String> contents = await linesFromFile('tools/nl/assets/index.dic');
   List<String> twoCharWords =
       await linesFromFile('tools/nl/assets/tweeletterwoorden.txt');
   List<String> threeCharWords =
