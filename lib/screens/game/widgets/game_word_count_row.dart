@@ -12,8 +12,6 @@ class WordCountOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     Solution solution = Provider.of(context).solution;
 
-    print(solution.uniqueWordsSorted());
-
     return GridView.builder(
       itemCount: ((_maxLength - 1) * 2),
       physics: NeverScrollableScrollPhysics(),
