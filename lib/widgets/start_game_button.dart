@@ -42,7 +42,7 @@ class StartGameButton extends StatelessWidget {
           ),
         );
       },
-      child: Icon(Icons.forward),
+      child: Icon(Icons.play_arrow),
     );
   }
 }

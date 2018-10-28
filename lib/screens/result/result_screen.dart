@@ -108,14 +108,14 @@ class ResultScreenState extends State<ResultScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FloatingActionButton(
-                        heroTag: "home",
+                        heroTag: "settings",
                         onPressed: () {
                           Navigator.popUntil(
                             context,
                             ModalRoute.withName(Navigator.defaultRouteName),
                           );
                         },
-                        child: Icon(Icons.home),
+                        child: Icon(Icons.settings),
                       ),
                       Container(
                         width: 20.0,
