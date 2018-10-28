@@ -3,17 +3,14 @@ import 'dart:collection';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
+import 'package:bnoggles/utils/gamelogic/histogram.dart';
 
 abstract class Answer {
   Set<String> uniqueWords();
 
   bool contains(String word) => uniqueWords().contains(word);
 
-  int countForLength(int length) =>
-      uniqueWords().where((w) => w.length == length).length;
-
-  int countForMinLength(int minLength) =>
-      uniqueWords().where((w) => w.length >= minLength).length;
+  Histogram get histogram;
 }
 
 enum Evaluation { good, wrong, goodAgain }
@@ -30,6 +27,8 @@ class UserWord {
 
 class UserAnswer extends Answer {
   final List<UserWord> found;
+  @override
+  final Histogram histogram;
 
   factory UserAnswer(UserAnswer old, String word, bool isCorrect) {
     Evaluation eval;
@@ -43,16 +42,21 @@ class UserAnswer extends Answer {
     }
 
     return UserAnswer._internal(
-        List.unmodifiable(old.found.toList()..add(UserWord(word, eval))));
+      List.unmodifiable(old.found.toList()..add(UserWord(word, eval))),
+    );
   }
 
-  UserAnswer._internal(this.found);
+  UserAnswer._internal(List<UserWord> found)
+      : this.found = found,
+        histogram = Histogram.fromStrings(_uniqueWords(found));
 
   static UserAnswer start() => UserAnswer._internal(const <UserWord>[]);
 
   @override
-  Set<String> uniqueWords() =>
-      found.where((f) => f.eval == Evaluation.good).map((f) => f.word).toSet();
+  Set<String> uniqueWords() => _uniqueWords(found);
+
+  static Set<String> _uniqueWords(List<UserWord> words) =>
+      words.where((f) => f.eval == Evaluation.good).map((f) => f.word).toSet();
 
   @override
   String toString() => found.toString();
@@ -61,18 +65,25 @@ class UserAnswer extends Answer {
 class Solution extends Answer {
   final Set<Chain> _chains;
   final int minimalLength;
+  @override
+  final Histogram histogram;
 
   factory Solution(Board board, Dictionary dict, int minimalLength) {
     return Solution._internal(
         _Problem(board, dict, minimalLength).find(), minimalLength);
   }
 
-  Solution._internal(this._chains, this.minimalLength);
+  Solution._internal(Set<Chain> chains, this.minimalLength)
+      : _chains = chains,
+        histogram = Histogram.fromStrings(_uniqueWords(chains));
 
   Set<Chain> get chains => Set.from(_chains);
 
   @override
-  Set<String> uniqueWords() => _chains.map((e) => e.text).toSet();
+  Set<String> uniqueWords() => _uniqueWords(_chains);
+
+  static Set<String> _uniqueWords(Set<Chain> words) =>
+      words.map((e) => e.text).toSet();
 
   int _compareWords(String a, String b) {
     var compareLength = a.length.compareTo(b.length);

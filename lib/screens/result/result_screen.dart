@@ -86,14 +86,11 @@ class ResultScreenState extends State<ResultScreen> {
             child: Column(
               children: [
                 Expanded(
-                  child: Center(
-                    child: ScoreOverview(
-                      solution: solution,
-                      userAnswer: userAnswer,
-                      fontSize: secondColumnWidth / 25,
-                    ),
-                  ),
-                ),
+                    child: Center(
+                        child: ScoreOverview(
+                  scores: gameInfo.scoreSheet,
+                  fontSize: secondColumnWidth / 25,
+                ))),
                 Container(
                   margin: const EdgeInsets.all(10.0),
                   child: BoardWidget(
