@@ -32,7 +32,7 @@ void writeAll(Set<AffixedWordContainer> containers) async {
 
   all.sort();
 
-  var output = File('assets/nl/words.txt');
+  var output = File('assets/en/words.txt');
   var sink = output.openWrite();
 
   all.forEach(sink.writeln);

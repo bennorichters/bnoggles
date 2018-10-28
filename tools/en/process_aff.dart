@@ -5,7 +5,8 @@ import '../dictionary.dart';
 import 'clean_dict_file.dart';
 
 void main(List<String> arguments) async {
-  await processAff();
+  var result = await processAff();
+  print(result);
 }
 
 Future<List<Map<String, Set<Affix>>>> processAff() async {
