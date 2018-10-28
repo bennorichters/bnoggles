@@ -4,7 +4,7 @@ import 'dart:io';
 import '../dictionary.dart';
 import 'clean_dict_file.dart';
 
-const combineable = true;
+const combinable = true;
 
 void main(List<String> arguments) async {
   await processAff();
@@ -141,7 +141,7 @@ class _AffixInterpreter {
       assert(condition == emptyCondition,
           'expected no condition for prefix. $condition');
 
-      _prefixes.putIfAbsent(name, () => Set()).add(Prefix(combineable, toAdd));
+      _prefixes.putIfAbsent(name, () => Set()).add(Prefix(combinable, toAdd));
     }
 
     parseAffixLines(header, prefixAdder);
@@ -152,7 +152,7 @@ class _AffixInterpreter {
         String name, int toRemove, String toAdd, SuffixCondition condition) {
       _suffixes
           .putIfAbsent(name, () => Set())
-          .add(Suffix(combineable, toAdd, toRemove, condition));
+          .add(Suffix(combinable, toAdd, toRemove, condition));
     }
 
     parseAffixLines(header, suffixAdder);

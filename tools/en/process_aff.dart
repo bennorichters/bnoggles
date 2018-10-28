@@ -93,7 +93,7 @@ class _AffixInterpreter {
 
   void parseAffixLines(
       String header,
-      void affixAdder(bool combineable, String name, int toRemove, String toAdd,
+      void affixAdder(bool combinable, String name, int toRemove, String toAdd,
           SuffixCondition condition)) {
     var headerInfo = parseHeader(header);
 
