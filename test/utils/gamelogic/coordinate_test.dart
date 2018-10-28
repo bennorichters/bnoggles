@@ -23,7 +23,7 @@ void main() {
       Coordinate(-1, -1),
     ];
 
-    testEqualSets(origin.allNeigbours(-10, 10), neighbours);
+    testEqualSets(origin.allNeighbours(-10, 10), neighbours);
   });
 
   test('allNeighbours with restrictions', () {
@@ -33,7 +33,7 @@ void main() {
       Coordinate(0, 1),
     ];
 
-    testEqualSets(origin.allNeigbours(0, 10), neighbours);
+    testEqualSets(origin.allNeighbours(0, 10), neighbours);
   });
 }
 

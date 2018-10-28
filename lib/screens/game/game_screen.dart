@@ -44,22 +44,27 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
       disposeController();
 
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute<Null>(
-              builder: (context) => ResultScreen(gameInfo: gameInfo)));
+        context,
+        MaterialPageRoute<Null>(
+          builder: (context) => ResultScreen(gameInfo: gameInfo),
+        ),
+      );
     }
 
     return Scaffold(
-      appBar:
-          AppBar(title: Text("Bnoggles"), leading: new Container(), actions: [
-        IconButton(
-          icon: Icon(Icons.stop),
-          color: Colors.red,
-          onPressed: () {
-            showResultScreen();
-          },
-        ),
-      ]),
+      appBar: AppBar(
+        title: Text("Bnoggles"),
+        leading: new Container(),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.stop),
+            color: Colors.red,
+            onPressed: () {
+              showResultScreen();
+            },
+          ),
+        ],
+      ),
       body: Provider(
         gameInfo: gameInfo,
         child: Column(
@@ -72,7 +77,8 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: _wordLines(gameInfo.configuration.preferences.hints.value),
+                children:
+                    _wordLines(gameInfo.configuration.preferences.hints.value),
               ),
             ),
             Grid(gameInfo.board.mapNeighbours()),

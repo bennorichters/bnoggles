@@ -18,11 +18,11 @@ class Grid extends StatefulWidget {
 }
 
 class GridState extends State<Grid> {
-  final Map<Coordinate, Iterable<Coordinate>> neigbours;
+  final Map<Coordinate, Iterable<Coordinate>> neighbours;
   final List<Coordinate> _selectedPositions = [];
   final _key = GlobalKey();
 
-  GridState(this.neigbours);
+  GridState(this.neighbours);
 
   void _start(PointerEvent event) {
     _itemHit(event);
@@ -54,7 +54,7 @@ class GridState extends State<Grid> {
   bool _canBeNext(Coordinate position) =>
       _selectedPositions.isEmpty ||
       (!_selectedPositions.contains(position) &&
-          neigbours[_selectedPositions.last].contains(position));
+          neighbours[_selectedPositions.last].contains(position));
 
   void _finish(PointerUpEvent event) {
     GameInfo gameInfo = Provider.of(_key.currentContext);
@@ -91,20 +91,21 @@ class GridState extends State<Grid> {
     double cellWidth = mediaWidth / board.width;
 
     return Container(
-        key: _key,
-        margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
-        child: Listener(
-          onPointerDown: _start,
-          onPointerMove: _move,
-          onPointerUp: _finish,
-          child: Container(
-            child: BoardWidget(
-              board: board,
-              centeredCharacter: HittableCenteredCharacter(cellWidth),
-              selectedPositions: _selectedPositions,
-            ),
+      key: _key,
+      margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
+      child: Listener(
+        onPointerDown: _start,
+        onPointerMove: _move,
+        onPointerUp: _finish,
+        child: Container(
+          child: BoardWidget(
+            board: board,
+            centeredCharacter: HittableCenteredCharacter(cellWidth),
+            selectedPositions: _selectedPositions,
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 

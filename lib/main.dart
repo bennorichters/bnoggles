@@ -68,8 +68,9 @@ class MyApp extends StatelessWidget {
     ]);
 
     return MaterialApp(
-        title: 'Bnoggles',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        home: StartScreen(configuration: configuration));
+      title: 'Bnoggles',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: StartScreen(configuration: configuration),
+    );
   }
 }

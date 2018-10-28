@@ -36,9 +36,10 @@ class StartGameButton extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute<Null>(
-              builder: (context) => GameScreen(
-                    gameInfo: gameInfo,
-                  )),
+            builder: (context) => GameScreen(
+                  gameInfo: gameInfo,
+                ),
+          ),
         );
       },
       child: Icon(Icons.forward),

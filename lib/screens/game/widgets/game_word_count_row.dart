@@ -59,8 +59,12 @@ class NumberInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.blueGrey,
-      child:
-          Center(child: Text(number, style: TextStyle(color: Colors.white70))),
+      child: Center(
+        child: Text(
+          number,
+          style: TextStyle(color: Colors.white70),
+        ),
+      ),
     );
   }
 }
@@ -94,8 +98,11 @@ class UserAnswerNumberInfo extends StatelessWidget {
     return Container(
       color: Colors.blue,
       child: Center(
-          child: Text(remaining.toString(),
-              style: TextStyle(color: Colors.white))),
+        child: Text(
+          remaining.toString(),
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
     );
   }
 

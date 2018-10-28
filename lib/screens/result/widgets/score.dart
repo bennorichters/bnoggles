@@ -21,29 +21,40 @@ class ScoreOverview extends StatelessWidget {
     int totalWords = solution.uniqueWords().length;
 
     return Container(
-        padding: EdgeInsets.all(15.0),
-        margin: EdgeInsets.all(25.0),
-        child: Table(
-          columnWidths: {
-            0: FixedColumnWidth(50.0),
-            1: FixedColumnWidth(50.0),
-          },
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: [
-            TableRow(children: [
-              Icon(Icons.tag_faces, size: 40.0, color: Colors.purple,),
-              buildText("$score", Colors.purple),
-            ]),
-            TableRow(children: [
-              Icon(Icons.done, size: 40.0, color: Colors.green,),
-              buildText("$foundWords", Colors.green),
-            ]),
-            TableRow(children: [
+      padding: EdgeInsets.all(15.0),
+      margin: EdgeInsets.all(25.0),
+      child: Table(
+        columnWidths: {
+          0: FixedColumnWidth(50.0),
+          1: FixedColumnWidth(50.0),
+        },
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: [
+          TableRow(children: [
+            Icon(
+              Icons.tag_faces,
+              size: 40.0,
+              color: Colors.purple,
+            ),
+            buildText("$score", Colors.purple),
+          ]),
+          TableRow(children: [
+            Icon(
+              Icons.done,
+              size: 40.0,
+              color: Colors.green,
+            ),
+            buildText("$foundWords", Colors.green),
+          ]),
+          TableRow(
+            children: [
               Icon(Icons.done_all, size: 40.0, color: Colors.blue),
               buildText("$totalWords", Colors.blue),
-            ]),
-          ],
-        ));
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Text buildText(String text, Color color) =>

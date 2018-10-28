@@ -27,7 +27,7 @@ class Board {
 
   Map<Coordinate, Iterable<Coordinate>> mapNeighbours() {
     var contents = <Coordinate, Iterable<Coordinate>>{};
-    allCoordinates().forEach((c) => contents[c] = c.allNeigbours(0, width - 1));
+    allCoordinates().forEach((c) => contents[c] = c.allNeighbours(0, width - 1));
     return Map.unmodifiable(contents);
   }
 

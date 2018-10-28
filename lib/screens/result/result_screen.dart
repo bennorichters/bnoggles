@@ -38,27 +38,37 @@ class ResultScreenState extends State<ResultScreen> {
         key: (dynamic chain) => (chain as Chain).text,
         value: (dynamic chain) => (chain as Chain).chain);
 
-    List<Widget> tiles = solution.uniqueWordsSorted().map((word) => GestureDetector(
-          child: Container(
-              margin: EdgeInsets.fromLTRB(3.0, 5.0, 3.0, 5.0),
-              padding: EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                  color: userAnswer.contains(word)
-                      ? Colors.green
-                      : Colors.lightBlueAccent,
-                  borderRadius: BorderRadius.all(Radius.circular(5.0))),
-              child: Text(word.toUpperCase(),
-                  style: TextStyle(
+    List<Widget> tiles = solution
+        .uniqueWordsSorted()
+        .map(
+          (word) => GestureDetector(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(3.0, 5.0, 3.0, 5.0),
+                  padding: EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    color: userAnswer.contains(word)
+                        ? Colors.green
+                        : Colors.lightBlueAccent,
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  ),
+                  child: Text(
+                    word.toUpperCase(),
+                    style: TextStyle(
                       fontSize: 10.0,
                       color: userAnswer.contains(word)
                           ? Colors.white
-                          : Colors.black))),
-          onTap: () {
-            setState(() {
-              highlightedTiles = optionPerWord[word];
-            });
-          },
-        )).toList();
+                          : Colors.black,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    highlightedTiles = optionPerWord[word];
+                  });
+                },
+              ),
+        )
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -68,48 +78,52 @@ class ResultScreenState extends State<ResultScreen> {
       body: Center(
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              width: wordViewWidth,
-              child: ListView(children: tiles)),
+            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+            width: wordViewWidth,
+            child: ListView(children: tiles),
+          ),
           Expanded(
             child: Column(
               children: [
                 Expanded(
-                    child: Center(
-                        child: ScoreOverview(
-                  solution: solution,
-                  userAnswer: userAnswer,
-                  fontSize: secondColumnWidth / 25,
-                ))),
+                  child: Center(
+                    child: ScoreOverview(
+                      solution: solution,
+                      userAnswer: userAnswer,
+                      fontSize: secondColumnWidth / 25,
+                    ),
+                  ),
+                ),
                 Container(
-                    margin: const EdgeInsets.all(10.0),
-                    child: BoardWidget(
-                      selectedPositions: highlightedTiles,
-                      board: board,
-                      centeredCharacter: CenteredCharacter(cellWidth),
-                    )),
+                  margin: const EdgeInsets.all(10.0),
+                  child: BoardWidget(
+                    selectedPositions: highlightedTiles,
+                    board: board,
+                    centeredCharacter: CenteredCharacter(cellWidth),
+                  ),
+                ),
                 Container(
-                    padding: EdgeInsets.all(20.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          FloatingActionButton(
-                            heroTag: "home",
-                            onPressed: () {
-                              Navigator.popUntil(
-                                  context,
-                                  ModalRoute.withName(
-                                      Navigator.defaultRouteName));
-                            },
-                            child: Icon(Icons.home),
-                          ),
-                          Container(
-                            width: 20.0,
-                          ),
-                          StartGameButton(
-                              configuration: gameInfo.configuration),
-                        ]))
+                  padding: EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FloatingActionButton(
+                        heroTag: "home",
+                        onPressed: () {
+                          Navigator.popUntil(
+                            context,
+                            ModalRoute.withName(Navigator.defaultRouteName),
+                          );
+                        },
+                        child: Icon(Icons.home),
+                      ),
+                      Container(
+                        width: 20.0,
+                      ),
+                      StartGameButton(configuration: gameInfo.configuration),
+                    ],
+                  ),
+                )
               ],
             ),
           )

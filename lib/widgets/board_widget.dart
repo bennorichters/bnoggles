@@ -66,9 +66,13 @@ class CenteredCharacter {
     Coordinate position,
   }) =>
       Center(
-          child: Text(character.toUpperCase(),
-              style: TextStyle(
-                  fontSize: cellWidth / 4,
-                  fontWeight: FontWeight.bold,
-                  color: (selected ? Colors.white : Colors.black))));
+        child: Text(
+          character.toUpperCase(),
+          style: TextStyle(
+            fontSize: cellWidth / 4,
+            fontWeight: FontWeight.bold,
+            color: (selected ? Colors.white : Colors.black),
+          ),
+        ),
+      );
 }

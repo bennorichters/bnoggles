@@ -11,7 +11,6 @@ class WordWindow extends StatefulWidget {
 
   @override
   State<WordWindow> createState() => WordWindowState();
-
 }
 
 class WordWindowState extends State<WordWindow> {
@@ -26,11 +25,12 @@ class WordWindowState extends State<WordWindow> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 48.0,
-        child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: widget.provider().map((w) => _UserWordFeedback(w)).toList()
-        ));
+      height: 48.0,
+      child: ListView(
+          scrollDirection: Axis.horizontal,
+          children:
+              widget.provider().map((w) => _UserWordFeedback(w)).toList()),
+    );
   }
 
   @override
@@ -67,16 +67,20 @@ class _UserWordFeedback extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.all(4.0),
-        padding: new EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          color: _word.color,
+      margin: const EdgeInsets.all(4.0),
+      padding: new EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        color: _word.color,
+      ),
+      child: Center(
+        child: Text(
+          _word.value.toUpperCase(),
+          style: TextStyle(
+            fontSize: 20.0,
+          ),
         ),
-        child: Center(
-            child: Text(_word.value.toUpperCase(),
-                style: TextStyle(
-                  fontSize: 20.0,
-                ))));
+      ),
+    );
   }
 }

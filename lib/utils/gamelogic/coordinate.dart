@@ -25,7 +25,7 @@ class Coordinate {
 
   Coordinate _neighbour(_Direction dir) => this + _neighbourVector[dir];
 
-  Iterable<Coordinate> allNeigbours(num min, num max) => _Direction.values
+  Iterable<Coordinate> allNeighbours(num min, num max) => _Direction.values
       .map((d) => _neighbour(d))
       .where((c) => _withinBoundaries(c, min, max));
 
