@@ -27,21 +27,25 @@ class _LanguageOptionsState extends State<_LanguageOptions> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> options = createRadio('nl', 0)..addAll(createRadio('en', 1));
 
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: options,
+      children: createRadio('nl', 0)..addAll(createRadio('en', 1)),
     );
   }
 
   List<Widget> createRadio(String country, int value) {
     return [
-      Opacity(
-        opacity: widget.notifier.value == value ? 1.0 : 0.3,
-        child: Image.asset(
-          'assets/' + country + '/flag.png',
-          width: 50.0,
+      GestureDetector(
+        onTap: () {
+          change(value);
+        },
+        child: Opacity(
+          opacity: widget.notifier.value == value ? 1.0 : 0.3,
+          child: Image.asset(
+            'assets/' + country + '/flag.png',
+            width: 50.0,
+          ),
         ),
       ),
       Radio(
