@@ -20,9 +20,9 @@ void main() async {
 
 Future<Configuration> setup() async {
   String configJson = await loadConfigJson();
-  Map<String, dynamic> config = json.decode(configJson);
+  Map<String, dynamic> freqJson = json.decode(configJson);
 
-  Map<String, int> _freq = getFreq(config);
+  Map<String, int> _freq = getFreq(freqJson);
   var generator = RandomLetterGenerator(_freq);
 
   String words = await loadDictionary();
@@ -32,16 +32,16 @@ Future<Configuration> setup() async {
   return Configuration(generator, dict, prefs);
 }
 
-Map<String, int> getFreq(Map<String, dynamic> config) {
+Map<String, int> getFreq(Map<String, dynamic> freqJson) {
   var result = <String, int>{};
-  Map<String, dynamic> m = config['letterFrequencies'];
+  Map<String, dynamic> m = freqJson;
   m.forEach((k, dynamic e) => result[k] = e as int);
 
   return result;
 }
 
 Future<String> loadConfigJson() async {
-  return await rootBundle.loadString('assets/config.json');
+  return await rootBundle.loadString('assets/nl/letterFrequencies.json');
 }
 
 Future<String> loadDictionary() async {
