@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'dictionary.dart';
+import '../dictionary.dart';
 
 import 'process_aff.dart';
 
@@ -44,7 +44,7 @@ void writeAll(Set<AffixedWordContainer> containers) async {
 }
 
 Future<List<String>> readFile() async {
-  var input = File('tools/assets/index_nl_clean.dic');
+  var input = File('tools/nl/assets/index_nl_clean.dic');
   var contents = await input.readAsLines();
   return contents;
 }

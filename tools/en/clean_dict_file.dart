@@ -2,33 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 const String allowedChars = "abcdefghijklmnopqrstuvwxyz";
-const replacements = {
-  "'": "",
-  '-': '',
-  'ë': 'e',
-  'é': 'e',
-  'ê': 'e',
-  'ĳ': 'ij',
-  'ï': 'i',
-  'è': 'e',
-  'ç': 'c',
-  'ü': 'u',
-  'ö': 'o',
-  'ñ': 'n',
-  'à': 'a',
-  'û': 'u',
-  'ô': 'o',
-  'ä': 'a',
-  'î': 'i',
-  'ó': 'o',
-  'ú': 'u',
-  'á': 'a',
-  'í': 'i',
-  'â': 'a',
-  'å': 'a',
+const Map<String, String> replacements = {
 };
 
-const forbiddenCodes = ['PN', 'Fw'];
+const List<String> forbiddenCodes = [];
 
 Set<String> disallowed = Set();
 
@@ -37,13 +14,13 @@ void main(List<String> arguments) async {
 }
 
 void process() async {
-  List<String> contents = await linesFromFile('tools/assets/index_nl.dic');
+  List<String> contents = await linesFromFile('tools/en/assets/index.dic');
   List<String> twoCharWords =
-      await linesFromFile('tools/assets/tweeletterwoorden.txt');
+      await linesFromFile('tools/en/assets/twoletterwords.txt');
   List<String> threeCharWords =
-      await linesFromFile('tools/assets/drieletterwoorden.txt');
+      await linesFromFile('tools/en/assets/threeletterwords.txt');
 
-  List<String> extraWords = await linesFromFile('tools/assets/extraWords.txt');
+  List<String> extraWords = await linesFromFile('tools/en/assets/extraWords.txt');
 
   List<String> twoThreeCharWords = List.from(twoCharWords)
     ..addAll(threeCharWords);
@@ -65,7 +42,7 @@ void process() async {
 
   print(result.keys.length);
 
-  var output = File('tools/assets/index_nl_clean.dic');
+  var output = File('tools/en/assets/index_clean.dic');
   var sink = output.openWrite();
 
   for (String word in result.keys.toList()..sort()) {

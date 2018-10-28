@@ -1,9 +1,10 @@
 import 'package:quiver/core.dart';
 
 abstract class Affix {
+  final bool _combinable;
   final String _toAdd;
 
-  Affix(this._toAdd);
+  Affix(this._combinable, this._toAdd);
 
   bool canBeAppliedTo(String word);
 
@@ -11,7 +12,7 @@ abstract class Affix {
 }
 
 class Prefix extends Affix {
-  Prefix(String toAdd) : super(toAdd);
+  Prefix(bool _combinable, String toAdd) : super(_combinable, toAdd);
 
   @override
   String apply(String text) => _toAdd + text;
@@ -33,7 +34,8 @@ class Suffix extends Affix {
   final int _toStrip;
   final SuffixCondition _condition;
 
-  Suffix(String toAdd, this._toStrip, this._condition) : super(toAdd);
+  Suffix(bool _combinable, String toAdd, this._toStrip, this._condition)
+      : super(_combinable, toAdd);
 
   @override
   bool canBeAppliedTo(String word) => _condition.match(word);
@@ -58,30 +60,48 @@ class Suffix extends Affix {
 }
 
 class SuffixCondition {
-  final String _toMatch;
-  final bool _negated;
-
-  const SuffixCondition(this._toMatch, this._negated);
+  final String _pattern;
+  const SuffixCondition(this._pattern);
 
   bool match(String word) {
-    var endsWith = word.endsWith(_toMatch);
-    return (_negated) ? !endsWith : endsWith;
+    if (_pattern.isEmpty) return true;
+
+    return RegExp(_pattern + '\$').hasMatch(word);
   }
 
   @override
   bool operator ==(dynamic other) =>
-      other is SuffixCondition &&
-      other._toMatch == _toMatch &&
-      other._negated == _negated;
+      other is SuffixCondition && _pattern == other._pattern;
 
   @override
-  int get hashCode => hash2(_toMatch.hashCode, _negated.hashCode);
-
-  @override
-  String toString() => '[$_toMatch - $_negated]';
+  int get hashCode => _pattern.hashCode;
 }
 
-const SuffixCondition emptyCondition = SuffixCondition("", false);
+//class SuffixCondition {
+//  final String _toMatch;
+//  final bool _negated;
+//
+//  const SuffixCondition(this._toMatch, this._negated);
+//
+//  bool match(String word) {
+//    var endsWith = word.endsWith(_toMatch);
+//    return (_negated) ? !endsWith : endsWith;
+//  }
+//
+//  @override
+//  bool operator ==(dynamic other) =>
+//      other is SuffixCondition &&
+//      other._toMatch == _toMatch &&
+//      other._negated == _negated;
+//
+//  @override
+//  int get hashCode => hash2(_toMatch.hashCode, _negated.hashCode);
+//
+//  @override
+//  String toString() => '[$_toMatch - $_negated]';
+//}
+
+const SuffixCondition emptyCondition = SuffixCondition("");
 
 class AffixedWordContainer {
   final String _base;
@@ -90,9 +110,28 @@ class AffixedWordContainer {
 
   AffixedWordContainer(this._base, this._prefixes, this._suffixes);
 
-  int get length => (_prefixes.length + 1) * (_suffixes.length + 1);
+  List<Affix> _combinablePrefixes() =>
+      _prefixes.where((e) => e._combinable).toList();
+  List<Affix> _combinableSuffixes() =>
+      _suffixes.where((e) => e._combinable).toList();
+  List<Affix> _uncombinablePrefixes() =>
+      _prefixes.where((e) => !e._combinable).toList();
+  List<Affix> _uncombinableSuffixes() =>
+      _suffixes.where((e) => !e._combinable).toList();
 
-  String _word(int index) {
+  int get length => _combinableLength() + _uncombinablelength();
+
+  int _combinableLength() =>
+      (_combinablePrefixes().length + 1) * (_combinableSuffixes().length + 1);
+
+  int _uncombinablelength() =>
+      _uncombinablePrefixes().length + _uncombinableSuffixes().length;
+
+  String _word(int index) => index < _combinableLength()
+      ? wordFromCombinables(index)
+      : wordFromUncombinables(index);
+
+  String wordFromCombinables(int index) {
     int rowLength = _prefixes.length + 1;
     int y = (index / rowLength).floor();
     int x = index - y * rowLength;
@@ -106,6 +145,17 @@ class AffixedWordContainer {
     }
 
     return result;
+  }
+
+  String wordFromUncombinables(int index) {
+    int rest = index - _combinableLength();
+    var uncombinablePrefixes = _uncombinablePrefixes();
+    if (rest < uncombinablePrefixes.length) {
+      return uncombinablePrefixes[rest].apply(_base);
+    }
+
+    rest -= uncombinablePrefixes.length;
+    return _uncombinableSuffixes()[rest].apply(_base);
   }
 
   @override

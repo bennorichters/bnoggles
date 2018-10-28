@@ -15,5 +15,4 @@ bnoggles_android.iml
 android/
 ios/
 
-index_nl_clean.dic
-index_nl_clean_unmunched.dic
+*.dic
