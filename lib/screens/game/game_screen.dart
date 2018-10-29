@@ -32,7 +32,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     _controller = AnimationController(
       vsync: this,
       duration:
-          Duration(seconds: gameInfo.configuration.preferences.time.value),
+          Duration(seconds: gameInfo.parameters.time),
     );
 
     _controller.forward(from: 0.0);
@@ -79,14 +79,14 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
           children: [
             GameProgress(
               _controller,
-              gameInfo.configuration.preferences.time.value,
+              gameInfo.parameters.time,
               _showResultScreen,
             ),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children:
-                    _wordLines(gameInfo.configuration.preferences.hints.value),
+                    _wordLines(gameInfo.parameters.hints),
               ),
             ),
             Grid(gameInfo.board.mapNeighbours()),

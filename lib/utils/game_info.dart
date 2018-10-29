@@ -1,18 +1,18 @@
-import 'package:bnoggles/utils/configuration.dart';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:bnoggles/utils/gamelogic/scoring.dart' as sc;
+import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter/cupertino.dart';
 
 class GameInfo {
-  final Configuration configuration;
+  final GameParameters parameters;
   final Board board;
   final Solution solution;
   final ValueNotifier<UserAnswer> userAnswer;
   final List<String> randomWords;
 
   GameInfo({
-    @required this.configuration,
+    @required this.parameters,
     @required this.board,
     @required Solution solution,
     @required this.userAnswer,
