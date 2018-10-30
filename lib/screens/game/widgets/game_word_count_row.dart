@@ -90,8 +90,8 @@ class UserAnswerNumberInfo extends StatelessWidget {
     Solution solution = gameInfo.solution;
     Answer answer = gameInfo.userAnswer.value;
 
-    int remaining =
-        _countForLength(solution, length) - _countForLength(answer, length);
+    var todo = solution.histogram - answer.histogram;
+    int remaining = length == _maxLength ? todo.atLeast(length) : todo[length];
 
     return Container(
       color: Colors.blue,
@@ -103,8 +103,4 @@ class UserAnswerNumberInfo extends StatelessWidget {
       ),
     );
   }
-
-  int _countForLength(Answer answer, int length) => (length == _maxLength)
-      ? answer.countForMinLength(length)
-      : answer.countForLength(length);
 }

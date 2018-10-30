@@ -1,6 +1,7 @@
 import 'package:bnoggles/utils/configuration.dart';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/scoring.dart' as sc;
 import 'package:flutter/cupertino.dart';
 
 class GameInfo {
@@ -18,6 +19,12 @@ class GameInfo {
   })  : this.solution = solution,
         randomWords = solution.uniqueWords().toList()..shuffle();
 
+  ScoreSheet get scoreSheet => ScoreSheet(
+        availableWords: solution.histogram.count,
+        foundWords: userAnswer.value.histogram.count,
+        score: sc.standard(solution.histogram, userAnswer.value.histogram),
+      );
+
   void addListener(VoidCallback listener) {
     userAnswer.addListener(listener);
   }
@@ -25,4 +32,12 @@ class GameInfo {
   void removeListener(VoidCallback listener) {
     userAnswer.removeListener(listener);
   }
+}
+
+class ScoreSheet {
+  final int availableWords;
+  final int foundWords;
+  final int score;
+
+  ScoreSheet({this.availableWords, this.foundWords, this.score});
 }

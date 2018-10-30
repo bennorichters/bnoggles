@@ -36,21 +36,29 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     );
 
     _controller.forward(from: 0.0);
+
+    gameInfo.userAnswer.addListener(_checkDone);
+  }
+
+  void _checkDone() {
+    if ((gameInfo.solution.histogram - gameInfo.userAnswer.value.histogram).isEmpty) {
+      _showResultScreen();
+    }
+  }
+
+  void _showResultScreen() {
+    disposeController();
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute<Null>(
+        builder: (context) => ResultScreen(gameInfo: gameInfo),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    void showResultScreen() {
-      disposeController();
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute<Null>(
-          builder: (context) => ResultScreen(gameInfo: gameInfo),
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Bnoggles"),
@@ -60,7 +68,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
             icon: Icon(Icons.stop),
             color: Colors.red,
             onPressed: () {
-              showResultScreen();
+              _showResultScreen();
             },
           ),
         ],
@@ -72,7 +80,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
             GameProgress(
               _controller,
               gameInfo.configuration.preferences.time.value,
-              showResultScreen,
+              _showResultScreen,
             ),
             Expanded(
               child: Column(
@@ -111,6 +119,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    gameInfo.userAnswer.removeListener(_checkDone);
     disposeController();
     super.dispose();
   }

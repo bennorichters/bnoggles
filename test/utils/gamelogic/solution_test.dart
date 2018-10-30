@@ -15,35 +15,33 @@ void main() {
   });
 
   test('wordsPerSizeCount', () {
-    Solution s = createSolution();
+    var h = createSolution().histogram;
+    expect(h[0], 0);
+    expect(h[1], 0);
+    expect(h[2], 2);
+    expect(h[3], 1);
+    expect(h[4], 0);
 
-    expect(s.countForLength(0), 0);
-    expect(s.countForLength(1), 0);
-    expect(s.countForLength(2), 2);
-    expect(s.countForLength(3), 1);
-    expect(s.countForLength(4), 0);
-
-    expect(s.countForMinLength(0), 3);
-    expect(s.countForMinLength(1), 3);
-    expect(s.countForMinLength(2), 3);
-    expect(s.countForMinLength(3), 1);
-    expect(s.countForMinLength(4), 0);
+    expect(h.atLeast(0), 3);
+    expect(h.atLeast(1), 3);
+    expect(h.atLeast(2), 3);
+    expect(h.atLeast(3), 1);
+    expect(h.atLeast(4), 0);
   });
 
   test('wordsPerSizeCount minimal Length = 3', () {
-    Solution s = createSolution(minimalLength: 3);
+    var h = createSolution(minimalLength: 3).histogram;
+    expect(h[0], 0);
+    expect(h[1], 0);
+    expect(h[2], 0);
+    expect(h[3], 1);
+    expect(h[4], 0);
 
-    expect(s.countForLength(0), 0);
-    expect(s.countForLength(1), 0);
-    expect(s.countForLength(2), 0);
-    expect(s.countForLength(3), 1);
-    expect(s.countForLength(4), 0);
-
-    expect(s.countForMinLength(0), 1);
-    expect(s.countForMinLength(1), 1);
-    expect(s.countForMinLength(2), 1);
-    expect(s.countForMinLength(3), 1);
-    expect(s.countForMinLength(4), 0);
+    expect(h.atLeast(0), 1);
+    expect(h.atLeast(1), 1);
+    expect(h.atLeast(2), 1);
+    expect(h.atLeast(3), 1);
+    expect(h.atLeast(4), 0);
   });
 
   test('userAnswer.found', () {
