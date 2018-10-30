@@ -30,11 +30,12 @@ class SettingsScreenState extends State<SettingsScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SettingsGrid(
-                preferences
-              ),
+              SettingsGrid(preferences),
               Center(
-                child: StartGameButton(parameterProvider: preferences.toParameters),
+                child: StartGameButton(
+                  parameterProvider: preferences.toParameters,
+                  replaceScreen: false,
+                ),
               ),
             ],
           ),
