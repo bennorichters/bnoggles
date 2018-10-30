@@ -2,13 +2,6 @@ import 'package:collection/collection.dart';
 
 const _eq = const ListEquality<int>();
 
-void main() {
-  var one = Histogram.fromStrings(['a']);
-  var two = Histogram.fromStrings(['a', 'a']);
-  print('$two - $one = ${two - one}');
-  print('$one - $two = ${one - two}');
-}
-
 class Histogram {
   final List<int> _occurrences;
 
