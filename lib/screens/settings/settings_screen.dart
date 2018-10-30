@@ -1,21 +1,21 @@
 import 'package:bnoggles/screens/settings/widgets/settings.dart';
-import 'package:bnoggles/utils/configuration.dart';
+import 'package:bnoggles/utils/preferences.dart';
 import 'package:bnoggles/widgets/start_game_button.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
-  final Configuration configuration;
+  final Preferences preferences;
 
-  SettingsScreen({Key key, @required this.configuration}) : super(key: key);
+  SettingsScreen({Key key, @required this.preferences}) : super(key: key);
 
   @override
-  State createState() => SettingsScreenState(configuration: configuration);
+  State createState() => SettingsScreenState(preferences: preferences);
 }
 
 class SettingsScreenState extends State<SettingsScreen> {
-  final Configuration configuration;
+  final Preferences preferences;
 
-  SettingsScreenState({@required this.configuration});
+  SettingsScreenState({@required this.preferences});
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +31,10 @@ class SettingsScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SettingsGrid(
-                configuration.preferences
+                preferences
               ),
               Center(
-                child: StartGameButton(configuration: configuration),
+                child: StartGameButton(parameterProvider: preferences.toParameters),
               ),
             ],
           ),

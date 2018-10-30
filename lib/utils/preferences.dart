@@ -40,6 +40,7 @@ class Preferences {
   }
 
   GameParameters toParameters() => GameParameters(
+        languageCode: const ['nl', 'en'][language.value],
         time: time.value,
         size: size.value,
         length: length.value,
@@ -48,10 +49,13 @@ class Preferences {
 }
 
 class GameParameters {
+  final String languageCode;
   final int time;
   final int size;
   final int length;
   final bool hints;
 
-  const GameParameters({this.time, this.size, this.length, this.hints});
+  const GameParameters({this.languageCode, this.time, this.size, this.length, this.hints});
 }
+
+typedef GameParameters ParameterProvider();

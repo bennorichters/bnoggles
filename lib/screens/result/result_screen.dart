@@ -117,7 +117,7 @@ class ResultScreenState extends State<ResultScreen> {
                       Container(
                         width: 20.0,
                       ),
-                      StartGameButton(configuration: gameInfo.configuration),
+                      StartGameButton(parameterProvider: () => gameInfo.parameters),
                     ],
                   ),
                 )
