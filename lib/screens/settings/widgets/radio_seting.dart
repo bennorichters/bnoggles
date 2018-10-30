@@ -43,7 +43,7 @@ class _LanguageOptionsState extends State<_LanguageOptions> {
         child: Opacity(
           opacity: widget.notifier.value == value ? 1.0 : 0.3,
           child: Image.asset(
-            'assets/' + country + '/flag.png',
+            'assets/lang/' + country + '/flag.png',
             width: 50.0,
           ),
         ),

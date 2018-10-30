@@ -9,8 +9,8 @@ import 'package:bnoggles/utils/preferences.dart';
 void main() async {
   Language.registerLoader(LanguageLoader(
     letterFrequencies: (code) =>
-        rootBundle.loadString('assets/$code/letterFrequencies.json'),
-    availableWords: (code) => rootBundle.loadString('assets/$code/words.txt'),
+        rootBundle.loadString('assets/lang/$code/letterFrequencies.json'),
+    availableWords: (code) => rootBundle.loadString('assets/lang/$code/words.txt'),
   ));
 
   var preferences = await Preferences.load();

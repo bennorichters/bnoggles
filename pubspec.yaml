@@ -79,5 +79,6 @@ flutter:
 
   assets:
     - assets/
-    - assets/nl/
-    - assets/en/
+    - assets/lang/
+    - assets/lang/nl/
+    - assets/lang/en/
