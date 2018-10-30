@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RadioSetting {
+class LanguageSetting {
   static List<Widget> create(ValueNotifier<int> notifier, IconData icon) {
     return <Widget>[
       Icon(icon, size: 40.0),
@@ -27,16 +27,16 @@ class _LanguageOptionsState extends State<_LanguageOptions> {
 
   @override
   Widget build(BuildContext context) {
-
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: createRadio('nl', 0)..addAll(createRadio('en', 1)),
+      children: [tappableFlag('nl', 0), tappableFlag('en', 1)],
     );
   }
 
-  List<Widget> createRadio(String country, int value) {
-    return [
-      GestureDetector(
+  Widget tappableFlag(String country, int value) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+      child: GestureDetector(
         onTap: () {
           change(value);
         },
@@ -48,11 +48,6 @@ class _LanguageOptionsState extends State<_LanguageOptions> {
           ),
         ),
       ),
-      Radio(
-        value: value,
-        onChanged: change,
-        groupValue: widget.notifier.value,
-      ),
-    ];
+    );
   }
 }
