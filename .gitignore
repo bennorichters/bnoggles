@@ -2,6 +2,7 @@
 .atom/
 .dart_tool/
 .idea
+*.iml
 .packages
 .pub/
 build/
@@ -13,7 +14,16 @@ packages
 bnoggles.iml
 bnoggles_android.iml
 
-android/
 ios/
+
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
 
 tools/*.dic
