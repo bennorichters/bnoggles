@@ -73,7 +73,7 @@ class ResultScreenState extends State<ResultScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bnoggles"),
-        leading: new Container(),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
