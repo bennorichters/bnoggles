@@ -1,5 +1,5 @@
-import 'package:bnoggles/utils/board.dart';
-import 'package:bnoggles/utils/coordinate.dart';
+import 'package:bnoggles/utils/gamelogic/board.dart';
+import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:flutter/material.dart';
 
 class BoardWidget extends StatelessWidget {
@@ -8,7 +8,10 @@ class BoardWidget extends StatelessWidget {
   final CenteredCharacter centeredCharacter;
 
   const BoardWidget(
-      {Key key, this.selectedPositions, this.board, this.centeredCharacter})
+      {Key key,
+      @required this.selectedPositions,
+      @required this.board,
+      @required this.centeredCharacter})
       : super(key: key);
 
   @override
@@ -58,15 +61,18 @@ class CenteredCharacter {
   CenteredCharacter(this.cellWidth);
 
   Widget create({
-    String character,
-    bool selected,
+    @required String character,
+    @required bool selected,
     Coordinate position,
-  }) {
-    return Center(
-        child: Text(character.toUpperCase(),
-            style: TextStyle(
-                fontSize: cellWidth / 4,
-                fontWeight: FontWeight.bold,
-                color: (selected ? Colors.white : Colors.black))));
-  }
+  }) =>
+      Center(
+        child: Text(
+          character.toUpperCase(),
+          style: TextStyle(
+            fontSize: cellWidth / 4,
+            fontWeight: FontWeight.bold,
+            color: (selected ? Colors.white : Colors.black),
+          ),
+        ),
+      );
 }

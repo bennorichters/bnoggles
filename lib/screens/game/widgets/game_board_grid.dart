@@ -1,12 +1,13 @@
+import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/widgets/board_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:bnoggles/screens/game/widgets/provider.dart';
 
-import 'package:bnoggles/utils/board.dart';
-import 'package:bnoggles/utils/coordinate.dart';
-import 'package:bnoggles/utils/solution.dart';
+import 'package:bnoggles/utils/gamelogic/board.dart';
+import 'package:bnoggles/utils/gamelogic/coordinate.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class Grid extends StatefulWidget {
   final Map<Coordinate, Iterable<Coordinate>> neighbours;
@@ -17,26 +18,18 @@ class Grid extends StatefulWidget {
 }
 
 class GridState extends State<Grid> {
-  final Map<Coordinate, Iterable<Coordinate>> neigbours;
+  final Map<Coordinate, Iterable<Coordinate>> neighbours;
   final List<Coordinate> _selectedPositions = [];
   final _key = GlobalKey();
 
-  bool _validStart = false;
-
-  GridState(this.neigbours);
+  GridState(this.neighbours);
 
   void _start(PointerEvent event) {
-    _validStart = Provider.of(_key.currentContext).gameOngoing;
-
-    if (_validStart) {
-      _itemHit(event);
-    }
+    _itemHit(event);
   }
 
   void _move(PointerEvent event) {
-    if (_validStart) {
-      _itemHit(event);
-    }
+    _itemHit(event);
   }
 
   void _itemHit(PointerEvent event) {
@@ -61,26 +54,24 @@ class GridState extends State<Grid> {
   bool _canBeNext(Coordinate position) =>
       _selectedPositions.isEmpty ||
       (!_selectedPositions.contains(position) &&
-          neigbours[_selectedPositions.last].contains(position));
+          neighbours[_selectedPositions.last].contains(position));
 
   void _finish(PointerUpEvent event) {
-    if (_validStart) {
-      GameInfo gameInfo = Provider.of(_key.currentContext);
-      Board board = gameInfo.board;
-      Solution solution = gameInfo.solution;
+    GameInfo gameInfo = Provider.of(_key.currentContext);
+    Board board = gameInfo.board;
+    Solution solution = gameInfo.solution;
 
-      var word = StringBuffer();
-      for (Coordinate position in _selectedPositions) {
-        word.write(board.characterAt(position));
-      }
+    var word = StringBuffer();
+    for (Coordinate position in _selectedPositions) {
+      word.write(board.characterAt(position));
+    }
 
-      if (word.length >= gameInfo.solution.minimalLength) {
-        var candidate = word.toString();
+    if (word.length >= gameInfo.solution.minimalLength) {
+      var candidate = word.toString();
 
-        UserAnswer old = gameInfo.userAnswer.value;
-        gameInfo.userAnswer.value =
-            UserAnswer(old, candidate, solution.isCorrect(candidate));
-      }
+      UserAnswer old = gameInfo.userAnswer.value;
+      gameInfo.userAnswer.value =
+          UserAnswer(old, candidate, solution.isCorrect(candidate));
     }
 
     _clearSelection();
@@ -88,7 +79,6 @@ class GridState extends State<Grid> {
 
   void _clearSelection() {
     setState(() {
-      _validStart = false;
       _selectedPositions.clear();
     });
   }
@@ -101,20 +91,21 @@ class GridState extends State<Grid> {
     double cellWidth = mediaWidth / board.width;
 
     return Container(
-        key: _key,
-        margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
-        child: Listener(
-          onPointerDown: _start,
-          onPointerMove: _move,
-          onPointerUp: _finish,
-          child: Container(
-            child: BoardWidget(
-              board: board,
-              centeredCharacter: HittableCenteredCharacter(cellWidth),
-              selectedPositions: _selectedPositions,
-            ),
+      key: _key,
+      margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
+      child: Listener(
+        onPointerDown: _start,
+        onPointerMove: _move,
+        onPointerUp: _finish,
+        child: Container(
+          child: BoardWidget(
+            board: board,
+            centeredCharacter: HittableCenteredCharacter(cellWidth),
+            selectedPositions: _selectedPositions,
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 

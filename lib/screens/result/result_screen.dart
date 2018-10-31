@@ -1,39 +1,36 @@
-import 'package:bnoggles/utils/board.dart';
-import 'package:bnoggles/utils/coordinate.dart';
+import 'package:bnoggles/screens/result/widgets/score.dart';
+import 'package:bnoggles/utils/game_info.dart';
+import 'package:bnoggles/utils/gamelogic/board.dart';
+import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/widgets/board_widget.dart';
+import 'package:bnoggles/widgets/start_game_button.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bnoggles/utils/solution.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class ResultScreen extends StatefulWidget {
-  final Board board;
-  final Solution solution;
-  final UserAnswer userAnswer;
-
-  ResultScreen(this.board, this.solution, this.userAnswer);
+  final GameInfo gameInfo;
+  ResultScreen({@required this.gameInfo});
 
   @override
-  State<StatefulWidget> createState() =>
-      ResultScreenState(board, solution, userAnswer);
+  State<StatefulWidget> createState() => ResultScreenState(gameInfo: gameInfo);
 }
 
 class ResultScreenState extends State<ResultScreen> {
-  final Board board;
-  final Solution solution;
-  final UserAnswer userAnswer;
-
+  final GameInfo gameInfo;
   List<Coordinate> highlightedTiles = [];
 
-  ResultScreenState(this.board, this.solution, this.userAnswer);
+  ResultScreenState({@required this.gameInfo});
 
   @override
   Widget build(BuildContext context) {
-    int score = calculateScore(solution, userAnswer);
-    int maxScore = calculateScore(solution, solution);
+    Solution solution = gameInfo.solution;
+    UserAnswer userAnswer = gameInfo.userAnswer.value;
+    Board board = gameInfo.board;
 
-    double wordViewWidth = 150.0;
     double mediaWidth = MediaQuery.of(context).size.width;
-    double secondColumnWidth = (mediaWidth - wordViewWidth);
+    double wordViewWidth = mediaWidth / 6;
+    double secondColumnWidth = mediaWidth - wordViewWidth;
     double cellWidth = secondColumnWidth / board.width;
 
     Map<String, List<Coordinate>> optionPerWord = Map.fromIterable(
@@ -41,92 +38,97 @@ class ResultScreenState extends State<ResultScreen> {
         key: (dynamic chain) => (chain as Chain).text,
         value: (dynamic chain) => (chain as Chain).chain);
 
-    void doSomething(String word) {
-      setState(() {
-        highlightedTiles = optionPerWord[word];
-      });
-    }
-
-    var tiles = solution.uniqueWordsSorted().map((word) => ListTile(
-          dense: true,
-          contentPadding: EdgeInsets.all(5.0),
-          title: Container(
-              padding: EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                  color: userAnswer.contains(word)
-                      ? Colors.green
-                      : Colors.lightBlueAccent,
-                  borderRadius: BorderRadius.all(Radius.circular(5.0))),
-              child: Text(word.toUpperCase(),
-                  style: TextStyle(
+    List<Widget> tiles = solution
+        .uniqueWordsSorted()
+        .map(
+          (word) => GestureDetector(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(3.0, 5.0, 3.0, 5.0),
+                  padding: EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    color: userAnswer.contains(word)
+                        ? Colors.green
+                        : Colors.lightBlueAccent,
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  ),
+                  child: Text(
+                    word.toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 10.0,
                       color: userAnswer.contains(word)
                           ? Colors.white
-                          : Colors.black))),
-          onTap: () {
-            doSomething(word);
-          },
-        ));
-
-    final List<Widget> divided = ListTile.divideTiles(
-      context: context,
-      tiles: tiles,
-    ).toList();
+                          : Colors.black,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    highlightedTiles = optionPerWord[word];
+                  });
+                },
+              ),
+        )
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Bnoggles"),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              width: wordViewWidth,
-              child: ListView(children: divided)),
+            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+            width: wordViewWidth,
+            child: ListView(children: tiles),
+          ),
           Expanded(
-            child: Column(children: [
-              Center(
-                  child: Container(
-                      child: Text(
-                "$score / $maxScore",
-                style: TextStyle(fontSize: secondColumnWidth / 8),
-              ))),
-              Container(
+            child: Column(
+              children: [
+                Expanded(
+                    child: Center(
+                        child: ScoreOverview(
+                  scores: gameInfo.scoreSheet,
+                  fontSize: secondColumnWidth / 25,
+                ))),
+                Container(
                   margin: const EdgeInsets.all(10.0),
                   child: BoardWidget(
                     selectedPositions: highlightedTiles,
                     board: board,
                     centeredCharacter: CenteredCharacter(cellWidth),
-                  )),
-              FloatingActionButton(
-                onPressed: () {
-                  Navigator.popUntil(
-                      context, ModalRoute.withName(Navigator.defaultRouteName));
-                },
-                child: Icon(Icons.home),
-              ),
-            ]),
-          ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FloatingActionButton(
+                        heroTag: "settings",
+                        onPressed: () {
+                          Navigator.popUntil(
+                            context,
+                            ModalRoute.withName(Navigator.defaultRouteName),
+                          );
+                        },
+                        child: Icon(Icons.settings),
+                      ),
+                      Container(
+                        width: 20.0,
+                      ),
+                      StartGameButton(
+                        parameterProvider: () => gameInfo.parameters,
+                        replaceScreen: true,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
         ]),
       ),
     );
-  }
-
-  int calculateScore(Solution solution, Answer userAnswer) {
-    var goodAnswerCount = solution.uniqueWords().length;
-    if (goodAnswerCount == 0) {
-      return 0;
-    }
-
-    int result = 0;
-    for (String word in userAnswer.uniqueWords()) {
-      result += word.length * 2;
-    }
-
-    var percentageFound = (userAnswer.uniqueWords().length / goodAnswerCount);
-    result = (result * percentageFound * percentageFound).round();
-    result += userAnswer.uniqueWords().length;
-
-    return result;
   }
 }

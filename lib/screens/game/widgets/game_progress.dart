@@ -13,11 +13,17 @@ class GameProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Container(width: 280.0, height: 80.0, child: WordCountOverview()),
+      Container(
+        width: 280.0,
+        height: 80.0,
+        child: WordCountOverview(),
+      ),
       Expanded(
-          child: Container(
-              height: 80.0,
-              child: Clock(_showResultScreen, _controller, _startValue))),
+        child: Container(
+          height: 80.0,
+          child: Clock(_showResultScreen, _controller, _startValue),
+        ),
+      ),
     ]);
   }
 }

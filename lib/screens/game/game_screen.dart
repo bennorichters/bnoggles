@@ -3,91 +3,123 @@ import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
 import 'package:bnoggles/screens/game/widgets/provider.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
-import 'package:bnoggles/utils/board.dart';
-import 'package:bnoggles/utils/solution.dart';
+import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatefulWidget {
-  final Board board;
-  final Solution solution;
-  final int startValue;
+  final GameInfo gameInfo;
 
-  GameScreen(
-      {Key key,
-      @required this.board,
-      @required this.solution,
-      @required this.startValue})
-      : super(key: key);
+  GameScreen({
+    Key key,
+    @required this.gameInfo,
+  }) : super(key: key);
 
   @override
-  State createState() =>
-      GameScreenState(board: board, solution: solution, startValue: startValue);
+  State createState() => GameScreenState(gameInfo: gameInfo);
 }
 
 class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   final GameInfo gameInfo;
-  final int _startValue;
 
   AnimationController _controller;
   bool controllerDisposed = false;
 
-  GameScreenState({@required Board board, Solution solution, int startValue})
-      : gameInfo = GameInfo(
-            board: board,
-            solution: solution,
-            userAnswer: ValueNotifier(UserAnswer.start())),
-        _startValue = startValue;
+  GameScreenState({@required this.gameInfo});
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: _startValue),
+      duration:
+          Duration(seconds: gameInfo.parameters.time),
     );
 
     _controller.forward(from: 0.0);
+
+    gameInfo.userAnswer.addListener(_checkDone);
+  }
+
+  void _checkDone() {
+    if ((gameInfo.solution.histogram - gameInfo.userAnswer.value.histogram).isEmpty) {
+      _showResultScreen();
+    }
+  }
+
+  void _showResultScreen() {
+    disposeController();
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute<Null>(
+        builder: (context) => ResultScreen(gameInfo: gameInfo),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    void showResultScreen() {
-      UserAnswer userAnswer = gameInfo.userAnswer.value;
-      gameInfo.gameOngoing = false;
-
-      disposeController();
-
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute<Null>(
-              builder: (context) =>
-                  ResultScreen(gameInfo.board, gameInfo.solution, userAnswer)));
-    }
-
     return Scaffold(
-        appBar:
-            AppBar(title: Text("Bnoggles"), leading: new Container(), actions: [
+      appBar: AppBar(
+        title: Text("Bnoggles"),
+        automaticallyImplyLeading: false,
+        actions: [
           IconButton(
             icon: Icon(Icons.stop),
             color: Colors.red,
             onPressed: () {
-              showResultScreen();
+              _showResultScreen();
             },
           ),
-        ]),
-        body: Provider(
-            gameInfo: gameInfo,
-            child: Column(
-              children: [
-                GameProgress(_controller, _startValue, showResultScreen),
-                Expanded(child: Center(child: WordWindow())),
-                Grid(gameInfo.board.mapNeighbours()),
-              ],
-            )));
+        ],
+      ),
+      body: Provider(
+        gameInfo: gameInfo,
+        child: Column(
+          children: [
+            GameProgress(
+              _controller,
+              gameInfo.parameters.time,
+              _showResultScreen,
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children:
+                    _wordLines(gameInfo.parameters.hints),
+              ),
+            ),
+            Grid(gameInfo.board.mapNeighbours()),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _wordLines(bool hints) {
+    WordsProvider byUser = () => gameInfo.userAnswer.value.found.reversed
+        .map((a) => Word.fromUser(a))
+        .toList();
+
+    if (!hints) {
+      return [WordWindow(byUser, gameInfo.userAnswer)];
+    }
+
+    WordsProvider byGame = () => gameInfo.randomWords
+        .where((w) =>
+            !gameInfo.userAnswer.value.found.map((w) => w.word).contains(w))
+        .map((a) => Word.neutral(a))
+        .toList();
+
+    return [
+      WordWindow(byUser, gameInfo.userAnswer),
+      WordWindow(byGame, gameInfo.userAnswer),
+    ];
   }
 
   @override
   void dispose() {
+    gameInfo.userAnswer.removeListener(_checkDone);
     disposeController();
     super.dispose();
   }

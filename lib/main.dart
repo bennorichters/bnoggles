@@ -1,68 +1,29 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-
+import 'package:bnoggles/utils/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'
     show DeviceOrientation, SystemChrome, rootBundle;
 
-import 'package:bnoggles/screens/start/start_screen.dart';
-
-import 'package:bnoggles/utils/dictionary.dart';
+import 'package:bnoggles/screens/settings/settings_screen.dart';
+import 'package:bnoggles/utils/preferences.dart';
 
 void main() async {
-  var res = await setup();
+  Language.registerLoader(LanguageLoader(
+    letterFrequencies: (code) =>
+        rootBundle.loadString('assets/lang/$code/letterFrequencies.json'),
+    availableWords: (code) =>
+        rootBundle.loadString('assets/lang/$code/words.dic'),
+  ));
 
-  runApp(MyApp(res));
-}
-
-Future<Configuration> setup() async {
-  String configJson = await loadConfigJson();
-  Map<String, dynamic> config = json.decode(configJson);
-
-  Map<String, int> _freq = getFreq(config);
-  var generator = RandomLetterGenerator(_freq);
-
-  String words = await loadDictionary();
-  Dictionary dict = Dictionary(words.split("\n")..sort());
-
-  return Configuration(generator, dict);
-}
-
-Map<String, int> getFreq(Map<String, dynamic> config) {
-  var result = <String, int>{};
-  Map<String, dynamic> m = config['letterFrequencies'];
-  m.forEach((k, dynamic e) => result[k] = e as int);
-
-  return result;
-}
-
-Future<String> loadConfigJson() async {
-  return await rootBundle.loadString('assets/config.json');
-}
-
-Future<String> loadDictionary() async {
-  return await rootBundle.loadString('assets/words-nl.txt');
-}
-
-Future<Dictionary> readDutchWords(String fileName) async {
-  var source = File(fileName);
-  List<String> contents = await source.readAsLines();
-  contents.sort();
-  return Dictionary(contents);
-}
-
-class Configuration {
-  final RandomLetterGenerator generator;
-  final Dictionary dictionary;
-
-  Configuration(this.generator, this.dictionary);
+  var preferences = await Preferences.load();
+  // preload previous language
+  Language.forLanguageCode(preferences.toParameters().languageCode);
+  runApp(MyApp(preferences));
 }
 
 class MyApp extends StatelessWidget {
-  final Configuration configuration;
+  final Preferences preferences;
 
-  MyApp(this.configuration);
+  MyApp(this.preferences);
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +35,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Bnoggles',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: StartScreen(
-          dictionary: configuration.dictionary,
-          generator: configuration.generator),
+      home: SettingsScreen(preferences: preferences),
     );
   }
 }

@@ -1,5 +1,6 @@
 .DS_Store
 .atom/
+.dart_tool/
 .idea
 .packages
 .pub/
@@ -15,5 +16,4 @@ bnoggles_android.iml
 android/
 ios/
 
-index_nl_clean.dic
-index_nl_clean_unmunched.dic
+tools/*.dic
