@@ -62,7 +62,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bnoggles"),
-        leading: new Container(),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: Icon(Icons.stop),
