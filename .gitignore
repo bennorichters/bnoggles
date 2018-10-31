@@ -16,4 +16,4 @@ bnoggles_android.iml
 android/
 ios/
 
-*.dic
+tools/*.dic
