@@ -10,7 +10,8 @@ void main() async {
   Language.registerLoader(LanguageLoader(
     letterFrequencies: (code) =>
         rootBundle.loadString('assets/lang/$code/letterFrequencies.json'),
-    availableWords: (code) => rootBundle.loadString('assets/lang/$code/words.txt'),
+    availableWords: (code) =>
+        rootBundle.loadString('assets/lang/$code/words.dic'),
   ));
 
   var preferences = await Preferences.load();
