@@ -12,7 +12,8 @@ void main() {
     var rlg = MockRandomLetterGenerator();
     var letters = ['a', 'b', 'c', 'd'];
 
-    when(rlg.next()).thenAnswer((s) => letters.removeAt(0));
+    when(rlg.next(maxLength: anyNamed('maxLength')))
+        .thenAnswer((s) => letters.removeAt(0));
 
     Board b = Board(2, rlg);
 
@@ -27,7 +28,7 @@ void main() {
 
   test('mapNeighbours', () {
     var rlg = MockRandomLetterGenerator();
-    when(rlg.next()).thenAnswer((s) => 'a');
+    when(rlg.next(maxLength: anyNamed('maxLength'))).thenAnswer((s) => 'a');
 
     Board b = Board(3, rlg);
     var neighbours = b.mapNeighbours();

@@ -92,7 +92,7 @@ Solution createSolution({int minimalLength = 2}) {
   ];
 
   var rlg = MockRandomLetterGenerator();
-  when(rlg.next()).thenAnswer((s) => 'a');
+  when(rlg.next(maxLength: anyNamed('maxLength'))).thenAnswer((s) => 'a');
   Board realBoard = Board(2, rlg);
 
   var mockBoard = MockBoard();

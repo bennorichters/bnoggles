@@ -25,13 +25,16 @@ class RandomLetterGenerator {
 
   RandomLetterGenerator(this._frequencies);
 
-  String next() {
-    var total = _frequencies.values.reduce((a, b) => a + b);
+  String next({int maxLength = 1}) {
+    Map<String, int> toChooseFrom = Map.of(_frequencies);
+    toChooseFrom.removeWhere((letter, freq) => letter.length > maxLength);
+
+    var total = toChooseFrom.values.reduce((a, b) => a + b);
     var randomNumber = _rng.nextInt(total);
 
     var sum = 0;
-    for (var c in _frequencies.keys.toList()..sort()) {
-      sum += _frequencies[c];
+    for (String c in toChooseFrom.keys.toList()..sort()) {
+      sum += toChooseFrom[c];
       if (sum > randomNumber) return c;
     }
 
