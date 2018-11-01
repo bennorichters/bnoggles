@@ -49,8 +49,12 @@ class Language {
     return result;
   }
 
-  Game createGame(int boardSize, int minimalWordLength) =>
-      Game(boardSize, minimalWordLength, _generator, _dictionary);
+  Game createGame(int boardSize, int minimalWordLength) => Game(
+        boardSize,
+        minimalWordLength,
+        _generator,
+        _dictionary,
+      );
 }
 
 class LanguageLoader {

@@ -21,15 +21,15 @@ class StartGameButton extends StatelessWidget {
       onPressed: () {
         var parameters = parameterProvider();
         Language.forLanguageCode(parameters.languageCode).then((language) {
-          var game = language.createGame(parameters.size, parameters.length);
-
-          var board = game.board;
-          var solution = game.solution;
+          var game = language.createGame(
+            parameters.size,
+            parameters.length,
+          );
 
           GameInfo gameInfo = GameInfo(
             parameters: parameters,
-            board: board,
-            solution: solution,
+            board: game.board,
+            solution: game.solution,
             userAnswer: ValueNotifier(UserAnswer.start()),
           );
           if (replaceScreen) {
