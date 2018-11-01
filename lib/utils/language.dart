@@ -50,7 +50,7 @@ class Language {
   }
 
   Game createGame(int boardSize, int minimalWordLength) =>
-      Game(boardSize, _generator, _dictionary, minimalWordLength);
+      Game(boardSize, minimalWordLength, _generator, _dictionary);
 }
 
 class LanguageLoader {

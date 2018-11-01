@@ -8,8 +8,8 @@ class Game {
 
   Game._(this.board, this.solution);
 
-  factory Game(int boardSize, RandomLetterGenerator generator,
-      Dictionary dictionary, int minimalWordLength) {
+  factory Game(int boardSize, int minimalWordLength,
+      RandomLetterGenerator generator, Dictionary dictionary) {
     Board board = Board(
       boardSize,
       generator,
