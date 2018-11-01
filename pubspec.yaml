@@ -24,6 +24,7 @@ dependencies:
 
 dev_dependencies:
   mockito: ^3.0.0
+  trotter: ^1.0.2
   flutter_test:
     sdk: flutter
 
