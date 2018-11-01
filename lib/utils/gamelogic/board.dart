@@ -11,7 +11,8 @@ class Board {
   factory Board._unmodifiable(Map<Coordinate, String> cells) =>
       Board._(Map.unmodifiable(cells));
 
-  factory Board(int width, RandomLetterGenerator gen) => _BoardFactory(width, gen).build();
+  factory Board(int width, RandomLetterGenerator gen) =>
+      _BoardFactory(width, gen).build();
 
   int get width => sqrt(cells.length).floor();
 
