@@ -4,19 +4,20 @@ import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 
 class Board {
-  final Map<Coordinate, String> cell;
+  final Map<Coordinate, String> cells;
 
-  factory Board(int width, RandomLetterGenerator gen) {
-    return _BoardFactory(width, gen).build();
-  }
+  Board._(this.cells);
 
-  Board._internal(this.cell);
+  factory Board._unmodifiable(Map<Coordinate, String> cells) =>
+      Board._(Map.unmodifiable(cells));
 
-  int get width => sqrt(cell.length).floor();
+  factory Board(int width, RandomLetterGenerator gen) => _BoardFactory(width, gen).build();
 
-  String characterAt(Coordinate coordinate) => cell[coordinate];
+  int get width => sqrt(cells.length).floor();
 
-  Iterable<Coordinate> allCoordinates() => cell.keys;
+  String characterAt(Coordinate coordinate) => cells[coordinate];
+
+  Iterable<Coordinate> allCoordinates() => cells.keys;
 
   Map<Coordinate, Iterable<Coordinate>> mapNeighbours() {
     var contents = <Coordinate, Iterable<Coordinate>>{};
@@ -25,13 +26,35 @@ class Board {
     return Map.unmodifiable(contents);
   }
 
+  Board insertWordRandomly(String word) {
+    assert(
+        word.length <= 4, "word length should be max 4 but is ${word.length}");
+
+    // For longer lengths the algorithm should check if the chain doesn't lock
+    // itself in. For instance: (1, 1); (0, 1); (1, 0); (0, 0)
+
+    Map<Coordinate, String> copy = Map.from(cells);
+
+    List<Coordinate> chain = [];
+    Coordinate current = (allCoordinates().toList()..shuffle())[0];
+    for (int i = 0; i < word.length; i++) {
+      chain.add(current);
+      copy[current] = word.substring(i, i + 1);
+
+      current = (current.allNeighbours(0, width - 1).toList()..shuffle())
+          .firstWhere((c) => !chain.contains(c));
+    }
+
+    return Board._unmodifiable(copy);
+  }
+
   @override
   String toString() {
     var result = <String>[];
     for (var y = 0; y < width; y++) {
       var line = StringBuffer();
       for (var x = 0; x < width; x++) {
-        line.write(cell[Coordinate(x, y)]);
+        line.write(cells[Coordinate(x, y)]);
       }
       result.add(line.toString());
     }
@@ -80,7 +103,7 @@ class _BoardFactory {
       left -= letter.length;
     }
 
-    return Board._internal(Map.unmodifiable(_map));
+    return Board._unmodifiable(_map);
   }
 
   void emptyBoard() {
@@ -106,10 +129,10 @@ class _BoardFactory {
           .allNeighbours(0, _width - 1)
           .where((c) => (_map[c] == null) && !found.contains(c))
           .toList()
-        ..shuffle(_rand);
+            ..shuffle(_rand);
 
       var result =
-      freeChain(nextCandidates, length - 1, List.of(found)..add(candidate));
+          freeChain(nextCandidates, length - 1, List.of(found)..add(candidate));
 
       if (result != null) {
         return result;

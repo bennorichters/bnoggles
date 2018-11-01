@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/game.dart';
 
 class Language {
   static LanguageLoader _loader;
@@ -50,16 +49,8 @@ class Language {
     return result;
   }
 
-  Board generateBoard(int size) => Board(
-        size,
-        _generator,
-      );
-
-  Solution solve(Board board, int minimalWordLength) => Solution(
-        board,
-        _dictionary,
-        minimalWordLength,
-      );
+  Game createGame(int boardSize, int minimalWordLength) =>
+      Game(boardSize, _generator, _dictionary, minimalWordLength);
 }
 
 class LanguageLoader {

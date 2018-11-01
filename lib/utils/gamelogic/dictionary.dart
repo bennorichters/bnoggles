@@ -17,6 +17,9 @@ class Dictionary {
     if (higher.startsWith(word)) return _notFoundCanStart;
     return _notFoundDeadEnd;
   }
+
+  String randomWord(int length) =>
+      (_words.where((w) => w.length == length).toList()..shuffle())[0];
 }
 
 class RandomLetterGenerator {

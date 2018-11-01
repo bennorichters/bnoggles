@@ -1,6 +1,7 @@
 import 'package:bnoggles/screens/game/game_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/game.dart';
 import 'package:bnoggles/utils/language.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,11 @@ class StartGameButton extends StatelessWidget {
       onPressed: () {
         var parameters = parameterProvider();
         Language.forLanguageCode(parameters.languageCode).then((language) {
-          var board = language.generateBoard(parameters.size);
-          var solution = language.solve(board, parameters.length);
+          var game = language.createGame(parameters.size, parameters.length);
+
+          var board = game.board;
+          var solution = game.solution;
+
           GameInfo gameInfo = GameInfo(
             parameters: parameters,
             board: board,
