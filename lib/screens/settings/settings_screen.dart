@@ -1,3 +1,8 @@
+// Copyright (c) 2018, The Bnoggles Team.
+// Please see the AUTHORS file for details.
+// All rights reserved. Use of this source code is governed by a MIT-style
+// license that can be found in the LICENSE file.
+
 import 'package:bnoggles/screens/settings/widgets/settings.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:bnoggles/widgets/start_game_button.dart';
