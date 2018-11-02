@@ -22,7 +22,8 @@ class ScoreOverview extends StatelessWidget {
             Icons.done,
             size: 40.0,
             color: Colors.black,
-          ),Container(
+          ),
+          Container(
             width: 20.0,
           ),
           buildText('${scores.foundWords}', Colors.green),
