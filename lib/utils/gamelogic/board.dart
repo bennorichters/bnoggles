@@ -85,8 +85,9 @@ class _BoardFactory {
       while (!found) {
         letter = _gen.next(maxLength: maxLength);
         chain = freeChain(
-            _map.keys.where((k) => _map[k] == null).toList()..shuffle(),
-            letter.length);
+          _map.keys.where((k) => _map[k] == null).toList()..shuffle(),
+          letter.length,
+        );
 
         if (chain == null) {
           maxLength--;
@@ -133,8 +134,11 @@ class _BoardFactory {
           .toList()
             ..shuffle();
 
-      var result =
-          freeChain(nextCandidates, length - 1, List.of(found)..add(candidate));
+      var result = freeChain(
+        nextCandidates,
+        length - 1,
+        List.of(found)..add(candidate),
+      );
 
       if (result != null) {
         return result;

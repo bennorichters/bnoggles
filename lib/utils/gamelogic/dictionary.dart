@@ -22,6 +22,17 @@ class Dictionary {
       (_words.where((w) => w.length == length).toList()..shuffle())[0];
 }
 
+class WordInfo {
+  final bool found;
+  final bool canStartWith;
+
+  const WordInfo._create(this.found, this.canStartWith);
+}
+
+const WordInfo _notFoundDeadEnd = WordInfo._create(false, false);
+const WordInfo _notFoundCanStart = WordInfo._create(false, true);
+const WordInfo _found = WordInfo._create(true, true);
+
 class RandomLetterGenerator {
   final _rng = new Random();
   final Map<String, int> _frequencies;
@@ -45,13 +56,3 @@ class RandomLetterGenerator {
   }
 }
 
-class WordInfo {
-  final bool found;
-  final bool canStartWith;
-
-  const WordInfo._create(this.found, this.canStartWith);
-}
-
-const WordInfo _notFoundDeadEnd = WordInfo._create(false, false);
-const WordInfo _notFoundCanStart = WordInfo._create(false, true);
-const WordInfo _found = WordInfo._create(true, true);
