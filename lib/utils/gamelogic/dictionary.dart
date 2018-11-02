@@ -24,7 +24,7 @@ class Dictionary {
 
 class RandomLetterGenerator {
   final _rng = new Random();
-  Map<String, int> _frequencies;
+  final Map<String, int> _frequencies;
 
   RandomLetterGenerator(this._frequencies);
 
