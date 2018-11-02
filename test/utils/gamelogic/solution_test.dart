@@ -6,6 +6,8 @@ import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
+import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
+
 class MockBoard extends Mock implements Board {}
 
 void main() {
@@ -81,7 +83,7 @@ void main() {
   });
 }
 
-class MockRandomLetterGenerator extends Mock implements RandomLetterGenerator {}
+class MockRandomLetterGenerator extends Mock implements LetterGenerator {}
 
 Solution createSolution({int minimalLength = 2}) {
   var allCoordinates = [
@@ -92,7 +94,7 @@ Solution createSolution({int minimalLength = 2}) {
   ];
 
   var rlg = MockRandomLetterGenerator();
-  when(rlg.next(maxLength: anyNamed('maxLength'))).thenAnswer((s) => 'a');
+  when(rlg.next()).thenAnswer((s) => 'a');
   Board realBoard = Board(2, rlg);
 
   var mockBoard = MockBoard();

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:collection/collection.dart';
 
 class Dictionary {
@@ -32,27 +30,4 @@ class WordInfo {
 const WordInfo _notFoundDeadEnd = WordInfo._create(false, false);
 const WordInfo _notFoundCanStart = WordInfo._create(false, true);
 const WordInfo _found = WordInfo._create(true, true);
-
-class RandomLetterGenerator {
-  final _rng = new Random();
-  final Map<String, int> _frequencies;
-
-  RandomLetterGenerator(this._frequencies);
-
-  String next({int maxLength = 1}) {
-    Map<String, int> toChooseFrom = Map.of(_frequencies);
-    toChooseFrom.removeWhere((letter, freq) => letter.length > maxLength);
-
-    var total = toChooseFrom.values.reduce((a, b) => a + b);
-    var randomNumber = _rng.nextInt(total);
-
-    var sum = 0;
-    for (String c in toChooseFrom.keys.toList()..sort()) {
-      sum += toChooseFrom[c];
-      if (sum > randomNumber) return c;
-    }
-
-    throw StateError('should not reach this code');
-  }
-}
 

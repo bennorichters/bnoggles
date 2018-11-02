@@ -3,16 +3,17 @@ import 'package:mockito/mockito.dart';
 
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
-import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 
-class MockRandomLetterGenerator extends Mock implements RandomLetterGenerator {}
+import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
+
+class MockRandomLetterGenerator extends Mock implements LetterGenerator {}
 
 void main() {
   test('all characters', () {
     var rlg = MockRandomLetterGenerator();
     var letters = ['a', 'b', 'c', 'd'];
 
-    when(rlg.next(maxLength: anyNamed('maxLength')))
+    when(rlg.next())
         .thenAnswer((s) => letters.removeAt(0));
 
     Board b = Board(2, rlg);
@@ -28,7 +29,7 @@ void main() {
 
   test('mapNeighbours', () {
     var rlg = MockRandomLetterGenerator();
-    when(rlg.next(maxLength: anyNamed('maxLength'))).thenAnswer((s) => 'a');
+    when(rlg.next()).thenAnswer((s) => 'a');
 
     Board b = Board(3, rlg);
     var neighbours = b.mapNeighbours();

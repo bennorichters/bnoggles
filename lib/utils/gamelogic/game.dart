@@ -1,5 +1,6 @@
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
+import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class Game {
@@ -9,10 +10,10 @@ class Game {
   Game._(this.board, this.solution);
 
   factory Game(int boardSize, int minimalWordLength,
-      RandomLetterGenerator generator, Dictionary dictionary) {
+      LetterFrequencyInfo letterFreq, Dictionary dictionary) {
     Board board = Board(
       boardSize,
-      generator,
+      LetterGenerator(letterFreq),
     );
 
     Solution solution = Solution(

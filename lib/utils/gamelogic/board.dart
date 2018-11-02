@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
-import 'package:bnoggles/utils/gamelogic/dictionary.dart';
+import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
 
 class Board {
   final Map<Coordinate, String> cells;
@@ -11,7 +11,7 @@ class Board {
   factory Board._unmodifiable(Map<Coordinate, String> cells) =>
       Board._(Map.unmodifiable(cells));
 
-  factory Board(int width, RandomLetterGenerator gen) =>
+  factory Board(int width, LetterGenerator gen) =>
       _BoardFactory(width, gen).build();
 
   int get width => sqrt(cells.length).floor();
@@ -66,7 +66,7 @@ class Board {
 
 class _BoardFactory {
   final int _width;
-  final RandomLetterGenerator _gen;
+  final LetterGenerator _gen;
   final Map<Coordinate, String> _map = Map();
   final Random _rand = Random();
 
@@ -76,25 +76,20 @@ class _BoardFactory {
     emptyBoard();
 
     int left = _map.keys.length;
-    int maxLength = left;
     while (left > 0) {
       String letter;
       List<Coordinate> chain;
 
       bool found = false;
       while (!found) {
-        letter = _gen.next(maxLength: maxLength);
+        letter = _gen.next();
         chain = freeChain(
           _map.keys.where((k) => _map[k] == null).toList()..shuffle(),
           letter.length,
         );
 
         if (chain == null) {
-          maxLength--;
-
-          if (maxLength == 0) {
-            throw StateError("letters do not fit in board");
-          }
+          _gen.decreaseLength();
         } else {
           found = true;
         }
