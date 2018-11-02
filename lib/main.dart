@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Bnoggles',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
       home: SettingsScreen(preferences: preferences),
     );
