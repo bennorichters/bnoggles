@@ -84,8 +84,9 @@ class _BoardFactory {
       bool found = false;
       while (!found) {
         letter = _gen.next(maxLength: maxLength);
-        chain = freeChain(_map.keys.where((k) => _map[k] == null).toList(),
-            letter.length, []);
+        chain = freeChain(
+            _map.keys.where((k) => _map[k] == null).toList()..shuffle(),
+            letter.length);
 
         if (chain == null) {
           maxLength--;
@@ -115,8 +116,8 @@ class _BoardFactory {
     }
   }
 
-  List<Coordinate> freeChain(
-      List<Coordinate> candidates, int length, List<Coordinate> found) {
+  List<Coordinate> freeChain(Iterable<Coordinate> candidates, int length,
+      [List<Coordinate> found = const []]) {
     if (length == 0) {
       return found;
     }
@@ -130,7 +131,7 @@ class _BoardFactory {
           .allNeighbours(0, _width - 1)
           .where((c) => (_map[c] == null) && !found.contains(c))
           .toList()
-            ..shuffle(_rand);
+            ..shuffle();
 
       var result =
           freeChain(nextCandidates, length - 1, List.of(found)..add(candidate));
