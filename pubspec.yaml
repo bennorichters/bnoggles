@@ -81,5 +81,6 @@ flutter:
   assets:
     - assets/
     - assets/lang/
-    - assets/lang/nl/
     - assets/lang/en/
+    - assets/lang/hu/
+    - assets/lang/nl/

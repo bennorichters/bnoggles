@@ -19,13 +19,11 @@ void countFrequencies() async {
 }
 
 class _FrequencyCounter {
-  static final int a = 'a'.codeUnitAt(0);
-  static final List<String> bag = characters("abcdefghijklmnopqrstuvwxyz");
+  static final List<String> bag =
+      characters("abcdefghijklmnopqrstuvwxyzöüóőúéáűí");
 
   final String _source;
   final Map<String, int> _sequenceCount = {};
-
-  int wCount = 0;
 
   _FrequencyCounter(this._source);
 
@@ -43,7 +41,7 @@ class _FrequencyCounter {
 }
 
 Future<String> readFile() async {
-  var input = File('assets/lang/en/words.dic');
+  var input = File('assets/lang/hu/words.dic');
   var contents = await input.readAsString();
   return contents;
 }

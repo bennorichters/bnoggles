@@ -40,7 +40,7 @@ class Preferences {
   }
 
   GameParameters toParameters() => GameParameters(
-        languageCode: const ['nl', 'en'][language.value],
+        languageCode: const ['nl', 'en', 'hu'][language.value],
         time: time.value,
         size: size.value,
         length: length.value,

@@ -29,7 +29,11 @@ class _LanguageOptionsState extends State<_LanguageOptions> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [tappableFlag('nl', 0), tappableFlag('en', 1)],
+      children: [
+        tappableFlag('nl', 0),
+        tappableFlag('en', 1),
+        tappableFlag('hu', 2),
+      ],
     );
   }
 
