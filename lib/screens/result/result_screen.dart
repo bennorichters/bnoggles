@@ -94,7 +94,7 @@ class ResultScreenState extends State<ResultScreen> {
                     child: Center(
                         child: ScoreOverview(
                   scores: gameInfo.scoreSheet,
-                  fontSize: secondColumnWidth / 25,
+                  fontSize: secondColumnWidth / 20,
                 ))),
                 Container(
                   margin: const EdgeInsets.all(10.0),

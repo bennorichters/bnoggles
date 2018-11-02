@@ -15,42 +15,34 @@ class ScoreOverview extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15.0),
-      margin: EdgeInsets.all(25.0),
-      child: Table(
-        columnWidths: {
-          0: FixedColumnWidth(50.0),
-          1: FixedColumnWidth(50.0),
-        },
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        children: [
-          TableRow(children: [
-            Icon(
-              Icons.tag_faces,
-              size: 40.0,
-              color: Colors.purple,
-            ),
-            buildText('${scores.score}', Colors.purple),
-          ]),
-          TableRow(children: [
-            Icon(
-              Icons.done,
-              size: 40.0,
-              color: Colors.green,
-            ),
-            buildText('${scores.foundWords}', Colors.green),
-          ]),
-          TableRow(children: [
-            Icon(Icons.done_all, size: 40.0, color: Colors.blue),
-            buildText('${scores.availableWords}', Colors.blue),
-          ]),
+  Widget build(BuildContext context) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(
+            Icons.done,
+            size: 40.0,
+            color: Colors.black,
+          ),Container(
+            width: 20.0,
+          ),
+          buildText('${scores.foundWords}', Colors.green),
+          Container(
+            width: 10.0,
+          ),
+          buildText('/', Colors.black),
+          Container(
+            width: 10.0,
+          ),
+          buildText('${scores.availableWords}', Colors.blue),
         ],
-      ),
-    );
-  }
+      );
 
-  Text buildText(String text, Color color) =>
-      Text(text, style: TextStyle(fontSize: fontSize, color: color));
+  Text buildText(String text, Color color) => Text(
+        text,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: fontSize,
+          color: color,
+        ),
+      );
 }
