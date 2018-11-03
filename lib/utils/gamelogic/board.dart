@@ -70,49 +70,49 @@ class Board {
 }
 
 class _BoardFactory {
-  final int _width;
-  final LetterGenerator _gen;
-  final Map<Coordinate, String> _map = Map();
+  final int width;
+  final LetterGenerator gen;
+  final Map<Coordinate, String> map = Map();
   final Random _rand = Random();
 
-  _BoardFactory(this._width, this._gen);
+  _BoardFactory(this.width, this.gen);
 
   Board build() {
     emptyBoard();
 
-    int left = _map.keys.length;
+    int left = map.keys.length;
     while (left > 0) {
       String letter;
       List<Coordinate> chain;
 
       bool found = false;
       while (!found) {
-        letter = _gen.next();
+        letter = gen.next();
         chain = freeChain(
-          _map.keys.where((k) => _map[k] == null).toList()..shuffle(),
+          map.keys.where((k) => map[k] == null).toList()..shuffle(),
           letter.length,
         );
 
         if (chain == null) {
-          _gen.decreaseLength();
+          gen.decreaseLength();
         } else {
           found = true;
         }
       }
 
       for (int i = 0; i < letter.length; i++) {
-        _map[chain[i]] = letter.substring(i, i + 1);
+        map[chain[i]] = letter.substring(i, i + 1);
       }
       left -= letter.length;
     }
 
-    return Board._unmodifiable(_map);
+    return Board._unmodifiable(map);
   }
 
   void emptyBoard() {
-    for (var x = 0; x < _width; x++) {
-      for (var y = 0; y < _width; y++) {
-        _map[Coordinate(x, y)] = null;
+    for (var x = 0; x < width; x++) {
+      for (var y = 0; y < width; y++) {
+        map[Coordinate(x, y)] = null;
       }
     }
   }
@@ -129,8 +129,8 @@ class _BoardFactory {
 
     for (Coordinate candidate in candidates) {
       List<Coordinate> nextCandidates = candidate
-          .allNeighbours(0, _width - 1)
-          .where((c) => (_map[c] == null) && !found.contains(c))
+          .allNeighbours(0, width - 1)
+          .where((c) => (map[c] == null) && !found.contains(c))
           .toList()
             ..shuffle();
 

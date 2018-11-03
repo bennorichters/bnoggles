@@ -15,7 +15,7 @@ class Coordinate {
       return _cache[x][y];
     }
 
-    Coordinate coordinate = Coordinate._internal(x, y);
+    Coordinate coordinate = Coordinate._(x, y);
     if (!containsX) {
       _cache[x] = {};
     }
@@ -24,7 +24,7 @@ class Coordinate {
     return coordinate;
   }
 
-  Coordinate._internal(this.x, this.y);
+  Coordinate._(this.x, this.y);
 
   Coordinate operator +(Coordinate c) => Coordinate(x + c.x, y + c.y);
 
