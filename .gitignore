@@ -25,7 +25,6 @@ ios/
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 
-
-tools/*.dic
+/tools/**/*.dic
 
 key.properties
