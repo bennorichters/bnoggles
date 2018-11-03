@@ -35,21 +35,19 @@ class Countdown extends AnimatedWidget {
   Countdown({Key key, this.animation}) : super(key: key, listenable: animation);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: animation.value <= 30
-          ? (animation.value <= 10 ? Colors.red : Colors.orange)
-          : Colors.lightBlueAccent,
-      child: Center(
-        child: new Text(
-          formatTime(animation.status == AnimationStatus.completed
-              ? 0
-              : animation.value),
-          style: new TextStyle(
-              fontSize: 30.0,
-              color: animation.value <= 10 ? Colors.white : Colors.black),
+  Widget build(BuildContext context) => Container(
+        color: animation.value <= 30
+            ? (animation.value <= 10 ? Colors.red : Colors.orange)
+            : Colors.lightBlueAccent,
+        child: Center(
+          child: Text(
+            formatTime(animation.status == AnimationStatus.completed
+                ? 0
+                : animation.value),
+            style: TextStyle(
+                fontSize: 30.0,
+                color: animation.value <= 10 ? Colors.white : Colors.black),
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

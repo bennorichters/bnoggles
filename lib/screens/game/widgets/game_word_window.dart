@@ -28,15 +28,13 @@ class WordWindowState extends State<WordWindow> {
   void _didValueChange() => setState(() {});
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 48.0,
-      child: ListView(
-          scrollDirection: Axis.horizontal,
-          children:
-              widget.provider().map((w) => _UserWordFeedback(w)).toList()),
-    );
-  }
+  Widget build(BuildContext context) => Container(
+        height: 48.0,
+        child: ListView(
+            scrollDirection: Axis.horizontal,
+            children:
+                widget.provider().map((w) => _UserWordFeedback(w)).toList()),
+      );
 
   @override
   void dispose() {
@@ -73,7 +71,7 @@ class _UserWordFeedback extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(4.0),
-      padding: new EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
         color: _word.color,

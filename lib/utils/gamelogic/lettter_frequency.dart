@@ -38,7 +38,7 @@ class LetterFrequencyInfo {
 }
 
 class LetterGenerator {
-  final Random _rng = new Random();
+  final Random _rng = Random();
   final List<int> _lengths;
   final LetterFrequencyInfo _info;
 

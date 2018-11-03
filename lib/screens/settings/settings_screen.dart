@@ -14,38 +14,32 @@ class SettingsScreen extends StatefulWidget {
   SettingsScreen({Key key, @required this.preferences}) : super(key: key);
 
   @override
-  State createState() => SettingsScreenState(preferences: preferences);
+  State createState() => SettingsScreenState();
 }
 
 class SettingsScreenState extends State<SettingsScreen> {
-  final Preferences preferences;
-
-  SettingsScreenState({@required this.preferences});
-
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Bnoggles"),
-      ),
-      body: Center(
-        child: Container(
-          width: 500.0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SettingsGrid(preferences),
-              Center(
-                child: StartGameButton(
-                  parameterProvider: preferences.toParameters,
-                  replaceScreen: false,
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text("Bnoggles"),
+        ),
+        body: Center(
+          child: Container(
+            width: 500.0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SettingsGrid(widget.preferences),
+                Center(
+                  child: StartGameButton(
+                    parameterProvider: widget.preferences.toParameters,
+                    replaceScreen: false,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

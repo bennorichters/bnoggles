@@ -21,7 +21,7 @@ class Provider extends StatefulWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => new _ProviderState();
+  State<StatefulWidget> createState() => _ProviderState();
 }
 
 class _ProviderState extends State<Provider> {
@@ -34,12 +34,10 @@ class _ProviderState extends State<Provider> {
   void didValueChange() => setState(() {});
 
   @override
-  Widget build(BuildContext context) {
-    return new _InheritedProvider(
-      gameInfo: widget.gameInfo,
-      child: widget.child,
-    );
-  }
+  Widget build(BuildContext context) => _InheritedProvider(
+        gameInfo: widget.gameInfo,
+        child: widget.child,
+      );
 
   @override
   void dispose() {
@@ -57,7 +55,6 @@ class _InheritedProvider extends InheritedWidget {
         super(child: child);
 
   @override
-  bool updateShouldNotify(_InheritedProvider oldWidget) {
-    return _userAnswerValue != oldWidget._userAnswerValue;
-  }
+  bool updateShouldNotify(_InheritedProvider oldWidget) =>
+      _userAnswerValue != oldWidget._userAnswerValue;
 }

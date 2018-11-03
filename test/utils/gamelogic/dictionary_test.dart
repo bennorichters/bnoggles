@@ -23,7 +23,7 @@ void main() {
 
   test('returned WordInfo', () {
     Dictionary dict =
-        new Dictionary(['boomgroepen', 'dorpen', 'geknotte', 'torens']);
+        Dictionary(['boomgroepen', 'dorpen', 'geknotte', 'torens']);
 
     expect(true, dict.getInfo('boomgroepen').found);
     expect(false, dict.getInfo('boomgroep').found);

@@ -39,9 +39,9 @@ class BoardWidget extends StatelessWidget {
         bool selected = selectedPositions.contains(position);
         String character = board.characterAt(position);
         return Container(
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            border: new Border.all(width: 5.0, color: Colors.blueAccent),
+            border: Border.all(width: 5.0, color: Colors.blueAccent),
             color: (selected ? Colors.lightBlueAccent : Colors.white),
           ),
           child: centeredCharacter.create(

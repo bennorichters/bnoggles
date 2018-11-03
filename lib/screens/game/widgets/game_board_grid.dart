@@ -127,7 +127,7 @@ class HittableCenteredCharacter extends CenteredCharacter {
         .create(character: character, selected: selected, position: position);
 
     return Padding(
-      padding: new EdgeInsets.all(cellWidth / 8),
+      padding: EdgeInsets.all(cellWidth / 8),
       child: _PositionedWidget(
         position: position,
         child: Container(
@@ -148,9 +148,8 @@ class _PositionedWidget extends SingleChildRenderObjectWidget {
       : super(child: child, key: key);
 
   @override
-  _PositionedRenderObject createRenderObject(BuildContext context) {
-    return _PositionedRenderObject()..position = position;
-  }
+  _PositionedRenderObject createRenderObject(BuildContext context) =>
+      _PositionedRenderObject()..position = position;
 
   @override
   void updateRenderObject(

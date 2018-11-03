@@ -27,7 +27,7 @@ class WordCountOverview extends StatelessWidget {
       itemBuilder: (context, index) {
         return Container(
           decoration:
-              new BoxDecoration(border: new Border.all(color: Colors.black)),
+              BoxDecoration(border: Border.all(color: Colors.black)),
           child: fromIndex(index, solution),
         );
       },
@@ -59,29 +59,30 @@ class NumberInfo extends StatelessWidget {
   NumberInfo(this.number);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blueGrey,
-      child: Center(
-        child: Text(
-          number,
-          style: TextStyle(color: Colors.white70),
+  Widget build(BuildContext context) => Container(
+        color: Colors.blueGrey,
+        child: Center(
+          child: Text(
+            number,
+            style: TextStyle(color: Colors.white70),
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class NoNumberInfo extends StatelessWidget {
   NoNumberInfo();
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blueGrey,
-      child: Center(child: Text('x', style: TextStyle(color: Colors.white70))),
-    );
-  }
+  Widget build(BuildContext context) => Container(
+        color: Colors.blueGrey,
+        child: Center(
+          child: Text(
+            'x',
+            style: TextStyle(color: Colors.white70),
+          ),
+        ),
+      );
 }
 
 class UserAnswerNumberInfo extends StatelessWidget {

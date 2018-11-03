@@ -36,8 +36,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration:
-          Duration(seconds: gameInfo.parameters.time),
+      duration: Duration(seconds: gameInfo.parameters.time),
     );
 
     _controller.forward(from: 0.0);
@@ -46,7 +45,8 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   }
 
   void _checkDone() {
-    if ((gameInfo.solution.histogram - gameInfo.userAnswer.value.histogram).isEmpty) {
+    if ((gameInfo.solution.histogram - gameInfo.userAnswer.value.histogram)
+        .isEmpty) {
       _showResultScreen();
     }
   }
@@ -63,43 +63,40 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Bnoggles"),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.stop),
-            color: Colors.red,
-            onPressed: () {
-              _showResultScreen();
-            },
-          ),
-        ],
-      ),
-      body: Provider(
-        gameInfo: gameInfo,
-        child: Column(
-          children: [
-            GameProgress(
-              _controller,
-              gameInfo.parameters.time,
-              _showResultScreen,
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text("Bnoggles"),
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.stop),
+              color: Colors.red,
+              onPressed: () {
+                _showResultScreen();
+              },
             ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children:
-                    _wordLines(gameInfo.parameters.hints),
-              ),
-            ),
-            Grid(gameInfo.board.mapNeighbours()),
           ],
         ),
-      ),
-    );
-  }
+        body: Provider(
+          gameInfo: gameInfo,
+          child: Column(
+            children: [
+              GameProgress(
+                _controller,
+                gameInfo.parameters.time,
+                _showResultScreen,
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: _wordLines(gameInfo.parameters.hints),
+                ),
+              ),
+              Grid(gameInfo.board.mapNeighbours()),
+            ],
+          ),
+        ),
+      );
 
   List<Widget> _wordLines(bool hints) {
     WordsProvider byUser = () => gameInfo.userAnswer.value.found.reversed

@@ -19,45 +19,43 @@ class StartGameButton extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      heroTag: "playgame",
-      onPressed: () {
-        var parameters = parameterProvider();
-        Language.forLanguageCode(parameters.languageCode).then((language) {
-          var game = language.createGame(
-            parameters.size,
-            parameters.length,
-          );
+  Widget build(BuildContext context) => FloatingActionButton(
+        heroTag: "playgame",
+        onPressed: () {
+          var parameters = parameterProvider();
+          Language.forLanguageCode(parameters.languageCode).then((language) {
+            var game = language.createGame(
+              parameters.size,
+              parameters.length,
+            );
 
-          GameInfo gameInfo = GameInfo(
-            parameters: parameters,
-            board: game.board,
-            solution: game.solution,
-            userAnswer: ValueNotifier(UserAnswer.start()),
-          );
-          if (replaceScreen) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute<Null>(
-                builder: (context) => GameScreen(
-                      gameInfo: gameInfo,
-                    ),
-              ),
+            GameInfo gameInfo = GameInfo(
+              parameters: parameters,
+              board: game.board,
+              solution: game.solution,
+              userAnswer: ValueNotifier(UserAnswer.start()),
             );
-          } else {
-            Navigator.push(
-              context,
-              MaterialPageRoute<Null>(
-                builder: (context) => GameScreen(
-                      gameInfo: gameInfo,
-                    ),
-              ),
-            );
-          }
-        });
-      },
-      child: Icon(Icons.play_arrow),
-    );
-  }
+            if (replaceScreen) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute<Null>(
+                  builder: (context) => GameScreen(
+                        gameInfo: gameInfo,
+                      ),
+                ),
+              );
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute<Null>(
+                  builder: (context) => GameScreen(
+                        gameInfo: gameInfo,
+                      ),
+                ),
+              );
+            }
+          });
+        },
+        child: Icon(Icons.play_arrow),
+      );
 }

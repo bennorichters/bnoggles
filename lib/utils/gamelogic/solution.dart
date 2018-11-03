@@ -75,7 +75,7 @@ class Solution extends Answer {
 
   factory Solution(Board board, Dictionary dict, int minimalLength) {
     return Solution._internal(
-        _Problem(board, dict, minimalLength).find(), minimalLength);
+        _Problem(board, dict, minimalLength).solve(), minimalLength);
   }
 
   Solution._internal(Set<Chain> chains, this.minimalLength)
@@ -118,7 +118,7 @@ class _Problem {
   _Problem._internal(
       this.board, this.dict, this.minimalLength, this.neighbours);
 
-  Set<Chain> find() {
+  Set<Chain> solve() {
     initialCandidates();
     words = Set();
 
@@ -163,6 +163,7 @@ class Chain {
   Chain._blank()
       : _coordinates = [],
         _text = StringBuffer();
+
   Chain._extend(Chain head, Coordinate next, StringBuffer word)
       : _coordinates = List.of(head._coordinates)..add(next),
         _text = word;

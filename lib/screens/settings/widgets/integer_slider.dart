@@ -45,12 +45,10 @@ class _LabelState extends State<_Label> {
   void _didValueChange() => setState(() {});
 
   @override
-  Widget build(BuildContext context) {
-    return Text(
-      widget.label(widget.notifier.value),
-      style: TextStyle(fontSize: 20.0),
-    );
-  }
+  Widget build(BuildContext context) => Text(
+        widget.label(widget.notifier.value),
+        style: TextStyle(fontSize: 20.0),
+      );
 
   @override
   void dispose() {
@@ -104,17 +102,15 @@ class _SliderState extends State<_Slider> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Slider(
-      value: _value,
-      min: _min,
-      max: _max,
-      divisions: _divisions,
-      label: _label(_value.floor()),
-      onChanged: _onChanged,
-      onChangeEnd: _onChangedEnd,
-    );
-  }
+  Widget build(BuildContext context) => Slider(
+        value: _value,
+        min: _min,
+        max: _max,
+        divisions: _divisions,
+        label: _label(_value.floor()),
+        onChanged: _onChanged,
+        onChangeEnd: _onChangedEnd,
+      );
 }
 
 typedef String LabelRenderer(int value);

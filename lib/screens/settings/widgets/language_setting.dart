@@ -31,32 +31,28 @@ class _LanguageOptionsState extends State<_LanguageOptions> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        tappableFlag('nl', 0),
-        tappableFlag('en', 1),
-        tappableFlag('hu', 2),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          tappableFlag('nl', 0),
+          tappableFlag('en', 1),
+          tappableFlag('hu', 2),
+        ],
+      );
 
-  Widget tappableFlag(String country, int value) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-      child: GestureDetector(
-        onTap: () {
-          change(value);
-        },
-        child: Opacity(
-          opacity: widget.notifier.value == value ? 1.0 : 0.3,
-          child: Image.asset(
-            'assets/lang/' + country + '/flag.png',
-            width: 50.0,
+  Widget tappableFlag(String country, int value) => Padding(
+        padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+        child: GestureDetector(
+          onTap: () {
+            change(value);
+          },
+          child: Opacity(
+            opacity: widget.notifier.value == value ? 1.0 : 0.3,
+            child: Image.asset(
+              'assets/lang/' + country + '/flag.png',
+              width: 50.0,
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
