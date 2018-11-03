@@ -23,14 +23,14 @@ class LetterFrequencyInfo {
 
   List<int> _lengths() => _freqsPerLength.keys.toList()..sort();
 
-  List<String> _keys(int maxLength) => _freqsPerLength.keys
-      .where((key) => key <= maxLength)
+  List<String> _keys(int length) => _freqsPerLength.keys
+      .where((key) => key == length)
       .map((length) => _freqsPerLength[length].keys.toList())
       .reduce((a, b) => a..addAll(b))
         ..sort();
 
-  int _totalValue(int maxLength) => _freqsPerLength.keys
-      .where((key) => key <= maxLength)
+  int _totalValue(int length) => _freqsPerLength.keys
+      .where((key) => key == length)
       .map((length) => _freqsPerLength[length].values.reduce((a, b) => a + b))
       .reduce((a, b) => a + b);
 
@@ -38,22 +38,29 @@ class LetterFrequencyInfo {
 }
 
 class LetterGenerator {
-  final Random _rng = Random();
+  final Random _rng;
   final List<int> _lengths;
   final LetterFrequencyInfo _info;
 
   int _totalValue;
   List<String> _keys;
 
-  LetterGenerator._(this._lengths, this._info, this._totalValue, this._keys);
+  LetterGenerator._(
+      this._lengths, this._info, this._totalValue, this._keys, this._rng);
 
-  factory LetterGenerator(LetterFrequencyInfo info) {
+  factory LetterGenerator(LetterFrequencyInfo info, [Random rnd]) {
     List<int> lengths = info._lengths();
+
+    if (rnd == null) {
+      rnd = Random();
+    }
+
     return LetterGenerator._(
       lengths,
       info,
       info._totalValue(_lastValue(lengths)),
       info._keys(_lastValue(lengths)),
+      rnd,
     );
   }
 
