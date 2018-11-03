@@ -3,19 +3,20 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import 'dart:async';
 import 'dart:io';
 
 import '../dictionary.dart';
 
 import 'process_aff.dart';
+import 'read_file.dart';
 
 void main(List<String> arguments) async {
   processDic();
 }
 
 void processDic() async {
-  List<String> words = await readFile();
+  List<String> words =
+      await linesFromFile('tools/nl/assets/index_nl_clean.dic');
 
   List<Map<String, Set<Affix>>> affixes = await processAff();
   Map<String, Set<Affix>> prefixes = affixes[0];
@@ -28,16 +29,18 @@ void processDic() async {
 }
 
 void writeAll(Set<AffixedWordContainer> containers) async {
-  List<AffixedWord> all = [];
+  List<String> all = [];
   for (var container in containers) {
     for (int i = 0; i < container.length; i++) {
-      all.add(AffixedWord(container, i));
+      all.add(AffixedWord(container, i).toString());
     }
   }
 
+  addTwoThreeLetterWords(all);
+
   all.sort();
 
-  var output = File('assets/nl/words.txt');
+  var output = File('assets/lang/nl/words.dic');
   var sink = output.openWrite();
 
   all.forEach(sink.writeln);
@@ -48,10 +51,14 @@ void writeAll(Set<AffixedWordContainer> containers) async {
   print('ready');
 }
 
-Future<List<String>> readFile() async {
-  var input = File('tools/nl/assets/index_nl_clean.dic');
-  var contents = await input.readAsLines();
-  return contents;
+void addTwoThreeLetterWords(List<String> all) async {
+  List<String> twoCharWords =
+      await linesFromFile('tools/nl/assets/tweeletterwoorden.txt');
+  List<String> threeCharWords =
+      await linesFromFile('tools/nl/assets/drieletterwoorden.txt');
+
+  all.addAll(twoCharWords);
+  all.addAll(threeCharWords);
 }
 
 class _DictInterpreter {

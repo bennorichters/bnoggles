@@ -4,30 +4,25 @@
 // license that can be found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:io';
 
 import '../dictionary.dart';
 import 'clean_dict_file.dart';
 
-const combinable = true;
+import 'read_file.dart';
+
+const bool combinable = true;
 
 void main(List<String> arguments) async {
   await processAff();
 }
 
 Future<List<Map<String, Set<Affix>>>> processAff() async {
-  List<String> contents = await readFile();
+  List<String> contents = await linesFromFile('tools/nl/assets/index.aff');
 
   var interpreter = _AffixInterpreter(contents.iterator);
   interpreter.process();
 
   return [interpreter._prefixes, interpreter._suffixes];
-}
-
-Future<List<String>> readFile() async {
-  var input = File('tools/nl/assets/index.aff');
-  var contents = await input.readAsLines();
-  return contents;
 }
 
 class _AffixInterpreter {

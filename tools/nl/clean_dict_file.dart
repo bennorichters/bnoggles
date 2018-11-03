@@ -6,6 +6,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'read_file.dart';
+
 const String allowedChars = "abcdefghijklmnopqrstuvwxyz";
 const replacements = {
   "'": "",
@@ -43,17 +45,11 @@ void main(List<String> arguments) async {
 
 void process() async {
   List<String> contents = await linesFromFile('tools/nl/assets/index.dic');
-  List<String> twoCharWords =
-      await linesFromFile('tools/nl/assets/tweeletterwoorden.txt');
-  List<String> threeCharWords =
-      await linesFromFile('tools/nl/assets/drieletterwoorden.txt');
 
-  List<String> extraWords = await linesFromFile('tools/nl/assets/extraWords.txt');
+  List<String> extraWords =
+      await linesFromFile('tools/nl/assets/extraWords.txt');
 
-  List<String> twoThreeCharWords = List.from(twoCharWords)
-    ..addAll(threeCharWords);
-
-  contents..addAll(twoThreeCharWords)..addAll(extraWords);
+  contents.addAll(extraWords);
 
   Map<String, String> result = Map();
   for (var line in contents) {
@@ -61,7 +57,7 @@ void process() async {
     String word = clean(parts[0]);
     String code = (parts.length > 1) ? parts[1] : '';
 
-    if (isCodeAllowed(code) && (isWordAllowed(word, twoThreeCharWords))) {
+    if (isCodeAllowed(code) && (isWordAllowed(word))) {
       if (!result.containsKey(word)) {
         result[word] = code;
       }
@@ -81,19 +77,10 @@ void process() async {
   sink.close();
 }
 
-Future<List<String>> linesFromFile(String name) async {
-  var input = File(name);
-  var contents = await input.readAsLines();
-  return contents;
-}
-
-bool isWordAllowed(String word, List<String> twoThreeCharWords) {
-  if (word.length < 2) return false;
+bool isWordAllowed(String word) {
+  if (word.length < 4) return false;
 
   if (word.toLowerCase() != word) return false;
-
-  if (word.length >= 2 && word.length <= 3 && !twoThreeCharWords.contains(word))
-    return false;
 
   for (int i = 0; i < word.length; i++) {
     var char = word.substring(i, i + 1);
