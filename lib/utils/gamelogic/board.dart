@@ -76,7 +76,6 @@ class _BoardFactory {
   final int width;
   final LetterGenerator gen;
   final Map<Coordinate, String> map = Map();
-  final Random _rand = Random();
 
   _BoardFactory(this.width, this.gen);
 
