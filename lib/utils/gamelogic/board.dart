@@ -47,8 +47,11 @@ class Board {
       chain.add(current);
       copy[current] = word.substring(i, i + 1);
 
-      current = (current.allNeighbours(0, width - 1).toList()..shuffle())
-          .firstWhere((c) => !chain.contains(c));
+      if (i < word.length - 1) {
+        current = (current.allNeighbours(0, width - 1).toList()
+          ..shuffle())
+            .firstWhere((c) => !chain.contains(c));
+      }
     }
 
     return Board._unmodifiable(copy);
