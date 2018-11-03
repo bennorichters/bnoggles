@@ -9,18 +9,16 @@ import 'dart:io';
 import 'package:trotter/trotter.dart';
 
 void main(List<String> arguments) async {
-  countFrequencies();
+   countFrequencies();
 }
 
 void countFrequencies() async {
   String words = await readFile();
   var map = _FrequencyCounter(words).countAllSequences();
 
-  map.forEach((a, b) {
-    if (b > 0) print('"$a": $b,');
-  });
-
-  var total = map.values.fold(0, (int a, int b) => a + b);
+  (map.keys.where((k) => map[k] > 100).toList()
+        ..sort((a, b) => (map[b] - map[a])))
+      .forEach((k) => print('"$k": ${map[k]},'));
 }
 
 class _FrequencyCounter {
@@ -33,7 +31,7 @@ class _FrequencyCounter {
   _FrequencyCounter(this._source);
 
   Map<String, int> countAllSequences() {
-    var combos = Amalgams(3, _FrequencyCounter.bag);
+    var combos = Amalgams(1, _FrequencyCounter.bag);
     for (var combo in combos()) {
       String sequence = combo.reduce((a, b) => (a as String) + (b as String));
       _sequenceCount[sequence] = count(sequence);

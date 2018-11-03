@@ -27,7 +27,7 @@ class Game {
       minimalWordLength,
     );
 
-    if (solution.uniqueWords().length == 0) {
+    if (solution.uniqueWords().length < 10) {
       String word = dictionary.randomWord(4);
       board = board.insertWordRandomly(word);
 
