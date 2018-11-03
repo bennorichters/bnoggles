@@ -25,17 +25,17 @@ void main() {
     Dictionary dict =
         Dictionary(['boomgroepen', 'dorpen', 'geknotte', 'torens']);
 
-    expect(true, dict.getInfo('boomgroepen').found);
-    expect(false, dict.getInfo('boomgroep').found);
-    expect(true, dict.getInfo('boomgroep').canStartWith);
+    expect(dict.getInfo('boomgroepen').found, true);
+    expect(dict.getInfo('boomgroep').found, false);
+    expect(dict.getInfo('boomgroep').canStartWith, true);
 
-    expect(false, dict.getInfo('kerken').found);
-    expect(false, dict.getInfo('kerken').canStartWith);
+    expect(dict.getInfo('kerken').found, false);
+    expect(dict.getInfo('kerken').canStartWith, false);
 
-    expect(false, dict.getInfo('verspreid').found);
-    expect(false, dict.getInfo('verspreid').canStartWith);
+    expect(dict.getInfo('verspreid').found, false);
+    expect(dict.getInfo('verspreid').canStartWith, false);
 
-    expect(false, dict.getInfo('aan').found);
-    expect(false, dict.getInfo('aan').canStartWith);
+    expect(dict.getInfo('aan').found, false);
+    expect(dict.getInfo('aan').canStartWith, false);
   });
 }
