@@ -25,19 +25,26 @@ void processDic() async {
   _DictInterpreter dict = _DictInterpreter(words, prefixes, suffixes);
   dict.process();
 
-  writeAll(dict.result);
+  createAll(dict.result);
 }
 
-void writeAll(Set<AffixedWordContainer> containers) async {
-  List<String> all = [];
+void createAll(Set<AffixedWordContainer> containers) async {
+  List<String> twoAndThree = await twoAndThreeLetterWords();
+
+  Set<String> all = twoAndThree.toSet();
   for (var container in containers) {
     for (int i = 0; i < container.length; i++) {
-      all.add(AffixedWord(container, i).toString());
+      var word = AffixedWord(container, i).toString();
+      if (word.length > 3) {
+        all.add(word);
+      }
     }
   }
 
-  await addTwoThreeLetterWords(all);
+  await writeToFile(all.toList());
+}
 
+Future writeToFile(List<String> all) async {
   all.sort();
 
   var output = File('assets/lang/nl/words.dic');
@@ -51,14 +58,13 @@ void writeAll(Set<AffixedWordContainer> containers) async {
   print('ready');
 }
 
-Future<void> addTwoThreeLetterWords(List<String> all) async {
-  List<String> twoCharWords =
+Future<List<String>> twoAndThreeLetterWords() async {
+  List<String> result =
       await linesFromFile('tools/nl/assets/tweeletterwoorden.txt');
-  List<String> threeCharWords =
-      await linesFromFile('tools/nl/assets/drieletterwoorden.txt');
+  result.addAll(
+      await linesFromFile('tools/nl/assets/drieletterwoorden.txt'));
 
-  all.addAll(twoCharWords);
-  all.addAll(threeCharWords);
+  return result;
 }
 
 class _DictInterpreter {
@@ -85,9 +91,9 @@ class _DictInterpreter {
     return AffixedWordContainer(word, prefixes, suffixes);
   }
 
-  List<Affix> findAffixes(
+  static List<Affix> findAffixes(
       String word, String affixNames, Map<String, Set<Affix>> affixes) {
-    List<Affix> result = [];
+    Set<Affix> result = Set();
     for (int i = 0; i < affixNames.length; i += 2) {
       String name = affixNames.substring(i, i + 2);
       if (affixes.containsKey(name)) {
@@ -96,6 +102,6 @@ class _DictInterpreter {
       }
     }
 
-    return result;
+    return result.toList();
   }
 }

@@ -58,9 +58,8 @@ void process() async {
     String code = (parts.length > 1) ? parts[1] : '';
 
     if (isCodeAllowed(code) && (isWordAllowed(word))) {
-      if (!result.containsKey(word)) {
-        result[word] = code;
-      }
+      result.putIfAbsent(word, () => '');
+      result[word] += code;
     }
   }
 
@@ -78,7 +77,7 @@ void process() async {
 }
 
 bool isWordAllowed(String word) {
-  if (word.length < 4) return false;
+  if (word.length < 2) return false;
 
   if (word.toLowerCase() != word) return false;
 
