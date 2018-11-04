@@ -11,9 +11,7 @@ class Coordinate {
   factory Coordinate(int x, int y) {
     var containsX = _cache.containsKey(x);
 
-    if (containsX && _cache[x].containsKey(y)) {
-      return _cache[x][y];
-    }
+    if (containsX && _cache[x].containsKey(y)) return _cache[x][y];
 
     Coordinate coordinate = Coordinate._(x, y);
     if (!containsX) {

@@ -29,10 +29,10 @@ class WordInfo {
   final bool found;
   final bool canStartWith;
 
-  const WordInfo._create(this.found, this.canStartWith);
+  const WordInfo._(this.found, this.canStartWith);
 }
 
-const WordInfo _notFoundDeadEnd = WordInfo._create(false, false);
-const WordInfo _notFoundCanStart = WordInfo._create(false, true);
-const WordInfo _found = WordInfo._create(true, true);
+const WordInfo _notFoundDeadEnd = WordInfo._(false, false);
+const WordInfo _notFoundCanStart = WordInfo._(false, true);
+const WordInfo _found = WordInfo._(true, true);
 
