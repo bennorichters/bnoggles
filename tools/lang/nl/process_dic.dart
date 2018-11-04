@@ -5,7 +5,7 @@
 
 import 'dart:io';
 
-import '../dictionary.dart';
+import '../../dictionary.dart';
 
 import 'process_aff.dart';
 import 'read_file.dart';

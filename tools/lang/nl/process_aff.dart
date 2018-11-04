@@ -4,29 +4,25 @@
 // license that can be found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:io';
 
-import '../dictionary.dart';
+import '../../dictionary.dart';
 import 'clean_dict_file.dart';
 
+import 'read_file.dart';
+
+const bool combinable = true;
+
 void main(List<String> arguments) async {
-  var result = await processAff();
-  print(result);
+  await processAff();
 }
 
 Future<List<Map<String, Set<Affix>>>> processAff() async {
-  List<String> contents = await readFile();
+  List<String> contents = await linesFromFile('tools/nl/assets/index.aff');
 
   var interpreter = _AffixInterpreter(contents.iterator);
   interpreter.process();
 
   return [interpreter._prefixes, interpreter._suffixes];
-}
-
-Future<List<String>> readFile() async {
-  var input = File('tools/en/assets/index.aff');
-  var contents = await input.readAsLines();
-  return contents;
 }
 
 class _AffixInterpreter {
@@ -80,6 +76,8 @@ class _AffixInterpreter {
     var type = elements[0];
     var name = elements[1];
     var combineYN = elements[2];
+    assert(combineYN == 'Y' || isProperNameAffix(name),
+        "expected Y in header '$line'");
 
     try {
       int length = int.parse(elements[3]);
@@ -87,7 +85,6 @@ class _AffixInterpreter {
 
       return <String, dynamic>{
         "type": type,
-        "combineable": (combineYN == 'Y'),
         "name": name,
         "linesToFollow": length
       };
@@ -99,8 +96,8 @@ class _AffixInterpreter {
 
   void parseAffixLines(
       String header,
-      void affixAdder(bool combinable, String name, int toRemove, String toAdd,
-          SuffixCondition condition)) {
+      void affixAdder(
+          String name, int toRemove, String toAdd, SuffixCondition condition)) {
     var headerInfo = parseHeader(header);
 
     for (int i = 0; i < (headerInfo["linesToFollow"] as int); i++) {
@@ -115,9 +112,8 @@ class _AffixInterpreter {
       var toRemove = createRemoveLength(elements[2]);
       var toAdd = clean(stripContinuation(elements[3]));
 
-      if (toAdd.isNotEmpty) {
-        affixAdder(headerInfo["combineable"] as bool, name, toRemove, toAdd,
-            createCondition(elements));
+      if (!isProperNameAffix(name) && toAdd.isNotEmpty) {
+        affixAdder(name, toRemove, toAdd, createCondition(elements));
       }
     }
   }
@@ -136,9 +132,11 @@ class _AffixInterpreter {
 
   String stripContinuation(String toAdd) => toAdd.split("/")[0];
 
+  bool isProperNameAffix(String name) => ['PN', 'PI', 'PJ'].contains(name);
+
   void startPrefix(String header) {
-    void prefixAdder(bool combinable, String name, int toRemove, String toAdd,
-        SuffixCondition condition) {
+    void prefixAdder(
+        String name, int toRemove, String toAdd, SuffixCondition condition) {
       assert(toRemove == 0, "expected 0 for remove option in prefix");
       assert(condition == emptyCondition,
           'expected no condition for prefix. $condition');
@@ -150,8 +148,8 @@ class _AffixInterpreter {
   }
 
   void startSuffix(String header) {
-    void suffixAdder(bool combinable, String name, int toRemove, String toAdd,
-        SuffixCondition condition) {
+    void suffixAdder(
+        String name, int toRemove, String toAdd, SuffixCondition condition) {
       _suffixes
           .putIfAbsent(name, () => Set())
           .add(Suffix(combinable, toAdd, toRemove, condition));
