@@ -8,16 +8,24 @@ import 'dart:math';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
 
+typedef List<Coordinate> Shuffler(List<Coordinate> toShuffle);
+
 class Board {
   final Map<Coordinate, String> cells;
+  final Shuffler shuffler;
 
-  Board._(this.cells);
+  Board._(this.cells, this.shuffler);
 
-  factory Board._unmodifiable(Map<Coordinate, String> cells) =>
-      Board._(Map.unmodifiable(cells));
+  factory Board._unmodifiable(
+          Map<Coordinate, String> cells, Shuffler shuffler) =>
+      Board._(Map.unmodifiable(cells), shuffler);
 
-  factory Board(int width, LetterGenerator gen) =>
-      _BoardFactory(width, gen).build();
+  factory Board(int width, LetterGenerator gen, [Shuffler shuffler]) =>
+      _BoardFactory(
+        width,
+        gen,
+        shuffler ?? (list) => list..shuffle(),
+      ).build();
 
   int get width => sqrt(cells.length).floor();
 
@@ -42,19 +50,18 @@ class Board {
     Map<Coordinate, String> copy = Map.from(cells);
 
     List<Coordinate> chain = [];
-    Coordinate current = (allCoordinates().toList()..shuffle())[0];
+    Coordinate current = shuffler((allCoordinates().toList()))[0];
     for (int i = 0; i < word.length; i++) {
       chain.add(current);
       copy[current] = word.substring(i, i + 1);
 
       if (i < word.length - 1) {
-        current = (current.allNeighbours(0, width - 1).toList()
-          ..shuffle())
+        current = shuffler(current.allNeighbours(0, width - 1).toList())
             .firstWhere((c) => !chain.contains(c));
       }
     }
 
-    return Board._unmodifiable(copy);
+    return Board._unmodifiable(copy, shuffler);
   }
 
   @override
@@ -75,9 +82,10 @@ class Board {
 class _BoardFactory {
   final int width;
   final LetterGenerator gen;
+  final Shuffler shuffler;
   final Map<Coordinate, String> map = Map();
 
-  _BoardFactory(this.width, this.gen);
+  _BoardFactory(this.width, this.gen, this.shuffler);
 
   Board build() {
     emptyBoard();
@@ -91,7 +99,7 @@ class _BoardFactory {
       while (!found) {
         letter = gen.next();
         chain = freeChain(
-          map.keys.where((k) => map[k] == null).toList()..shuffle(),
+          shuffler(map.keys.where((k) => map[k] == null).toList()),
           letter.length,
         );
 
@@ -108,7 +116,7 @@ class _BoardFactory {
       left -= letter.length;
     }
 
-    return Board._unmodifiable(map);
+    return Board._unmodifiable(map, shuffler);
   }
 
   void emptyBoard() {
@@ -130,11 +138,10 @@ class _BoardFactory {
     }
 
     for (Coordinate candidate in candidates) {
-      List<Coordinate> nextCandidates = candidate
+      List<Coordinate> nextCandidates = shuffler(candidate
           .allNeighbours(0, width - 1)
           .where((c) => (map[c] == null) && !found.contains(c))
-          .toList()
-            ..shuffle();
+          .toList());
 
       var result = freeChain(
         nextCandidates,
