@@ -46,16 +46,16 @@ class UserAnswer extends Answer {
       eval = Evaluation.wrong;
     }
 
-    return UserAnswer._internal(
+    return UserAnswer._(
       List.unmodifiable(old.found.toList()..add(UserWord(word, eval))),
     );
   }
 
-  UserAnswer._internal(List<UserWord> found)
+  UserAnswer._(List<UserWord> found)
       : this.found = found,
         histogram = Histogram.fromStrings(_uniqueWords(found));
 
-  static UserAnswer start() => UserAnswer._internal(const <UserWord>[]);
+  static UserAnswer start() => UserAnswer._(const <UserWord>[]);
 
   @override
   Set<String> uniqueWords() => _uniqueWords(found);
@@ -73,12 +73,10 @@ class Solution extends Answer {
   @override
   final Histogram histogram;
 
-  factory Solution(Board board, Dictionary dict, int minimalLength) {
-    return Solution._internal(
-        _Problem(board, dict, minimalLength).solve(), minimalLength);
-  }
+  factory Solution(Board board, Dictionary dict, int minimalLength) =>
+      Solution._(_Problem(board, dict, minimalLength).solve(), minimalLength);
 
-  Solution._internal(Set<Chain> chains, this.minimalLength)
+  Solution._(Set<Chain> chains, this.minimalLength)
       : _chains = chains,
         histogram = Histogram.fromStrings(_uniqueWords(chains));
 
@@ -98,7 +96,7 @@ class Solution extends Answer {
   List<String> uniqueWordsSorted() =>
       uniqueWords().toList()..sort((a, b) => _compareWords(a, b));
 
-  bool isCorrect(String text) => uniqueWords().contains(text);
+  bool isCorrect(String text) => contains(text);
 }
 
 class _Problem {
@@ -110,13 +108,10 @@ class _Problem {
   Queue<Chain> candidates;
   Set<Chain> words;
 
-  factory _Problem(Board board, Dictionary dict, int minimalLength) {
-    return _Problem._internal(
-        board, dict, minimalLength, board.mapNeighbours());
-  }
+  factory _Problem(Board board, Dictionary dict, int minimalLength) =>
+      _Problem._(board, dict, minimalLength, board.mapNeighbours());
 
-  _Problem._internal(
-      this.board, this.dict, this.minimalLength, this.neighbours);
+  _Problem._(this.board, this.dict, this.minimalLength, this.neighbours);
 
   Set<Chain> solve() {
     initialCandidates();
