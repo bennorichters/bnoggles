@@ -11,14 +11,14 @@ import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
 typedef List<Coordinate> Shuffler(List<Coordinate> toShuffle);
 
 class Board {
-  final Map<Coordinate, String> cells;
-  final Shuffler shuffler;
+  final Map<Coordinate, String> _tiles;
+  final Shuffler _shuffler;
 
-  Board._(this.cells, this.shuffler);
+  Board._(this._tiles, this._shuffler);
 
   factory Board._unmodifiable(
-          Map<Coordinate, String> cells, Shuffler shuffler) =>
-      Board._(Map.unmodifiable(cells), shuffler);
+          Map<Coordinate, String> tiles, Shuffler shuffler) =>
+      Board._(Map.unmodifiable(tiles), shuffler);
 
   factory Board(int width, LetterGenerator gen, [Shuffler shuffler]) =>
       _BoardFactory(
@@ -27,11 +27,11 @@ class Board {
         shuffler ?? (list) => list..shuffle(),
       ).build();
 
-  int get width => sqrt(cells.length).floor();
+  int get width => sqrt(_tiles.length).floor();
 
-  String characterAt(Coordinate coordinate) => cells[coordinate];
+  String characterAt(Coordinate coordinate) => _tiles[coordinate];
 
-  Iterable<Coordinate> allCoordinates() => cells.keys;
+  Iterable<Coordinate> allCoordinates() => _tiles.keys;
 
   Map<Coordinate, Iterable<Coordinate>> mapNeighbours() {
     var contents = <Coordinate, Iterable<Coordinate>>{};
@@ -47,21 +47,23 @@ class Board {
     // For longer lengths the algorithm should check if the chain doesn't lock
     // itself in. For instance: (1, 1); (0, 1); (1, 0); (0, 0)
 
-    Map<Coordinate, String> copy = Map.from(cells);
+    Map<Coordinate, String> copy = Map.from(_tiles);
 
     List<Coordinate> chain = [];
-    Coordinate current = shuffler((allCoordinates().toList()))[0];
+    Coordinate current = _shuffler((allCoordinates().toList()))[0];
     for (int i = 0; i < word.length; i++) {
       chain.add(current);
       copy[current] = word.substring(i, i + 1);
 
       if (i < word.length - 1) {
-        current = shuffler(current.allNeighbours(0, width - 1).toList())
-            .firstWhere((c) => !chain.contains(c));
+        current = _shuffler(current
+            .allNeighbours(0, width - 1)
+            .where((c) => !chain.contains(c))
+            .toList())[0];
       }
     }
 
-    return Board._unmodifiable(copy, shuffler);
+    return Board._unmodifiable(copy, _shuffler);
   }
 
   @override
@@ -70,7 +72,7 @@ class Board {
     for (var y = 0; y < width; y++) {
       var line = StringBuffer();
       for (var x = 0; x < width; x++) {
-        line.write(cells[Coordinate(x, y)]);
+        line.write(_tiles[Coordinate(x, y)]);
       }
       result.add(line.toString());
     }
@@ -83,64 +85,62 @@ class _BoardFactory {
   final int width;
   final LetterGenerator gen;
   final Shuffler shuffler;
-  final Map<Coordinate, String> map = Map();
+  final Map<Coordinate, String> tiles = Map();
 
   _BoardFactory(this.width, this.gen, this.shuffler);
 
   Board build() {
     emptyBoard();
 
-    int left = map.keys.length;
+    int left = tiles.keys.length;
     while (left > 0) {
-      String letter;
-      List<Coordinate> chain;
-
-      bool found = false;
-      while (!found) {
-        letter = gen.next();
-        chain = freeChain(
-          shuffler(map.keys.where((k) => map[k] == null).toList()),
-          letter.length,
-        );
-
-        if (chain == null) {
-          gen.decreaseLength();
-        } else {
-          found = true;
-        }
-      }
-
-      for (int i = 0; i < letter.length; i++) {
-        map[chain[i]] = letter.substring(i, i + 1);
-      }
-      left -= letter.length;
+      left -= addLetterSequence();
     }
 
-    return Board._unmodifiable(map, shuffler);
+    return Board._unmodifiable(tiles, shuffler);
+  }
+
+  int addLetterSequence() {
+    String letterSequence;
+    List<Coordinate> chain;
+
+    while (chain == null) {
+      letterSequence = gen.next();
+      chain = freeChain(
+        shuffler(tiles.keys.where((k) => tiles[k] == null).toList()),
+        letterSequence.length,
+      );
+
+      if (chain == null) {
+        gen.decreaseLength();
+      }
+    }
+
+    for (int i = 0; i < letterSequence.length; i++) {
+      tiles[chain[i]] = letterSequence.substring(i, i + 1);
+    }
+
+    return letterSequence.length;
   }
 
   void emptyBoard() {
     for (var x = 0; x < width; x++) {
       for (var y = 0; y < width; y++) {
-        map[Coordinate(x, y)] = null;
+        tiles[Coordinate(x, y)] = null;
       }
     }
   }
 
   List<Coordinate> freeChain(Iterable<Coordinate> candidates, int length,
       [List<Coordinate> found = const []]) {
-    if (length == 0) {
-      return found;
-    }
+    if (length == 0) return found;
 
-    if (candidates.length == 0) {
-      return null;
-    }
+    if (candidates.length == 0) return null;
 
     for (Coordinate candidate in candidates) {
       List<Coordinate> nextCandidates = shuffler(candidate
           .allNeighbours(0, width - 1)
-          .where((c) => (map[c] == null) && !found.contains(c))
+          .where((c) => (tiles[c] == null) && !found.contains(c))
           .toList());
 
       var result = freeChain(
