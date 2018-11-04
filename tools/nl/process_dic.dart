@@ -36,7 +36,7 @@ void writeAll(Set<AffixedWordContainer> containers) async {
     }
   }
 
-  addTwoThreeLetterWords(all);
+  await addTwoThreeLetterWords(all);
 
   all.sort();
 
@@ -51,7 +51,7 @@ void writeAll(Set<AffixedWordContainer> containers) async {
   print('ready');
 }
 
-void addTwoThreeLetterWords(List<String> all) async {
+Future<void> addTwoThreeLetterWords(List<String> all) async {
   List<String> twoCharWords =
       await linesFromFile('tools/nl/assets/tweeletterwoorden.txt');
   List<String> threeCharWords =
