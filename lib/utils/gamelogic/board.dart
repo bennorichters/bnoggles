@@ -50,7 +50,7 @@ class Board {
     Map<Coordinate, String> copy = Map.from(_tiles);
 
     List<Coordinate> chain = [];
-    Coordinate current = _shuffler((allCoordinates().toList()))[0];
+    Coordinate current = _shuffler((allCoordinates().toList())).first;
     for (int i = 0; i < word.length; i++) {
       chain.add(current);
       copy[current] = word.substring(i, i + 1);

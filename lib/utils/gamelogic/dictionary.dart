@@ -22,7 +22,7 @@ class Dictionary {
   }
 
   String randomWord(int length) =>
-      (_words.where((w) => w.length == length).toList()..shuffle())[0];
+      (_words.where((w) => w.length == length).toList()..shuffle()).first;
 }
 
 class WordInfo {
