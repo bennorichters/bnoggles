@@ -23,10 +23,10 @@ void main() {
     Board b = Board(2, rlg);
 
     var allChars = Set<String>();
-    allChars.add(b.characterAt(Coordinate(0, 0)));
-    allChars.add(b.characterAt(Coordinate(0, 1)));
-    allChars.add(b.characterAt(Coordinate(1, 0)));
-    allChars.add(b.characterAt(Coordinate(1, 1)));
+    allChars.add(b[Coordinate(0, 0)]);
+    allChars.add(b[Coordinate(0, 1)]);
+    allChars.add(b[Coordinate(1, 0)]);
+    allChars.add(b[Coordinate(1, 1)]);
 
     expect(allChars, Set.of(['a', 'b', 'c', 'd']));
   });

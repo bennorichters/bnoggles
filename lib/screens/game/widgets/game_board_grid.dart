@@ -68,7 +68,7 @@ class GridState extends State<Grid> {
 
     var word = StringBuffer();
     for (Coordinate position in _selectedPositions) {
-      word.write(board.characterAt(position));
+      word.write(board[position]);
     }
 
     if (word.length >= gameInfo.solution.minimalLength) {

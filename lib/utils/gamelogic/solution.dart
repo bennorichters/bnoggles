@@ -136,7 +136,7 @@ class _Problem {
   }
 
   void evaluateCandidate(Chain baseCandidate, Coordinate coordinate) {
-    var character = board.characterAt(coordinate);
+    var character = board[coordinate];
     StringBuffer word = (StringBuffer(baseCandidate._text)..write(character));
     var info = dict.getInfo(word.toString());
 

@@ -29,7 +29,7 @@ class Board {
 
   int get width => sqrt(_tiles.length).floor();
 
-  String characterAt(Coordinate coordinate) => _tiles[coordinate];
+  String operator [](Coordinate coordinate)  => _tiles[coordinate];
 
   Iterable<Coordinate> allCoordinates() => _tiles.keys;
 

@@ -37,7 +37,7 @@ class BoardWidget extends StatelessWidget {
         var xy = _indexToXY(index, width);
         Coordinate position = Coordinate(xy[0], xy[1]);
         bool selected = selectedPositions.contains(position);
-        String character = board.characterAt(position);
+        String character = board[position];
         return Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),

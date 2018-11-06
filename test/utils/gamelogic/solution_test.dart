@@ -103,10 +103,10 @@ Solution createSolution({int minimalLength = 2}) {
   Board realBoard = Board(2, rlg);
 
   var mockBoard = MockBoard();
-  when(mockBoard.characterAt(allCoordinates[0])).thenReturn('a');
-  when(mockBoard.characterAt(allCoordinates[1])).thenReturn('b');
-  when(mockBoard.characterAt(allCoordinates[2])).thenReturn('c');
-  when(mockBoard.characterAt(allCoordinates[3])).thenReturn('d');
+  when(mockBoard[allCoordinates[0]]).thenReturn('a');
+  when(mockBoard[allCoordinates[1]]).thenReturn('b');
+  when(mockBoard[allCoordinates[2]]).thenReturn('c');
+  when(mockBoard[allCoordinates[3]]).thenReturn('d');
 
   when(mockBoard.width).thenReturn(2);
 
