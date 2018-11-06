@@ -3,79 +3,59 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
+import 'dart:math';
 import 'package:collection/collection.dart';
 
-const _eq = const ListEquality<int>();
+const _eq = const MapEquality<int, int>();
 
 class Histogram {
-  final List<int> _occurrences;
+  final Map<int, int> _countPerLength;
 
-  Histogram.fromStrings(Iterable<String> words) : this._(_toList(words));
+  Histogram.fromStrings(Iterable<String> words)
+      : this._(
+          groupBy(
+            words.where((word) => word.isNotEmpty).map((word) => word.length),
+            (int wordLength) => wordLength,
+          ).map(
+            (wordLength, elements) => MapEntry(wordLength, elements.length),
+          ),
+        );
 
-  Histogram._(this._occurrences);
+  Histogram._(this._countPerLength);
 
-  static List<int> _toList(Iterable<String> words) {
-    if (words.isEmpty) return const <int>[];
-    var max = 0;
-    words.map((w) => w.length).forEach((i) {
-      if (i > max) max = i;
-    });
-    var list = List.filled(max, 0);
-    words.map((w) => w.length).forEach((i) {
-      if (i > 0) list[i - 1]++;
-    });
-    return list;
-  }
+  int get longest => isEmpty ? 0 : _countPerLength.keys.reduce(max);
 
-  int get longest => _occurrences.length;
-
-  bool get isEmpty => _occurrences.length == 0;
+  bool get isEmpty => _countPerLength.isEmpty;
 
   int get count => atLeast(0);
 
-  int operator [](int i) {
-    if (i == 0) return 0;
-    var index = i - 1;
-    if (index >= _occurrences.length) return 0;
-    return _occurrences[index];
-  }
+  int operator [](int i) =>
+      _countPerLength.containsKey(i) ? _countPerLength[i] : 0;
 
-  int atLeast(int i) {
-    var start = i - 1;
-    if (i == 0) start = 0;
-    var result = 0;
-    for (var j = start; j < _occurrences.length; j++) {
-      result += _occurrences[j];
-    }
-    return result;
-  }
+  int atLeast(int i) => _countPerLength.keys
+      .where((k) => k >= i)
+      .map((k) => _countPerLength[k])
+      .fold(0, (a, b) => a + b);
 
   @override
   bool operator ==(dynamic other) =>
-      other is Histogram && _eq.equals(_occurrences, other._occurrences);
+      other is Histogram && _eq.equals(_countPerLength, other._countPerLength);
 
   @override
-  int get hashCode => _eq.hash(_occurrences);
+  int get hashCode => _eq.hash(_countPerLength);
 
   @override
-  String toString() => _occurrences.toString();
+  String toString() => _countPerLength.toString();
 
   Histogram operator -(Histogram other) {
-    if (other.longest > longest) throw ArgumentError('$this - $other < 0');
-
-    var buffer = List.of(_occurrences, growable: true);
-    var lastNonZero = -1;
-    for (var i = 0; i < other._occurrences.length; i++) {
-      buffer[i] -= other._occurrences[i];
-      if (buffer[i] < 0) throw ArgumentError('$this - $other < 0');
-
-      if (buffer[i] != 0) {
-        lastNonZero = i;
-      }
+    Map<int, int> result = Map();
+    for (int key in Set.from(_countPerLength.keys)
+      ..addAll(other._countPerLength.keys)) {
+      int diff = this[key] - other[key];
+      if (diff < 0) throw ArgumentError('$this - $other < 0');
+      if (diff > 0) result[key] = diff;
     }
-    if (other.longest == longest) {
-      buffer.length = lastNonZero + 1;
-    }
-    return Histogram._(buffer);
+
+    return Histogram._(result);
   }
 }
