@@ -10,6 +10,11 @@ import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
 
 typedef List<Coordinate> Shuffler(List<Coordinate> toShuffle);
 
+/// An abstract representation of the board on which the game is played.
+///
+/// A board maps a [Coordinate] to a letter. All boards are square, i.e. they
+/// have the same width as height. A [LetterGenerator] is used to fill the board
+/// with different letters.
 class Board {
   final Map<Coordinate, String> _tiles;
   final Shuffler _shuffler;
@@ -20,10 +25,16 @@ class Board {
           Map<Coordinate, String> tiles, Shuffler shuffler) =>
       Board._(Map.unmodifiable(tiles), shuffler);
 
-  factory Board(int width, LetterGenerator gen, [Shuffler shuffler]) =>
+  /// Creates a [Board].
+  ///
+  /// The board will contain [width]*[width] [Coordinate]s. The [generator]
+  /// is used generate a letter for each coordinate. The [shuffler] determines
+  /// the order in which the coordinates are mapped. [List.shuffle] is used when
+  /// [shuffler] is omitted.
+  factory Board(int width, LetterGenerator generator, [Shuffler shuffler]) =>
       _BoardFactory(
         width,
-        gen,
+        generator,
         shuffler ?? (list) => list..shuffle(),
       ).build();
 

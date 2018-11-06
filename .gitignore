@@ -28,3 +28,5 @@ ios/
 /tools/**/*.dic
 
 key.properties
+
+/doc
