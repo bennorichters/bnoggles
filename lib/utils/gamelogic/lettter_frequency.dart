@@ -50,10 +50,7 @@ class LetterGenerator {
 
   factory LetterGenerator(LetterFrequencyInfo info, [Random rnd]) {
     List<int> lengths = info._lengths();
-
-    if (rnd == null) {
-      rnd = Random();
-    }
+    rnd ??= Random();
 
     return LetterGenerator._(
       lengths,
