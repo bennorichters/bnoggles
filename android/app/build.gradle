@@ -39,8 +39,8 @@ android {
         applicationId "com.github.bennorichters.bnoggles"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 6
-        versionName '1.06-beta'
+        versionCode 7
+        versionName '1.07-beta'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
