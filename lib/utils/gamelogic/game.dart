@@ -8,17 +8,29 @@ import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
+/// A container for both a [Board] and a [Solution].
+///
+/// The board and the solution are created by the constructor.
 class Game {
+
+  /// The [Board]
   final Board board;
+
+  /// The [Solution]
   final Solution solution;
 
   Game._(this.board, this.solution);
 
-  factory Game(int boardSize, int minimalWordLength,
-      LetterFrequencyInfo letterFreq, Dictionary dictionary) {
+  /// Creates a [Board] and a [Solution] to be contained by the new game.
+  ///
+  /// The new board has width [boardWidth] and is filled with letters generated
+  /// by the [generator]. The solution is then created based on the given
+  /// [dictionary] and [minimalWordLength].
+  factory Game(int boardWidth, LetterGenerator generator,
+      Dictionary dictionary, int minimalWordLength) {
     Board board = Board(
-      boardSize,
-      LetterGenerator(letterFreq),
+      boardWidth,
+      generator,
     );
 
     Solution solution = Solution(

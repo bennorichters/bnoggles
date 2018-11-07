@@ -57,9 +57,9 @@ class Language {
 
   Game createGame(int boardSize, int minimalWordLength) => Game(
         boardSize,
-        minimalWordLength,
-        _frequencyInfo,
+        LetterGenerator(_frequencyInfo),
         _dictionary,
+        minimalWordLength,
       );
 }
 
