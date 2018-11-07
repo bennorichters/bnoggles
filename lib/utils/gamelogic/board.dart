@@ -28,9 +28,9 @@ class Board {
   /// Creates a [Board].
   ///
   /// The board will contain [width]*[width] [Coordinate]s. The [generator]
-  /// is used generate a letter for each coordinate. The [shuffler] determines
-  /// the order in which the coordinates are mapped. [List.shuffle] is used when
-  /// [shuffler] is omitted.
+  /// is used to generate a letter for each coordinate. The [shuffler]
+  /// determines the order in which the coordinates are mapped. [List.shuffle]
+  /// is used when [shuffler] is omitted.
   factory Board(int width, LetterGenerator generator, [Shuffler shuffler]) =>
       _BoardFactory(
         width,
