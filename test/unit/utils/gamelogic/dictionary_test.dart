@@ -10,17 +10,6 @@ import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
 
 void main() {
-  test('RandomLetterGenerator', () {
-    var info = LetterFrequencyInfo({'a': 1});
-
-    LetterGenerator rlg = LetterGenerator(info);
-
-    expect(rlg.next(), 'a');
-    expect(rlg.next(), 'a');
-    expect(rlg.next(), 'a');
-    expect(rlg.next(), 'a');
-  });
-
   test('returned WordInfo', () {
     Dictionary dict =
         Dictionary(['boomgroepen', 'dorpen', 'geknotte', 'torens']);
