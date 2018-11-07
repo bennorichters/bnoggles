@@ -38,4 +38,19 @@ void main() {
     expect(dict.getInfo('aan').found, false);
     expect(dict.getInfo('aan').canStartWith, false);
   });
+
+  test('random word', () {
+    Dictionary dict = Dictionary(['1', '22', '333', '55555']);
+
+    expect(dict.randomWord(1), '1');
+    expect(dict.randomWord(2), '22');
+    expect(dict.randomWord(3), '333');
+    expect(dict.randomWord(5), '55555');
+  });
+
+  test('random word for wrong length', () {
+    Dictionary dict = Dictionary(['1', '22', '333', '55555']);
+
+    expect(() => dict.randomWord(4), throwsArgumentError);
+  });
 }
