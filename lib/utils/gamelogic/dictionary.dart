@@ -25,11 +25,11 @@ class Dictionary {
   }
 
   /// Returns a random word with the given [length]. If the dictionary does not
-  /// contain a word with the given an ArgumentError will be thrown.
+  /// contain a word with the given an [ArgumentError] will be thrown.
   String randomWord(int length) =>
       (_words.where((w) => w.length == length).toList()..shuffle()).firstWhere(
           (w) => true,
-          orElse: throw ArgumentError('no word for length $length'));
+          orElse: () => throw ArgumentError('no word for length $length'));
 }
 
 /// Information about a word
