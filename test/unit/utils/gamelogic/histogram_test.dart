@@ -62,19 +62,14 @@ void main() {
   test('equals', () {
     var d = Histogram.fromStrings([]);
     expect(d == d, true);
-    expect(
-        Histogram.fromStrings(['']) == Histogram.fromStrings([]), true);
-    expect(Histogram.fromStrings(['a']) == Histogram.fromStrings(['a']),
-        true);
-    expect(Histogram.fromStrings(['a']) == Histogram.fromStrings(['b']),
-        true);
+    expect(Histogram.fromStrings(['']) == Histogram.fromStrings([]), true);
+    expect(Histogram.fromStrings(['a']) == Histogram.fromStrings(['a']), true);
+    expect(Histogram.fromStrings(['a']) == Histogram.fromStrings(['b']), true);
     expect(
         Histogram.fromStrings(['a', 'aaa']) ==
             Histogram.fromStrings(['aaa', 'a']),
         true);
-    expect(
-        Histogram.fromStrings(['a']) ==
-            Histogram.fromStrings(['aaa', 'a']),
+    expect(Histogram.fromStrings(['a']) == Histogram.fromStrings(['aaa', 'a']),
         false);
   });
 
@@ -104,10 +99,16 @@ void main() {
   });
 
   test('minus', () {
-    expect(Histogram.fromStrings(['a']) - Histogram.fromStrings(['a']) , Histogram.fromStrings([]));
-    expect(Histogram.fromStrings(['a']) - Histogram.fromStrings(['']) , Histogram.fromStrings(['a']));
-    expect(Histogram.fromStrings(['a', 'aaa']) - Histogram.fromStrings(['a']), Histogram.fromStrings(['aaa']));
-    expect(() => Histogram.fromStrings(['aaa']) - Histogram.fromStrings(['a']), throwsArgumentError);
-    expect(() => Histogram.fromStrings(['a']) - Histogram.fromStrings(['a', 'a']), throwsArgumentError);
+    expect(Histogram.fromStrings(['a']) - Histogram.fromStrings(['a']),
+        Histogram.fromStrings([]));
+    expect(Histogram.fromStrings(['a']) - Histogram.fromStrings(['']),
+        Histogram.fromStrings(['a']));
+    expect(Histogram.fromStrings(['a', 'aaa']) - Histogram.fromStrings(['a']),
+        Histogram.fromStrings(['aaa']));
+    expect(() => Histogram.fromStrings(['aaa']) - Histogram.fromStrings(['a']),
+        throwsArgumentError);
+    expect(
+        () => Histogram.fromStrings(['a']) - Histogram.fromStrings(['a', 'a']),
+        throwsArgumentError);
   });
 }
