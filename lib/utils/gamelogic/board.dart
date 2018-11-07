@@ -38,12 +38,21 @@ class Board {
         shuffler ?? (list) => list..shuffle(),
       ).build();
 
+  /// The width of this board
   int get width => sqrt(_tiles.length).floor();
 
+  /// The letter the [coordinate] is mapped to.
   String operator [](Coordinate coordinate)  => _tiles[coordinate];
 
+  /// An iterable over all coordinates in the board. The number of coordinates
+  /// equals [width]*[width].
   Iterable<Coordinate> allCoordinates() => _tiles.keys;
 
+  /// A map where each coordinate is mapped to all the neighbours it has. A
+  /// [Coordinate] is considered a neighbour of another coordinate if its
+  /// [Coordinate.x] and its [Coordinate.y] values at most have a difference of
+  /// 1 and both coordinates are not equal and x and y are both between zero
+  /// (inclusive) and width (exclusive).
   Map<Coordinate, Iterable<Coordinate>> mapNeighbours() {
     var contents = <Coordinate, Iterable<Coordinate>>{};
     allCoordinates()
@@ -51,6 +60,11 @@ class Board {
     return Map.unmodifiable(contents);
   }
 
+  /// Inserts the given [word] at a random place and returns a new instance of
+  /// [Board]. The new board is an exact copy of the old board, except that some
+  /// coordinates in the new board are now mapped to the letters of the given
+  /// word. These coordinates are determined by the shuffler as passed into the
+  /// constructor.
   Board insertWordRandomly(String word) {
     assert(
         word.length <= 4, "word length should be max 4 but is ${word.length}");
