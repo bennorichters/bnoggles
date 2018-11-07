@@ -7,8 +7,7 @@ import 'dart:async';
 import 'dart:io';
 
 const String allowedChars = "abcdefghijklmnopqrstuvwxyz";
-const Map<String, String> replacements = {
-};
+const Map<String, String> replacements = {};
 
 const List<String> forbiddenCodes = [];
 
@@ -19,13 +18,14 @@ void main(List<String> arguments) async {
 }
 
 void process() async {
-  List<String> contents = await linesFromFile('tools/en/assets/index.dic');
+  List<String> contents = await linesFromFile('tools/lang/en/assets/index.dic');
   List<String> twoCharWords =
-      await linesFromFile('tools/en/assets/twoletterwords.txt');
+      await linesFromFile('tools/lang/en/assets/twoletterwords.txt');
   List<String> threeCharWords =
-      await linesFromFile('tools/en/assets/threeletterwords.txt');
+      await linesFromFile('tools/lang/en/assets/threeletterwords.txt');
 
-  List<String> extraWords = await linesFromFile('tools/en/assets/extraWords.txt');
+  List<String> extraWords =
+      await linesFromFile('tools/lang/en/assets/extraWords.txt');
 
   List<String> twoThreeCharWords = List.from(twoCharWords)
     ..addAll(threeCharWords);
@@ -47,7 +47,7 @@ void process() async {
 
   print(result.keys.length);
 
-  var output = File('tools/en/assets/index_clean.dic');
+  var output = File('tools/lang/en/assets/index_clean.dic');
   var sink = output.openWrite();
 
   for (String word in result.keys.toList()..sort()) {

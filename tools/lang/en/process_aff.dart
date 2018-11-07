@@ -24,7 +24,7 @@ Future<List<Map<String, Set<Affix>>>> processAff() async {
 }
 
 Future<List<String>> readFile() async {
-  var input = File('tools/en/assets/index.aff');
+  var input = File('tools/lang/en/assets/index.aff');
   var contents = await input.readAsLines();
   return contents;
 }

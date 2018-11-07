@@ -37,7 +37,7 @@ void writeAll(Set<AffixedWordContainer> containers) async {
 
   all.sort();
 
-  var output = File('assets/en/words.txt');
+  var output = File('assets/lang/en/words.dic');
   var sink = output.openWrite();
 
   all.forEach(sink.writeln);
@@ -49,7 +49,7 @@ void writeAll(Set<AffixedWordContainer> containers) async {
 }
 
 Future<List<String>> readFile() async {
-  var input = File('tools/en/assets/index_clean.dic');
+  var input = File('tools/lang/en/assets/index_clean.dic');
   var contents = await input.readAsLines();
   return contents;
 }
