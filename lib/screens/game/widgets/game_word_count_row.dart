@@ -96,7 +96,7 @@ class UserAnswerNumberInfo extends StatelessWidget {
     Solution solution = gameInfo.solution;
     Answer answer = gameInfo.userAnswer.value;
 
-    var todo = solution.histogram - answer.histogram;
+    var todo = solution.frequency - answer.frequency;
     int remaining = length == _maxLength ? todo.atLeast(length) : todo[length];
 
     return Container(

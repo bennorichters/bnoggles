@@ -8,31 +8,31 @@ import 'package:test/test.dart';
 
 void main() {
   test('emptyList', () {
-    Frequency d = Frequency.fromStrings([]);
-    expect(d.longest, 0);
-    expect(d[0], 0);
-    expect(d.atLeast(0), 0);
-    expect(d.isEmpty, true);
+    Frequency f = Frequency.fromStrings([]);
+    expect(f.longest, 0);
+    expect(f[0], 0);
+    expect(f.atLeast(0), 0);
+    expect(f.isEmpty, true);
   });
 
   test('emptyString', () {
-    Frequency d = Frequency.fromStrings(['']);
-    expect(d.longest, 0);
-    expect(d[0], 0);
-    expect(d.atLeast(0), 0);
-    expect(d.isEmpty, true);
+    Frequency f = Frequency.fromStrings(['']);
+    expect(f.longest, 0);
+    expect(f[0], 0);
+    expect(f.atLeast(0), 0);
+    expect(f.isEmpty, true);
   });
 
   test('singleLetter', () {
-    Frequency d = Frequency.fromStrings(['a']);
-    expect(d.longest, 1);
-    expect(d[0], 0);
-    expect(d[1], 1);
-    expect(d[2], 0);
-    expect(d.atLeast(0), 1);
-    expect(d.atLeast(1), 1);
-    expect(d.atLeast(2), 0);
-    expect(d.isEmpty, false);
+    Frequency f = Frequency.fromStrings(['a']);
+    expect(f.longest, 1);
+    expect(f[0], 0);
+    expect(f[1], 1);
+    expect(f[2], 0);
+    expect(f.atLeast(0), 1);
+    expect(f.atLeast(1), 1);
+    expect(f.atLeast(2), 0);
+    expect(f.isEmpty, false);
   });
 
   test('isEmpty', () {
@@ -60,8 +60,8 @@ void main() {
   });
 
   test('equals', () {
-    var d = Frequency.fromStrings([]);
-    expect(d == d, true);
+    var f = Frequency.fromStrings([]);
+    expect(f == f, true);
     expect(Frequency.fromStrings(['']) == Frequency.fromStrings([]), true);
     expect(Frequency.fromStrings(['a']) == Frequency.fromStrings(['a']), true);
     expect(Frequency.fromStrings(['a']) == Frequency.fromStrings(['b']), true);
@@ -74,8 +74,8 @@ void main() {
   });
 
   test('hashCode', () {
-    var d = Frequency.fromStrings([]);
-    expect(d.hashCode == d.hashCode, true);
+    var f = Frequency.fromStrings([]);
+    expect(f.hashCode == f.hashCode, true);
     expect(
         Frequency.fromStrings(['']).hashCode ==
             Frequency.fromStrings([]).hashCode,

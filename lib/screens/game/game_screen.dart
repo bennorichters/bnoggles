@@ -45,7 +45,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   }
 
   void _checkDone() {
-    if ((gameInfo.solution.histogram - gameInfo.userAnswer.value.histogram)
+    if ((gameInfo.solution.frequency - gameInfo.userAnswer.value.frequency)
         .isEmpty) {
       _showResultScreen();
     }

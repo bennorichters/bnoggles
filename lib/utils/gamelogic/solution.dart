@@ -15,7 +15,7 @@ abstract class Answer {
 
   bool contains(String word) => uniqueWords().contains(word);
 
-  Frequency get histogram;
+  Frequency get frequency;
 }
 
 enum Evaluation { good, wrong, goodAgain }
@@ -33,7 +33,7 @@ class UserWord {
 class UserAnswer extends Answer {
   final List<UserWord> found;
   @override
-  final Frequency histogram;
+  final Frequency frequency;
 
   factory UserAnswer(UserAnswer old, String word, bool isCorrect) {
     Evaluation eval;
@@ -53,7 +53,7 @@ class UserAnswer extends Answer {
 
   UserAnswer._(List<UserWord> found)
       : this.found = found,
-        histogram = Frequency.fromStrings(_uniqueWords(found));
+        frequency = Frequency.fromStrings(_uniqueWords(found));
 
   static UserAnswer start() => UserAnswer._(const <UserWord>[]);
 
@@ -71,14 +71,14 @@ class Solution extends Answer {
   final Set<Chain> _chains;
   final int minimalLength;
   @override
-  final Frequency histogram;
+  final Frequency frequency;
 
   factory Solution(Board board, Dictionary dict, int minimalLength) =>
       Solution._(_Problem(board, dict, minimalLength).solve(), minimalLength);
 
   Solution._(Set<Chain> chains, this.minimalLength)
       : _chains = chains,
-        histogram = Frequency.fromStrings(_uniqueWords(chains));
+        frequency = Frequency.fromStrings(_uniqueWords(chains));
 
   Set<Chain> get chains => Set.from(_chains);
 

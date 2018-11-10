@@ -24,8 +24,8 @@ class GameInfo {
         randomWords = solution.uniqueWords().toList()..shuffle();
 
   ScoreSheet get scoreSheet => ScoreSheet(
-        availableWords: solution.histogram.count,
-        foundWords: userAnswer.value.histogram.count,
+        availableWords: solution.frequency.count,
+        foundWords: userAnswer.value.frequency.count,
       );
 
   void addListener(VoidCallback listener) {

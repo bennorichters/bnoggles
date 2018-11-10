@@ -22,7 +22,7 @@ void main() {
   });
 
   test('wordsPerSizeCount', () {
-    var h = createSolution().histogram;
+    var h = createSolution().frequency;
     expect(h[0], 0);
     expect(h[1], 0);
     expect(h[2], 2);
@@ -37,7 +37,7 @@ void main() {
   });
 
   test('wordsPerSizeCount minimal Length = 3', () {
-    var h = createSolution(minimalLength: 3).histogram;
+    var h = createSolution(minimalLength: 3).frequency;
     expect(h[0], 0);
     expect(h[1], 0);
     expect(h[2], 0);
