@@ -58,23 +58,23 @@ void main() {
     a = UserAnswer(a, "abc", true);
     expect(a.found.length, 1);
     expect(a.found[0].word, "abc");
-    expect(a.found[0].eval, Evaluation.good);
+    expect(a.found[0].evaluation, Evaluation.good);
 
     a = UserAnswer(a, "def", false);
     expect(a.found.length, 2);
     expect(a.found[0].word, "abc");
-    expect(a.found[0].eval, Evaluation.good);
+    expect(a.found[0].evaluation, Evaluation.good);
     expect(a.found[1].word, "def");
-    expect(a.found[1].eval, Evaluation.wrong);
+    expect(a.found[1].evaluation, Evaluation.wrong);
 
     a = UserAnswer(a, "abc", true);
     expect(a.found.length, 3);
     expect(a.found[0].word, "abc");
-    expect(a.found[0].eval, Evaluation.good);
+    expect(a.found[0].evaluation, Evaluation.good);
     expect(a.found[1].word, "def");
-    expect(a.found[1].eval, Evaluation.wrong);
+    expect(a.found[1].evaluation, Evaluation.wrong);
     expect(a.found[2].word, "abc");
-    expect(a.found[2].eval, Evaluation.goodAgain);
+    expect(a.found[2].evaluation, Evaluation.goodAgain);
   });
 
   test('userAnswer.uniqueWords', () {

@@ -52,7 +52,7 @@ class Word {
   Word._(this.value, this.color);
 
   Word.fromUser(UserWord userWord)
-      : this._(userWord.word, _colors[userWord.eval]);
+      : this._(userWord.word, _colors[userWord.evaluation]);
 
   Word.neutral(String word) : this._(word, Colors.blue);
 }

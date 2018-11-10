@@ -10,31 +10,65 @@ import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/gamelogic/frequency.dart';
 
+/// An answer in the game.
+///
+/// An answer contains words that have been found on a [Board]. Found words are
+/// considered to be correct, i.e. the board indeed contains that word and it
+/// is valid according to the used [Dictionary].
 abstract class Answer {
+  /// A set of all unique and correct words that have been found.
   Set<String> uniqueWords();
 
+  /// Returns [true] of this word is correct and has been found, [false]
+  /// otherwise.
   bool contains(String word) => uniqueWords().contains(word);
 
+  /// Returns a [Frequency] with information about the number of words per word
+  /// length.
   Frequency get frequency;
 }
 
-enum Evaluation { good, wrong, goodAgain }
+/// An evaluation about a word that has been found on the board.
+enum Evaluation {
+  /// This word can indeed be found on the [Board] and is valid according to the
+  /// used [Dictionary].
+  good,
 
-class UserWord {
-  final String word;
-  final Evaluation eval;
+  /// This word is either not on the [Board] or is not valid according to the
+  /// used [Dictionary].
+  wrong,
 
-  UserWord(this.word, this.eval);
-
-  @override
-  String toString() => "$word - $eval";
+  /// This word is [Evaluation.good], but has been found already.
+  goodAgain,
 }
 
+/// An sequence of characters as found by a player of the game.
+class UserWord {
+  /// The sequence of characters
+  final String word;
+
+  /// The evaluation of this word
+  final Evaluation evaluation;
+
+  /// Creates a [UserWord]
+  UserWord(this.word, this.evaluation);
+
+  @override
+  String toString() => "$word - $evaluation";
+}
+
+/// An [Answer] is produced by a player of the game.
 class UserAnswer extends Answer {
+  /// All words found by the user in the order that they where found.
   final List<UserWord> found;
+
   @override
   final Frequency frequency;
 
+  /// Creates a new [UserAnswer] based on an old answer.
+  ///
+  /// The new UserAnswer is a copy of the old answer and is extended with the
+  /// information provided by [word] and [isCorrect].
   factory UserAnswer(UserAnswer old, String word, bool isCorrect) {
     Evaluation eval;
 
@@ -55,31 +89,46 @@ class UserAnswer extends Answer {
       : this.found = found,
         frequency = Frequency.fromStrings(_uniqueWords(found));
 
+  /// Creates a [UserAnswer] that does not contain any found words.
   static UserAnswer start() => UserAnswer._(const <UserWord>[]);
 
   @override
   Set<String> uniqueWords() => _uniqueWords(found);
 
-  static Set<String> _uniqueWords(List<UserWord> words) =>
-      words.where((f) => f.eval == Evaluation.good).map((f) => f.word).toSet();
+  static Set<String> _uniqueWords(List<UserWord> words) => words
+      .where((f) => f.evaluation == Evaluation.good)
+      .map((f) => f.word)
+      .toSet();
 
   @override
   String toString() => found.toString();
 }
 
+/// A solution is the only correct [Answer].
+///
+/// A solution contains all possible words that can be found on a [Board].
 class Solution extends Answer {
   final Set<Chain> _chains;
+
+  /// The minimal lengths found words should have
   final int minimalLength;
   @override
   final Frequency frequency;
 
-  factory Solution(Board board, Dictionary dict, int minimalLength) =>
-      Solution._(_Problem(board, dict, minimalLength).solve(), minimalLength);
+  /// Creates a [Solution]
+  ///
+  /// All words that can be found on the [board], are valid according to the
+  /// [dictionary] and have a length greater than or equal to [minimalLength]
+  /// are found.
+  factory Solution(Board board, Dictionary dictionary, int minimalLength) =>
+      Solution._(
+          _Problem(board, dictionary, minimalLength).solve(), minimalLength);
 
   Solution._(Set<Chain> chains, this.minimalLength)
       : _chains = chains,
         frequency = Frequency.fromStrings(_uniqueWords(chains));
 
+  /// Returns all found [Chain]s.
   Set<Chain> get chains => Set.from(_chains);
 
   @override
@@ -93,10 +142,12 @@ class Solution extends Answer {
     return (compareLength == 0) ? a.compareTo(b) : compareLength;
   }
 
+  /// Returns all found words sorted first by length, then alphabetically.
   List<String> uniqueWordsSorted() =>
       uniqueWords().toList()..sort((a, b) => _compareWords(a, b));
 
-  bool isCorrect(String text) => contains(text);
+  /// Returns [true] if [word] is part of this solution, [false] otherwise.
+  bool isCorrect(String word) => contains(word);
 }
 
 class _Problem {
@@ -151,6 +202,7 @@ class _Problem {
   }
 }
 
+/// A chain of tiles on the board that are connected with each other.
 class Chain {
   final List<Coordinate> _coordinates;
   final StringBuffer _text;
@@ -163,7 +215,9 @@ class Chain {
       : _coordinates = List.of(head._coordinates)..add(next),
         _text = word;
 
+  /// The coordinates of this chain.
   List<Coordinate> get chain => List.from(_coordinates);
+  /// The word that is associated with this chain.
   String get text => _text.toString();
 
   @override
