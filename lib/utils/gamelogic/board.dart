@@ -96,7 +96,7 @@ class _BoardFactory {
 
     int left = tiles.keys.length;
 
-    if (word != 0) {
+    if (word != null) {
       left -= addLetterSequence(word);
     }
 
