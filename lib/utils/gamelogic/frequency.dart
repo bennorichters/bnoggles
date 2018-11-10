@@ -8,10 +8,10 @@ import 'package:collection/collection.dart';
 
 const _eq = const MapEquality<int, int>();
 
-class Histogram {
+class Frequency {
   final Map<int, int> _countPerLength;
 
-  Histogram.fromStrings(Iterable<String> words)
+  Frequency.fromStrings(Iterable<String> words)
       : this._(
           groupBy(
             words.where((word) => word.isNotEmpty).map((word) => word.length),
@@ -21,7 +21,7 @@ class Histogram {
           ),
         );
 
-  Histogram._(this._countPerLength);
+  Frequency._(this._countPerLength);
 
   int get longest => isEmpty ? 0 : _countPerLength.keys.reduce(max);
 
@@ -39,7 +39,7 @@ class Histogram {
 
   @override
   bool operator ==(dynamic other) =>
-      other is Histogram && _eq.equals(_countPerLength, other._countPerLength);
+      other is Frequency && _eq.equals(_countPerLength, other._countPerLength);
 
   @override
   int get hashCode => _eq.hash(_countPerLength);
@@ -47,7 +47,7 @@ class Histogram {
   @override
   String toString() => _countPerLength.toString();
 
-  Histogram operator -(Histogram other) {
+  Frequency operator -(Frequency other) {
     Map<int, int> result = Map();
     for (int key in Set.from(_countPerLength.keys)
       ..addAll(other._countPerLength.keys)) {
@@ -56,6 +56,6 @@ class Histogram {
       if (diff > 0) result[key] = diff;
     }
 
-    return Histogram._(result);
+    return Frequency._(result);
   }
 }

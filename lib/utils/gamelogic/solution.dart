@@ -8,14 +8,14 @@ import 'dart:collection';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
-import 'package:bnoggles/utils/gamelogic/histogram.dart';
+import 'package:bnoggles/utils/gamelogic/frequency.dart';
 
 abstract class Answer {
   Set<String> uniqueWords();
 
   bool contains(String word) => uniqueWords().contains(word);
 
-  Histogram get histogram;
+  Frequency get histogram;
 }
 
 enum Evaluation { good, wrong, goodAgain }
@@ -33,7 +33,7 @@ class UserWord {
 class UserAnswer extends Answer {
   final List<UserWord> found;
   @override
-  final Histogram histogram;
+  final Frequency histogram;
 
   factory UserAnswer(UserAnswer old, String word, bool isCorrect) {
     Evaluation eval;
@@ -53,7 +53,7 @@ class UserAnswer extends Answer {
 
   UserAnswer._(List<UserWord> found)
       : this.found = found,
-        histogram = Histogram.fromStrings(_uniqueWords(found));
+        histogram = Frequency.fromStrings(_uniqueWords(found));
 
   static UserAnswer start() => UserAnswer._(const <UserWord>[]);
 
@@ -71,14 +71,14 @@ class Solution extends Answer {
   final Set<Chain> _chains;
   final int minimalLength;
   @override
-  final Histogram histogram;
+  final Frequency histogram;
 
   factory Solution(Board board, Dictionary dict, int minimalLength) =>
       Solution._(_Problem(board, dict, minimalLength).solve(), minimalLength);
 
   Solution._(Set<Chain> chains, this.minimalLength)
       : _chains = chains,
-        histogram = Histogram.fromStrings(_uniqueWords(chains));
+        histogram = Frequency.fromStrings(_uniqueWords(chains));
 
   Set<Chain> get chains => Set.from(_chains);
 
