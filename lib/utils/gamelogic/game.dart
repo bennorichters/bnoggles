@@ -12,7 +12,6 @@ import 'package:bnoggles/utils/gamelogic/solution.dart';
 ///
 /// The board and the solution are created by the constructor.
 class Game {
-
   /// The [Board]
   final Board board;
 
@@ -32,8 +31,9 @@ class Game {
   factory Game(int boardWidth, SequenceGenerator generator,
       Dictionary dictionary, int minimalWordLength) {
     Board board = Board(
-      boardWidth,
-      generator,
+      width: boardWidth,
+      generator: generator,
+      word: dictionary.randomWord(5),
     );
 
     Solution solution = Solution(
@@ -41,17 +41,6 @@ class Game {
       dictionary,
       minimalWordLength,
     );
-
-    if (solution.uniqueWords().length < 10) {
-      String word = dictionary.randomWord(5);
-      board = board.insertWordRandomly(word);
-
-      solution = Solution(
-        board,
-        dictionary,
-        minimalWordLength,
-      );
-    }
 
     return Game._(board, solution);
   }

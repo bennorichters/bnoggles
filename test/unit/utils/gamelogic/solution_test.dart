@@ -100,7 +100,10 @@ Solution createSolution({int minimalLength = 2}) {
 
   var rlg = MockRandomLetterGenerator();
   when(rlg.next()).thenAnswer((s) => 'a');
-  Board realBoard = Board(2, rlg);
+  Board realBoard = Board(
+    width: 2,
+    generator: rlg,
+  );
 
   var mockBoard = MockBoard();
   when(mockBoard[allCoordinates[0]]).thenReturn('a');

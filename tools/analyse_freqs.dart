@@ -13,10 +13,11 @@ void main(List<String> arguments) async {
 }
 
 void countFrequencies() async {
-  String words = await readFile();
-  var map = _FrequencyCounter(words).countAllSequences();
+  List<String> list = await readFile();
+  String words = list.where((w) => w.length <= 3).join('/');
 
-  (map.keys.where((k) => map[k] > 100).toList()
+  var map = _FrequencyCounter(words).countAllSequences();
+  (map.keys.toList()
         ..sort((a, b) => (map[b] - map[a])))
       .forEach((k) => print('"$k": ${map[k]},'));
 }
@@ -43,8 +44,8 @@ class _FrequencyCounter {
   int count(String sequence) => RegExp(sequence).allMatches(_source).length;
 }
 
-Future<String> readFile() async {
+Future<List<String>> readFile() async {
   var input = File('assets/lang/hu/words.dic');
-  var contents = await input.readAsString();
+  var contents = await input.readAsLines();
   return contents;
 }

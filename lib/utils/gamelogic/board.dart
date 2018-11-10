@@ -7,6 +7,7 @@ import 'dart:math';
 
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
+import 'package:meta/meta.dart';
 
 /// A shuffler returns a new list with the same elements as [toShuffle] but
 /// it can change the order.
@@ -32,13 +33,18 @@ class Board {
   /// The board will contain [width]*[width] [Coordinate]s. The [generator]
   /// is used to generate a letter for each coordinate. The [shuffler]
   /// determines the order in which the coordinates are mapped. [List.shuffle]
-  /// is used when [shuffler] is omitted.
-  factory Board(int width, SequenceGenerator generator, [Shuffler shuffler]) =>
+  /// is used when [shuffler] is omitted. If [word] is given it will be added
+  /// to the board.
+  factory Board(
+          {@required int width,
+          @required SequenceGenerator generator,
+          Shuffler shuffler,
+          String word}) =>
       _BoardFactory(
         width,
         generator,
         shuffler ?? (list) => list..shuffle(),
-      ).build();
+      ).build(word);
 
   /// The width of this board
   int get width => sqrt(_tiles.length).floor();
@@ -60,46 +66,6 @@ class Board {
     allCoordinates()
         .forEach((c) => contents[c] = c.allNeighbours(0, width - 1));
     return Map.unmodifiable(contents);
-  }
-
-  /// Inserts the given [word] at a random place and returns a new instance of
-  /// [Board]. The new board is an exact copy of the old board, except that some
-  /// coordinates in the new board are now mapped to the letters of the given
-  /// word. These coordinates are determined by the shuffler as passed into the
-  /// constructor.
-  ///
-  /// If the length of the word is greater than the number of available
-  /// tiles (width*width), an [ArgumentError] is thrown.
-  Board insertWordRandomly(String word) {
-    if (word.length > width * width) throw ArgumentError("'$word' is too big");
-    
-    Map<Coordinate, String> copy = Map.from(_tiles);
-
-    List<Coordinate> chain = _randomChain(
-        [_shuffler((allCoordinates().toList())).first], word.length - 1);
-    for (int i = 0; i < word.length; i++) {
-      copy[chain[i]] = word.substring(i, i + 1);
-    }
-
-    return Board._unmodifiable(copy, _shuffler);
-  }
-
-  List<Coordinate> _randomChain(List<Coordinate> result, int length) {
-    if (length == 0) return result;
-
-    var neighbours = _shuffler(result.last
-        .allNeighbours(0, width - 1)
-        .where((n) => !result.contains(n))
-        .toList());
-
-    for (Coordinate candidate in neighbours) {
-      List<Coordinate> recursiveResult = List.from(result)..add(candidate);
-      List<Coordinate> found = _randomChain(recursiveResult, length - 1);
-
-      if (found != null) return found;
-    }
-
-    return null;
   }
 
   @override
@@ -125,10 +91,15 @@ class _BoardFactory {
 
   _BoardFactory(this.width, this.gen, this.shuffler);
 
-  Board build() {
+  Board build(String word) {
     emptyBoard();
 
     int left = tiles.keys.length;
+
+    if (word != 0) {
+      left -= addLetterSequence(word);
+    }
+
     while (left > 0) {
       left -= addLetterSequence();
     }
@@ -136,12 +107,11 @@ class _BoardFactory {
     return Board._unmodifiable(tiles, shuffler);
   }
 
-  int addLetterSequence() {
-    String letterSequence;
+  int addLetterSequence([String letterSequence]) {
+    letterSequence ??= gen.next();
     List<Coordinate> chain;
 
     while (chain == null) {
-      letterSequence = gen.next();
       chain = freeChain(
         shuffler(tiles.keys.where((k) => tiles[k] == null).toList()),
         letterSequence.length,
@@ -149,6 +119,7 @@ class _BoardFactory {
 
       if (chain == null) {
         gen.decreaseLength();
+        letterSequence = gen.next();
       }
     }
 

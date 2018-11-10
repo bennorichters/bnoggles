@@ -6,10 +6,16 @@ import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
 void main() {
   test('ensure solution with one word', () {
-    Game game = Game(3, FakeLetterGenerator(), Dictionary(['bbbb']), 2);
+    Game game = Game(
+        3,
+        FakeLetterGenerator(),
+        Dictionary([
+          '12345',
+        ]),
+        2);
 
     expect(game.board.width, 3);
-    expect(game.solution.uniqueWords().contains('bbbb'), true);
+    expect(game.solution.uniqueWords().contains('12345'), true);
   });
 }
 

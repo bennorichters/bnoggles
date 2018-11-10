@@ -21,7 +21,7 @@ void main() {
       'f': 1,
     });
 
-    Dictionary dict = Dictionary(['word']);
+    Dictionary dict = Dictionary(['12345']);
 
     int boardWidth = 3;
     for (int i = 0; i < factorial(boardWidth * boardWidth); i++) {
@@ -29,8 +29,14 @@ void main() {
       Shuffler myShuffler = (List<Coordinate> list) =>
           Permutations(list.length, list)[i].cast<Coordinate>();
 
-      var board = Board(boardWidth, gen, myShuffler).insertWordRandomly("word");
-      expect(Solution(board, dict, 2).contains("word"), true);
+      var board = Board(
+        width: boardWidth,
+        generator: gen,
+        shuffler: myShuffler,
+        word: "12345",
+      );
+
+      expect(Solution(board, dict, 2).contains("12345"), true);
     }
   });
 }

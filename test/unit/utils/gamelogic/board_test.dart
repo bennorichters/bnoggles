@@ -17,10 +17,12 @@ void main() {
     var rlg = MockRandomLetterGenerator();
     var letters = ['a', 'b', 'c', 'd'];
 
-    when(rlg.next())
-        .thenAnswer((s) => letters.removeAt(0));
+    when(rlg.next()).thenAnswer((s) => letters.removeAt(0));
 
-    Board b = Board(2, rlg);
+    Board b = Board(
+      width: 2,
+      generator: rlg,
+    );
 
     var allChars = Set<String>();
     allChars.add(b[Coordinate(0, 0)]);
@@ -35,7 +37,10 @@ void main() {
     var rlg = MockRandomLetterGenerator();
     when(rlg.next()).thenAnswer((s) => 'a');
 
-    Board b = Board(3, rlg);
+    Board b = Board(
+      width: 3,
+      generator: rlg,
+    );
     var neighbours = b.mapNeighbours();
 
     void e(Coordinate actual, List<Coordinate> expected) {
