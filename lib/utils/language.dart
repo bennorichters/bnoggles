@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/gamelogic/game.dart';
 import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
+import 'package:meta/meta.dart';
 
 /// The language in which the game is played.
 ///
@@ -21,8 +22,10 @@ class Language {
 
   Language._(this._frequencyInfo, this._dictionary);
 
+  /// Registers the [LanguageLoader]
   static void registerLoader(LanguageLoader loader) => _loader = loader;
 
+  /// Returns a Future instance of [Language] for the given language [code].
   static Future<Language> forLanguageCode(String code) async {
     if (_currentCode == code) {
       return _currentLanguage;
@@ -37,7 +40,7 @@ class Language {
   static Future<Language> _load(String code) async {
     var start = DateTime.now();
     return Future.wait<String>([
-      _loader.letterFrequencies(code),
+      _loader.characterSequenceFrequencies(code),
       _loader.availableWords(code),
     ]).then((var files) {
       return Language._(
@@ -58,19 +61,34 @@ class Language {
     return result;
   }
 
-  Game createGame(int boardSize, int minimalWordLength) => Game(
-        boardSize,
+  /// Creates a new [Game]
+  ///
+  /// The new game uses the language dependent information contained by this
+  /// class. The [boardWidth] determines the size of the [Board] to be created.
+  /// The [minimalWordLength] determines the minimal size the words in the
+  /// [Solution] will have.
+  Game createGame(int boardWidth, int minimalWordLength) => Game(
+        boardWidth,
         _frequencyInfo.createSequenceGenerator(),
         _dictionary,
         minimalWordLength,
       );
 }
 
+/// Container for dictionary related elements that need to be loaded
 class LanguageLoader {
-  Resolver letterFrequencies;
+  /// Resolver for information about frequencies of character sequences
+  Resolver characterSequenceFrequencies;
+
+  /// All available words
   Resolver availableWords;
 
-  LanguageLoader({this.letterFrequencies, this.availableWords});
+  /// Creates an instance of [LanguageLoader]
+  LanguageLoader({
+    @required this.characterSequenceFrequencies,
+    @required this.availableWords,
+  });
 }
 
+/// Returns a String for the given [languageCode]
 typedef Future<String> Resolver(String languageCode);

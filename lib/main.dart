@@ -13,7 +13,7 @@ import 'package:bnoggles/utils/preferences.dart';
 
 void main() async {
   Language.registerLoader(LanguageLoader(
-    letterFrequencies: (code) =>
+    characterSequenceFrequencies: (code) =>
         rootBundle.loadString('assets/lang/$code/letterFrequencies.json'),
     availableWords: (code) =>
         rootBundle.loadString('assets/lang/$code/words.dic'),
