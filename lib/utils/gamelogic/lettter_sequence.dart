@@ -67,7 +67,7 @@ class LetterSequenceInfo {
 
 /// A generator for letter sequences to fill a [Board] with.
 ///
-/// This generator chooses from the sequences that has been passed into the
+/// This generator chooses from the sequences that have been passed into the
 /// constructor of [LetterSequenceInfo]. The method [SequenceGenerator.next]
 /// generates sequences. When an instance of this class is first created,
 /// calling next will generate a sequence that is chosen from the available
