@@ -73,9 +73,9 @@ class LetterSequenceInfo {
 /// calling next will generate a sequence that is chosen from the available
 /// sequences that have the longest length. After calling
 /// [SequenceGenerator.decreaseLength] the next method will choose from
-/// sequences that have the one but highest length. Further calls to decrease
-/// length will behave similarly until the shortest available length has been
-/// reached.
+/// sequences that have the one but highest length. Further calls to
+/// decreaseLength will behave similarly until the shortest available length has
+/// been reached.
 ///
 /// Instances of this class are created with
 /// [LetterSequenceInfo.createSequenceGenerator].
@@ -116,7 +116,8 @@ class SequenceGenerator {
   /// level.
   ///
   /// If the length cannot be decreased anymore, i.e. when the shortest
-  /// available length has been reached, this method will throw a [StateError].
+  /// available length has been reached already, this method will throw a
+  /// [StateError].
   void decreaseLength() {
     if (_lengths.length < 2) throw StateError("cannot decrease length anymore");
 
