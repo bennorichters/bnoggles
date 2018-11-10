@@ -43,7 +43,7 @@ class Game {
     );
 
     if (solution.uniqueWords().length < 10) {
-      String word = dictionary.randomWord(4);
+      String word = dictionary.randomWord(5);
       board = board.insertWordRandomly(word);
 
       solution = Solution(

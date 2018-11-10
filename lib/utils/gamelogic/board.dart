@@ -44,7 +44,7 @@ class Board {
   int get width => sqrt(_tiles.length).floor();
 
   /// The letter the [coordinate] is mapped to.
-  String operator [](Coordinate coordinate)  => _tiles[coordinate];
+  String operator [](Coordinate coordinate) => _tiles[coordinate];
 
   /// An iterable over all coordinates in the board. The number of coordinates
   /// equals [width]*[width].
@@ -67,30 +67,39 @@ class Board {
   /// coordinates in the new board are now mapped to the letters of the given
   /// word. These coordinates are determined by the shuffler as passed into the
   /// constructor.
+  ///
+  /// If the length of the word is greater than the number of available
+  /// tiles (width*width), an [ArgumentError] is thrown.
   Board insertWordRandomly(String word) {
-    assert(
-        word.length <= 4, "word length should be max 4 but is ${word.length}");
-
-    // For longer lengths the algorithm should check if the chain doesn't lock
-    // itself in. For instance: (1, 1); (0, 1); (1, 0); (0, 0)
-
+    if (word.length > width * width) throw ArgumentError("'$word' is too big");
+    
     Map<Coordinate, String> copy = Map.from(_tiles);
 
-    List<Coordinate> chain = [];
-    Coordinate current = _shuffler((allCoordinates().toList())).first;
+    List<Coordinate> chain = _randomChain(
+        [_shuffler((allCoordinates().toList())).first], word.length - 1);
     for (int i = 0; i < word.length; i++) {
-      chain.add(current);
-      copy[current] = word.substring(i, i + 1);
-
-      if (i < word.length - 1) {
-        current = _shuffler(current
-            .allNeighbours(0, width - 1)
-            .where((c) => !chain.contains(c))
-            .toList())[0];
-      }
+      copy[chain[i]] = word.substring(i, i + 1);
     }
 
     return Board._unmodifiable(copy, _shuffler);
+  }
+
+  List<Coordinate> _randomChain(List<Coordinate> result, int length) {
+    if (length == 0) return result;
+
+    var neighbours = _shuffler(result.last
+        .allNeighbours(0, width - 1)
+        .where((n) => !result.contains(n))
+        .toList());
+
+    for (Coordinate candidate in neighbours) {
+      List<Coordinate> recursiveResult = List.from(result)..add(candidate);
+      List<Coordinate> found = _randomChain(recursiveResult, length - 1);
+
+      if (found != null) return found;
+    }
+
+    return null;
   }
 
   @override
