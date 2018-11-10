@@ -6,7 +6,7 @@
 import 'dart:math';
 import 'package:test/test.dart';
 
-import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
+import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
 void main() {
   test('1 char', () {
@@ -14,8 +14,8 @@ void main() {
       'a': 1,
     };
 
-    var info = LetterFrequencyInfo(freq);
-    var gen = LetterGenerator(info, MyRandom());
+    var info = LetterSequenceInfo(freq);
+    var gen = info.createSequenceGenerator(MyRandom());
 
     expect(gen.next(), 'a');
     expect(gen.next(), 'a');
@@ -29,8 +29,8 @@ void main() {
       'f': 1,
     };
 
-    var info = LetterFrequencyInfo(freq);
-    var gen = LetterGenerator(info, MyRandom());
+    var info = LetterSequenceInfo(freq);
+    var gen = info.createSequenceGenerator(MyRandom());
 
     expect(gen.next(), 'abc');
     expect(gen.next(), 'abc');
@@ -56,8 +56,8 @@ void main() {
       'i': 1,
     };
 
-    var info = LetterFrequencyInfo(freq);
-    var gen = LetterGenerator(info, MyRandom());
+    var info = LetterSequenceInfo(freq);
+    var gen = info.createSequenceGenerator(MyRandom());
 
     expect(gen.next(), 'abcde');
     expect(gen.next(), 'abcde');
@@ -91,8 +91,8 @@ void main() {
       '4': 1,
     };
 
-    var info = LetterFrequencyInfo(freq);
-    var gen = LetterGenerator(info, MyRandom());
+    var info = LetterSequenceInfo(freq);
+    var gen = info.createSequenceGenerator(MyRandom());
 
     expect(gen.next().length, 5);
     expect(gen.next().length, 5);

@@ -11,7 +11,7 @@ import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
-import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
+import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
 class MockBoard extends Mock implements Board {}
 
@@ -88,7 +88,7 @@ void main() {
   });
 }
 
-class MockRandomLetterGenerator extends Mock implements LetterGenerator {}
+class MockRandomLetterGenerator extends Mock implements SequenceGenerator {}
 
 Solution createSolution({int minimalLength = 2}) {
   var allCoordinates = [

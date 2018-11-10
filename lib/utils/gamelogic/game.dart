@@ -5,7 +5,7 @@
 
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
-import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
+import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 /// A container for both a [Board] and a [Solution].
@@ -29,7 +29,7 @@ class Game {
   ///
   /// It is guaranteed that the generated board has a solution that contains at
   /// least one word.
-  factory Game(int boardWidth, LetterGenerator generator,
+  factory Game(int boardWidth, SequenceGenerator generator,
       Dictionary dictionary, int minimalWordLength) {
     Board board = Board(
       boardWidth,

@@ -6,14 +6,14 @@
 import 'dart:math';
 
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
-import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
+import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
 typedef List<Coordinate> Shuffler(List<Coordinate> toShuffle);
 
 /// An abstract representation of the board on which the game is played.
 ///
 /// A board maps a [Coordinate] to a letter. All boards are square, i.e. they
-/// have the same width as height. A [LetterGenerator] is used to fill the board
+/// have the same width as height. A [SequenceGenerator] is used to fill the board
 /// with different letters.
 class Board {
   final Map<Coordinate, String> _tiles;
@@ -31,7 +31,7 @@ class Board {
   /// is used to generate a letter for each coordinate. The [shuffler]
   /// determines the order in which the coordinates are mapped. [List.shuffle]
   /// is used when [shuffler] is omitted.
-  factory Board(int width, LetterGenerator generator, [Shuffler shuffler]) =>
+  factory Board(int width, SequenceGenerator generator, [Shuffler shuffler]) =>
       _BoardFactory(
         width,
         generator,
@@ -108,7 +108,7 @@ class Board {
 
 class _BoardFactory {
   final int width;
-  final LetterGenerator gen;
+  final SequenceGenerator gen;
   final Shuffler shuffler;
   final Map<Coordinate, String> tiles = Map();
 

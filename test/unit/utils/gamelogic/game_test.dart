@@ -2,7 +2,7 @@ import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/gamelogic/game.dart';
 import 'package:test/test.dart';
 
-import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
+import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
 void main() {
   test('ensure solution with one word', () {
@@ -13,7 +13,7 @@ void main() {
   });
 }
 
-class FakeLetterGenerator implements LetterGenerator {
+class FakeLetterGenerator implements SequenceGenerator {
   @override
   String next() => 'a';
 

@@ -6,14 +6,14 @@
 import 'dart:convert';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/gamelogic/game.dart';
-import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
+import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
 class Language {
   static LanguageLoader _loader;
   static String _currentCode;
   static Language _currentLanguage;
 
-  LetterFrequencyInfo _frequencyInfo;
+  LetterSequenceInfo _frequencyInfo;
   Dictionary _dictionary;
 
   Language._(this._frequencyInfo, this._dictionary);
@@ -38,7 +38,7 @@ class Language {
       _loader.availableWords(code),
     ]).then((var files) {
       return Language._(
-        LetterFrequencyInfo(_getFrequencies(files[0])),
+        LetterSequenceInfo(_getFrequencies(files[0])),
         Dictionary(files[1].split("\n")..sort()),
       );
     }).then((Language language) {
@@ -57,7 +57,7 @@ class Language {
 
   Game createGame(int boardSize, int minimalWordLength) => Game(
         boardSize,
-        LetterGenerator(_frequencyInfo),
+        _frequencyInfo.createSequenceGenerator(),
         _dictionary,
         minimalWordLength,
       );

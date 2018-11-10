@@ -8,9 +8,9 @@ import 'package:test/test.dart';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 
-import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
+import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
-class MockRandomLetterGenerator extends Mock implements LetterGenerator {}
+class MockRandomLetterGenerator extends Mock implements SequenceGenerator {}
 
 void main() {
   test('all characters', () {

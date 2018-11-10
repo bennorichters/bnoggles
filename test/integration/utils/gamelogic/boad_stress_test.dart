@@ -11,11 +11,11 @@ import 'package:trotter/trotter.dart';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 
-import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
+import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
 void main() {
   test('lot of shuffles', () {
-    var info = LetterFrequencyInfo({
+    var info = LetterSequenceInfo({
       'abc': 1,
       'de': 1,
       'f': 1,
@@ -25,7 +25,7 @@ void main() {
 
     int boardWidth = 3;
     for (int i = 0; i < factorial(boardWidth * boardWidth); i++) {
-      var gen = LetterGenerator(info);
+      var gen = info.createSequenceGenerator();
       Shuffler myShuffler = (List<Coordinate> list) =>
           Permutations(list.length, list)[i].cast<Coordinate>();
 

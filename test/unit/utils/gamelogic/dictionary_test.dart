@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 
-import 'package:bnoggles/utils/gamelogic/lettter_frequency.dart';
+import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
 void main() {
   test('returned WordInfo', () {
