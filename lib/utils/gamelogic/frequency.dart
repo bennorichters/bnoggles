@@ -15,7 +15,7 @@ const _eq = const MapEquality<int, int>();
 class Frequency {
   final Map<int, int> _countPerLength;
 
-  /// Creates a [Frequency] based on the length of the given [words].
+  /// Creates a [Frequency] based on the lengths of the given [words].
   Frequency.fromStrings(Iterable<String> words)
       : this._(
           groupBy(
