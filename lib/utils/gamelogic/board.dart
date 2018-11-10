@@ -49,11 +49,11 @@ class Board {
   /// The width of this board
   int get width => sqrt(_tiles.length).floor();
 
-  /// The letter the [coordinate] is mapped to.
+  /// The letter the [coordinate] is mapped to
   String operator [](Coordinate coordinate) => _tiles[coordinate];
 
   /// An iterable over all coordinates in the board. The number of coordinates
-  /// equals [width]*[width].
+  /// equals [width]*[width]
   Iterable<Coordinate> allCoordinates() => _tiles.keys;
 
   /// A map where each coordinate is mapped to all the neighbours it has. A
