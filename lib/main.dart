@@ -22,13 +22,19 @@ void main() async {
   var preferences = await Preferences.load();
   // preload previous language
   Language.forLanguageCode(preferences.toParameters().languageCode);
-  runApp(MyApp(preferences));
+  runApp(Bnoggles(preferences));
 }
 
-class MyApp extends StatelessWidget {
+/// The main class for the app.
+///
+/// An instance of this class is passed into Flutter's [runApp] method.
+class Bnoggles extends StatelessWidget {
   final Preferences preferences;
 
-  MyApp(this.preferences);
+  /// Creates an instance of [Bnoggles]
+  ///
+  /// [preferences] is used to set and save user settings.
+  Bnoggles(this.preferences);
 
   @override
   Widget build(BuildContext context) {
