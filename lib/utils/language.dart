@@ -20,7 +20,7 @@ class Language {
   Dictionary _dictionary;
 
   Language._(this._frequencyInfo, this._dictionary);
-  
+
   static void registerLoader(LanguageLoader loader) => _loader = loader;
 
   static Future<Language> forLanguageCode(String code) async {
