@@ -25,8 +25,8 @@ class StartGameButton extends StatelessWidget {
           var parameters = parameterProvider();
           Language.forLanguageCode(parameters.languageCode).then((language) {
             var game = language.createGame(
-              parameters.size,
-              parameters.length,
+              parameters.boardWidth,
+              parameters.minimalWordLength,
             );
 
             GameInfo gameInfo = GameInfo(

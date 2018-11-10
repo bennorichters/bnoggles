@@ -8,13 +8,20 @@ import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter/cupertino.dart';
 
+/// Information about an ongoing game.
 class GameInfo {
+  /// The [GameParameters]
   final GameParameters parameters;
+  /// The [Board]
   final Board board;
+  /// The [Solution]
   final Solution solution;
+  /// A [ValueNotifier] holding a [userAnswer].
   final ValueNotifier<UserAnswer> userAnswer;
+  /// A [ValueNotifier] holding a list of random word shown as hints.
   final List<String> randomWords;
 
+  /// Creates an instance of [GameInfo]
   GameInfo({
     @required this.parameters,
     @required this.board,
@@ -23,23 +30,30 @@ class GameInfo {
   })  : this.solution = solution,
         randomWords = solution.uniqueWords().toList()..shuffle();
 
+  /// Returns the [ScoreSheet]
   ScoreSheet get scoreSheet => ScoreSheet(
         availableWords: solution.frequency.count,
         foundWords: userAnswer.value.frequency.count,
       );
 
-  void addListener(VoidCallback listener) {
+  /// Adds a listener for the [GameInfo.userAnswer]
+  void addUserAnswerListener(VoidCallback listener) {
     userAnswer.addListener(listener);
   }
 
-  void removeListener(VoidCallback listener) {
+  /// Removes a listener for the [GameInfo.userAnswer]
+  void removeUserAnswerListener(VoidCallback listener) {
     userAnswer.removeListener(listener);
   }
 }
 
+/// Information about the available and found words
 class ScoreSheet {
+  /// The available words
   final int availableWords;
+  /// The found words
   final int foundWords;
 
+  /// Creates an instance of [ScoreSheet]
   ScoreSheet({this.availableWords, this.foundWords});
 }

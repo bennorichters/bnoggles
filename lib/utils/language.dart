@@ -8,6 +8,9 @@ import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/gamelogic/game.dart';
 import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
+/// The language in which the game is played.
+///
+/// An instance of this class can be used to create a game.
 class Language {
   static LanguageLoader _loader;
   static String _currentCode;
@@ -17,7 +20,7 @@ class Language {
   Dictionary _dictionary;
 
   Language._(this._frequencyInfo, this._dictionary);
-
+  
   static void registerLoader(LanguageLoader loader) => _loader = loader;
 
   static Future<Language> forLanguageCode(String code) async {

@@ -38,7 +38,8 @@ class WordInfo {
   final bool found;
 
   /// [true] if there is at least one word in the [Dictionary] that starts with
-  /// the word, [false] otherwise.
+  /// the word, [false] otherwise. If [found] is [true], [canStartWith] is also
+  /// [true].
   final bool canStartWith;
 
   const WordInfo._(this.found, this.canStartWith);

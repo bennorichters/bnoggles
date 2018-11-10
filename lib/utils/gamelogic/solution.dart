@@ -16,16 +16,18 @@ import 'package:bnoggles/utils/gamelogic/frequency.dart';
 /// considered to be correct, i.e. the board indeed contains that word and it
 /// is valid according to the used [Dictionary].
 abstract class Answer {
+  /// Returns a [Frequency] with information about the number of words per word
+  /// length.
+  final Frequency frequency;
+
+  Answer(this.frequency);
+
   /// A set of all unique and correct words that have been found.
   Set<String> uniqueWords();
 
   /// Returns [true] of this word is correct and has been found, [false]
   /// otherwise.
   bool contains(String word) => uniqueWords().contains(word);
-
-  /// Returns a [Frequency] with information about the number of words per word
-  /// length.
-  Frequency get frequency;
 }
 
 /// An evaluation about a word that has been found on the board.
@@ -38,7 +40,7 @@ enum Evaluation {
   /// used [Dictionary].
   wrong,
 
-  /// This word is [Evaluation.good], but has been found already.
+  /// This word is good, but has been found already.
   goodAgain,
 }
 
@@ -62,9 +64,6 @@ class UserAnswer extends Answer {
   /// All words found by the user in the order that they where found.
   final List<UserWord> found;
 
-  @override
-  final Frequency frequency;
-
   /// Creates a new [UserAnswer] based on an old answer.
   ///
   /// The new UserAnswer is a copy of the old answer and is extended with the
@@ -87,7 +86,7 @@ class UserAnswer extends Answer {
 
   UserAnswer._(List<UserWord> found)
       : this.found = found,
-        frequency = Frequency.fromStrings(_uniqueWords(found));
+        super(Frequency.fromStrings(_uniqueWords(found)));
 
   /// Creates a [UserAnswer] that does not contain any found words.
   static UserAnswer start() => UserAnswer._(const <UserWord>[]);
@@ -107,13 +106,13 @@ class UserAnswer extends Answer {
 /// A solution is the only correct [Answer].
 ///
 /// A solution contains all possible words that can be found on a [Board].
+/// Sometimes the same word can be found by connecting different chains of
+/// tiles. The getter [chains] can be used to get all possibilities.
 class Solution extends Answer {
   final Set<Chain> _chains;
 
   /// The minimal lengths found words should have
   final int minimalLength;
-  @override
-  final Frequency frequency;
 
   /// Creates a [Solution]
   ///
@@ -126,7 +125,7 @@ class Solution extends Answer {
 
   Solution._(Set<Chain> chains, this.minimalLength)
       : _chains = chains,
-        frequency = Frequency.fromStrings(_uniqueWords(chains));
+        super(Frequency.fromStrings(_uniqueWords(chains)));
 
   /// Returns all found [Chain]s.
   Set<Chain> get chains => Set.from(_chains);
@@ -202,7 +201,8 @@ class _Problem {
   }
 }
 
-/// A chain of tiles on the board that are connected with each other.
+/// A chain of tiles on the board that are connected with each other and form a
+/// word.
 class Chain {
   final List<Coordinate> _coordinates;
   final StringBuffer _text;
@@ -217,6 +217,7 @@ class Chain {
 
   /// The coordinates of this chain.
   List<Coordinate> get chain => List.from(_coordinates);
+
   /// The word that is associated with this chain.
   String get text => _text.toString();
 

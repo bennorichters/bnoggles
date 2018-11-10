@@ -7,17 +7,29 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// The preferences as set by the user.
 class Preferences {
+  /// The code of the language in which the game is played.
   final ValueNotifier<int> language;
+
+  /// The time in seconds the game will last
   final ValueNotifier<int> time;
-  final ValueNotifier<int> size;
-  final ValueNotifier<int> length;
+
+  /// The width of the [Board]
+  final ValueNotifier<int> boardWidth;
+
+  /// The minimal length of the words to be found
+  final ValueNotifier<int> minimalWordLength;
+
+  /// Flag whether or not hints are shown
   final ValueNotifier<bool> hints;
 
-  Preferences(this.language, this.time, this.size, this.length,
+  /// Creates an instance of [Preferences]
+  Preferences(this.language, this.time, this.boardWidth, this.minimalWordLength,
       {ValueNotifier<bool> hints})
       : this.hints = hints ?? ValueNotifier(false);
 
+  /// Returns the Preferences
   static Future<Preferences> load() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -44,23 +56,42 @@ class Preferences {
     );
   }
 
+  /// Creates [GameParameters] based on these Preferences
   GameParameters toParameters() => GameParameters(
         languageCode: const ['nl', 'en', 'hu'][language.value],
         time: time.value,
-        size: size.value,
-        length: length.value,
+        boardWidth: boardWidth.value,
+        minimalWordLength: minimalWordLength.value,
         hints: hints.value,
       );
 }
 
+/// Parameters to start a new game with
 class GameParameters {
+  /// The code of the language in which the game is played.
   final String languageCode;
+
+  /// The time in seconds the game will last
   final int time;
-  final int size;
-  final int length;
+
+  /// The width of the [Board]
+  final int boardWidth;
+
+  /// The minimal length of the words to be found
+  final int minimalWordLength;
+
+  /// Flag whether or not hints are shown
   final bool hints;
 
-  const GameParameters({this.languageCode, this.time, this.size, this.length, this.hints});
+  /// Creates an instance of [GameParameters]
+  const GameParameters({
+    this.languageCode,
+    this.time,
+    this.boardWidth,
+    this.minimalWordLength,
+    this.hints,
+  });
 }
 
+/// Provider for [GameParameters]
 typedef GameParameters ParameterProvider();

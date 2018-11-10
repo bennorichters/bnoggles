@@ -8,6 +8,8 @@ import 'dart:math';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
+/// A shuffler returns a new list with the same elements as [toShuffle] but
+/// it can change the order.
 typedef List<Coordinate> Shuffler(List<Coordinate> toShuffle);
 
 /// An abstract representation of the board on which the game is played.

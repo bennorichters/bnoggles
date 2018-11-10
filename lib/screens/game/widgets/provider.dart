@@ -28,7 +28,7 @@ class _ProviderState extends State<Provider> {
   @override
   void initState() {
     super.initState();
-    widget.gameInfo.addListener(didValueChange);
+    widget.gameInfo.addUserAnswerListener(didValueChange);
   }
 
   void didValueChange() => setState(() {});
@@ -41,7 +41,7 @@ class _ProviderState extends State<Provider> {
 
   @override
   void dispose() {
-    widget.gameInfo.removeListener(didValueChange);
+    widget.gameInfo.removeUserAnswerListener(didValueChange);
     super.dispose();
   }
 }

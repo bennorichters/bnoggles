@@ -74,7 +74,7 @@ class SettingsGrid extends StatelessWidget {
           _emptyLine(emptyLineHeight),
           TableRow(
             children: IntSlider.create(
-              preferences.size,
+              preferences.boardWidth,
               Icons.grid_on,
               (i) => '$i x $i',
               min: 3,
@@ -84,7 +84,7 @@ class SettingsGrid extends StatelessWidget {
           _emptyLine(emptyLineHeight),
           TableRow(
             children: IntSlider.create(
-              preferences.length,
+              preferences.minimalWordLength,
               Icons.text_rotation_none,
               (i) => '$i+',
               min: 2,
