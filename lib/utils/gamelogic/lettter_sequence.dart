@@ -5,11 +5,21 @@
 
 import 'dart:math';
 
+/// Information about the sequences of characters with which the [Board] is
+/// filled.
+///
+/// The sole purpose of this class is to create a [SequenceGenerator] via the
+/// method [createSequenceGenerator].
 class LetterSequenceInfo {
   final Map<int, Map<String, int>> _frequenciesPerLength;
 
   LetterSequenceInfo._(this._frequenciesPerLength);
 
+  /// Creates a [LetterSequenceInfo].
+  ///
+  /// The given [frequencies] contains information that is letter used by the
+  /// [SequenceGenerator]. The keys in this map are used to fill a [Board].
+  /// The values determine the likelihood this key is chosen.
   factory LetterSequenceInfo(Map<String, int> frequencies) {
     Map<int, Map<String, int>> frequenciesPerLength = {};
     for (MapEntry<String, int> entry in frequencies.entries) {
@@ -21,16 +31,20 @@ class LetterSequenceInfo {
     return LetterSequenceInfo._(frequenciesPerLength);
   }
 
-  SequenceGenerator createSequenceGenerator([Random rnd]) {
+  /// Creates a SequenceGenerator.
+  ///
+  /// The given [random] is used to choose sequences. If this is omitted an
+  /// instance of [Random] will be used.
+  SequenceGenerator createSequenceGenerator([Random random]) {
     List<int> lengths = _lengths();
-    rnd ??= Random();
+    random ??= Random();
 
     return SequenceGenerator._(
       lengths,
       this,
       _totalValue(lengths.last),
       _keys(lengths.last),
-      rnd,
+      random,
     );
   }
 
@@ -51,8 +65,25 @@ class LetterSequenceInfo {
   int _value(String key) => _frequenciesPerLength[key.length][key];
 }
 
+/// A generator for letter sequences to fill a [Board] with.
+///
+/// This generator chooses from the sequences that has been passed into the
+/// constructor of [LetterSequenceInfo]. The method [SequenceGenerator.next]
+/// generates sequences. When an instance of this class is first created,
+/// calling next will generate a sequence that is chosen from the available
+/// sequences that have the longest length. After calling
+/// [SequenceGenerator.decreaseLength] the next method will choose from
+/// sequences that have the one but highest length. Further calls to decrease
+/// length will behave similarly until the shortest available length has been
+/// reached.
+///
+/// Instances of this class are created with
+/// [LetterSequenceInfo.createSequenceGenerator].
+///
+/// Instances of this class are mutable. For a new [Game], a new instance of
+/// this class should be used.
 class SequenceGenerator {
-  final Random _rng;
+  final Random _random;
   final List<int> _lengths;
   final LetterSequenceInfo _info;
 
@@ -60,10 +91,14 @@ class SequenceGenerator {
   List<String> _keys;
 
   SequenceGenerator._(
-      this._lengths, this._info, this._totalValue, this._keys, this._rng);
+      this._lengths, this._info, this._totalValue, this._keys, this._random);
 
+  /// Generates a new letter sequence.
+  ///
+  /// For the exact behaviour of this method see the documentation at the class
+  /// level.
   String next() {
-    int randomNumber = _rng.nextInt(_totalValue);
+    int randomNumber = _random.nextInt(_totalValue);
 
     int sum = 0;
     for (String sequence in _keys) {
@@ -74,6 +109,14 @@ class SequenceGenerator {
     throw StateError('should not reach this code');
   }
 
+  /// Decreases the length of the sequences the method [SequenceGenerator.next]
+  /// chooses from.
+  ///
+  /// For the exact behaviour of this method see the documentation at the class
+  /// level.
+  ///
+  /// If the length cannot be decreased anymore, i.e. when the shortest
+  /// available length has been reached, this method will throw a [StateError].
   void decreaseLength() {
     if (_lengths.length < 2) throw StateError("cannot decrease length anymore");
 
