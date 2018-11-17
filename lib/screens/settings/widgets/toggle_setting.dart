@@ -13,11 +13,32 @@ class ToggleSetting {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Switch(
-              value: notifier.value,
-              onChanged: (bool value) => notifier.value = value,
+            _HintSwitch(
+              notifier: notifier,
             ),
           ],
         ),
       ];
+}
+
+class _HintSwitch extends StatefulWidget {
+  _HintSwitch({Key key, this.notifier}) : super(key: key);
+  final ValueNotifier<bool> notifier;
+
+  @override
+  State<StatefulWidget> createState() => _HintSwitchState();
+}
+
+class _HintSwitchState extends State<_HintSwitch> {
+  @override
+  Widget build(BuildContext context) {
+    return Switch(
+      value: widget.notifier.value,
+      onChanged: (bool isOn) {
+        setState(() {
+          widget.notifier.value = isOn;
+        });
+      },
+    );
+  }
 }
