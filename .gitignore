@@ -6,9 +6,10 @@
 .packages
 .pub/
 build/
-ios/.generated/
 packages
 .flutter-plugins
+
+*.log
 
 .metadata
 bnoggles.iml
