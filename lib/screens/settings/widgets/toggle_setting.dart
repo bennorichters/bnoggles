@@ -31,14 +31,12 @@ class _HintSwitch extends StatefulWidget {
 
 class _HintSwitchState extends State<_HintSwitch> {
   @override
-  Widget build(BuildContext context) {
-    return Switch(
-      value: widget.notifier.value,
-      onChanged: (bool isOn) {
-        setState(() {
-          widget.notifier.value = isOn;
-        });
-      },
-    );
-  }
+  Widget build(BuildContext context) => Switch(
+        value: widget.notifier.value,
+        onChanged: (bool isOn) {
+          setState(() {
+            widget.notifier.value = isOn;
+          });
+        },
+      );
 }
