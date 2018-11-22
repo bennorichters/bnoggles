@@ -10,52 +10,76 @@ import 'package:bnoggles/utils/language.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter/material.dart';
 
-class StartGameButton extends StatelessWidget {
-  final ParameterProvider parameterProvider;
-  final bool replaceScreen;
-
+class StartGameButton extends StatefulWidget {
   StartGameButton(
       {Key key, @required this.parameterProvider, @required this.replaceScreen})
       : super(key: key);
 
-  @override
-  Widget build(BuildContext context) => FloatingActionButton(
-        heroTag: "playgame",
-        onPressed: () {
-          var parameters = parameterProvider();
-          Language.forLanguageCode(parameters.languageCode).then((language) {
-            var game = language.createGame(
-              parameters.boardWidth,
-              parameters.minimalWordLength,
-            );
+  final ParameterProvider parameterProvider;
+  final bool replaceScreen;
 
-            GameInfo gameInfo = GameInfo(
-              parameters: parameters,
-              board: game.board,
-              solution: game.solution,
-              userAnswer: ValueNotifier(UserAnswer.start()),
-            );
-            if (replaceScreen) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<Null>(
-                  builder: (context) => GameScreen(
-                        gameInfo: gameInfo,
-                      ),
-                ),
-              );
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute<Null>(
-                  builder: (context) => GameScreen(
-                        gameInfo: gameInfo,
-                      ),
-                ),
-              );
-            }
-          });
-        },
-        child: Icon(Icons.play_arrow),
-      );
+  @override
+  State<StatefulWidget> createState() => _StartGameButtonState();
+}
+
+class _StartGameButtonState extends State<StartGameButton> {
+  bool isLoading = false;
+
+  @override
+  Widget build(BuildContext context) => isLoading
+      ? CircularProgressIndicator()
+      : FloatingActionButton(
+          heroTag: "playgame",
+          onPressed: _pressPlayButton(context),
+          child: Icon(Icons.play_arrow),
+        );
+
+  VoidCallback _pressPlayButton(BuildContext context) => () {
+        setState(() {
+          isLoading = true;
+        });
+
+        var parameters = widget.parameterProvider();
+        Language.forLanguageCode(parameters.languageCode).then((language) {
+          var game = language.createGame(
+            parameters.boardWidth,
+            parameters.minimalWordLength,
+          );
+
+          GameInfo gameInfo = GameInfo(
+            parameters: parameters,
+            board: game.board,
+            solution: game.solution,
+            userAnswer: ValueNotifier(UserAnswer.start()),
+          );
+
+          if (widget.replaceScreen) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute<Null>(
+                builder: (context) => GameScreen(
+                      gameInfo: gameInfo,
+                    ),
+              ),
+            ).then((value) {
+              setState(() {
+                isLoading = false;
+              });
+            });
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute<Null>(
+                builder: (context) => GameScreen(
+                      gameInfo: gameInfo,
+                    ),
+              ),
+            ).then((value) {
+              setState(() {
+                isLoading = false;
+              });
+            });
+          }
+        });
+      };
 }

@@ -9,15 +9,15 @@ import 'package:bnoggles/widgets/start_game_button.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
-  final Preferences preferences;
-
   SettingsScreen({Key key, @required this.preferences}) : super(key: key);
 
+  final Preferences preferences;
+
   @override
-  State createState() => SettingsScreenState();
+  State createState() => _SettingsScreenState();
 }
 
-class SettingsScreenState extends State<SettingsScreen> {
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
