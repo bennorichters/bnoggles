@@ -9,16 +9,16 @@ import 'package:flutter/rendering.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class WordWindow extends StatefulWidget {
+  WordWindow(this.provider, this.stateNotifier);
+
   final WordsProvider provider;
   final ValueNotifier stateNotifier;
 
-  WordWindow(this.provider, this.stateNotifier);
-
   @override
-  State<WordWindow> createState() => WordWindowState();
+  State<WordWindow> createState() => _WordWindowState();
 }
 
-class WordWindowState extends State<WordWindow> {
+class _WordWindowState extends State<WordWindow> {
   @override
   void initState() {
     super.initState();
@@ -46,26 +46,54 @@ class WordWindowState extends State<WordWindow> {
 typedef List<Word> WordsProvider();
 
 class Word {
-  final String value;
-  final Color color;
-
-  Word._(this.value, this.color);
+  Word._(this.value, this.color, this.style);
 
   Word.fromUser(UserWord userWord)
-      : this._(userWord.word, _colors[userWord.evaluation]);
+      : this._(
+          userWord.word,
+          _colors[userWord.evaluation],
+          _textStyle[userWord.evaluation],
+        );
 
-  Word.neutral(String word) : this._(word, Colors.blue);
+  Word.neutral(String word)
+      : this._(
+          word,
+          Colors.blue,
+          _neutralStyle,
+        );
+
+  final String value;
+  final Color color;
+  final TextStyle style;
 }
+
+const double _fontSize = 20.0;
+
+const _neutralStyle = TextStyle(
+  fontSize: _fontSize,
+);
+
+const Map<Evaluation, TextStyle> _textStyle = {
+  Evaluation.good: TextStyle(
+    fontSize: _fontSize,
+    fontWeight: FontWeight.bold,
+  ),
+  Evaluation.wrong: TextStyle(
+    fontSize: _fontSize,
+    decoration: TextDecoration.lineThrough,
+  ),
+  Evaluation.goodAgain: _neutralStyle,
+};
 
 const Map<Evaluation, Color> _colors = {
   Evaluation.good: Colors.green,
   Evaluation.wrong: Colors.red,
-  Evaluation.goodAgain: Colors.orange
+  Evaluation.goodAgain: Colors.orange,
 };
 
 class _UserWordFeedback extends StatelessWidget {
-  final Word _word;
-  _UserWordFeedback(this._word);
+  _UserWordFeedback(this.word);
+  final Word word;
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +102,12 @@ class _UserWordFeedback extends StatelessWidget {
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        color: _word.color,
+        color: word.color,
       ),
       child: Center(
         child: Text(
-          _word.value.toUpperCase(),
-          style: TextStyle(
-            fontSize: 20.0,
-          ),
+          word.value.toUpperCase(),
+          style: word.style,
         ),
       ),
     );
