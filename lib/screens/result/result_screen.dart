@@ -14,18 +14,18 @@ import 'package:flutter/material.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class ResultScreen extends StatefulWidget {
-  final GameInfo gameInfo;
   ResultScreen({@required this.gameInfo});
+  final GameInfo gameInfo;
 
   @override
   State<StatefulWidget> createState() => ResultScreenState(gameInfo: gameInfo);
 }
 
 class ResultScreenState extends State<ResultScreen> {
+  ResultScreenState({@required this.gameInfo});
+
   final GameInfo gameInfo;
   List<Coordinate> highlightedTiles = [];
-
-  ResultScreenState({@required this.gameInfo});
 
   @override
   Widget build(BuildContext context) {

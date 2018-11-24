@@ -16,8 +16,8 @@ class LanguageSetting {
 }
 
 class _LanguageOptions extends StatefulWidget {
-  final ValueNotifier<int> notifier;
   _LanguageOptions({Key key, this.notifier}) : super(key: key);
+  final ValueNotifier<int> notifier;
 
   @override
   State<StatefulWidget> createState() => _LanguageOptionsState();

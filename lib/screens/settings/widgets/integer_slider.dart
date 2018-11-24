@@ -27,9 +27,9 @@ class IntSlider {
 }
 
 class _Label extends StatefulWidget {
+  _Label({Key key, this.notifier, this.label}) : super(key: key);
   final ValueNotifier<int> notifier;
   final LabelRenderer label;
-  _Label({Key key, this.notifier, this.label}) : super(key: key);
 
   @override
   _LabelState createState() => _LabelState();
@@ -58,15 +58,15 @@ class _LabelState extends State<_Label> {
 }
 
 class _Slider extends StatefulWidget {
+  _Slider(
+      {Key key, this.notifier, this.label, this.min, this.max, this.divisions})
+      : super(key: key);
+
   final ValueNotifier<int> notifier;
   final int min;
   final int max;
   final int divisions;
   final LabelRenderer label;
-
-  _Slider(
-      {Key key, this.notifier, this.label, this.min, this.max, this.divisions})
-      : super(key: key);
 
   @override
   _SliderState createState() => _SliderState();
