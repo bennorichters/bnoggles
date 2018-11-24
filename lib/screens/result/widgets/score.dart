@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class ScoreOverview extends StatelessWidget {
-  final ScoreSheet scores;
-  final double fontSize;
-
   ScoreOverview({Key key, @required this.scores, @required this.fontSize})
       : super(key: key);
+
+  final ScoreSheet scores;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) => Row(

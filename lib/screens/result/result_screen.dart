@@ -106,7 +106,7 @@ class ResultScreenState extends State<ResultScreen> {
                 ),
                 Container(
                   padding: EdgeInsets.all(20.0),
-                  child: Row(
+                  child: Row( 
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FloatingActionButton(
