@@ -38,7 +38,7 @@ class Language {
   }
 
   static Future<Language> _load(String code) async {
-    var start = DateTime.now();
+    // var start = DateTime.now();
     return Future.wait<String>([
       _loader.characterSequenceFrequencies(code),
       _loader.availableWords(code),
@@ -48,8 +48,8 @@ class Language {
         Dictionary(files[1].split("\n")..sort()),
       );
     }).then((Language language) {
-      var time = DateTime.now().difference(start).inMilliseconds;
-      print("Loading '$code' took ${time}ms");
+      // var time = DateTime.now().difference(start).inMilliseconds;
+      // print("Loading '$code' took ${time}ms");
       return language;
     });
   }
