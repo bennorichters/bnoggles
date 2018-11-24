@@ -13,14 +13,14 @@ import 'package:meta/meta.dart';
 ///
 /// An instance of this class can be used to create a game.
 class Language {
+  Language._(this._frequencyInfo, this._dictionary);
+
   static LanguageLoader _loader;
   static String _currentCode;
   static Language _currentLanguage;
 
   LetterSequenceInfo _frequencyInfo;
   Dictionary _dictionary;
-
-  Language._(this._frequencyInfo, this._dictionary);
 
   /// Registers the [LanguageLoader]
   static void registerLoader(LanguageLoader loader) => _loader = loader;
@@ -77,17 +77,17 @@ class Language {
 
 /// Container for dictionary related elements that need to be loaded
 class LanguageLoader {
-  /// Resolver for information about frequencies of character sequences
-  Resolver characterSequenceFrequencies;
-
-  /// All available words
-  Resolver availableWords;
-
   /// Creates an instance of [LanguageLoader]
   LanguageLoader({
     @required this.characterSequenceFrequencies,
     @required this.availableWords,
   });
+
+  /// Resolver for information about frequencies of character sequences
+  Resolver characterSequenceFrequencies;
+
+  /// All available words
+  Resolver availableWords;
 }
 
 /// Returns a String for the given [languageCode]
