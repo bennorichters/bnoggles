@@ -5,14 +5,13 @@
 
 import 'dart:math';
 
-import 'package:bnoggles/screens/settings/widgets/language_setting.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-
 import 'package:bnoggles/screens/settings/widgets/integer_slider.dart';
+import 'package:bnoggles/screens/settings/widgets/language_setting.dart';
 import 'package:bnoggles/screens/settings/widgets/toggle_setting.dart';
 import 'package:bnoggles/utils/helper/helper.dart';
 import 'package:bnoggles/utils/preferences.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 // The height of an empty line should decrease for smaller screen sizes. The
 // maximum height is 50. Empirically found values for the height of some
