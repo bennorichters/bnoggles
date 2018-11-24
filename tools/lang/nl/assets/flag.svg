@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="600"
+   height="600"
+   viewBox="0 0 6 6"
+   version="1.1"
+   id="svg268"
+   sodipodi:docname="flag.svg"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06">
+  <metadata
+     id="metadata274">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs272">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3967">
+      <circle
+         style="fill:#00ff00;stroke-width:0.01652573"
+         id="circle3969"
+         cx="4.5"
+         cy="3"
+         r="3" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3971">
+      <circle
+         style="fill:#00ff00;stroke-width:0.01652573"
+         id="circle3973"
+         cx="4.5"
+         cy="3"
+         r="3" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3975">
+      <circle
+         style="fill:#00ff00;stroke-width:0.01652573"
+         id="circle3977"
+         cx="4.5"
+         cy="3"
+         r="3" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1652"
+     inkscape:window-height="896"
+     id="namedview270"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1"
+     inkscape:cx="334"
+     inkscape:cy="300"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg268" />
+  <rect
+     width="9"
+     height="6"
+     id="rect262"
+     clip-path="url(#clipPath3975)"
+     x="0"
+     y="0"
+     style="fill:#21468b"
+     transform="translate(-1.5)" />
+  <rect
+     width="9"
+     height="9"
+     id="rect264"
+     x="0"
+     y="-5"
+     style="fill:#ffffff;stroke-width:1.5"
+     clip-path="url(#clipPath3971)"
+     transform="translate(-1.5)" />
+  <rect
+     width="9"
+     height="2"
+     id="rect266"
+     clip-path="url(#clipPath3967)"
+     x="0"
+     y="0"
+     style="fill:#ae1c28"
+     transform="translate(-1.5)" />
+</svg>
