@@ -45,18 +45,18 @@ class WordCountOverview extends StatelessWidget {
       if (length == _maxLength) {
         text = ">= " + text;
       }
-      return NumberInfo(text);
+      return _NumberInfo(text);
     }
     if (length < solution.minimalLength) {
-      return NoNumberInfo();
+      return _NoNumberInfo();
     }
-    return UserAnswerNumberInfo(length);
+    return _UserAnswerNumberInfo(length);
   }
 }
 
-class NumberInfo extends StatelessWidget {
+class _NumberInfo extends StatelessWidget {
+  _NumberInfo(this.number);
   final String number;
-  NumberInfo(this.number);
 
   @override
   Widget build(BuildContext context) => Container(
@@ -70,8 +70,8 @@ class NumberInfo extends StatelessWidget {
       );
 }
 
-class NoNumberInfo extends StatelessWidget {
-  NoNumberInfo();
+class _NoNumberInfo extends StatelessWidget {
+  _NoNumberInfo();
 
   @override
   Widget build(BuildContext context) => Container(
@@ -85,10 +85,9 @@ class NoNumberInfo extends StatelessWidget {
       );
 }
 
-class UserAnswerNumberInfo extends StatelessWidget {
+class _UserAnswerNumberInfo extends StatelessWidget {
+  _UserAnswerNumberInfo(this.length);
   final int length;
-
-  UserAnswerNumberInfo(this.length);
 
   @override
   Widget build(BuildContext context) {

@@ -7,14 +7,17 @@ import 'package:bnoggles/utils/helper/helper.dart';
 import 'package:flutter/material.dart';
 
 class Clock extends StatelessWidget {
+  Clock(this.showResultScreen, this._controller, this.startTime);
+
   final VoidCallback showResultScreen;
   final AnimationController _controller;
   final int startTime;
 
-  Clock(this.showResultScreen, this._controller, this.startTime);
-
   @override
   Widget build(BuildContext context) {
+    MediaQueryData data = MediaQuery.of(context);
+    double clockFontSize = data.size.width < 375.0 ? 15.0 : 30.0;
+
     var animation = StepTween(
       begin: startTime + 1,
       end: 1,
@@ -26,13 +29,16 @@ class Clock extends StatelessWidget {
       }
     });
 
-    return Countdown(animation: animation);
+    return _Countdown(animation: animation, fontSize: clockFontSize);
   }
 }
 
-class Countdown extends AnimatedWidget {
+class _Countdown extends AnimatedWidget {
+  _Countdown({Key key, this.animation, this.fontSize})
+      : super(key: key, listenable: animation);
+
   final Animation<int> animation;
-  Countdown({Key key, this.animation}) : super(key: key, listenable: animation);
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -45,7 +51,7 @@ class Countdown extends AnimatedWidget {
                 ? 0
                 : animation.value),
             style: TextStyle(
-                fontSize: 30.0,
+                fontSize: fontSize,
                 color: animation.value <= 10 ? Colors.white : Colors.black),
           ),
         ),
