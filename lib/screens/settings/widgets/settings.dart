@@ -26,9 +26,8 @@ const double a = (20.0 - 50.0) / (592.0 - 683.4);
 const double b = 20.0 - a * 592.0;
 
 class SettingsGrid extends StatelessWidget {
-  final Preferences preferences;
-
   SettingsGrid(this.preferences);
+  final Preferences preferences;
 
   TableRow _emptyLine(double emptyLineHeight) => TableRow(
         children: [
@@ -47,7 +46,7 @@ class SettingsGrid extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.all(15.0),
-      margin: EdgeInsets.all(25.0),
+      margin: EdgeInsets.all(5.0),
       child: Table(
         columnWidths: {
           0: FixedColumnWidth(50.0),
