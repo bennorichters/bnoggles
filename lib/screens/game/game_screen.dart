@@ -12,24 +12,24 @@ import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatefulWidget {
-  final GameInfo gameInfo;
-
   GameScreen({
     Key key,
     @required this.gameInfo,
   }) : super(key: key);
 
+  final GameInfo gameInfo;
+
   @override
-  State createState() => GameScreenState(gameInfo: gameInfo);
+  State createState() => _GameScreenState(gameInfo: gameInfo);
 }
 
-class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
+class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
+  _GameScreenState({@required this.gameInfo});
+
   final GameInfo gameInfo;
 
   AnimationController _controller;
   bool controllerDisposed = false;
-
-  GameScreenState({@required this.gameInfo});
 
   @override
   void initState() {
@@ -41,17 +41,17 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
     _controller.forward(from: 0.0);
 
-    gameInfo.userAnswer.addListener(_checkDone);
+    gameInfo.userAnswer.addListener(checkDone);
   }
 
-  void _checkDone() {
+  void checkDone() {
     if ((gameInfo.solution.frequency - gameInfo.userAnswer.value.frequency)
         .isEmpty) {
-      _showResultScreen();
+      showResultScreen();
     }
   }
 
-  void _showResultScreen() {
+  void showResultScreen() {
     disposeController();
 
     Navigator.pushReplacement(
@@ -72,7 +72,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
               icon: Icon(Icons.stop),
               color: Colors.red,
               onPressed: () {
-                _showResultScreen();
+                showResultScreen();
               },
             ),
           ],
@@ -84,12 +84,12 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
               GameProgress(
                 _controller,
                 gameInfo.parameters.time,
-                _showResultScreen,
+                showResultScreen,
               ),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: _wordLines(gameInfo.parameters.hints),
+                  children: wordLines(gameInfo.parameters.hints),
                 ),
               ),
               Grid(gameInfo.board.mapNeighbours()),
@@ -98,7 +98,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
         ),
       );
 
-  List<Widget> _wordLines(bool hints) {
+  List<Widget> wordLines(bool hints) {
     WordsProvider byUser = () => gameInfo.userAnswer.value.found.reversed
         .map((a) => Word.fromUser(a))
         .toList();
@@ -121,7 +121,7 @@ class GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    gameInfo.userAnswer.removeListener(_checkDone);
+    gameInfo.userAnswer.removeListener(checkDone);
     disposeController();
     super.dispose();
   }

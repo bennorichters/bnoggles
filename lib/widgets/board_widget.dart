@@ -8,16 +8,16 @@ import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:flutter/material.dart';
 
 class BoardWidget extends StatelessWidget {
-  final List<Coordinate> selectedPositions;
-  final Board board;
-  final CenteredCharacter centeredCharacter;
-
   const BoardWidget(
       {Key key,
       @required this.selectedPositions,
       @required this.board,
       @required this.centeredCharacter})
       : super(key: key);
+
+  final List<Coordinate> selectedPositions;
+  final Board board;
+  final CenteredCharacter centeredCharacter;
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +62,8 @@ class BoardWidget extends StatelessWidget {
 }
 
 class CenteredCharacter {
-  final double cellWidth;
   CenteredCharacter(this.cellWidth);
+  final double cellWidth;
 
   Widget create({
     @required String character,

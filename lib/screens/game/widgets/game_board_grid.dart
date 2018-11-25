@@ -15,30 +15,30 @@ import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class Grid extends StatefulWidget {
-  final Map<Coordinate, Iterable<Coordinate>> neighbours;
   Grid(this.neighbours);
+  final Map<Coordinate, Iterable<Coordinate>> neighbours;
 
   @override
-  GridState createState() => GridState(neighbours);
+  _GridState createState() => _GridState(neighbours);
 }
 
-class GridState extends State<Grid> {
+class _GridState extends State<Grid> {
+  _GridState(this.neighbours);
+
   final Map<Coordinate, Iterable<Coordinate>> neighbours;
-  final List<Coordinate> _selectedPositions = [];
-  final _key = GlobalKey();
+  final List<Coordinate> selectedPositions = [];
+  final key = GlobalKey();
 
-  GridState(this.neighbours);
-
-  void _start(PointerEvent event) {
-    _itemHit(event);
+  void start(PointerEvent event) {
+    itemHit(event);
   }
 
   void _move(PointerEvent event) {
-    _itemHit(event);
+    itemHit(event);
   }
 
-  void _itemHit(PointerEvent event) {
-    final RenderBox box = _key.currentContext.findRenderObject();
+  void itemHit(PointerEvent event) {
+    final RenderBox box = key.currentContext.findRenderObject();
     final result = HitTestResult();
     Offset local = box.globalToLocal(event.position);
     if (box.hitTest(result, position: local)) {
@@ -46,9 +46,9 @@ class GridState extends State<Grid> {
         final target = hit.target;
         if (target is _PositionedRenderObject) {
           Coordinate position = target.position;
-          if (_canBeNext(position)) {
+          if (canBeNext(position)) {
             setState(() {
-              _selectedPositions.add(position);
+              selectedPositions.add(position);
             });
           }
         }
@@ -56,18 +56,18 @@ class GridState extends State<Grid> {
     }
   }
 
-  bool _canBeNext(Coordinate position) =>
-      _selectedPositions.isEmpty ||
-      (!_selectedPositions.contains(position) &&
-          neighbours[_selectedPositions.last].contains(position));
+  bool canBeNext(Coordinate position) =>
+      selectedPositions.isEmpty ||
+      (!selectedPositions.contains(position) &&
+          neighbours[selectedPositions.last].contains(position));
 
-  void _finish(PointerUpEvent event) {
-    GameInfo gameInfo = Provider.of(_key.currentContext);
+  void finish(PointerUpEvent event) {
+    GameInfo gameInfo = Provider.of(key.currentContext);
     Board board = gameInfo.board;
     Solution solution = gameInfo.solution;
 
     var word = StringBuffer();
-    for (Coordinate position in _selectedPositions) {
+    for (Coordinate position in selectedPositions) {
       word.write(board[position]);
     }
 
@@ -79,12 +79,12 @@ class GridState extends State<Grid> {
           UserAnswer(old, candidate, solution.isCorrect(candidate));
     }
 
-    _clearSelection();
+    clearSelection();
   }
 
-  void _clearSelection() {
+  void clearSelection() {
     setState(() {
-      _selectedPositions.clear();
+      selectedPositions.clear();
     });
   }
 
@@ -96,17 +96,17 @@ class GridState extends State<Grid> {
     double cellWidth = mediaWidth / board.width;
 
     return Container(
-      key: _key,
+      key: key,
       margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
       child: Listener(
-        onPointerDown: _start,
+        onPointerDown: start,
         onPointerMove: _move,
-        onPointerUp: _finish,
+        onPointerUp: finish,
         child: Container(
           child: BoardWidget(
             board: board,
-            centeredCharacter: HittableCenteredCharacter(cellWidth),
-            selectedPositions: _selectedPositions,
+            centeredCharacter: _HittableCenteredCharacter(cellWidth),
+            selectedPositions: selectedPositions,
           ),
         ),
       ),
@@ -114,8 +114,8 @@ class GridState extends State<Grid> {
   }
 }
 
-class HittableCenteredCharacter extends CenteredCharacter {
-  HittableCenteredCharacter(double cellWidth) : super(cellWidth);
+class _HittableCenteredCharacter extends CenteredCharacter {
+  _HittableCenteredCharacter(double cellWidth) : super(cellWidth);
 
   @override
   Widget create({
@@ -142,10 +142,10 @@ class HittableCenteredCharacter extends CenteredCharacter {
 }
 
 class _PositionedWidget extends SingleChildRenderObjectWidget {
-  final Coordinate position;
-
   _PositionedWidget({Widget child, this.position, Key key})
       : super(child: child, key: key);
+
+  final Coordinate position;
 
   @override
   _PositionedRenderObject createRenderObject(BuildContext context) =>
