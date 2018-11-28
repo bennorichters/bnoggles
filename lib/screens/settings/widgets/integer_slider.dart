@@ -5,25 +5,28 @@
 
 import 'package:flutter/material.dart';
 
-class IntSlider {
-  static List<Widget> create(
-      ValueNotifier<int> notifier, IconData icon, LabelRenderer label,
-      {int min, int max, int stepSize = 1}) {
-    var divisions = (max - min) ~/ stepSize;
-    assert(min + stepSize * divisions == max,
-        'Inconsistent slider parameters: $max - $min is not divisible by $stepSize');
-    return [
-      Icon(icon, size: 40.0),
-      _Label(label: label, notifier: notifier),
-      _Slider(
-        label: label,
-        notifier: notifier,
-        min: min,
-        max: max,
-        divisions: divisions,
-      ),
-    ];
-  }
+List<Widget> intSlider({
+  @required ValueNotifier<int> notifier,
+  @required IconData icon,
+  @required LabelRenderer label,
+  @required int min,
+  @required int max,
+  int stepSize = 1,
+}) {
+  var divisions = (max - min) ~/ stepSize;
+  assert(min + stepSize * divisions == max,
+      'Inconsistent slider parameters: $max - $min is not divisible by $stepSize');
+  return [
+    Icon(icon, size: 40.0),
+    _Label(label: label, notifier: notifier),
+    _Slider(
+      label: label,
+      notifier: notifier,
+      min: min,
+      max: max,
+      divisions: divisions,
+    ),
+  ];
 }
 
 class _Label extends StatefulWidget {

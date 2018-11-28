@@ -5,10 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('find icon and label', (WidgetTester tester) async {
     ValueNotifier<int> v = ValueNotifier(0);
-    var list = IntSlider.create(
-      v,
-      Icons.ac_unit,
-      (i) => 'txt',
+    var list = intSlider(
+      notifier: v,
+      icon: Icons.ac_unit,
+      label: (i) => 'txt',
       min: 0,
       max: 9,
     );
@@ -23,10 +23,10 @@ void main() {
 
   testWidgets('tap slider', (WidgetTester tester) async {
     ValueNotifier<int> v = ValueNotifier(0);
-    var list = IntSlider.create(
-      v,
-      Icons.ac_unit,
-      (i) => i.toString(),
+    var list = intSlider(
+      notifier: v,
+      icon: Icons.ac_unit,
+      label: (i) => i.toString(),
       min: 0,
       max: 9,
     );
@@ -44,7 +44,7 @@ void main() {
       var target = topLeft + Offset(step * (i + .5), middleY);
       await tester.tapAt(target);
       await tester.pump();
-      
+
       expect(v.value, i);
 
       var label = find.text(i.toString());
