@@ -5,21 +5,18 @@
 
 import 'package:flutter/material.dart';
 
-class ToggleSetting {
-  static List<Widget> create(ValueNotifier<bool> notifier, IconData icon) =>
-      <Widget>[
-        Icon(icon, size: 40.0),
-        Container(),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _HintSwitch(
-              notifier: notifier,
-            ),
-          ],
-        ),
-      ];
-}
+List<Widget> toggleSetting(ValueNotifier<bool> notifier, IconData icon) => [
+      Icon(icon, size: 40.0),
+      Container(),
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _HintSwitch(
+            notifier: notifier,
+          ),
+        ],
+      ),
+    ];
 
 class _HintSwitch extends StatefulWidget {
   _HintSwitch({Key key, this.notifier}) : super(key: key);
@@ -33,10 +30,8 @@ class _HintSwitchState extends State<_HintSwitch> {
   @override
   Widget build(BuildContext context) => Switch(
         value: widget.notifier.value,
-        onChanged: (bool isOn) {
-          setState(() {
-            widget.notifier.value = isOn;
-          });
-        },
+        onChanged: (bool isOn) => setState(() {
+              widget.notifier.value = isOn;
+            }),
       );
 }

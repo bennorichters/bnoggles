@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('find icon', (WidgetTester tester) async {
     ValueNotifier<bool> v = ValueNotifier(false);
-    var list = ToggleSetting.create(v, Icons.ac_unit);
+    var list = toggleSetting(v, Icons.ac_unit);
     await tester.pumpWidget(testable(children: list));
 
     var icon = find.byIcon(Icons.ac_unit);
@@ -14,7 +14,7 @@ void main() {
 
   testWidgets('toggle switch', (WidgetTester tester) async {
     ValueNotifier<bool> v = ValueNotifier(false);
-    var list = ToggleSetting.create(v, Icons.ac_unit);
+    var list = toggleSetting(v, Icons.ac_unit);
     await tester.pumpWidget(testable(children: list));
 
     var toggleWidget = find.byType(Switch);
