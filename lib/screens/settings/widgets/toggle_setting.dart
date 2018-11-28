@@ -5,7 +5,10 @@
 
 import 'package:flutter/material.dart';
 
-List<Widget> toggleSetting(ValueNotifier<bool> notifier, IconData icon) => [
+/// Creates a list of three widgets; an [Icon], a [Container] and a [Switch].
+///
+/// The user can toggle the value of [notifier] by tapping the switch.
+List<Widget> toggleSetting({IconData icon, ValueNotifier<bool> notifier}) => [
       Icon(icon, size: 40.0),
       Container(),
       Row(

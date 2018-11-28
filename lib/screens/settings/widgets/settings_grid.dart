@@ -92,8 +92,8 @@ class SettingsGrid extends StatelessWidget {
           _emptyLine(emptyLineHeight),
           TableRow(
             children: toggleSetting(
-              preferences.hints,
-              Icons.assistant,
+              icon: Icons.assistant,
+              notifier: preferences.hints,
             ),
           ),
         ],
