@@ -1,3 +1,8 @@
+// Copyright (c) 2018, The Bnoggles Team.
+// Please see the AUTHORS file for details.
+// All rights reserved. Use of this source code is governed by a MIT-style
+// license that can be found in the LICENSE file.
+
 import 'package:bnoggles/screens/settings/widgets/integer_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,34 +27,31 @@ void main() {
   });
 
   testWidgets('tap slider', (WidgetTester tester) async {
-    ValueNotifier<int> v = ValueNotifier(0);
+    ValueNotifier<int> v = ValueNotifier(8);
     var list = intSlider(
       notifier: v,
       icon: Icons.ac_unit,
       label: (i) => i.toString(),
-      min: 0,
-      max: 9,
+      min: 8,
+      max: 16,
+      stepSize: 2,
     );
     await tester.pumpWidget(testable(children: list));
 
     var slider = find.byType(Slider);
     expect(slider, findsOneWidget);
 
-    var topLeft = tester.getTopLeft(slider);
-    var bottomRight = tester.getBottomRight(slider);
-    var step = (bottomRight.dx - topLeft.dx) / 10;
-    var middleY = (bottomRight.dy - topLeft.dy) / 2;
+    Slider sliderWidget = slider.evaluate().single.widget as Slider;
+    expect(sliderWidget.min, 8);
+    expect(sliderWidget.max, 16);
+    expect(sliderWidget.divisions, 4);
 
-    for (int i = 0; i < 10; i++) {
-      var target = topLeft + Offset(step * (i + .5), middleY);
-      await tester.tapAt(target);
-      await tester.pump();
+    await tester.tapAt(tester.getCenter(slider));
+    await tester.pump();
 
-      expect(v.value, i);
-
-      var label = find.text(i.toString());
-      expect(label, findsOneWidget);
-    }
+    expect(v.value, 12);
+    var label = find.text('12');
+    expect(label, findsOneWidget);
   });
 }
 
