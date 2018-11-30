@@ -1,0 +1,24 @@
+// Copyright (c) 2018, The Bnoggles Team.
+// Please see the AUTHORS file for details.
+// All rights reserved. Use of this source code is governed by a MIT-style
+// license that can be found in the LICENSE file.
+
+import 'package:bnoggles/screens/settings/widgets/language_setting.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'test_helper.dart';
+
+void main() {
+  testWidgets('find icon and label', (WidgetTester tester) async {
+    ValueNotifier<int> v = ValueNotifier(0);
+    var list = LanguageSetting.create(v, Icons.ac_unit);
+    await tester.pumpWidget(testable(children: list));
+
+    var icon = find.byIcon(Icons.ac_unit);
+    expect(icon, findsOneWidget);
+
+    var images = find.byType(Image);
+    expect(images, findsNWidgets(3));
+  });
+}

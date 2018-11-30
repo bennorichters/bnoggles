@@ -7,6 +7,8 @@ import 'package:bnoggles/screens/settings/widgets/integer_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'test_helper.dart';
+
 void main() {
   testWidgets('find icon and label', (WidgetTester tester) async {
     ValueNotifier<int> v = ValueNotifier(0);
@@ -53,14 +55,4 @@ void main() {
     var label = find.text('12');
     expect(label, findsOneWidget);
   });
-}
-
-Widget testable({List<Widget> children}) {
-  return MaterialApp(
-    home: Material(
-      child: Row(
-        children: children,
-      ),
-    ),
-  );
 }

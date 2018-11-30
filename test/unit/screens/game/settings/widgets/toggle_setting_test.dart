@@ -7,6 +7,8 @@ import 'package:bnoggles/screens/settings/widgets/toggle_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'test_helper.dart';
+
 void main() {
   testWidgets('find icon', (WidgetTester tester) async {
     ValueNotifier<bool> v = ValueNotifier(false);
@@ -49,14 +51,4 @@ void main() {
     await tester.pump();
     expect(v.value, false);
   });
-}
-
-Widget testable({List<Widget> children}) {
-  return MaterialApp(
-    home: Material(
-      child: Row(
-        children: children,
-      ),
-    ),
-  );
 }
