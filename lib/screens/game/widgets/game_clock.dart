@@ -3,7 +3,7 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import 'package:bnoggles/utils/helper/helper.dart';
+import 'package:bnoggles/utils/format_time/format_time.dart';
 import 'package:flutter/material.dart';
 
 class Clock extends StatelessWidget {
