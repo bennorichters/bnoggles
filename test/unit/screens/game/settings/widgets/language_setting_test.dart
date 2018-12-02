@@ -31,7 +31,7 @@ void main() {
     return widget.child as Opacity;
   }
 
-  testWidgets('en', (WidgetTester tester) async {
+  testWidgets('tapping en flag', (WidgetTester tester) async {
     ValueNotifier<int> v = ValueNotifier(0);
     var list = LanguageSetting.create(v, Icons.ac_unit);
     await tester.pumpWidget(testableImage(children: list));
