@@ -5,6 +5,11 @@
 
 import 'package:flutter/material.dart';
 
+/// Creates a list of three widgets; an [Icon], a [Container] and a [Row] that
+/// in turn contains three images.
+///
+/// The three images represent the flags of the UK, Holland and Hungary. The
+/// user can change the value of [notifier] by tapping on the flags.
 List<Widget> languageOptions({
   @required ValueNotifier<int> notifier,
   @required IconData icon,
