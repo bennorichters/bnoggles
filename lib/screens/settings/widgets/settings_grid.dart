@@ -21,8 +21,8 @@ import 'package:flutter/rendering.dart';
 // - for screen height 592.0 (e.g. Nexus 4) the empty line height is 20
 //
 // emptyLineHeight = A x screenHeight + B
-const double a = (20.0 - 50.0) / (592.0 - 683.4);
-const double b = 20.0 - a * 592.0;
+const double _a = (20.0 - 50.0) / (592.0 - 683.4);
+const double _b = 20.0 - _a * 592.0;
 
 class SettingsGrid extends StatelessWidget {
   SettingsGrid(this.preferences);
@@ -41,7 +41,7 @@ class SettingsGrid extends StatelessWidget {
     // See above
     MediaQueryData data = MediaQuery.of(context);
     double screenHeight = data.size.height;
-    double emptyLineHeight = a * screenHeight + b;
+    double emptyLineHeight = _a * screenHeight + _b;
 
     return Container(
       padding: EdgeInsets.all(15.0),
