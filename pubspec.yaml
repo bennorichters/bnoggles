@@ -30,7 +30,6 @@ dependencies:
 dev_dependencies:
   mockito: ^3.0.0
   trotter: ^1.0.2
-  transparent_image: ^0.1.0
   flutter_test:
     sdk: flutter
 

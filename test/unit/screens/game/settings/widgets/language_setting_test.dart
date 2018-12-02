@@ -6,10 +6,7 @@
 import 'package:bnoggles/screens/settings/widgets/language_setting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:transparent_image/transparent_image.dart';
 
 import 'test_helper.dart';
 
@@ -34,7 +31,7 @@ void main() {
   testWidgets('tapping en flag', (WidgetTester tester) async {
     ValueNotifier<int> v = ValueNotifier(0);
     var list = languageOptions(notifier: v, icon: Icons.ac_unit);
-    await tester.pumpWidget(testableImage(children: list));
+    await tester.pumpWidget(testable(children: list));
 
     var nl = find.byKey(Key('LSGD_nl'));
     var en = find.byKey(Key('LSGD_en'));
@@ -55,27 +52,3 @@ void main() {
   });
 }
 
-Widget testableImage({List<Widget> children}) => MaterialApp(
-      home: DefaultAssetBundle(
-        bundle: TestAssetBundle(),
-        child: Material(
-          child: Row(
-            children: children,
-          ),
-        ),
-      ),
-    );
-
-class TestAssetBundle extends CachingAssetBundle {
-  TestAssetBundle();
-  final String manifest = '{}';
-
-  @override
-  Future<ByteData> load(String key) =>
-      SynchronousFuture<ByteData>(ByteData.view(kTransparentImage.buffer));
-
-  @override
-  Future<String> loadString(String key, {bool cache = true}) =>
-      SynchronousFuture<String>(
-          (key == 'AssetManifest.json') ? manifest : null);
-}
