@@ -25,8 +25,8 @@ const double _a = (20.0 - 50.0) / (592.0 - 683.4);
 const double _b = 20.0 - _a * 592.0;
 
 class SettingsGrid extends StatelessWidget {
-  SettingsGrid(this.preferences);
-  final Preferences preferences;
+  SettingsGrid(this._preferences);
+  final Preferences _preferences;
 
   TableRow _emptyLine(double emptyLineHeight) => TableRow(
         children: [
@@ -56,14 +56,14 @@ class SettingsGrid extends StatelessWidget {
         children: [
           TableRow(
             children: languageOptions(
-              notifier: preferences.language,
+              notifier: _preferences.language,
               icon: Icons.language,
             ),
           ),
           _emptyLine(emptyLineHeight),
           TableRow(
             children: intSlider(
-              notifier: preferences.time,
+              notifier: _preferences.time,
               icon: Icons.timer,
               label: formatTime,
               min: 30,
@@ -74,7 +74,7 @@ class SettingsGrid extends StatelessWidget {
           _emptyLine(emptyLineHeight),
           TableRow(
             children: intSlider(
-              notifier: preferences.boardWidth,
+              notifier: _preferences.boardWidth,
               icon: Icons.grid_on,
               label: (i) => '$i x $i',
               min: 3,
@@ -84,7 +84,7 @@ class SettingsGrid extends StatelessWidget {
           _emptyLine(emptyLineHeight),
           TableRow(
             children: intSlider(
-              notifier: preferences.minimalWordLength,
+              notifier: _preferences.minimalWordLength,
               icon: Icons.text_rotation_none,
               label: (i) => '$i+',
               min: 2,
@@ -95,7 +95,7 @@ class SettingsGrid extends StatelessWidget {
           TableRow(
             children: toggleSetting(
               icon: Icons.assistant,
-              notifier: preferences.hints,
+              notifier: _preferences.hints,
             ),
           ),
         ],
