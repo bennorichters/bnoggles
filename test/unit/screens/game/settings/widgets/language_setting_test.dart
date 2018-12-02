@@ -41,7 +41,7 @@ void main() {
     var hu = find.byKey(Key('LSGD_hu'));
 
     expect(v.value, 0);
-    expect(_firstChild(nl).opacity, 1.0);
+    expect(_firstChild(nl).opacity, 1);
     expect(_firstChild(en).opacity < 1, true);
     expect(_firstChild(hu).opacity < 1, true);
 
