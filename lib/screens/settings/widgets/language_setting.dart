@@ -5,15 +5,15 @@
 
 import 'package:flutter/material.dart';
 
-class LanguageSetting {
-  static List<Widget> create(ValueNotifier<int> notifier, IconData icon) {
-    return <Widget>[
+List<Widget> languageOptions({
+  @required ValueNotifier<int> notifier,
+  @required IconData icon,
+}) =>
+    [
       Icon(icon, size: 40.0),
       Container(),
       _LanguageOptions(notifier: notifier),
     ];
-  }
-}
 
 class _LanguageOptions extends StatefulWidget {
   _LanguageOptions({Key key, this.notifier}) : super(key: key);

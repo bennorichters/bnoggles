@@ -55,8 +55,10 @@ class SettingsGrid extends StatelessWidget {
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         children: [
           TableRow(
-            children:
-                LanguageSetting.create(preferences.language, Icons.language),
+            children: languageOptions(
+              notifier: preferences.language,
+              icon: Icons.language,
+            ),
           ),
           _emptyLine(emptyLineHeight),
           TableRow(

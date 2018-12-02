@@ -16,7 +16,7 @@ import 'test_helper.dart';
 void main() {
   testWidgets('find icon and label', (WidgetTester tester) async {
     ValueNotifier<int> v = ValueNotifier(0);
-    var list = LanguageSetting.create(v, Icons.ac_unit);
+    var list = languageOptions(notifier: v, icon: Icons.ac_unit);
     await tester.pumpWidget(testable(children: list));
 
     var icon = find.byIcon(Icons.ac_unit);
@@ -33,7 +33,7 @@ void main() {
 
   testWidgets('tapping en flag', (WidgetTester tester) async {
     ValueNotifier<int> v = ValueNotifier(0);
-    var list = LanguageSetting.create(v, Icons.ac_unit);
+    var list = languageOptions(notifier: v, icon: Icons.ac_unit);
     await tester.pumpWidget(testableImage(children: list));
 
     var nl = find.byKey(Key('LSGD_nl'));
