@@ -7,7 +7,7 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.33.6"
+    version: "0.34.0"
   archive:
     dependency: transitive
     description:
@@ -110,7 +110,7 @@ packages:
       name: front_end
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.6+8"
+    version: "0.1.7"
   glob:
     dependency: transitive
     description:
@@ -152,7 +152,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   io:
     dependency: transitive
     description:
@@ -180,7 +180,7 @@ packages:
       name: kernel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.6+8"
+    version: "0.3.7"
   logging:
     dependency: transitive
     description:
@@ -381,7 +381,7 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.1"
+    version: "1.5.1+1"
   test_api:
     dependency: transitive
     description:
@@ -395,7 +395,14 @@ packages:
       name: test_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.0+1"
+  transparent_image:
+    dependency: "direct dev"
+    description:
+      name: transparent_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   trotter:
     dependency: "direct dev"
     description:

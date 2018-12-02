@@ -43,6 +43,7 @@ class _LanguageOptionsState extends State<_LanguageOptions> {
   Widget tappableFlag(String country, int value) => Padding(
         padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
         child: GestureDetector(
+          key: Key('LSGD_' + country),
           onTap: () {
             change(value);
           },
@@ -51,6 +52,7 @@ class _LanguageOptionsState extends State<_LanguageOptions> {
             child: Image.asset(
               'assets/lang/' + country + '/flag40.png',
               width: 40.0,
+              height: 40.0,
             ),
           ),
         ),
