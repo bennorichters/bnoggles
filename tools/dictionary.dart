@@ -6,10 +6,10 @@
 import 'package:quiver/core.dart';
 
 abstract class Affix {
+  Affix(this._combinable, this._toAdd);
+
   final bool _combinable;
   final String _toAdd;
-
-  Affix(this._combinable, this._toAdd);
 
   bool canBeAppliedTo(String word);
 
@@ -36,11 +36,11 @@ class Prefix extends Affix {
 }
 
 class Suffix extends Affix {
-  final int _toStrip;
-  final SuffixCondition _condition;
-
   Suffix(bool _combinable, String toAdd, this._toStrip, this._condition)
       : super(_combinable, toAdd);
+
+  final int _toStrip;
+  final SuffixCondition _condition;
 
   @override
   bool canBeAppliedTo(String word) => _condition.match(word);
@@ -65,8 +65,8 @@ class Suffix extends Affix {
 }
 
 class SuffixCondition {
-  final String _pattern;
   const SuffixCondition(this._pattern);
+  final String _pattern;
 
   bool match(String word) {
     if (_pattern.isEmpty) return true;
@@ -85,11 +85,11 @@ class SuffixCondition {
 const SuffixCondition emptyCondition = SuffixCondition("");
 
 class AffixedWordContainer {
+  AffixedWordContainer(this._base, this._prefixes, this._suffixes);
+
   final String _base;
   final List<Affix> _prefixes;
   final List<Affix> _suffixes;
-
-  AffixedWordContainer(this._base, this._prefixes, this._suffixes);
 
   List<Affix> _combinablePrefixes() =>
       _prefixes.where((e) => e._combinable).toList();
@@ -100,12 +100,12 @@ class AffixedWordContainer {
   List<Affix> _uncombinableSuffixes() =>
       _suffixes.where((e) => !e._combinable).toList();
 
-  int get length => _combinableLength() + _uncombinablelength();
+  int get length => _combinableLength() + _uncombinableLength();
 
   int _combinableLength() =>
       (_combinablePrefixes().length + 1) * (_combinableSuffixes().length + 1);
 
-  int _uncombinablelength() =>
+  int _uncombinableLength() =>
       _uncombinablePrefixes().length + _uncombinableSuffixes().length;
 
   String _word(int index) => index < _combinableLength()
@@ -144,10 +144,10 @@ class AffixedWordContainer {
 }
 
 class AffixedWord implements Comparable<AffixedWord> {
+  AffixedWord(this._container, this._index);
+
   final AffixedWordContainer _container;
   final int _index;
-
-  AffixedWord(this._container, this._index);
 
   @override
   int compareTo(AffixedWord other) =>

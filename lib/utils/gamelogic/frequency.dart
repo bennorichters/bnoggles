@@ -13,8 +13,6 @@ const _eq = const MapEquality<int, int>();
 /// Two frequencies are considered equal if and only if for each word length
 /// they have the same count.
 class Frequency {
-  final Map<int, int> _countPerLength;
-
   /// Creates a [Frequency] based on the lengths of the given [words].
   Frequency.fromStrings(Iterable<String> words)
       : this._(
@@ -27,6 +25,8 @@ class Frequency {
         );
 
   Frequency._(this._countPerLength);
+
+  final Map<int, int> _countPerLength;
 
   /// The longest word length which count is greater than zero
   int get longest => isEmpty ? 0 : _countPerLength.keys.reduce(max);

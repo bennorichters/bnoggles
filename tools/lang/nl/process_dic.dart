@@ -68,13 +68,13 @@ Future<List<String>> twoAndThreeLetterWords() async {
 }
 
 class _DictInterpreter {
+  _DictInterpreter(this._lines, this._prefixes, this._suffixes);
+
   final List<String> _lines;
   final Map<String, Set<Affix>> _prefixes;
   final Map<String, Set<Affix>> _suffixes;
 
   final Set<AffixedWordContainer> result = Set();
-
-  _DictInterpreter(this._lines, this._prefixes, this._suffixes);
 
   void process() {
     _lines.forEach((e) => result.add(parseLine(e)));

@@ -9,6 +9,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// The preferences as set by the user.
 class Preferences {
+  /// Creates an instance of [Preferences]
+  Preferences(this.language, this.time, this.boardWidth, this.minimalWordLength,
+      {ValueNotifier<bool> hints})
+      : this.hints = hints ?? ValueNotifier(false);
+
   /// The code of the language in which the game is played.
   final ValueNotifier<int> language;
 
@@ -23,11 +28,6 @@ class Preferences {
 
   /// Flag whether or not hints are shown
   final ValueNotifier<bool> hints;
-
-  /// Creates an instance of [Preferences]
-  Preferences(this.language, this.time, this.boardWidth, this.minimalWordLength,
-      {ValueNotifier<bool> hints})
-      : this.hints = hints ?? ValueNotifier(false);
 
   /// Returns the Preferences
   static Future<Preferences> load() async {
@@ -68,6 +68,15 @@ class Preferences {
 
 /// Parameters to start a new game with
 class GameParameters {
+  /// Creates an instance of [GameParameters]
+  const GameParameters({
+    this.languageCode,
+    this.time,
+    this.boardWidth,
+    this.minimalWordLength,
+    this.hints,
+  });
+
   /// The code of the language in which the game is played.
   final String languageCode;
 
@@ -82,15 +91,6 @@ class GameParameters {
 
   /// Flag whether or not hints are shown
   final bool hints;
-
-  /// Creates an instance of [GameParameters]
-  const GameParameters({
-    this.languageCode,
-    this.time,
-    this.boardWidth,
-    this.minimalWordLength,
-    this.hints,
-  });
 }
 
 /// Provider for [GameParameters]

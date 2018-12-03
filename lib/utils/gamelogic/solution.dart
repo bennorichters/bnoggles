@@ -16,11 +16,11 @@ import 'package:bnoggles/utils/gamelogic/frequency.dart';
 /// considered to be correct, i.e. the board indeed contains that word and it
 /// is valid according to the used [Dictionary].
 abstract class Answer {
+  Answer(this.frequency);
+
   /// Returns a [Frequency] with information about the number of words per word
   /// length.
   final Frequency frequency;
-
-  Answer(this.frequency);
 
   /// A set of all unique and correct words that have been found.
   Set<String> uniqueWords();
@@ -46,14 +46,14 @@ enum Evaluation {
 
 /// An sequence of characters as found by a player of the game.
 class UserWord {
+  /// Creates a [UserWord]
+  UserWord(this.word, this.evaluation);
+
   /// The sequence of characters
   final String word;
 
   /// The evaluation of this word
   final Evaluation evaluation;
-
-  /// Creates a [UserWord]
-  UserWord(this.word, this.evaluation);
 
   @override
   String toString() => "$word - $evaluation";
@@ -61,9 +61,6 @@ class UserWord {
 
 /// An [Answer] is produced by a player of the game.
 class UserAnswer extends Answer {
-  /// All words found by the user in the order that they where found.
-  final List<UserWord> found;
-
   /// Creates a new [UserAnswer] based on an old answer.
   ///
   /// The new UserAnswer is a copy of the old answer and is extended with the
@@ -88,6 +85,9 @@ class UserAnswer extends Answer {
       : this.found = found,
         super(Frequency.fromStrings(_uniqueWords(found)));
 
+  /// All words found by the user in the order that they where found.
+  final List<UserWord> found;
+
   /// Creates a [UserAnswer] that does not contain any found words.
   static UserAnswer start() => UserAnswer._(const <UserWord>[]);
 
@@ -109,11 +109,6 @@ class UserAnswer extends Answer {
 /// Sometimes the same word can be found by connecting different chains of
 /// tiles. The getter [chains] can be used to get all possibilities.
 class Solution extends Answer {
-  final Set<Chain> _chains;
-
-  /// The minimal lengths found words should have
-  final int minimalLength;
-
   /// Creates a [Solution]
   ///
   /// All words that can be found on the [board], are valid according to the
@@ -126,6 +121,11 @@ class Solution extends Answer {
   Solution._(Set<Chain> chains, this.minimalLength)
       : _chains = chains,
         super(Frequency.fromStrings(_uniqueWords(chains)));
+
+  final Set<Chain> _chains;
+
+  /// The minimal lengths found words should have
+  final int minimalLength;
 
   /// Returns all found [Chain]s.
   Set<Chain> get chains => Set.from(_chains);
@@ -150,6 +150,11 @@ class Solution extends Answer {
 }
 
 class _Problem {
+  factory _Problem(Board board, Dictionary dict, int minimalLength) =>
+      _Problem._(board, dict, minimalLength, board.mapNeighbours());
+
+  _Problem._(this.board, this.dict, this.minimalLength, this.neighbours);
+
   final Board board;
   final Dictionary dict;
   final int minimalLength;
@@ -157,11 +162,6 @@ class _Problem {
 
   Queue<Chain> candidates;
   Set<Chain> words;
-
-  factory _Problem(Board board, Dictionary dict, int minimalLength) =>
-      _Problem._(board, dict, minimalLength, board.mapNeighbours());
-
-  _Problem._(this.board, this.dict, this.minimalLength, this.neighbours);
 
   Set<Chain> solve() {
     initialCandidates();
@@ -204,9 +204,6 @@ class _Problem {
 /// A chain of tiles on the board that are connected with each other and form a
 /// word.
 class Chain {
-  final List<Coordinate> _coordinates;
-  final StringBuffer _text;
-
   Chain._blank()
       : _coordinates = [],
         _text = StringBuffer();
@@ -214,6 +211,9 @@ class Chain {
   Chain._extend(Chain head, Coordinate next, StringBuffer word)
       : _coordinates = List.of(head._coordinates)..add(next),
         _text = word;
+
+  final List<Coordinate> _coordinates;
+  final StringBuffer _text;
 
   /// The coordinates of this chain.
   List<Coordinate> get chain => List.from(_coordinates);

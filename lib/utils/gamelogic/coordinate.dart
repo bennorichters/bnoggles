@@ -8,14 +8,6 @@
 /// Two coordinates are considered equal if their x values are equal and their
 /// y values are equal.
 class Coordinate {
-  static final Map<int, Map<int, Coordinate>> _cache = {};
-
-  /// The x value of this coordinate
-  final int x;
-
-  /// The y value of this coordinate
-  final int y;
-
   /// Creates a [Coordinate] with the given [x] and [y] values.
   factory Coordinate(int x, int y) {
     var containsX = _cache.containsKey(x);
@@ -32,6 +24,14 @@ class Coordinate {
   }
 
   Coordinate._(this.x, this.y);
+
+  static final Map<int, Map<int, Coordinate>> _cache = {};
+
+  /// The x value of this coordinate
+  final int x;
+
+  /// The y value of this coordinate
+  final int y;
 
   /// Adds this coordinate to the [other] as if both coordinates where vectors.
   /// Returns a new coordinate.

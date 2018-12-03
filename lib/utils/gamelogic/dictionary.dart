@@ -7,10 +7,10 @@ import 'package:collection/collection.dart';
 
 /// A list of valid words.
 class Dictionary {
-  final List<String> _words;
-
   /// Creates a dictionary with the given [words].
   Dictionary(this._words);
+
+  final List<String> _words;
 
   /// Looks up [word] in this dictionary and returns information about it.
   WordInfo getInfo(String word) {
@@ -34,6 +34,8 @@ class Dictionary {
 
 /// Information about a word
 class WordInfo {
+  const WordInfo._(this.found, this.canStartWith);
+
   /// [true] if this word is in the [Dictionary], [false] otherwise.
   final bool found;
 
@@ -41,8 +43,6 @@ class WordInfo {
   /// the word, [false] otherwise. If [found] is [true], [canStartWith] is also
   /// [true].
   final bool canStartWith;
-
-  const WordInfo._(this.found, this.canStartWith);
 }
 
 const WordInfo _notFoundDeadEnd = WordInfo._(false, false);

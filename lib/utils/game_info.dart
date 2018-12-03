@@ -10,6 +10,15 @@ import 'package:flutter/cupertino.dart';
 
 /// Information about an ongoing game.
 class GameInfo {
+  /// Creates an instance of [GameInfo]
+  GameInfo({
+    @required this.parameters,
+    @required this.board,
+    @required Solution solution,
+    @required this.userAnswer,
+  })  : this.solution = solution,
+        randomWords = solution.uniqueWords().toList()..shuffle();
+
   /// The [GameParameters]
   final GameParameters parameters;
   /// The [Board]
@@ -20,15 +29,6 @@ class GameInfo {
   final ValueNotifier<UserAnswer> userAnswer;
   /// A [ValueNotifier] holding a list of random word shown as hints.
   final List<String> randomWords;
-
-  /// Creates an instance of [GameInfo]
-  GameInfo({
-    @required this.parameters,
-    @required this.board,
-    @required Solution solution,
-    @required this.userAnswer,
-  })  : this.solution = solution,
-        randomWords = solution.uniqueWords().toList()..shuffle();
 
   /// Returns the [ScoreSheet]
   ScoreSheet get scoreSheet => ScoreSheet(
@@ -49,11 +49,11 @@ class GameInfo {
 
 /// Information about the available and found words
 class ScoreSheet {
+  /// Creates an instance of [ScoreSheet]
+  ScoreSheet({this.availableWords, this.foundWords});
+
   /// The available words
   final int availableWords;
   /// The found words
   final int foundWords;
-
-  /// Creates an instance of [ScoreSheet]
-  ScoreSheet({this.availableWords, this.foundWords});
 }

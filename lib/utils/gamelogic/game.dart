@@ -12,14 +12,6 @@ import 'package:bnoggles/utils/gamelogic/solution.dart';
 ///
 /// The board and the solution are created by the constructor.
 class Game {
-  /// The [Board]
-  final Board board;
-
-  /// The [Solution]
-  final Solution solution;
-
-  Game._(this.board, this.solution);
-
   /// Creates a [Board] and a [Solution] to be contained by the new game.
   ///
   /// The new board has width [boardWidth] and is filled with letters generated
@@ -44,4 +36,12 @@ class Game {
 
     return Game._(board, solution);
   }
+
+  Game._(this.board, this.solution);
+
+  /// The [Board]
+  final Board board;
+
+  /// The [Solution]
+  final Solution solution;
 }

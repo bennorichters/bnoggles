@@ -11,10 +11,6 @@ import 'dart:math';
 /// The sole purpose of this class is to create a [SequenceGenerator] via the
 /// method [createSequenceGenerator].
 class LetterSequenceInfo {
-  final Map<int, Map<String, int>> _frequenciesPerLength;
-
-  LetterSequenceInfo._(this._frequenciesPerLength);
-
   /// Creates a [LetterSequenceInfo].
   ///
   /// The given [frequencies] contains information that is letter used by the
@@ -30,6 +26,10 @@ class LetterSequenceInfo {
 
     return LetterSequenceInfo._(frequenciesPerLength);
   }
+
+  LetterSequenceInfo._(this._frequenciesPerLength);
+
+  final Map<int, Map<String, int>> _frequenciesPerLength;
 
   /// Creates a SequenceGenerator.
   ///
@@ -83,15 +83,15 @@ class LetterSequenceInfo {
 /// Instances of this class are mutable. For a new [Game], a new instance of
 /// this class should be used.
 class SequenceGenerator {
+  SequenceGenerator._(
+      this._lengths, this._info, this._totalValue, this._keys, this._random);
+
   final Random _random;
   final List<int> _lengths;
   final LetterSequenceInfo _info;
 
   int _totalValue;
   List<String> _keys;
-
-  SequenceGenerator._(
-      this._lengths, this._info, this._totalValue, this._keys, this._random);
 
   /// Generates a new letter sequence.
   ///

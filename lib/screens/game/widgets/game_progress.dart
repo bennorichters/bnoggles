@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class GameProgress extends StatelessWidget {
+  GameProgress(this._controller, this._startValue, this._showResultScreen);
+
   final AnimationController _controller;
   final int _startValue;
   final VoidCallback _showResultScreen;
-
-  GameProgress(this._controller, this._startValue, this._showResultScreen);
 
   @override
   Widget build(BuildContext context) => Row(

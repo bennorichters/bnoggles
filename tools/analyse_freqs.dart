@@ -23,13 +23,13 @@ void countFrequencies() async {
 }
 
 class _FrequencyCounter {
+  _FrequencyCounter(this._source);
+
   static final List<String> bag =
       characters("abcdefghijklmnopqrstuvwxyzöüóőúéáűí");
 
   final String _source;
   final Map<String, int> _sequenceCount = {};
-
-  _FrequencyCounter(this._source);
 
   Map<String, int> countAllSequences() {
     var combos = Amalgams(1, _FrequencyCounter.bag);

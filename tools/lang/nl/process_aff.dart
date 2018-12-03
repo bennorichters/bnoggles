@@ -26,12 +26,12 @@ Future<List<Map<String, Set<Affix>>>> processAff() async {
 }
 
 class _AffixInterpreter {
+  _AffixInterpreter(this._lines);
+
   final Iterator<String> _lines;
 
   final Map<String, Set<Affix>> _prefixes = Map();
   final Map<String, Set<Affix>> _suffixes = Map();
-
-  _AffixInterpreter(this._lines);
 
   void process() {
     while (_lines.moveNext()) {

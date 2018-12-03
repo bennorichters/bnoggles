@@ -19,15 +19,6 @@ typedef List<Coordinate> Shuffler(List<Coordinate> toShuffle);
 /// have the same width as height. A [SequenceGenerator] is used to fill the board
 /// with different letters.
 class Board {
-  final Map<Coordinate, String> _tiles;
-  final Shuffler _shuffler;
-
-  Board._(this._tiles, this._shuffler);
-
-  factory Board._unmodifiable(
-          Map<Coordinate, String> tiles, Shuffler shuffler) =>
-      Board._(Map.unmodifiable(tiles), shuffler);
-
   /// Creates a [Board].
   ///
   /// The board will contain [width]*[width] [Coordinate]s. The [generator]
@@ -45,6 +36,14 @@ class Board {
         generator,
         shuffler ?? (list) => list..shuffle(),
       ).build(word);
+
+  factory Board._unmodifiable(
+          Map<Coordinate, String> tiles) =>
+      Board._(Map.unmodifiable(tiles));
+
+  Board._(this._tiles);
+
+  final Map<Coordinate, String> _tiles;
 
   /// The width of this board
   int get width => sqrt(_tiles.length).floor();
@@ -84,12 +83,12 @@ class Board {
 }
 
 class _BoardFactory {
+  _BoardFactory(this.width, this.gen, this.shuffler);
+
   final int width;
   final SequenceGenerator gen;
   final Shuffler shuffler;
   final Map<Coordinate, String> tiles = Map();
-
-  _BoardFactory(this.width, this.gen, this.shuffler);
 
   Board build(String word) {
     emptyBoard();
@@ -104,7 +103,7 @@ class _BoardFactory {
       left -= addLetterSequence();
     }
 
-    return Board._unmodifiable(tiles, shuffler);
+    return Board._unmodifiable(tiles);
   }
 
   int addLetterSequence([String letterSequence]) {
