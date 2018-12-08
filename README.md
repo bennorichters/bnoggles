@@ -6,7 +6,7 @@ This project is based on the [Flutter](https://flutter.io/) application developm
 
 ## Status
 
-This project is currently in beta status and available for invited testers on the Google Play store.
+This project is available for everyone who registered as a beta tester on the Google Play store and for invited testers on iOS devices.
 
 ## Example
 
