@@ -24,7 +24,9 @@ import 'package:flutter/rendering.dart';
 const double _a = (20.0 - 50.0) / (592.0 - 683.4);
 const double _b = 20.0 - _a * 592.0;
 
+/// A widget displaying all settings.
 class SettingsGrid extends StatelessWidget {
+  /// Creates a [SettingsGrid] based on the given [Preferences].
   SettingsGrid(this._preferences);
   final Preferences _preferences;
 
