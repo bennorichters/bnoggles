@@ -5,12 +5,10 @@
 
 import 'package:flutter/material.dart';
 
-Widget testable({List<Widget> children}) {
-  return MaterialApp(
-    home: Material(
-      child: Row(
-        children: children,
+Widget testable({List<Widget> children}) => MaterialApp(
+      home: Material(
+        child: Row(
+          children: children,
+        ),
       ),
-    ),
-  );
-}
+    );
