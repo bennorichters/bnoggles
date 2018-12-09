@@ -16,8 +16,8 @@ typedef List<Coordinate> Shuffler(List<Coordinate> toShuffle);
 /// An abstract representation of the board on which the game is played.
 ///
 /// A board maps a [Coordinate] to a letter. All boards are square, i.e. they
-/// have the same width as height. A [SequenceGenerator] is used to fill the board
-/// with different letters.
+/// have the same width as height. A [SequenceGenerator] is used to fill the
+/// board with different letters.
 class Board {
   /// Creates a [Board].
   ///
