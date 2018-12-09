@@ -10,16 +10,20 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'dart:ui' as ui;
 
+import 'package:mockito/mockito.dart';
+
+class MockPreferences extends Mock implements Preferences {}
+
 void main() {
   testWidgets('grid does not overflow', (WidgetTester tester) async {
-    Preferences p = Preferences(
-      ValueNotifier(0),
-      ValueNotifier(300),
-      ValueNotifier(3),
-      ValueNotifier(2),
-    );
+    Preferences mp = MockPreferences();
+    when(mp.language).thenAnswer((s) => ValueNotifier(0));
+    when(mp.time).thenAnswer((s) => ValueNotifier(300));
+    when(mp.boardWidth).thenAnswer((s) => ValueNotifier(3));
+    when(mp.minimalWordLength).thenAnswer((s) => ValueNotifier(2));
+    when(mp.hints).thenAnswer((s) => ValueNotifier(false));
 
-    SettingsGrid grid = SettingsGrid(p);
+    SettingsGrid grid = SettingsGrid(mp);
     await tester.pumpWidget(testableWidget(grid, 900, 1200));
     await tester.pumpWidget(testableWidget(grid, 500, 592));
   });
