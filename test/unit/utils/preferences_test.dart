@@ -34,8 +34,7 @@ Future<Preferences> getPreferences() async {
 
     if (methodCall.method == 'getAll') {
       // Initial values can be set here. At the moment of writing they need to
-      // be prefixed by the undocumented prefix 'flutter.' in order to work. For
-      // example:
+      // be prefixed with the undocumented prefix 'flutter.'; for example:
       // return <String, dynamic>{'flutter.language': 1};
 
       return <String, dynamic>{};
