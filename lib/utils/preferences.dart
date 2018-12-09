@@ -64,6 +64,11 @@ class Preferences {
         minimalWordLength: minimalWordLength.value,
         hints: hints.value,
       );
+
+  @override
+  String toString() =>
+      'Preferences [${language.value}, ${time.value}, ${boardWidth.value}, '
+          '${minimalWordLength.value}, ${hints.value}]';
 }
 
 /// Parameters to start a new game with
