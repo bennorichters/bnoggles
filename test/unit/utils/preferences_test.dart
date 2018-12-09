@@ -16,6 +16,16 @@ void main() {
     expect(preferences.minimalWordLength.value, 2);
     expect(preferences.hints.value, false);
   });
+
+  test('GameParameters created by Preferences', () async {
+    Preferences preferences = await getPreferences();
+    GameParameters gp = preferences.toParameters();
+    expect(gp.languageCode, 'nl');
+    expect(gp.time, 150);
+    expect(gp.boardWidth, 3);
+    expect(gp.minimalWordLength, 2);
+    expect(gp.hints, false);
+  });
 }
 
 Future<Preferences> getPreferences() async {
