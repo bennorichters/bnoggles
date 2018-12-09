@@ -9,11 +9,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// The preferences as set by the user.
 class Preferences {
-  Preferences._(
+  Preferences._({
     this.language,
     this.time,
     this.boardWidth,
-    this.minimalWordLength, {
+    this.minimalWordLength,
     ValueNotifier<bool> hints,
   }) : this.hints = hints ?? ValueNotifier(false);
 
@@ -53,10 +53,10 @@ class Preferences {
     }
 
     return Preferences._(
-      intNotifier('language', 0),
-      intNotifier('time', 150),
-      intNotifier('size', 3),
-      intNotifier('length', 2),
+      language: intNotifier('language', 0),
+      time: intNotifier('time', 150),
+      boardWidth: intNotifier('size', 3),
+      minimalWordLength: intNotifier('length', 2),
       hints: boolNotifier('hints', false),
     );
   }
