@@ -5,8 +5,8 @@
 
 /// A pair of two integers, x and y.
 ///
-/// Two coordinates are considered equal if their x values are equal and their
-/// y values are equal.
+/// Two coordinates are considered equal if and only if their x values are equal
+/// and their y values are equal.
 class Coordinate {
   /// Creates a [Coordinate] with the given [x] and [y] values.
   factory Coordinate(int x, int y) {
