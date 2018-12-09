@@ -21,13 +21,17 @@ class GameInfo {
 
   /// The [GameParameters]
   final GameParameters parameters;
+
   /// The [Board]
   final Board board;
+
   /// The [Solution]
   final Solution solution;
+
   /// A [ValueNotifier] holding a [userAnswer].
   final ValueNotifier<UserAnswer> userAnswer;
-  /// A [ValueNotifier] holding a list of random word shown as hints.
+
+  /// A list of random word shown as hints.
   final List<String> randomWords;
 
   /// Returns the [ScoreSheet]
@@ -54,6 +58,7 @@ class ScoreSheet {
 
   /// The available words
   final int availableWords;
+
   /// The found words
   final int foundWords;
 }
