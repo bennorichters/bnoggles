@@ -35,7 +35,8 @@ class Coordinate {
 
   /// Adds this coordinate to the [other] as if both coordinates where vectors.
   /// Returns a new coordinate.
-  Coordinate operator +(Coordinate other) => Coordinate(x + other.x, y + other.y);
+  Coordinate operator +(Coordinate other) =>
+      Coordinate(x + other.x, y + other.y);
 
   Coordinate _neighbour(_Direction dir) => this + _neighbourVector[dir];
 
