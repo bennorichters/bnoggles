@@ -10,10 +10,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// The preferences as set by the user.
 class Preferences {
   Preferences._({
-    this.language,
-    this.time,
-    this.boardWidth,
-    this.minimalWordLength,
+    @required this.language,
+    @required this.time,
+    @required this.boardWidth,
+    @required this.minimalWordLength,
     ValueNotifier<bool> hints,
   }) : this.hints = hints ?? ValueNotifier(false);
 
@@ -62,7 +62,7 @@ class Preferences {
   }
 
   /// Creates [GameParameters] based on these Preferences
-  GameParameters toParameters() => GameParameters(
+  GameParameters toParameters() => GameParameters._(
         languageCode: const ['nl', 'en', 'hu'][language.value],
         time: time.value,
         boardWidth: boardWidth.value,
@@ -78,13 +78,12 @@ class Preferences {
 
 /// Parameters to start a new game with
 class GameParameters {
-  /// Creates an instance of [GameParameters]
-  const GameParameters({
-    this.languageCode,
-    this.time,
-    this.boardWidth,
-    this.minimalWordLength,
-    this.hints,
+  const GameParameters._({
+    @required this.languageCode,
+    @required this.time,
+    @required this.boardWidth,
+    @required this.minimalWordLength,
+    @required this.hints,
   });
 
   /// The code of the language in which the game is played.

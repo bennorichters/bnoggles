@@ -35,7 +35,7 @@ class GameInfo {
   final List<String> randomWords;
 
   /// Returns the [ScoreSheet]
-  ScoreSheet get scoreSheet => ScoreSheet(
+  ScoreSheet get scoreSheet => ScoreSheet._(
         availableWords: solution.frequency.count,
         foundWords: userAnswer.value.frequency.count,
       );
@@ -53,8 +53,7 @@ class GameInfo {
 
 /// Information about the available and found words
 class ScoreSheet {
-  /// Creates an instance of [ScoreSheet]
-  ScoreSheet({this.availableWords, this.foundWords});
+  ScoreSheet._({this.availableWords, this.foundWords});
 
   /// The available words
   final int availableWords;
