@@ -14,10 +14,9 @@ class GameInfo {
   GameInfo({
     @required this.parameters,
     @required this.board,
-    @required Solution solution,
+    @required this.solution,
     @required this.userAnswer,
-  })  : this.solution = solution,
-        randomWords = solution.uniqueWords().toList()..shuffle();
+  }) : randomWords = solution.uniqueWords().toList()..shuffle();
 
   /// The [GameParameters]
   final GameParameters parameters;
@@ -31,7 +30,7 @@ class GameInfo {
   /// A [ValueNotifier] holding a [userAnswer].
   final ValueNotifier<UserAnswer> userAnswer;
 
-  /// A list of random word shown as hints.
+  /// A list all unique words contained by [Solution] in a random order
   final List<String> randomWords;
 
   /// Returns the [ScoreSheet]
