@@ -4,9 +4,9 @@ A word game for iOS and Android. Swipe through letters to find all words hidden 
 
 This project is based on the [Flutter](https://flutter.io/) application development SDK.
 
-## Status
+## Install for end users
 
-This project is in beta and currently available for everyone who registered as a beta tester on the Google Play store and for invited testers on iOS devices.
+Download the app via the [Apple App Store](https://itunes.apple.com/us/app/bnoggles/id1442341488) or the [Google Play Store](https://play.google.com/store/apps/details?id=com.github.bennorichters.bnoggles).
 
 ## Example
 
