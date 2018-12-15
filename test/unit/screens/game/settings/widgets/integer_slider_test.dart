@@ -19,7 +19,7 @@ void main() {
       min: 0,
       max: 9,
     );
-    await tester.pumpWidget(testable(children: list));
+    await tester.pumpWidget(testableRow(children: list));
 
     var icon = find.byIcon(Icons.ac_unit);
     expect(icon, findsOneWidget);
@@ -38,7 +38,7 @@ void main() {
       max: 16,
       stepSize: 2,
     );
-    await tester.pumpWidget(testable(children: list));
+    await tester.pumpWidget(testableRow(children: list));
 
     var slider = find.byType(Slider);
     expect(slider, findsOneWidget);

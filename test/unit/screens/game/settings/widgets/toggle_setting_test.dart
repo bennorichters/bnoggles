@@ -16,7 +16,7 @@ void main() {
       notifier: v,
       icon: Icons.ac_unit,
     );
-    await tester.pumpWidget(testable(children: list));
+    await tester.pumpWidget(testableRow(children: list));
 
     var icon = find.byIcon(Icons.ac_unit);
     expect(icon, findsOneWidget);
@@ -28,7 +28,7 @@ void main() {
       notifier: v,
       icon: Icons.ac_unit,
     );
-    await tester.pumpWidget(testable(children: list));
+    await tester.pumpWidget(testableRow(children: list));
 
     var toggleWidget = find.byType(Switch);
     expect(toggleWidget, findsOneWidget);
