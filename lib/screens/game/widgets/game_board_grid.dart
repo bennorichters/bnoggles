@@ -15,17 +15,14 @@ import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class Grid extends StatefulWidget {
-  Grid(this.neighbours);
-  final Map<Coordinate, Iterable<Coordinate>> neighbours;
+  Grid(this._neighbours);
+  final Map<Coordinate, Iterable<Coordinate>> _neighbours;
 
   @override
-  _GridState createState() => _GridState(neighbours);
+  _GridState createState() => _GridState();
 }
 
 class _GridState extends State<Grid> {
-  _GridState(this.neighbours);
-
-  final Map<Coordinate, Iterable<Coordinate>> neighbours;
   final List<Coordinate> selectedPositions = [];
   final key = GlobalKey();
 
@@ -33,7 +30,7 @@ class _GridState extends State<Grid> {
     itemHit(event);
   }
 
-  void _move(PointerEvent event) {
+  void move(PointerEvent event) {
     itemHit(event);
   }
 
@@ -59,7 +56,7 @@ class _GridState extends State<Grid> {
   bool canBeNext(Coordinate position) =>
       selectedPositions.isEmpty ||
       (!selectedPositions.contains(position) &&
-          neighbours[selectedPositions.last].contains(position));
+          widget._neighbours[selectedPositions.last].contains(position));
 
   void finish(PointerUpEvent event) {
     GameInfo gameInfo = Provider.of(key.currentContext);
@@ -100,7 +97,7 @@ class _GridState extends State<Grid> {
       margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
       child: Listener(
         onPointerDown: start,
-        onPointerMove: _move,
+        onPointerMove: move,
         onPointerUp: finish,
         child: Container(
           child: BoardWidget(

@@ -27,7 +27,7 @@ class MockRandomLetterGenerator extends Mock implements SequenceGenerator {}
 
 void main() {
   final TestWidgetsFlutterBinding binding =
-  TestWidgetsFlutterBinding.ensureInitialized();
+      TestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('All letters present', (WidgetTester tester) async {
     await binding.setSurfaceSize(Size(600, 800));
