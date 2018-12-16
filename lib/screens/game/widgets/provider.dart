@@ -8,12 +8,17 @@ import 'package:flutter/widgets.dart';
 
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
+/// A widget that holds an instance of [GameInfo] that is accessible by its
+/// descendants.
 class Provider extends StatefulWidget {
+  /// Creates a [Provider]. The given [gameInfo] is accessible by [child] and
+  /// the children of child.
   const Provider({this.gameInfo, this.child});
 
   final GameInfo gameInfo;
   final Widget child;
 
+  /// Returns the instance of [GameInfo] hold by this provider.
   static GameInfo of(BuildContext context) {
     _InheritedProvider ip =
         context.inheritFromWidgetOfExactType(_InheritedProvider);
@@ -48,13 +53,13 @@ class _ProviderState extends State<Provider> {
 
 class _InheritedProvider extends InheritedWidget {
   _InheritedProvider({this.gameInfo, Widget child})
-      : _userAnswerValue = gameInfo.userAnswer.value,
+      : userAnswerValue = gameInfo.userAnswer.value,
         super(child: child);
 
   final GameInfo gameInfo;
-  final UserAnswer _userAnswerValue;
+  final UserAnswer userAnswerValue;
 
   @override
   bool updateShouldNotify(_InheritedProvider oldWidget) =>
-      _userAnswerValue != oldWidget._userAnswerValue;
+      userAnswerValue != oldWidget.userAnswerValue;
 }
