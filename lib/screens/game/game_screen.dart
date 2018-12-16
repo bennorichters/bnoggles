@@ -92,7 +92,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
                   children: wordLines(gameInfo.parameters.hints),
                 ),
               ),
-              const Grid(),
+              const GameBoard(),
             ],
           ),
         ),

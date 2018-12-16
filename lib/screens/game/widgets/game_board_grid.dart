@@ -14,14 +14,14 @@ import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
-class Grid extends StatefulWidget {
-  const Grid();
+class GameBoard extends StatefulWidget {
+  const GameBoard();
 
   @override
-  _GridState createState() => _GridState();
+  _GameBoardState createState() => _GameBoardState();
 }
 
-class _GridState extends State<Grid> {
+class _GameBoardState extends State<GameBoard> {
   final List<Coordinate> selectedPositions = [];
   final key = GlobalKey();
 
