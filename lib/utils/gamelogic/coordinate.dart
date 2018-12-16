@@ -50,6 +50,13 @@ class Coordinate {
       .map((d) => _neighbour(d))
       .where((c) => _withinBoundaries(c, min, max));
 
+  /// Returns [true] if [other] is a neighbour of this, [false] otherwise.
+  ///
+  /// A neighbour is not the same object is [this] and either its x value
+  /// or its y value or both, differ exactly one from this x and y values.
+  bool isNeighbourOf(Coordinate other) =>
+      (((x - other.x).abs() == 1) || ((y - other.y).abs() == 1));
+
   bool _withinBoundaries(Coordinate coordinate, num min, num max) =>
       ((coordinate.x >= min) &&
           (coordinate.x <= max) &&

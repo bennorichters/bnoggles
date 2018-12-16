@@ -15,8 +15,7 @@ import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class Grid extends StatefulWidget {
-  Grid(this._neighbours);
-  final Map<Coordinate, Iterable<Coordinate>> _neighbours;
+  const Grid();
 
   @override
   _GridState createState() => _GridState();
@@ -25,38 +24,6 @@ class Grid extends StatefulWidget {
 class _GridState extends State<Grid> {
   final List<Coordinate> selectedPositions = [];
   final key = GlobalKey();
-
-  void start(PointerEvent event) {
-    itemHit(event);
-  }
-
-  void move(PointerEvent event) {
-    itemHit(event);
-  }
-
-  void itemHit(PointerEvent event) {
-    final RenderBox box = key.currentContext.findRenderObject();
-    final result = HitTestResult();
-    Offset local = box.globalToLocal(event.position);
-    if (box.hitTest(result, position: local)) {
-      for (final hit in result.path) {
-        final target = hit.target;
-        if (target is _PositionedRenderObject) {
-          Coordinate position = target.position;
-          if (canBeNext(position)) {
-            setState(() {
-              selectedPositions.add(position);
-            });
-          }
-        }
-      }
-    }
-  }
-
-  bool canBeNext(Coordinate position) =>
-      selectedPositions.isEmpty ||
-      (!selectedPositions.contains(position) &&
-          widget._neighbours[selectedPositions.last].contains(position));
 
   void finish(PointerUpEvent event) {
     GameInfo gameInfo = Provider.of(key.currentContext);
@@ -92,12 +59,36 @@ class _GridState extends State<Grid> {
     double mediaWidth = MediaQuery.of(context).size.width;
     double cellWidth = mediaWidth / board.width;
 
+    bool canBeNext(Coordinate position) =>
+        selectedPositions.isEmpty ||
+            (!selectedPositions.contains(position) &&
+                selectedPositions.last.isNeighbourOf(position));
+
+    void startAndMove(PointerEvent event) {
+      final RenderBox box = key.currentContext.findRenderObject();
+      final result = HitTestResult();
+      Offset local = box.globalToLocal(event.position);
+      if (box.hitTest(result, position: local)) {
+        for (final hit in result.path) {
+          final target = hit.target;
+          if (target is _PositionedRenderObject) {
+            Coordinate position = target.position;
+            if (canBeNext(position)) {
+              setState(() {
+                selectedPositions.add(position);
+              });
+            }
+          }
+        }
+      }
+    }
+
     return Container(
       key: key,
       margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
       child: Listener(
-        onPointerDown: start,
-        onPointerMove: move,
+        onPointerDown: startAndMove,
+        onPointerMove: startAndMove,
         onPointerUp: finish,
         child: Container(
           child: BoardWidget(

@@ -94,7 +94,7 @@ void main() {
 }
 
 Widget testableGrid(GameInfo info) {
-  Grid grid = Grid(info.board.mapNeighbours());
+  Grid grid = const Grid();
 
   Provider provider = Provider(
     gameInfo: info,

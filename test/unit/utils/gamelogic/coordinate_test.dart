@@ -40,6 +40,23 @@ void main() {
 
     testEqualSets(origin.allNeighbours(0, 10), neighbours);
   });
+
+  test('isNeighbourOf', () {
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(0, -1)), true);
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(1, -1)), true);
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(1, 0)), true);
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(1, 1)), true);
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(0, 1)), true);
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(-1, 1)), true);
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(-1, 0)), true);
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(-1, -1)), true);
+
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(0, 0)), false);
+
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(2, 0)), false);
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(0, 2)), false);
+    expect(Coordinate(0, 0).isNeighbourOf(Coordinate(2, 2)), false);
+  });
 }
 
 void testEqualSets(Iterable actual, Iterable matcher) {
