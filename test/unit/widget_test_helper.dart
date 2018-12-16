@@ -4,6 +4,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 
 Widget testableRow({List<Widget> children}) => MaterialApp(
       home: Material(
@@ -16,5 +17,33 @@ Widget testableRow({List<Widget> children}) => MaterialApp(
 Widget testableWidget({Widget child}) => MaterialApp(
       home: Material(
         child: child,
+      ),
+    );
+
+Widget testableConstrainedWidget(Widget child, double width, double height) =>
+    testableWidgetWithMediaQuery(
+      Center(
+        child: Container(
+          width: width,
+          height: height,
+          child: UnconstrainedBox(
+            child: child,
+          ),
+        ),
+      ),
+      width,
+      height,
+    );
+
+Widget testableWidgetWithMediaQuery(
+        Widget child, double width, double height) =>
+    MaterialApp(
+      home: Material(
+        child: MediaQuery(
+          data: MediaQueryData.fromWindow(ui.window).copyWith(
+            size: Size(width, height),
+          ),
+          child: child,
+        ),
       ),
     );

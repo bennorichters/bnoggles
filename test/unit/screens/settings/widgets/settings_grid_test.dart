@@ -8,9 +8,9 @@ import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'dart:ui' as ui;
-
 import 'package:mockito/mockito.dart';
+
+import '../../../widget_test_helper.dart';
 
 class MockPreferences extends Mock implements Preferences {}
 
@@ -24,26 +24,7 @@ void main() {
     when(mp.hints).thenAnswer((s) => ValueNotifier(false));
 
     SettingsGrid grid = SettingsGrid(mp);
-    await tester.pumpWidget(testableWidget(grid, 900, 1200));
-    await tester.pumpWidget(testableWidget(grid, 500, 592));
+    await tester.pumpWidget(testableConstrainedWidget(grid, 900, 1200));
+    await tester.pumpWidget(testableConstrainedWidget(grid, 500, 592));
   });
 }
-
-Widget testableWidget(Widget child, double width, double height) => MaterialApp(
-      home: Material(
-        child: MediaQuery(
-          data: MediaQueryData.fromWindow(ui.window).copyWith(
-            size: Size(width, height),
-          ),
-          child: Center(
-            child: Container(
-              width: width,
-              height: height,
-              child: UnconstrainedBox(
-                child: child,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
