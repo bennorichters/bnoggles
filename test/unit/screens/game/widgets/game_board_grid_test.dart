@@ -67,6 +67,30 @@ void main() {
 
     expect(info.userAnswer.value.contains('abc'), true);
   });
+
+  testWidgets('Do not find word', (WidgetTester tester) async {
+    await binding.setSurfaceSize(Size(600, 800));
+    GameInfo info = createGameInfo();
+    await tester.pumpWidget(testableGrid(info));
+
+    expect(info.userAnswer.value.contains('abc'), false);
+
+    var offsetStart = tester.getCenter(find.text('A'));
+    var offSetMiddle = tester.getCenter(find.text('D'));
+    var offsetEnd = tester.getCenter(find.text('G'));
+    var vector1 = offSetMiddle - offsetStart;
+    var vector2 = offsetEnd - offSetMiddle;
+
+    TestGesture gesture = await tester.startGesture(offsetStart);
+    await gesture.moveBy(vector1);
+    await gesture.moveBy(vector2);
+    await gesture.up();
+
+    await tester.pumpAndSettle();
+
+    expect(info.userAnswer.value.contains('abc'), false);
+    expect(info.userAnswer.value.contains('adg'), false);
+  });
 }
 
 Widget testableGrid(GameInfo info) {
