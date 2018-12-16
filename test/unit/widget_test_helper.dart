@@ -20,9 +20,9 @@ Widget testableWidget({Widget child}) => MaterialApp(
       ),
     );
 
-Widget testableConstrainedWidget(Widget child, double width, double height) =>
+Widget testableConstrainedWidget({Widget child, double width, double height}) =>
     testableWidgetWithMediaQuery(
-      Center(
+      child: Center(
         child: Container(
           width: width,
           height: height,
@@ -31,12 +31,12 @@ Widget testableConstrainedWidget(Widget child, double width, double height) =>
           ),
         ),
       ),
-      width,
-      height,
+      width: width,
+      height: height,
     );
 
 Widget testableWidgetWithMediaQuery(
-        Widget child, double width, double height) =>
+        {Widget child, double width, double height}) =>
     MaterialApp(
       home: Material(
         child: MediaQuery(

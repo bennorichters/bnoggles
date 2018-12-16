@@ -32,7 +32,7 @@ void main() {
   testWidgets('All letters present', (WidgetTester tester) async {
     await binding.setSurfaceSize(Size(600, 800));
     GameInfo info = createGameInfo();
-    await tester.pumpWidget(testableGrid(info));
+    await tester.pumpWidget(testableGameBoard(info));
 
     expect(find.text('A'), findsOneWidget);
     expect(find.text('B'), findsOneWidget);
@@ -48,7 +48,7 @@ void main() {
   testWidgets('Find word', (WidgetTester tester) async {
     await binding.setSurfaceSize(Size(600, 800));
     GameInfo info = createGameInfo();
-    await tester.pumpWidget(testableGrid(info));
+    await tester.pumpWidget(testableGameBoard(info));
 
     expect(info.userAnswer.value.contains('abc'), false);
 
@@ -71,7 +71,7 @@ void main() {
   testWidgets('Do not find word', (WidgetTester tester) async {
     await binding.setSurfaceSize(Size(600, 800));
     GameInfo info = createGameInfo();
-    await tester.pumpWidget(testableGrid(info));
+    await tester.pumpWidget(testableGameBoard(info));
 
     expect(info.userAnswer.value.contains('abc'), false);
 
@@ -93,16 +93,14 @@ void main() {
   });
 }
 
-Widget testableGrid(GameInfo info) {
-  GameBoard grid = const GameBoard();
-
-  Provider provider = Provider(
-    gameInfo: info,
-    child: Container(width: 500.0, height: 500.0, child: grid),
-  );
-
-  return testableWidgetWithMediaQuery(provider, 600.0, 800.0);
-}
+Widget testableGameBoard(GameInfo info) => testableWidgetWithMediaQuery(
+      child: Provider(
+        gameInfo: info,
+        child: const GameBoard(),
+      ),
+      width: 600.0,
+      height: 800.0,
+    );
 
 GameInfo createGameInfo() {
   var mockParameters = MockParameters();
@@ -115,13 +113,12 @@ GameInfo createGameInfo() {
   when(mockSolution.isCorrect("abc")).thenReturn(true);
   when(mockSolution.isCorrect(argThat(isNot("abc")))).thenReturn(false);
 
-  GameInfo info = GameInfo(
+  return GameInfo(
     parameters: mockParameters,
     board: mockBoard,
     solution: mockSolution,
     userAnswer: vua,
   );
-  return info;
 }
 
 Board createMockBoard() {

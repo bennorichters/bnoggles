@@ -24,7 +24,15 @@ void main() {
     when(mp.hints).thenAnswer((s) => ValueNotifier(false));
 
     SettingsGrid grid = SettingsGrid(mp);
-    await tester.pumpWidget(testableConstrainedWidget(grid, 900, 1200));
-    await tester.pumpWidget(testableConstrainedWidget(grid, 500, 592));
+    await tester.pumpWidget(testableConstrainedWidget(
+      child: grid,
+      width: 900,
+      height: 1200,
+    ));
+    await tester.pumpWidget(testableConstrainedWidget(
+      child: grid,
+      width: 500,
+      height: 592,
+    ));
   });
 }
