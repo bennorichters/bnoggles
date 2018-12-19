@@ -50,7 +50,7 @@ void main() {
     var label0 = find.text('0');
     expect(label0, findsOneWidget);
 
-    var nextAnswer = UserAnswer(vua.value, 'abc', true);
+    var nextAnswer = vua.value.add('abc', true);
     vua.value = nextAnswer;
 
     await tester.pumpAndSettle();

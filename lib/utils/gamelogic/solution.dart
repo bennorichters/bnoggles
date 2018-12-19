@@ -61,14 +61,18 @@ class UserWord {
 
 /// An [Answer] is produced by a player of the game.
 class UserAnswer extends Answer {
-  /// Creates a new [UserAnswer] based on an old answer.
+  UserAnswer._(List<UserWord> found)
+      : this.found = found,
+        super(Frequency.fromStrings(_uniqueWords(found)));
+
+  /// Adds a word and returns a new [UserAnswer].
   ///
   /// The new UserAnswer is a copy of the old answer and is extended with the
   /// information provided by [word] and [isCorrect].
-  factory UserAnswer(UserAnswer old, String word, bool isCorrect) {
+  UserAnswer add(String word, bool isCorrect) {
     Evaluation eval;
 
-    if (isCorrect && old.contains(word)) {
+    if (isCorrect && contains(word)) {
       eval = Evaluation.goodAgain;
     } else if (isCorrect) {
       eval = Evaluation.good;
@@ -77,13 +81,9 @@ class UserAnswer extends Answer {
     }
 
     return UserAnswer._(
-      List.unmodifiable(old.found.toList()..add(UserWord(word, eval))),
+      List.unmodifiable(found.toList()..add(UserWord(word, eval))),
     );
   }
-
-  UserAnswer._(List<UserWord> found)
-      : this.found = found,
-        super(Frequency.fromStrings(_uniqueWords(found)));
 
   /// All words found by the user in the order that they where found.
   final List<UserWord> found;

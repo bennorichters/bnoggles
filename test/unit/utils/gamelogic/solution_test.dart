@@ -55,19 +55,19 @@ void main() {
     var a = UserAnswer.start();
     expect(a.found.length, 0);
 
-    a = UserAnswer(a, "abc", true);
+    a = a.add("abc", true);
     expect(a.found.length, 1);
     expect(a.found[0].word, "abc");
     expect(a.found[0].evaluation, Evaluation.good);
 
-    a = UserAnswer(a, "def", false);
+    a = a.add("def", false);
     expect(a.found.length, 2);
     expect(a.found[0].word, "abc");
     expect(a.found[0].evaluation, Evaluation.good);
     expect(a.found[1].word, "def");
     expect(a.found[1].evaluation, Evaluation.wrong);
 
-    a = UserAnswer(a, "abc", true);
+    a = a.add("abc", true);
     expect(a.found.length, 3);
     expect(a.found[0].word, "abc");
     expect(a.found[0].evaluation, Evaluation.good);
@@ -79,10 +79,10 @@ void main() {
 
   test('userAnswer.uniqueWords', () {
     UserAnswer a = UserAnswer.start();
-    a = UserAnswer(a, "abc", true);
-    a = UserAnswer(a, "def", false);
-    a = UserAnswer(a, "abc", true);
-    a = UserAnswer(a, "ghi", true);
+    a = a.add("abc", true);
+    a = a.add("def", false);
+    a = a.add("abc", true);
+    a = a.add("ghi", true);
 
     expect(a.uniqueWords(), ["abc", "ghi"].toSet());
   });

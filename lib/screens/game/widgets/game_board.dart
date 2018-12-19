@@ -46,7 +46,7 @@ class _GameBoardState extends State<GameBoard> {
 
       UserAnswer old = gameInfo.userAnswer.value;
       gameInfo.userAnswer.value =
-          UserAnswer(old, candidate, solution.isCorrect(candidate));
+          old.add(candidate, solution.isCorrect(candidate));
     }
 
     clearSelection();

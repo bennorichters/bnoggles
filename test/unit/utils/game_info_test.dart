@@ -69,7 +69,7 @@ void main() {
     when(mockSolution.uniqueWords()).thenReturn(words.toSet());
 
     ValueNotifier<UserAnswer> vua =
-        ValueNotifier(UserAnswer(UserAnswer.start(), 'abc', true));
+        ValueNotifier(UserAnswer.start().add('abc', true));
 
     GameInfo info = GameInfo(
       parameters: null,
@@ -91,7 +91,7 @@ void main() {
     when(mockSolution.uniqueWords()).thenReturn(words.toSet());
 
     ValueNotifier<UserAnswer> vua =
-        ValueNotifier(UserAnswer(UserAnswer.start(), 'abc', true));
+        ValueNotifier(UserAnswer.start().add('abc', true));
 
     GameInfo info = GameInfo(
       parameters: null,
@@ -106,11 +106,11 @@ void main() {
     }
 
     info.addUserAnswerListener(toggleFlag);
-    vua.value = UserAnswer(vua.value, 'd', false);
+    vua.value = vua.value.add('d', false);
     expect(flag, true);
 
     info.removeUserAnswerListener(toggleFlag);
-    vua.value = UserAnswer(vua.value, 'e', false);
+    vua.value = vua.value.add('e', false);
     expect(flag, true);
   });
 }
