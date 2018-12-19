@@ -124,7 +124,7 @@ class Solution extends Answer {
 
   final Set<Chain> _chains;
 
-  /// The minimal lengths found words should have
+  /// The minimal length found words should have
   final int minimalLength;
 
   /// Returns all found [Chain]s.
