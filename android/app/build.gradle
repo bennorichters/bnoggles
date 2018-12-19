@@ -28,9 +28,9 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 println 'buildMode: ' + localProperties.getProperty('flutter.buildMode')
 
+def keystoreProperties = new Properties()
 if (flutterBuildMode == 'release') {
     def keystorePropertiesFile = rootProject.file("key.properties")
-    def keystoreProperties = new Properties()
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
