@@ -10,33 +10,43 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../widget_test_helper.dart';
 
 void main() {
-  testWidgets('clock time and callback when finished', (WidgetTester tester) async {
-    bool finished = false;
-
-    int seconds = 100;
-    void result() {
-      finished = true;
-    }
-
+  testWidgets('clock time', (WidgetTester tester) async {
     var controller = AnimationController(
-      duration: Duration(seconds: seconds),
       vsync: tester,
     );
 
-    Clock clock = Clock(result, controller, seconds);
+    Clock clock = Clock(() {}, controller, 100);
     await tester.pumpWidget(testableWidget(child: clock));
 
     expect(find.text('1:41'), findsOneWidget);
-    expect(finished, false);
 
     controller.value = .5;
     await tester.pump();
     expect(find.text('0:51'), findsOneWidget);
-    expect(finished, false);
 
     controller.value = 1;
     await tester.pump();
     expect(find.text('0:00'), findsOneWidget);
+  });
+
+  testWidgets('callback when finished', (WidgetTester tester) async {
+    bool finished = false;
+
+    var controller = AnimationController(
+      vsync: tester,
+    );
+
+    Clock clock = Clock(() {
+      finished = true;
+    }, controller, 100);
+    await tester.pumpWidget(testableWidget(child: clock));
+
+    expect(finished, false);
+
+    controller.value = .5;
+    expect(finished, false);
+
+    controller.value = 1;
     expect(finished, true);
   });
 }
