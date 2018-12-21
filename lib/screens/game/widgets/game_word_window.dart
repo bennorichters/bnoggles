@@ -94,7 +94,7 @@ const Map<Evaluation, Color> _colors = {
 };
 
 class _UserWordFeedback extends StatelessWidget {
-  _UserWordFeedback(this.word);
+  const _UserWordFeedback(this.word);
   final Word word;
 
   @override

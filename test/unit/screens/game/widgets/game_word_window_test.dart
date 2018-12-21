@@ -1,0 +1,26 @@
+// Copyright (c) 2018, The Bnoggles Team.
+// Please see the AUTHORS file for details.
+// All rights reserved. Use of this source code is governed by a MIT-style
+// license that can be found in the LICENSE file.
+
+import 'package:bnoggles/screens/game/widgets/game_clock.dart';
+import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import '../../../widget_test_helper.dart';
+
+void main() {
+  testWidgets('show new words', (WidgetTester tester) async {
+    WordsProvider p =
+        () => List.generate(250, (i) => Word.neutral(i.toString()));
+    ValueNotifier<int> n = ValueNotifier(0);
+
+    Widget w = WordWindow(p, n);
+
+    await tester.pumpWidget(testableWidget(child: w));
+    expect(find.text('1'), findsOneWidget);
+    expect(find.text('5'), findsOneWidget);
+    expect(find.text('200'), findsNothing);
+  });
+}
