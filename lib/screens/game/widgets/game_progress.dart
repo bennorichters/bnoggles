@@ -28,7 +28,7 @@ class GameProgress extends StatelessWidget {
           Container(
             width: 280.0,
             height: 80.0,
-            child: WordCountOverview(),
+            child: const WordCountOverview(),
           ),
           Expanded(
             child: Container(
