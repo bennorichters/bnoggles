@@ -3,8 +3,8 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import 'package:bnoggles/screens/game/widgets/game_word_count_row.dart';
 import 'package:bnoggles/screens/game/widgets/provider.dart';
+import 'package:bnoggles/screens/game/widgets/word_count_overview.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/frequency.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
