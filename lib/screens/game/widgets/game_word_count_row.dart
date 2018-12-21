@@ -13,6 +13,8 @@ import 'package:bnoggles/utils/gamelogic/solution.dart';
 const int _maxLength = 8;
 
 class WordCountOverview extends StatelessWidget {
+  const WordCountOverview();
+
   @override
   Widget build(BuildContext context) {
     Solution solution = Provider.of(context).solution;
@@ -24,13 +26,10 @@ class WordCountOverview extends StatelessWidget {
         crossAxisCount: (_maxLength - 1),
         childAspectRatio: 1.0,
       ),
-      itemBuilder: (context, index) {
-        return Container(
-          decoration:
-              BoxDecoration(border: Border.all(color: Colors.black)),
-          child: fromIndex(index, solution),
-        );
-      },
+      itemBuilder: (context, index) => Container(
+            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+            child: fromIndex(index, solution),
+          ),
     );
   }
 
@@ -45,21 +44,23 @@ class WordCountOverview extends StatelessWidget {
       if (length == _maxLength) {
         text = ">= " + text;
       }
-      return _NumberInfo(text);
+      return _NumberInfo(text, index);
     }
     if (length < solution.minimalLength) {
-      return _NoNumberInfo();
+      return _NoNumberInfo(index);
     }
-    return _UserAnswerNumberInfo(length);
+    return _UserAnswerNumberInfo(length, index);
   }
 }
 
 class _NumberInfo extends StatelessWidget {
-  _NumberInfo(this.number);
+  const _NumberInfo(this.number, this.index);
   final String number;
+  final int index;
 
   @override
   Widget build(BuildContext context) => Container(
+        key: Key('wordcount' + index.toString()),
         color: Colors.blueGrey,
         child: Center(
           child: Text(
@@ -71,10 +72,12 @@ class _NumberInfo extends StatelessWidget {
 }
 
 class _NoNumberInfo extends StatelessWidget {
-  _NoNumberInfo();
+  const _NoNumberInfo(this.index);
+  final int index;
 
   @override
   Widget build(BuildContext context) => Container(
+        key: Key('wordcount' + index.toString()),
         color: Colors.blueGrey,
         child: Center(
           child: Text(
@@ -86,8 +89,9 @@ class _NoNumberInfo extends StatelessWidget {
 }
 
 class _UserAnswerNumberInfo extends StatelessWidget {
-  _UserAnswerNumberInfo(this.length);
+  const _UserAnswerNumberInfo(this.length, this.index);
   final int length;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +103,7 @@ class _UserAnswerNumberInfo extends StatelessWidget {
     int remaining = length == _maxLength ? todo.atLeast(length) : todo[length];
 
     return Container(
+      key: Key('wordcount' + index.toString()),
       color: Colors.blue,
       child: Center(
         child: Text(
