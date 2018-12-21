@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 /// Widget showing a clock that counts down to zero.
 class Clock extends StatelessWidget {
   /// Creates the [Clock]
-  Clock(this.showResultScreen, this._controller, this.startTime);
+  Clock(this._showResultScreen, this._controller, this._startTime);
 
-  final VoidCallback showResultScreen;
+  final VoidCallback _showResultScreen;
   final AnimationController _controller;
-  final int startTime;
+  final int _startTime;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +21,13 @@ class Clock extends StatelessWidget {
     double clockFontSize = data.size.width < 375.0 ? 15.0 : 30.0;
 
     var animation = StepTween(
-      begin: startTime + 1,
+      begin: _startTime + 1,
       end: 1,
     ).animate(_controller);
 
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        showResultScreen();
+        _showResultScreen();
       }
     });
 
