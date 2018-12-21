@@ -14,6 +14,8 @@ const int _maxLength = 8;
 
 /// Overview of word lengths and the number of words still to be find in this
 /// category by the user.
+///
+/// This widget should be a descendant of [Provider].
 class WordCountOverview extends StatelessWidget {
   /// Creates a [WordCountOverview]
   const WordCountOverview();
