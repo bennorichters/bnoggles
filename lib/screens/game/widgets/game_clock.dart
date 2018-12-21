@@ -6,7 +6,9 @@
 import 'package:bnoggles/utils/format_time/format_time.dart';
 import 'package:flutter/material.dart';
 
+/// Widget showing a clock that counts down to zero.
 class Clock extends StatelessWidget {
+  /// Creates the [Clock]
   Clock(this.showResultScreen, this._controller, this.startTime);
 
   final VoidCallback showResultScreen;

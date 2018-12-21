@@ -12,7 +12,10 @@ import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 const int _maxLength = 8;
 
+/// Overview of word lengths and the number of words still to be find in this
+/// category by the user.
 class WordCountOverview extends StatelessWidget {
+  /// Creates a [WordCountOverview]
   const WordCountOverview();
 
   @override
