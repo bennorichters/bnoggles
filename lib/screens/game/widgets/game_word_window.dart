@@ -9,10 +9,10 @@ import 'package:flutter/rendering.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class WordWindow extends StatefulWidget {
-  WordWindow(this.provider, this.stateNotifier);
+  WordWindow(this._wordsProvider, this._stateNotifier);
 
-  final WordsProvider provider;
-  final ValueNotifier stateNotifier;
+  final WordsProvider _wordsProvider;
+  final ValueNotifier _stateNotifier;
 
   @override
   State<WordWindow> createState() => _WordWindowState();
@@ -22,7 +22,7 @@ class _WordWindowState extends State<WordWindow> {
   @override
   void initState() {
     super.initState();
-    widget.stateNotifier.addListener(_didValueChange);
+    widget._stateNotifier.addListener(_didValueChange);
   }
 
   void _didValueChange() => setState(() {});
@@ -32,13 +32,15 @@ class _WordWindowState extends State<WordWindow> {
         height: 48.0,
         child: ListView(
             scrollDirection: Axis.horizontal,
-            children:
-                widget.provider().map((w) => _UserWordFeedback(w)).toList()),
+            children: widget
+                ._wordsProvider()
+                .map((w) => _UserWordFeedback(w))
+                .toList()),
       );
 
   @override
   void dispose() {
-    widget.stateNotifier.removeListener(_didValueChange);
+    widget._stateNotifier.removeListener(_didValueChange);
     super.dispose();
   }
 }
