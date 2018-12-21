@@ -19,8 +19,30 @@ void main() {
     Widget w = WordWindow(p, n);
 
     await tester.pumpWidget(testableWidget(child: w));
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('0'), findsOneWidget);
     expect(find.text('5'), findsOneWidget);
-    expect(find.text('200'), findsNothing);
+  });
+
+  testWidgets('dragging words from right to left', (WidgetTester tester) async {
+    WordsProvider p =
+        () => List.generate(250, (i) => Word.neutral(i.toString()));
+    ValueNotifier<int> n = ValueNotifier(0);
+
+    Widget w = WordWindow(p, n);
+
+    await tester.pumpWidget(testableWidget(child: w));
+
+    bool found = true;
+    int i = -1;
+    while (found) {
+      i++;
+      found =
+          findsOneWidget.matches(find.text(i.toString()), <dynamic, dynamic>{});
+    }
+
+    await tester.drag(find.text((i - 1).toString()), Offset(-100, 0));
+    await tester.pumpAndSettle();
+    expect(find.text('0'), findsNothing);
+    expect(find.text(i.toString()), findsOneWidget);
   });
 }
