@@ -3,12 +3,15 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
+import 'dart:async';
+
 import 'package:bnoggles/screens/game/widgets/game_board.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
 import 'package:bnoggles/screens/game/widgets/provider.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatefulWidget {
@@ -87,10 +90,14 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
                 showResultScreen,
               ),
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: wordLines(gameInfo.parameters.hints),
-                ),
+                child: ValueListenableBuilder<UserAnswer>(
+                    valueListenable: gameInfo.userAnswer,
+                    builder: (context, value, child) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: wordLines(gameInfo.parameters.hints),
+                      );
+                    }),
               ),
               const GameBoard(),
             ],
@@ -99,23 +106,23 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
       );
 
   List<Widget> wordLines(bool hints) {
-    WordsProvider byUser = () => gameInfo.userAnswer.value.found.reversed
+    var byUser = gameInfo.userAnswer.value.found.reversed
         .map((a) => Word.fromUser(a))
         .toList();
 
     if (!hints) {
-      return [WordWindow(byUser, gameInfo.userAnswer)];
+      return [WordWindow(byUser)];
     }
 
-    WordsProvider byGame = () => gameInfo.randomWords
+    var byGame = gameInfo.randomWords
         .where((w) =>
             !gameInfo.userAnswer.value.found.map((w) => w.word).contains(w))
         .map((a) => Word.neutral(a))
         .toList();
 
     return [
-      WordWindow(byUser, gameInfo.userAnswer),
-      WordWindow(byGame, gameInfo.userAnswer),
+      WordWindow(byUser),
+      WordWindow(byGame),
     ];
   }
 

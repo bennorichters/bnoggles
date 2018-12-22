@@ -12,11 +12,9 @@ import '../../../widget_test_helper.dart';
 
 void main() {
   testWidgets('show first words in list', (WidgetTester tester) async {
-    WordsProvider p =
-        () => List.generate(250, (i) => Word.neutral(i.toString()));
-    ValueNotifier<int> n = ValueNotifier(0);
+    var p = List.generate(250, (i) => Word.neutral(i.toString()));
 
-    Widget w = WordWindow(p, n);
+    Widget w = WordWindow(p);
 
     await tester.pumpWidget(testableWidget(child: w));
     expect(find.text('0'), findsOneWidget);
@@ -25,15 +23,16 @@ void main() {
 
   testWidgets('show new word', (WidgetTester tester) async {
     List<Word> words = List.generate(250, (i) => Word.neutral(i.toString()));
-    WordsProvider p = () => words;
+    ValueNotifier<List<Word>> valueNotifier = ValueNotifier(words);
 
-    ValueNotifier<int> n = ValueNotifier(0);
+    Widget v = ValueListenableBuilder<List<Word>>(
+      valueListenable: valueNotifier,
+      builder: (context, value, child) => WordWindow(valueNotifier.value),
+    );
 
-    Widget w = WordWindow(p, n);
-
-    await tester.pumpWidget(testableWidget(child: w));
+    await tester.pumpWidget(testableWidget(child: v));
     words.insert(0, Word.neutral('abcde'));
-    n.value = 1;
+    valueNotifier.value = words.toList();
     await tester.pumpAndSettle();
     expect(find.text('ABCDE'), findsOneWidget);
   });
@@ -41,17 +40,19 @@ void main() {
   testWidgets('new word visible after first dragging left',
       (WidgetTester tester) async {
     List<Word> words = List.generate(250, (i) => Word.neutral(i.toString()));
-    WordsProvider p = () => words;
+    ValueNotifier<List<Word>> valueNotifier = ValueNotifier(words);
 
-    ValueNotifier<int> n = ValueNotifier(0);
+    Widget v = ValueListenableBuilder<List<Word>>(
+      valueListenable: valueNotifier,
+      builder: (context, value, child) => WordWindow(valueNotifier.value),
+    );
 
-    Widget w = WordWindow(p, n);
+    await tester.pumpWidget(testableWidget(child: v));
 
-    await tester.pumpWidget(testableWidget(child: w));
     await tester.drag(find.text('10'), Offset(-300, 0));
     await tester.pumpAndSettle();
     words.insert(0, Word.neutral('abcde'));
-    n.value = 1;
+    valueNotifier.value = words.toList();
     await tester.pumpAndSettle();
 
     expect(find.text('ABCDE'), findsOneWidget);

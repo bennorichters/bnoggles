@@ -9,10 +9,9 @@ import 'package:flutter/rendering.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class WordWindow extends StatefulWidget {
-  WordWindow(this._wordsProvider, this._stateNotifier);
+  WordWindow(this._wordsProvider);
 
-  final WordsProvider _wordsProvider;
-  final ValueNotifier _stateNotifier;
+  final List<Word> _wordsProvider;
 
   @override
   State<WordWindow> createState() => _WordWindowState();
@@ -28,16 +27,17 @@ class _WordWindowState extends State<WordWindow> {
       initialScrollOffset: 0.0,
       keepScrollOffset: true,
     );
-    widget._stateNotifier.addListener(_didValueChange);
   }
 
-  void _didValueChange() => setState(() {
-        controller.animateTo(
-          controller.position.minScrollExtent,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.ease,
-        );
-      });
+  @override
+  void didUpdateWidget(WordWindow oldWidget) {
+    controller.animateTo(
+      controller.position.minScrollExtent,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,20 +47,12 @@ class _WordWindowState extends State<WordWindow> {
           controller: controller,
           scrollDirection: Axis.horizontal,
           children: widget
-              ._wordsProvider()
+              ._wordsProvider
               .map((w) => _UserWordFeedback(w))
               .toList()),
     );
   }
-
-  @override
-  void dispose() {
-    widget._stateNotifier.removeListener(_didValueChange);
-    super.dispose();
-  }
 }
-
-typedef List<Word> WordsProvider();
 
 class Word {
   Word._(this.value, this.color, this.style);
