@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../widget_test_helper.dart';
 
 void main() {
-  testWidgets('show new words', (WidgetTester tester) async {
+  testWidgets('show first words in list', (WidgetTester tester) async {
     WordsProvider p =
         () => List.generate(250, (i) => Word.neutral(i.toString()));
     ValueNotifier<int> n = ValueNotifier(0);
@@ -21,6 +21,21 @@ void main() {
     await tester.pumpWidget(testableWidget(child: w));
     expect(find.text('0'), findsOneWidget);
     expect(find.text('5'), findsOneWidget);
+  });
+
+  testWidgets('show new word', (WidgetTester tester) async {
+    List<Word> words = List.generate(250, (i) => Word.neutral(i.toString()));
+    WordsProvider p = () => words;
+
+    ValueNotifier<int> n = ValueNotifier(0);
+
+    Widget w = WordWindow(p, n);
+
+    await tester.pumpWidget(testableWidget(child: w));
+    words.insert(0, Word.neutral('abcde'));
+    n.value = 1;
+    await tester.pumpAndSettle();
+    expect(find.text('ABCDE'), findsOneWidget);
   });
 
   testWidgets('dragging words from right to left', (WidgetTester tester) async {

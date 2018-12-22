@@ -67,6 +67,9 @@ class Word {
   final String value;
   final Color color;
   final TextStyle style;
+
+  @override
+  String toString() => '$value Color:$color TextStyle:$style';
 }
 
 const double _fontSize = 20.0;
