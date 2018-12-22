@@ -19,24 +19,39 @@ class WordWindow extends StatefulWidget {
 }
 
 class _WordWindowState extends State<WordWindow> {
+  ScrollController controller;
+
   @override
   void initState() {
     super.initState();
+    controller = new ScrollController(
+      initialScrollOffset: 0.0,
+      keepScrollOffset: true,
+    );
     widget._stateNotifier.addListener(_didValueChange);
   }
 
-  void _didValueChange() => setState(() {});
+  void _didValueChange() => setState(() {
+        controller.animateTo(
+          controller.position.minScrollExtent,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.ease,
+        );
+      });
 
   @override
-  Widget build(BuildContext context) => Container(
-        height: 48.0,
-        child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: widget
-                ._wordsProvider()
-                .map((w) => _UserWordFeedback(w))
-                .toList()),
-      );
+  Widget build(BuildContext context) {
+    return Container(
+      height: 48.0,
+      child: ListView(
+          controller: controller,
+          scrollDirection: Axis.horizontal,
+          children: widget
+              ._wordsProvider()
+              .map((w) => _UserWordFeedback(w))
+              .toList()),
+    );
+  }
 
   @override
   void dispose() {

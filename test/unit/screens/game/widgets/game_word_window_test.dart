@@ -54,7 +54,6 @@ void main() {
     n.value = 1;
     await tester.pumpAndSettle();
 
-    // TODO Fix this bug
-    // expect(find.text('ABCDE'), findsOneWidget);
+    expect(find.text('ABCDE'), findsOneWidget);
   });
 }
