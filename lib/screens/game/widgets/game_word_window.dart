@@ -9,9 +9,9 @@ import 'package:flutter/rendering.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class WordWindow extends StatefulWidget {
-  WordWindow(this._wordsProvider);
+  WordWindow(this._words);
 
-  final List<Word> _wordsProvider;
+  final List<Word> _words;
 
   @override
   State<WordWindow> createState() => _WordWindowState();
@@ -47,7 +47,7 @@ class _WordWindowState extends State<WordWindow> {
           controller: controller,
           scrollDirection: Axis.horizontal,
           children: widget
-              ._wordsProvider
+              ._words
               .map((w) => _UserWordFeedback(w))
               .toList()),
     );
