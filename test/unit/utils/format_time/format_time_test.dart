@@ -20,4 +20,83 @@ void main() {
     expect(formatTime(6000), '100:00');
     expect(formatTime(6001), '100:01');
   });
+
+  test('interpolateY', () {
+    expect(
+        interpolateY(
+          x: 5,
+          smallX: 4,
+          smallY: 20,
+          bigX: 6,
+          bigY: 30,
+        ),
+        25);
+
+    expect(
+        interpolateY(
+          x: 5,
+          smallX: 0,
+          smallY: 0,
+          bigX: 10,
+          bigY: 10,
+        ),
+        5);
+
+    expect(
+        interpolateY(
+          x: 5,
+          smallX: 3,
+          smallY: 3,
+          bigX: 6,
+          bigY: 6,
+        ),
+        5);
+
+    expect(
+        interpolateY(
+          x: 5,
+          smallX: 0,
+          smallY: 0,
+          bigX: 10,
+          bigY: 10,
+          min: -1,
+          max: 6,
+        ),
+        5);
+
+    expect(
+        interpolateY(
+          x: 5,
+          smallX: 3,
+          smallY: 3,
+          bigX: 6,
+          bigY: 6,
+          min: -1,
+          max: 6,
+        ),
+        5);
+
+    expect(
+        interpolateY(
+          x: 5,
+          smallX: 3,
+          smallY: 3,
+          bigX: 6,
+          bigY: 6,
+          min: 6,
+        ),
+        6);
+
+    expect(
+        interpolateY(
+          x: 5,
+          smallX: 3,
+          smallY: 3,
+          bigX: 6,
+          bigY: 6,
+          max: 4,
+        ),
+        4);
+
+  });
 }
