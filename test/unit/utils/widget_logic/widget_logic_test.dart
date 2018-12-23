@@ -3,6 +3,8 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
+import 'dart:math';
+
 import 'package:bnoggles/utils/widget_logic/widget_logic.dart';
 import 'package:test/test.dart';
 
@@ -23,80 +25,58 @@ void main() {
 
   test('interpolateY', () {
     expect(
-        interpolateY(
-          x: 5,
-          smallX: 4,
-          smallY: 20,
-          bigX: 6,
-          bigY: 30,
-        ),
+        Interpolator.fromDataPoints(
+          p1: Point(4, 20),
+          p2: Point(6, 30),
+        ).y(x: 5),
         25);
 
     expect(
-        interpolateY(
-          x: 5,
-          smallX: 0,
-          smallY: 0,
-          bigX: 10,
-          bigY: 10,
-        ),
+        Interpolator.fromDataPoints(
+          p1: Point(0, 0),
+          p2: Point(10, 10),
+        ).y(x: 5),
         5);
 
     expect(
-        interpolateY(
-          x: 5,
-          smallX: 3,
-          smallY: 3,
-          bigX: 6,
-          bigY: 6,
-        ),
+        Interpolator.fromDataPoints(
+          p1: Point(3, 3),
+          p2: Point(6, 6),
+        ).y(x: 5),
         5);
 
     expect(
-        interpolateY(
-          x: 5,
-          smallX: 0,
-          smallY: 0,
-          bigX: 10,
-          bigY: 10,
+        Interpolator.fromDataPoints(
+          p1: Point(0, 0),
+          p2: Point(10, 10),
           min: -1,
           max: 6,
-        ),
+        ).y(x: 5),
         5);
 
     expect(
-        interpolateY(
-          x: 5,
-          smallX: 3,
-          smallY: 3,
-          bigX: 6,
-          bigY: 6,
+        Interpolator.fromDataPoints(
+          p1: Point(3, 3),
+          p2: Point(6, 6),
           min: -1,
           max: 6,
-        ),
+        ).y(x: 5),
         5);
 
     expect(
-        interpolateY(
-          x: 5,
-          smallX: 3,
-          smallY: 3,
-          bigX: 6,
-          bigY: 6,
+        Interpolator.fromDataPoints(
+          p1: Point(3, 3),
+          p2: Point(6, 6),
           min: 6,
-        ),
+        ).y(x: 6),
         6);
 
     expect(
-        interpolateY(
-          x: 5,
-          smallX: 3,
-          smallY: 3,
-          bigX: 6,
-          bigY: 6,
+        Interpolator.fromDataPoints(
+          p1: Point(3, 3),
+          p2: Point(6, 6),
           max: 4,
-        ),
+        ).y(x: 4),
         4);
-
   });
 }

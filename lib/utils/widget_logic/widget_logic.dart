@@ -12,18 +12,32 @@ String formatTime(int seconds) {
   return '$minutes:$restSeconds';
 }
 
-/// Interpolates data points to find value y for given x
-double interpolateY(
-    {double x,
-    double smallX,
-    double smallY,
-    double bigX,
-    double bigY,
+/// Calculator that finds y for a given value x based on two linear data points
+class Interpolator {
+  factory Interpolator.fromDataPoints({
+    Math.Point p1,
+    Math.Point p2,
     double min = double.negativeInfinity,
-    double max = double.infinity}) {
+    double max = double.infinity,
+  }) {
+    double a = (p1.y - p2.y) / (p1.x - p2.x);
+    double b = p1.y - (a * p1.x);
 
-  double a = (bigY - smallY) / (bigX - smallX);
-  double b = smallY - (a * smallX);
+    return Interpolator._(a, b, min, max);
+  }
 
-  return Math.max(Math.min(a * x + b, max), min);
+  Interpolator._(
+    this._a,
+    this._b,
+    this._min,
+    this._max,
+  );
+
+  final double _a;
+  final double _b;
+  final double _min;
+  final double _max;
+
+  /// Calculates the value for y
+  double y({double x}) => Math.max(Math.min(_a * x + _b, _max), _min);
 }
