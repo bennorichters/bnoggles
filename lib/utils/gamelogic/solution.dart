@@ -46,8 +46,7 @@ enum Evaluation {
 
 /// An sequence of characters as found by a player of the game.
 class UserWord {
-  /// Creates a [UserWord]
-  UserWord(this.word, this.evaluation);
+  UserWord._(this.word, this.evaluation);
 
   /// The sequence of characters
   final String word;
@@ -81,7 +80,7 @@ class UserAnswer extends Answer {
     }
 
     return UserAnswer._(
-      List.unmodifiable(found.toList()..add(UserWord(word, eval))),
+      List.unmodifiable(found.toList()..add(UserWord._(word, eval))),
     );
   }
 
