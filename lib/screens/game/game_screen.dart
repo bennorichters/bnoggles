@@ -3,8 +3,6 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import 'dart:async';
-
 import 'package:bnoggles/screens/game/widgets/game_board.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
