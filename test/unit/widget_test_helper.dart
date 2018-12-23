@@ -64,16 +64,10 @@ class MockRandomLetterGenerator extends Mock implements SequenceGenerator {}
 class MockSolution extends Mock implements Solution {}
 
 GameInfo createGameInfo([List<String> words = const[]]) {
-  var mockParameters = MockParameters();
+  var mockParameters = createMockParameters();
   var mockBoard = createMockBoard();
-  var mockSolution = MockSolution();
   var vua = ValueNotifier(UserAnswer.start());
-
-  when(mockSolution.uniqueWords()).thenReturn(['abc'].toSet());
-  when(mockSolution.minimalLength).thenReturn(2);
-  when(mockSolution.isCorrect("abc")).thenReturn(true);
-  when(mockSolution.isCorrect(argThat(isNot("abc")))).thenReturn(false);
-  when(mockSolution.frequency).thenReturn(Frequency.fromStrings(words));
+  var mockSolution = createMockSolution(words);
 
   return GameInfo(
     parameters: mockParameters,
@@ -81,6 +75,30 @@ GameInfo createGameInfo([List<String> words = const[]]) {
     solution: mockSolution,
     userAnswer: vua,
   );
+}
+
+MockParameters createMockParameters() {
+  var mockParameters = MockParameters();
+
+  when(mockParameters.hints).thenReturn(true);
+  when(mockParameters.minimalWordLength).thenReturn(2);
+  when(mockParameters.boardWidth).thenReturn(3);
+  when(mockParameters.languageCode).thenReturn('nl');
+  when(mockParameters.time).thenReturn(150);
+
+  return mockParameters;
+}
+
+MockSolution createMockSolution(List<String> words) {
+  var mockSolution = MockSolution();
+
+  when(mockSolution.uniqueWords()).thenReturn(['abc'].toSet());
+  when(mockSolution.minimalLength).thenReturn(2);
+  when(mockSolution.isCorrect("abc")).thenReturn(true);
+  when(mockSolution.isCorrect(argThat(isNot("abc")))).thenReturn(false);
+  when(mockSolution.frequency).thenReturn(Frequency.fromStrings(words));
+
+  return mockSolution;
 }
 
 Board createMockBoard() {
