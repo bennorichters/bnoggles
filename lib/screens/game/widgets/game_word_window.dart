@@ -46,10 +46,7 @@ class _WordWindowState extends State<WordWindow> {
       child: ListView(
           controller: controller,
           scrollDirection: Axis.horizontal,
-          children: widget
-              ._words
-              .map((w) => _UserWordFeedback(w))
-              .toList()),
+          children: widget._words.map((w) => _UserWordFeedback(w)).toList()),
     );
   }
 }
