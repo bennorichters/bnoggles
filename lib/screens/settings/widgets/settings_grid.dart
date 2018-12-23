@@ -17,12 +17,14 @@ import 'package:flutter/rendering.dart';
 // maximum height is 50. Empirically found values for the height of some
 // devices are:
 //
-// - for screen height 683.4 (e.g. Pixel) the empty line height is 50
 // - for screen height 592.0 (e.g. Nexus 4) the empty line height is 20
-//
-// emptyLineHeight = A x screenHeight + B
-const double _a = (20.0 - 50.0) / (592.0 - 683.4);
-const double _b = 20.0 - _a * 592.0;
+// - for screen height 683.4 (e.g. Pixel) the empty line height is 50
+final emptyLineHeightCalculator = Interpolator.fromDataPoints(
+  p1: const Point(592, 20),
+  p2: const Point(683.4, 50),
+  min: 0,
+  max: 50,
+);
 
 /// A widget displaying all settings.
 class SettingsGrid extends StatelessWidget {
@@ -32,7 +34,7 @@ class SettingsGrid extends StatelessWidget {
 
   TableRow _emptyLine(double emptyLineHeight) => TableRow(
         children: [
-          Container(height: min(50.0, emptyLineHeight)),
+          Container(height: emptyLineHeight),
           Container(),
           Container(),
         ],
@@ -43,7 +45,8 @@ class SettingsGrid extends StatelessWidget {
     // See above
     MediaQueryData data = MediaQuery.of(context);
     double screenHeight = data.size.height;
-    double emptyLineHeight = _a * screenHeight + _b;
+    double emptyLineHeight = emptyLineHeightCalculator.y(x: screenHeight);
+    print('$screenHeight -> $emptyLineHeight');
 
     return Container(
       padding: EdgeInsets.all(15.0),

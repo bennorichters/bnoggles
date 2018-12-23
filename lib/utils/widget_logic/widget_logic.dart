@@ -26,7 +26,7 @@ class Interpolator {
     return Interpolator._(a, b, min, max);
   }
 
-  Interpolator._(
+  const Interpolator._(
     this._a,
     this._b,
     this._min,
