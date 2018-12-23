@@ -46,7 +46,6 @@ class SettingsGrid extends StatelessWidget {
     MediaQueryData data = MediaQuery.of(context);
     double screenHeight = data.size.height;
     double emptyLineHeight = emptyLineHeightCalculator.y(x: screenHeight);
-    print('$screenHeight -> $emptyLineHeight');
 
     return Container(
       padding: EdgeInsets.all(15.0),
