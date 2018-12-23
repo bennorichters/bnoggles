@@ -13,7 +13,10 @@ void main() {
   testWidgets('show first words in list', (WidgetTester tester) async {
     var p = List.generate(250, (i) => Word.neutral(i.toString()));
 
-    Widget w = WordWindow(p);
+    Widget w = WordWindow(
+      words: p,
+      scrollBackOnUpdate: true,
+    );
 
     await tester.pumpWidget(testableWidget(child: w));
     expect(find.text('0'), findsOneWidget);
@@ -26,7 +29,10 @@ void main() {
 
     Widget v = ValueListenableBuilder<List<Word>>(
       valueListenable: valueNotifier,
-      builder: (context, value, child) => WordWindow(valueNotifier.value),
+      builder: (context, value, child) => WordWindow(
+            words: valueNotifier.value,
+            scrollBackOnUpdate: true,
+          ),
     );
 
     await tester.pumpWidget(testableWidget(child: v));
@@ -43,7 +49,10 @@ void main() {
 
     Widget v = ValueListenableBuilder<List<Word>>(
       valueListenable: valueNotifier,
-      builder: (context, value, child) => WordWindow(valueNotifier.value),
+      builder: (context, value, child) => WordWindow(
+            words: valueNotifier.value,
+            scrollBackOnUpdate: true,
+          ),
     );
 
     await tester.pumpWidget(testableWidget(child: v));
@@ -55,5 +64,29 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ABCDE'), findsOneWidget);
+  });
+
+  testWidgets('new word not visible after first dragging left',
+      (WidgetTester tester) async {
+    List<Word> words = List.generate(250, (i) => Word.neutral(i.toString()));
+    ValueNotifier<List<Word>> valueNotifier = ValueNotifier(words);
+
+    Widget v = ValueListenableBuilder<List<Word>>(
+      valueListenable: valueNotifier,
+      builder: (context, value, child) => WordWindow(
+            words: valueNotifier.value,
+            scrollBackOnUpdate: false,
+          ),
+    );
+
+    await tester.pumpWidget(testableWidget(child: v));
+
+    await tester.drag(find.text('10'), Offset(-300, 0));
+    await tester.pumpAndSettle();
+    words.insert(0, Word.neutral('abcde'));
+    valueNotifier.value = words.toList();
+    await tester.pumpAndSettle();
+
+    expect(find.text('ABCDE'), findsNothing);
   });
 }

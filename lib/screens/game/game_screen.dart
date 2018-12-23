@@ -111,7 +111,12 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
         .toList();
 
     if (!hints) {
-      return [WordWindow(byUser)];
+      return [
+        WordWindow(
+          words: byUser,
+          scrollBackOnUpdate: true,
+        )
+      ];
     }
 
     var byGame = gameInfo.randomWords
@@ -121,8 +126,14 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
         .toList();
 
     return [
-      WordWindow(byUser),
-      WordWindow(byGame),
+      WordWindow(
+        words: byUser,
+        scrollBackOnUpdate: true,
+      ),
+      WordWindow(
+        words: byGame,
+        scrollBackOnUpdate: false,
+      ),
     ];
   }
 

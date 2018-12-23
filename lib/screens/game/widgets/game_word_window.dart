@@ -9,9 +9,13 @@ import 'package:flutter/rendering.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 class WordWindow extends StatefulWidget {
-  WordWindow(this._words);
+  WordWindow({
+    @required this.words,
+    @required this.scrollBackOnUpdate,
+  });
 
-  final List<Word> _words;
+  final List<Word> words;
+  final bool scrollBackOnUpdate;
 
   @override
   State<WordWindow> createState() => _WordWindowState();
@@ -31,11 +35,14 @@ class _WordWindowState extends State<WordWindow> {
 
   @override
   void didUpdateWidget(WordWindow oldWidget) {
-    controller.animateTo(
-      controller.position.minScrollExtent,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.ease,
-    );
+    if (widget.scrollBackOnUpdate) {
+      controller.animateTo(
+        controller.position.minScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    }
+
     super.didUpdateWidget(oldWidget);
   }
 
@@ -46,7 +53,7 @@ class _WordWindowState extends State<WordWindow> {
       child: ListView(
           controller: controller,
           scrollDirection: Axis.horizontal,
-          children: widget._words.map((w) => _UserWordFeedback(w)).toList()),
+          children: widget.words.map((w) => _UserWordFeedback(w)).toList()),
     );
   }
 }
