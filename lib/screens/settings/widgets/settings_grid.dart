@@ -8,7 +8,7 @@ import 'dart:math';
 import 'package:bnoggles/screens/settings/widgets/integer_slider.dart';
 import 'package:bnoggles/screens/settings/widgets/language_setting.dart';
 import 'package:bnoggles/screens/settings/widgets/toggle_setting.dart';
-import 'package:bnoggles/utils/format_time/format_time.dart';
+import 'package:bnoggles/utils/widget_logic/widget_logic.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
