@@ -4,14 +4,18 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart' as Solution;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 
 import '../../../widget_test_helper.dart';
 
+class MockUserWord extends Mock implements Solution.UserWord {}
+
 void main() {
   testWidgets('show first words in list', (WidgetTester tester) async {
-    var p = List.generate(250, (i) => Word.neutral(i.toString()));
+    var p = List.generate(250, (i) => WordDisplay.neutral(i.toString()));
 
     Widget w = WordWindow(
       words: p,
@@ -24,10 +28,11 @@ void main() {
   });
 
   testWidgets('show new word', (WidgetTester tester) async {
-    List<Word> words = List.generate(250, (i) => Word.neutral(i.toString()));
-    ValueNotifier<List<Word>> valueNotifier = ValueNotifier(words);
+    List<WordDisplay> words =
+        List.generate(250, (i) => WordDisplay.neutral(i.toString()));
+    ValueNotifier<List<WordDisplay>> valueNotifier = ValueNotifier(words);
 
-    Widget v = ValueListenableBuilder<List<Word>>(
+    Widget v = ValueListenableBuilder<List<WordDisplay>>(
       valueListenable: valueNotifier,
       builder: (context, value, child) => WordWindow(
             words: valueNotifier.value,
@@ -36,7 +41,7 @@ void main() {
     );
 
     await tester.pumpWidget(testableWidget(child: v));
-    words.insert(0, Word.neutral('abcde'));
+    words.insert(0, WordDisplay.neutral('abcde'));
     valueNotifier.value = words.toList();
     await tester.pumpAndSettle();
     expect(find.text('ABCDE'), findsOneWidget);
@@ -44,10 +49,11 @@ void main() {
 
   testWidgets('new word visible after first dragging left',
       (WidgetTester tester) async {
-    List<Word> words = List.generate(250, (i) => Word.neutral(i.toString()));
-    ValueNotifier<List<Word>> valueNotifier = ValueNotifier(words);
+    List<WordDisplay> words =
+        List.generate(250, (i) => WordDisplay.neutral(i.toString()));
+    ValueNotifier<List<WordDisplay>> valueNotifier = ValueNotifier(words);
 
-    Widget v = ValueListenableBuilder<List<Word>>(
+    Widget v = ValueListenableBuilder<List<WordDisplay>>(
       valueListenable: valueNotifier,
       builder: (context, value, child) => WordWindow(
             words: valueNotifier.value,
@@ -59,7 +65,7 @@ void main() {
 
     await tester.drag(find.text('10'), Offset(-300, 0));
     await tester.pumpAndSettle();
-    words.insert(0, Word.neutral('abcde'));
+    words.insert(0, WordDisplay.neutral('abcde'));
     valueNotifier.value = words.toList();
     await tester.pumpAndSettle();
 
@@ -68,10 +74,11 @@ void main() {
 
   testWidgets('new word not visible after first dragging left',
       (WidgetTester tester) async {
-    List<Word> words = List.generate(250, (i) => Word.neutral(i.toString()));
-    ValueNotifier<List<Word>> valueNotifier = ValueNotifier(words);
+    List<WordDisplay> words =
+        List.generate(250, (i) => WordDisplay.neutral(i.toString()));
+    ValueNotifier<List<WordDisplay>> valueNotifier = ValueNotifier(words);
 
-    Widget v = ValueListenableBuilder<List<Word>>(
+    Widget v = ValueListenableBuilder<List<WordDisplay>>(
       valueListenable: valueNotifier,
       builder: (context, value, child) => WordWindow(
             words: valueNotifier.value,
@@ -83,10 +90,21 @@ void main() {
 
     await tester.drag(find.text('10'), Offset(-300, 0));
     await tester.pumpAndSettle();
-    words.insert(0, Word.neutral('abcde'));
+    words.insert(0, WordDisplay.neutral('abcde'));
     valueNotifier.value = words.toList();
     await tester.pumpAndSettle();
 
     expect(find.text('ABCDE'), findsNothing);
+  });
+
+  testWidgets('WordDisplay toString finishes normally',
+      (WidgetTester tester) async {
+    WordDisplay.neutral("abc").toString();
+
+    MockUserWord mockUserWord = MockUserWord();
+    when(mockUserWord.word).thenReturn('abc');
+    when(mockUserWord.evaluation).thenReturn(Solution.Evaluation.good);
+
+    WordDisplay.fromUser(mockUserWord).toString();
   });
 }

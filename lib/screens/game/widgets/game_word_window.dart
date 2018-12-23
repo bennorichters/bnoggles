@@ -8,13 +8,21 @@ import 'package:flutter/rendering.dart';
 
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
+/// A list of words
+///
+/// The parent of this widget is responsible to call [setState] when the list
+/// needs to be updated, e.g. by wrapping this widget in a
+/// [ValueListenableBuilder].
 class WordWindow extends StatefulWidget {
   WordWindow({
     @required this.words,
     @required this.scrollBackOnUpdate,
   });
 
-  final List<Word> words;
+  /// The words to be shown
+  final List<WordDisplay> words;
+  /// If [true] the list will scroll back to the start of the list when [words]
+  /// are updated. No automatic scrolling will happen otherwise.
   final bool scrollBackOnUpdate;
 
   @override
@@ -58,29 +66,33 @@ class _WordWindowState extends State<WordWindow> {
   }
 }
 
-class Word {
-  Word._(this.value, this.color, this.style);
+/// A container for a [String], a [Color] and a [TextStyle]
+class WordDisplay {
+  WordDisplay._(this._value, this._color, this._style);
 
-  Word.fromUser(UserWord userWord)
+  /// Creates an instance of [WordDisplay]. The color and style depend on the
+  /// [UserWord.evaluation].
+  WordDisplay.fromUser(UserWord userWord)
       : this._(
           userWord.word,
           _colors[userWord.evaluation],
           _textStyle[userWord.evaluation],
         );
 
-  Word.neutral(String word)
+  /// Creats an instance of [WordDisplay] with a 'neutral' style.
+  WordDisplay.neutral(String word)
       : this._(
           word,
           Colors.blue,
           _neutralStyle,
         );
 
-  final String value;
-  final Color color;
-  final TextStyle style;
+  final String _value;
+  final Color _color;
+  final TextStyle _style;
 
   @override
-  String toString() => '$value Color:$color TextStyle:$style';
+  String toString() => '$_value Color:$_color TextStyle:$_style';
 }
 
 const double _fontSize = 20.0;
@@ -109,7 +121,7 @@ const Map<Evaluation, Color> _colors = {
 
 class _UserWordFeedback extends StatelessWidget {
   const _UserWordFeedback(this.word);
-  final Word word;
+  final WordDisplay word;
 
   @override
   Widget build(BuildContext context) {
@@ -118,12 +130,12 @@ class _UserWordFeedback extends StatelessWidget {
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        color: word.color,
+        color: word._color,
       ),
       child: Center(
         child: Text(
-          word.value.toUpperCase(),
-          style: word.style,
+          word._value.toUpperCase(),
+          style: word._style,
         ),
       ),
     );

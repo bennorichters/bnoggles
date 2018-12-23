@@ -107,7 +107,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   List<Widget> wordLines(bool hints) {
     var byUser = gameInfo.userAnswer.value.found.reversed
-        .map((a) => Word.fromUser(a))
+        .map((a) => WordDisplay.fromUser(a))
         .toList();
 
     if (!hints) {
@@ -122,7 +122,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     var byGame = gameInfo.randomWords
         .where((w) =>
             !gameInfo.userAnswer.value.found.map((w) => w.word).contains(w))
-        .map((a) => Word.neutral(a))
+        .map((a) => WordDisplay.neutral(a))
         .toList();
 
     return [
