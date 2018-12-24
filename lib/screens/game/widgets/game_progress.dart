@@ -15,14 +15,14 @@ final _blockHeightCalculator = Interpolator.fromDataPoints(
   p1: const Point(592, 25),
   p2: const Point(683.4, 40),
   min: 25,
-  max: 50,
+  max: 40,
 );
 
 final _fontSizeCalculator = Interpolator.fromDataPoints(
   p1: const Point(592, 10),
   p2: const Point(683.4, 14),
   min: 8,
-  max: 15,
+  max: 14,
 );
 
 /// An overview of the progress of the game.
