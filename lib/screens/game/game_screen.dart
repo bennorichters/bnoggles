@@ -64,48 +64,57 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text("Bnoggles"),
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.stop),
-              color: Colors.red,
-              onPressed: () {
-                showResultScreen();
-              },
+  Widget build(BuildContext context) {
+    MediaQueryData data = MediaQuery.of(context);
+    double screenHeight = data.size.height;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Bnoggles"),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.stop),
+            color: Colors.red,
+            onPressed: () {
+              showResultScreen();
+            },
+          ),
+        ],
+      ),
+      body: Provider(
+        gameInfo: gameInfo,
+        child: Column(
+          children: [
+            GameProgress(
+              _controller,
+              gameInfo.parameters.time,
+              showResultScreen,
             ),
+            Expanded(
+              child: ValueListenableBuilder<UserAnswer>(
+                  valueListenable: gameInfo.userAnswer,
+                  builder: (context, value, child) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children:
+                          wordLines(gameInfo.parameters.hints, screenHeight),
+                    );
+                  }),
+            ),
+            const GameBoard(),
           ],
         ),
-        body: Provider(
-          gameInfo: gameInfo,
-          child: Column(
-            children: [
-              GameProgress(
-                _controller,
-                gameInfo.parameters.time,
-                showResultScreen,
-              ),
-              Expanded(
-                child: ValueListenableBuilder<UserAnswer>(
-                    valueListenable: gameInfo.userAnswer,
-                    builder: (context, value, child) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: wordLines(gameInfo.parameters.hints),
-                      );
-                    }),
-              ),
-              const GameBoard(),
-            ],
-          ),
-        ),
-      );
+      ),
+    );
+  }
 
-  List<Widget> wordLines(bool hints) {
+  List<Widget> wordLines(bool hints, double screenHeight) {
     var byUser = gameInfo.userAnswer.value.found.reversed
-        .map((a) => WordDisplay.fromUser(a))
+        .map((a) => WordDisplay.fromUser(
+              userWord: a,
+              screenHeight: screenHeight,
+            ))
         .toList();
 
     if (!hints) {
@@ -120,7 +129,10 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     var byGame = gameInfo.randomWords
         .where((w) =>
             !gameInfo.userAnswer.value.found.map((w) => w.word).contains(w))
-        .map((a) => WordDisplay.neutral(a))
+        .map((a) => WordDisplay.neutral(
+              word: a,
+              screenHeight: screenHeight,
+            ))
         .toList();
 
     return [

@@ -3,6 +3,9 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
+import 'dart:math';
+
+import 'package:bnoggles/utils/widget_logic/widget_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -21,6 +24,7 @@ class WordWindow extends StatefulWidget {
 
   /// The words to be shown
   final List<WordDisplay> words;
+
   /// If [true] the list will scroll back to the start of the list when [words]
   /// are updated. No automatic scrolling will happen otherwise.
   final bool scrollBackOnUpdate;
@@ -28,6 +32,13 @@ class WordWindow extends StatefulWidget {
   @override
   State<WordWindow> createState() => _WordWindowState();
 }
+
+final _wordWindowHeightCalculator = Interpolator.fromDataPoints(
+  p1: const Point(592, 30),
+  p2: const Point(683.4, 48),
+  min: 28,
+  max: 50,
+);
 
 class _WordWindowState extends State<WordWindow> {
   ScrollController controller;
@@ -56,15 +67,27 @@ class _WordWindowState extends State<WordWindow> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData data = MediaQuery.of(context);
+    double screenHeight = data.size.height;
+
     return Container(
-      height: 48.0,
+      height: _wordWindowHeightCalculator.y(x: screenHeight),
       child: ListView(
           controller: controller,
           scrollDirection: Axis.horizontal,
-          children: widget.words.map((w) => _UserWordFeedback(w)).toList()),
+          children: widget.words
+              .map((w) => _UserWordFeedback(w, screenHeight))
+              .toList()),
     );
   }
 }
+
+final _fontSizeCalculator = Interpolator.fromDataPoints(
+  p1: const Point(592, 10),
+  p2: const Point(683.4, 20),
+  min: 8,
+  max: 22,
+);
 
 /// A container for a [String], a [Color] and a [TextStyle]
 class WordDisplay {
@@ -72,19 +95,27 @@ class WordDisplay {
 
   /// Creates an instance of [WordDisplay]. The color and style depend on the
   /// [UserWord.evaluation].
-  WordDisplay.fromUser(UserWord userWord)
-      : this._(
+  WordDisplay.fromUser({
+    @required UserWord userWord,
+    @required double screenHeight,
+  }) : this._(
           userWord.word,
           _colors[userWord.evaluation],
-          _textStyle[userWord.evaluation],
+          _createTextStyles(_fontSizeCalculator.y(
+            x: screenHeight,
+          ))[userWord.evaluation],
         );
 
-  /// Creats an instance of [WordDisplay] with a 'neutral' style.
-  WordDisplay.neutral(String word)
-      : this._(
+  /// Creates an instance of [WordDisplay] with a 'neutral' style.
+  WordDisplay.neutral({
+    @required String word,
+    @required double screenHeight,
+  }) : this._(
           word,
           Colors.blue,
-          _neutralStyle,
+          createNeutralStyle(_fontSizeCalculator.y(
+            x: screenHeight,
+          )),
         );
 
   final String _value;
@@ -95,23 +126,21 @@ class WordDisplay {
   String toString() => '$_value Color:$_color TextStyle:$_style';
 }
 
-const double _fontSize = 20.0;
+Map<Evaluation, TextStyle> _createTextStyles(double fontSize) {
+  return {
+    Evaluation.good: TextStyle(
+      fontSize: fontSize,
+      fontWeight: FontWeight.bold,
+    ),
+    Evaluation.wrong: TextStyle(
+      fontSize: fontSize,
+      decoration: TextDecoration.lineThrough,
+    ),
+    Evaluation.goodAgain: createNeutralStyle(fontSize),
+  };
+}
 
-const _neutralStyle = TextStyle(
-  fontSize: _fontSize,
-);
-
-const Map<Evaluation, TextStyle> _textStyle = {
-  Evaluation.good: TextStyle(
-    fontSize: _fontSize,
-    fontWeight: FontWeight.bold,
-  ),
-  Evaluation.wrong: TextStyle(
-    fontSize: _fontSize,
-    decoration: TextDecoration.lineThrough,
-  ),
-  Evaluation.goodAgain: _neutralStyle,
-};
+TextStyle createNeutralStyle(double fontSize) => TextStyle(fontSize: fontSize);
 
 const Map<Evaluation, Color> _colors = {
   Evaluation.good: Colors.green,
@@ -119,15 +148,33 @@ const Map<Evaluation, Color> _colors = {
   Evaluation.goodAgain: Colors.orange,
 };
 
+final _marginCalculator = Interpolator.fromDataPoints(
+  p1: const Point(592, 2),
+  p2: const Point(683.4, 4),
+  min: 2,
+  max: 4,
+);
+
+final _paddingCalculator = Interpolator.fromDataPoints(
+  p1: const Point(592, 5),
+  p2: const Point(683.4, 10),
+  min: 4,
+  max: 12,
+);
+
 class _UserWordFeedback extends StatelessWidget {
-  const _UserWordFeedback(this.word);
+  const _UserWordFeedback(this.word, this.screenHeight);
   final WordDisplay word;
+  final double screenHeight;
 
   @override
   Widget build(BuildContext context) {
+    double margin = _marginCalculator.y(x: screenHeight);
+    double padding = _paddingCalculator.y(x: screenHeight);
+
     return Container(
-      margin: const EdgeInsets.all(4.0),
-      padding: EdgeInsets.all(10.0),
+      margin: EdgeInsets.all(margin),
+      padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
         color: word._color,

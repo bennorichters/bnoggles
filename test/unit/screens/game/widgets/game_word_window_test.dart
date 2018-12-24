@@ -15,7 +15,12 @@ class MockUserWord extends Mock implements Solution.UserWord {}
 
 void main() {
   testWidgets('show first words in list', (WidgetTester tester) async {
-    var p = List.generate(250, (i) => WordDisplay.neutral(i.toString()));
+    var p = List.generate(
+        250,
+        (i) => WordDisplay.neutral(
+              word: i.toString(),
+              screenHeight: 600,
+            ));
 
     Widget w = WordWindow(
       words: p,
@@ -28,8 +33,12 @@ void main() {
   });
 
   testWidgets('show new word', (WidgetTester tester) async {
-    List<WordDisplay> words =
-        List.generate(250, (i) => WordDisplay.neutral(i.toString()));
+    List<WordDisplay> words = List.generate(
+        250,
+        (i) => WordDisplay.neutral(
+              word: i.toString(),
+              screenHeight: 600,
+            ));
     ValueNotifier<List<WordDisplay>> valueNotifier = ValueNotifier(words);
 
     Widget v = ValueListenableBuilder<List<WordDisplay>>(
@@ -41,7 +50,12 @@ void main() {
     );
 
     await tester.pumpWidget(testableWidget(child: v));
-    words.insert(0, WordDisplay.neutral('abcde'));
+    words.insert(
+        0,
+        WordDisplay.neutral(
+          word: 'abcde',
+          screenHeight: 600,
+        ));
     valueNotifier.value = words.toList();
     await tester.pumpAndSettle();
     expect(find.text('ABCDE'), findsOneWidget);
@@ -49,8 +63,12 @@ void main() {
 
   testWidgets('new word visible after first dragging left',
       (WidgetTester tester) async {
-    List<WordDisplay> words =
-        List.generate(250, (i) => WordDisplay.neutral(i.toString()));
+    List<WordDisplay> words = List.generate(
+        250,
+        (i) => WordDisplay.neutral(
+              word: i.toString(),
+              screenHeight: 600,
+            ));
     ValueNotifier<List<WordDisplay>> valueNotifier = ValueNotifier(words);
 
     Widget v = ValueListenableBuilder<List<WordDisplay>>(
@@ -65,7 +83,12 @@ void main() {
 
     await tester.drag(find.text('10'), Offset(-300, 0));
     await tester.pumpAndSettle();
-    words.insert(0, WordDisplay.neutral('abcde'));
+    words.insert(
+        0,
+        WordDisplay.neutral(
+          word: 'abcde',
+          screenHeight: 600,
+        ));
     valueNotifier.value = words.toList();
     await tester.pumpAndSettle();
 
@@ -74,8 +97,12 @@ void main() {
 
   testWidgets('new word not visible after first dragging left',
       (WidgetTester tester) async {
-    List<WordDisplay> words =
-        List.generate(250, (i) => WordDisplay.neutral(i.toString()));
+    List<WordDisplay> words = List.generate(
+        250,
+        (i) => WordDisplay.neutral(
+              word: i.toString(),
+              screenHeight: 600,
+            ));
     ValueNotifier<List<WordDisplay>> valueNotifier = ValueNotifier(words);
 
     Widget v = ValueListenableBuilder<List<WordDisplay>>(
@@ -90,7 +117,12 @@ void main() {
 
     await tester.drag(find.text('10'), Offset(-300, 0));
     await tester.pumpAndSettle();
-    words.insert(0, WordDisplay.neutral('abcde'));
+    words.insert(
+        0,
+        WordDisplay.neutral(
+          word: 'abcde',
+          screenHeight: 600,
+        ));
     valueNotifier.value = words.toList();
     await tester.pumpAndSettle();
 
@@ -99,12 +131,18 @@ void main() {
 
   testWidgets('WordDisplay toString finishes normally',
       (WidgetTester tester) async {
-    WordDisplay.neutral("abc").toString();
+    WordDisplay.neutral(
+      word: "abc",
+      screenHeight: 600,
+    ).toString();
 
     MockUserWord mockUserWord = MockUserWord();
     when(mockUserWord.word).thenReturn('abc');
     when(mockUserWord.evaluation).thenReturn(Solution.Evaluation.good);
 
-    WordDisplay.fromUser(mockUserWord).toString();
+    WordDisplay.fromUser(
+      userWord: mockUserWord,
+      screenHeight: 600,
+    ).toString();
   });
 }

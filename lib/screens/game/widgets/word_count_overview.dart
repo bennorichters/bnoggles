@@ -18,7 +18,9 @@ const int _maxLength = 8;
 /// This widget should be a descendant of [Provider].
 class WordCountOverview extends StatelessWidget {
   /// Creates a [WordCountOverview]
-  const WordCountOverview();
+  const WordCountOverview({this.fontSize});
+
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,11 @@ class WordCountOverview extends StatelessWidget {
         childAspectRatio: 1.0,
       ),
       itemBuilder: (context, index) => Container(
-            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black,
+              ),
+            ),
             child: fromIndex(index, solution),
           ),
     );
@@ -49,19 +55,20 @@ class WordCountOverview extends StatelessWidget {
       if (length == _maxLength) {
         text = ">= " + text;
       }
-      return _NumberInfo(text, index);
+      return _NumberInfo(text, index, fontSize);
     }
     if (length < solution.minimalLength) {
-      return _NoNumberInfo(index);
+      return _NoNumberInfo(index, fontSize);
     }
-    return _UserAnswerNumberInfo(length, index);
+    return _UserAnswerNumberInfo(length, index, fontSize);
   }
 }
 
 class _NumberInfo extends StatelessWidget {
-  const _NumberInfo(this.number, this.index);
+  const _NumberInfo(this.number, this.index, this.fontSize);
   final String number;
   final int index;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -70,15 +77,19 @@ class _NumberInfo extends StatelessWidget {
         child: Center(
           child: Text(
             number,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: fontSize,
+            ),
           ),
         ),
       );
 }
 
 class _NoNumberInfo extends StatelessWidget {
-  const _NoNumberInfo(this.index);
+  const _NoNumberInfo(this.index, this.fontSize);
   final int index;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -87,16 +98,20 @@ class _NoNumberInfo extends StatelessWidget {
         child: Center(
           child: Text(
             'x',
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: fontSize,
+            ),
           ),
         ),
       );
 }
 
 class _UserAnswerNumberInfo extends StatelessWidget {
-  const _UserAnswerNumberInfo(this.length, this.index);
+  const _UserAnswerNumberInfo(this.length, this.index, this.fontSize);
   final int length;
   final int index;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +128,10 @@ class _UserAnswerNumberInfo extends StatelessWidget {
       child: Center(
         child: Text(
           remaining.toString(),
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: fontSize,
+          ),
         ),
       ),
     );
