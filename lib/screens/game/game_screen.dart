@@ -5,12 +5,10 @@
 
 import 'package:bnoggles/screens/game/widgets/game_board.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
-import 'package:bnoggles/screens/game/widgets/game_word_list.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_list_window.dart';
 import 'package:bnoggles/screens/game/widgets/provider.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatefulWidget {
