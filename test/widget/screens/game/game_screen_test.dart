@@ -9,6 +9,7 @@ import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_list_window.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -61,13 +62,75 @@ void main() {
 
     expect(find.byIcon(Icons.stop), findsOneWidget);
     await tester.tap(find.byIcon(Icons.stop));
+
+    await tester.pump();
+    expect(find.byType(ResultScreen), findsOneWidget);
+  });
+
+  testWidgets('Navigates to result screen when all words have been found',
+      (WidgetTester tester) async {
+    await binding.setSurfaceSize(Size(900, 1200));
+    GameInfo info = createGameInfo(words: ['abc']);
+    GameScreen screen = GameScreen(
+      gameInfo: info,
+    );
+
+    final mockObserver = MockNavigatorObserver();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: screen,
+        navigatorObservers: [mockObserver],
+      ),
+    );
+
+    ValueNotifier<UserAnswer> userAnswer = info.userAnswer;
+    userAnswer.value = userAnswer.value.add('abc', true);
+
+    await tester.pump();
+    expect(find.byType(ResultScreen), findsOneWidget);
+  });
+
+  testWidgets(
+      'Do not navigate to result screen when not all words have been found',
+      (WidgetTester tester) async {
+    await binding.setSurfaceSize(Size(900, 1200));
+    GameInfo info = createGameInfo(words: ['abc', 'def']);
+    GameScreen screen = GameScreen(
+      gameInfo: info,
+    );
+
+    final mockObserver = MockNavigatorObserver();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: screen,
+        navigatorObservers: [mockObserver],
+      ),
+    );
+
+    ValueNotifier<UserAnswer> userAnswer = info.userAnswer;
+    userAnswer.value = userAnswer.value.add('abc', true);
+
+    await tester.pump();
+    expect(find.byType(ResultScreen), findsNothing);
+  });
+
+  testWidgets('Navigate to result screen when time runs out',
+      (WidgetTester tester) async {
+    await binding.setSurfaceSize(Size(900, 1200));
+    GameInfo info = createGameInfo(words: ['abc', 'def']);
+    GameScreen screen = GameScreen(
+      gameInfo: info,
+    );
+
+    final mockObserver = MockNavigatorObserver();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: screen,
+        navigatorObservers: [mockObserver],
+      ),
+    );
+
     await tester.pumpAndSettle();
-
-    /// Verify that a push event happened
-    verify(mockObserver.didPush(any, any));
-
-    /// You'd also want to be sure that your page is now
-    /// present in the screen.
     expect(find.byType(ResultScreen), findsOneWidget);
   });
 }
