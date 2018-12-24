@@ -5,7 +5,7 @@
 
 import 'package:bnoggles/screens/game/widgets/game_board.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
-import 'package:bnoggles/screens/game/widgets/game_word_window.dart';
+import 'package:bnoggles/screens/game/widgets/game_word_list.dart';
 import 'package:bnoggles/screens/game/widgets/provider.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
