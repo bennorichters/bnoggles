@@ -6,6 +6,7 @@
 import 'package:bnoggles/screens/game/widgets/game_board.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_list.dart';
+import 'package:bnoggles/screens/game/widgets/game_word_list_window.dart';
 import 'package:bnoggles/screens/game/widgets/provider.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
@@ -65,9 +66,6 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData data = MediaQuery.of(context);
-    double screenHeight = data.size.height;
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Bnoggles"),
@@ -92,59 +90,13 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
               showResultScreen,
             ),
             Expanded(
-              child: ValueListenableBuilder<UserAnswer>(
-                  valueListenable: gameInfo.userAnswer,
-                  builder: (context, value, child) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children:
-                          wordLines(gameInfo.parameters.hints, screenHeight),
-                    );
-                  }),
+              child: const WordListWindow(),
             ),
             const GameBoard(),
           ],
         ),
       ),
     );
-  }
-
-  List<Widget> wordLines(bool hints, double screenHeight) {
-    var byUser = gameInfo.userAnswer.value.found.reversed
-        .map((a) => WordDisplay.fromUser(
-              userWord: a,
-              screenHeight: screenHeight,
-            ))
-        .toList();
-
-    if (!hints) {
-      return [
-        WordList(
-          words: byUser,
-          scrollBackOnUpdate: true,
-        )
-      ];
-    }
-
-    var byGame = gameInfo.randomWords
-        .where((w) =>
-            !gameInfo.userAnswer.value.found.map((w) => w.word).contains(w))
-        .map((a) => WordDisplay.neutral(
-              word: a,
-              screenHeight: screenHeight,
-            ))
-        .toList();
-
-    return [
-      WordList(
-        words: byUser,
-        scrollBackOnUpdate: true,
-      ),
-      WordList(
-        words: byGame,
-        scrollBackOnUpdate: false,
-      ),
-    ];
   }
 
   @override

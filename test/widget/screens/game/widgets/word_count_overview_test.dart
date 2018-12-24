@@ -3,9 +3,7 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import 'package:bnoggles/screens/game/widgets/provider.dart';
 import 'package:bnoggles/screens/game/widgets/word_count_overview.dart';
-import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -13,8 +11,9 @@ import '../../../widget_test_helper.dart';
 
 void main() {
   testWidgets('find 14 number infoboxes', (WidgetTester tester) async {
-    GameInfo info = createGameInfo([]);
-    await tester.pumpWidget(testableWordCountView(info));
+    await tester.pumpWidget(testableWidgetWithProvider(
+      child: WordCountOverview(),
+    ));
 
     for (int i = 0; i < 14; i++) {
       expect(find.byKey(Key('wordcount' + i.toString())), findsOneWidget);
@@ -22,9 +21,12 @@ void main() {
   });
 
   testWidgets('correct word count numbers', (WidgetTester tester) async {
-    GameInfo info =
-        createGameInfo(['12', '23', '123', '1234567', '1234567890']);
-    await tester.pumpWidget(testableWordCountView(info));
+    await tester.pumpWidget(testableWidgetWithProvider(
+      child: WordCountOverview(),
+      info: createGameInfo(
+        words: ['12', '23', '123', '1234567', '1234567890'],
+      ),
+    ));
 
     var countMap = {
       2: 2,
@@ -46,10 +48,3 @@ void main() {
     }
   });
 }
-
-Widget testableWordCountView(GameInfo info) => testableWidget(
-      child: Provider(
-        gameInfo: info,
-        child: WordCountOverview(),
-      ),
-    );

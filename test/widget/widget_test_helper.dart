@@ -3,6 +3,7 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
+import 'package:bnoggles/screens/game/widgets/provider.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
@@ -58,13 +59,28 @@ Widget testableWidgetWithMediaQuery(
       ),
     );
 
+Widget testableWidgetWithProvider({Widget child, GameInfo info}) {
+  return testableWidget(
+    child: Provider(
+      gameInfo: info ?? createGameInfo(),
+      child: child,
+    ),
+  );
+}
+
 class MockBoard extends Mock implements Board {}
+
 class MockParameters extends Mock implements GameParameters {}
+
 class MockRandomLetterGenerator extends Mock implements SequenceGenerator {}
+
 class MockSolution extends Mock implements Solution {}
 
-GameInfo createGameInfo([List<String> words = const[]]) {
-  var mockParameters = createMockParameters();
+GameInfo createGameInfo({
+  List<String> words = const ['abc'],
+  bool hints = true,
+}) {
+  var mockParameters = createMockParameters(hints);
   var mockBoard = createMockBoard();
   var vua = ValueNotifier(UserAnswer.start());
   var mockSolution = createMockSolution(words);
@@ -77,10 +93,10 @@ GameInfo createGameInfo([List<String> words = const[]]) {
   );
 }
 
-MockParameters createMockParameters() {
+MockParameters createMockParameters(bool hints) {
   var mockParameters = MockParameters();
 
-  when(mockParameters.hints).thenReturn(true);
+  when(mockParameters.hints).thenReturn(hints);
   when(mockParameters.minimalWordLength).thenReturn(2);
   when(mockParameters.boardWidth).thenReturn(3);
   when(mockParameters.languageCode).thenReturn('nl');
@@ -92,13 +108,26 @@ MockParameters createMockParameters() {
 MockSolution createMockSolution(List<String> words) {
   var mockSolution = MockSolution();
 
-  when(mockSolution.uniqueWords()).thenReturn(['abc'].toSet());
+  when(mockSolution.uniqueWords()).thenReturn(words.toSet());
   when(mockSolution.minimalLength).thenReturn(2);
-  when(mockSolution.isCorrect("abc")).thenReturn(true);
-  when(mockSolution.isCorrect(argThat(isNot("abc")))).thenReturn(false);
+  when(mockSolution.isCorrect(argThat(inList(words)))).thenReturn(true);
+  when(mockSolution.isCorrect(argThat(isNot(inList(words))))).thenReturn(false);
   when(mockSolution.frequency).thenReturn(Frequency.fromStrings(words));
 
   return mockSolution;
+}
+
+Matcher inList(List<String> strings) => _InList(strings);
+
+class _InList extends Matcher {
+  _InList(this.strings);
+  final List<String> strings;
+
+  @override
+  Description describe(Description description) => description.add('inlist ');
+
+  @override
+  bool matches(dynamic item, Map matchState) => strings.contains(item);
 }
 
 Board createMockBoard() {
