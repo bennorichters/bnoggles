@@ -11,6 +11,34 @@ import 'package:flutter/rendering.dart';
 
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
+final _wordListHeightCalculator = Interpolator.fromDataPoints(
+  p1: const Point(592, 30),
+  p2: const Point(683.4, 48),
+  min: 28,
+  max: 48,
+);
+
+final _marginCalculator = Interpolator.fromDataPoints(
+  p1: const Point(592, 2),
+  p2: const Point(683.4, 4),
+  min: 2,
+  max: 4,
+);
+
+final _paddingCalculator = Interpolator.fromDataPoints(
+  p1: const Point(592, 5),
+  p2: const Point(683.4, 10),
+  min: 4,
+  max: 10,
+);
+
+final _fontSizeCalculator = Interpolator.fromDataPoints(
+  p1: const Point(592, 10),
+  p2: const Point(683.4, 20),
+  min: 8,
+  max: 20,
+);
+
 /// A list of words
 ///
 /// The parent of this widget is responsible to call [setState] when the list
@@ -32,13 +60,6 @@ class WordList extends StatefulWidget {
   @override
   State<WordList> createState() => _WordListState();
 }
-
-final _wordListHeightCalculator = Interpolator.fromDataPoints(
-  p1: const Point(592, 30),
-  p2: const Point(683.4, 48),
-  min: 28,
-  max: 50,
-);
 
 class _WordListState extends State<WordList> {
   ScrollController controller;
@@ -81,13 +102,6 @@ class _WordListState extends State<WordList> {
     );
   }
 }
-
-final _fontSizeCalculator = Interpolator.fromDataPoints(
-  p1: const Point(592, 10),
-  p2: const Point(683.4, 20),
-  min: 8,
-  max: 22,
-);
 
 /// A container for a [String], a [Color] and a [TextStyle]
 class WordDisplay {
@@ -147,20 +161,6 @@ const Map<Evaluation, Color> _colors = {
   Evaluation.wrong: Colors.red,
   Evaluation.goodAgain: Colors.orange,
 };
-
-final _marginCalculator = Interpolator.fromDataPoints(
-  p1: const Point(592, 2),
-  p2: const Point(683.4, 4),
-  min: 2,
-  max: 4,
-);
-
-final _paddingCalculator = Interpolator.fromDataPoints(
-  p1: const Point(592, 5),
-  p2: const Point(683.4, 10),
-  min: 4,
-  max: 12,
-);
 
 class _UserWordFeedback extends StatelessWidget {
   const _UserWordFeedback(this.word, this.screenHeight);

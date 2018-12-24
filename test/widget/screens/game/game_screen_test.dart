@@ -24,7 +24,7 @@ void main() {
 
   testWidgets('find Bnoggles, GameProgess, WordListWindow, GameBoard',
       (WidgetTester tester) async {
-    await binding.setSurfaceSize(Size(900, 1200));
+    await binding.setSurfaceSize(Size(768, 1024));
 
     GameInfo info = createGameInfo();
     GameScreen screen = GameScreen(
@@ -33,8 +33,8 @@ void main() {
 
     Widget w = testableWidgetWithMediaQuery(
       child: screen,
-      width: 900,
-      height: 1200,
+      width: 768,
+      height: 1024,
     );
     await tester.pumpWidget(w);
 
