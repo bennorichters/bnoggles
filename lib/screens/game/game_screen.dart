@@ -119,7 +119,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
     if (!hints) {
       return [
-        WordWindow(
+        WordList(
           words: byUser,
           scrollBackOnUpdate: true,
         )
@@ -136,11 +136,11 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
         .toList();
 
     return [
-      WordWindow(
+      WordList(
         words: byUser,
         scrollBackOnUpdate: true,
       ),
-      WordWindow(
+      WordList(
         words: byGame,
         scrollBackOnUpdate: false,
       ),

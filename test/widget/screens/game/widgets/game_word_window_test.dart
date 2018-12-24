@@ -22,7 +22,7 @@ void main() {
               screenHeight: 600,
             ));
 
-    Widget w = WordWindow(
+    Widget w = WordList(
       words: p,
       scrollBackOnUpdate: true,
     );
@@ -43,7 +43,7 @@ void main() {
 
     Widget v = ValueListenableBuilder<List<WordDisplay>>(
       valueListenable: valueNotifier,
-      builder: (context, value, child) => WordWindow(
+      builder: (context, value, child) => WordList(
             words: valueNotifier.value,
             scrollBackOnUpdate: true,
           ),
@@ -73,7 +73,7 @@ void main() {
 
     Widget v = ValueListenableBuilder<List<WordDisplay>>(
       valueListenable: valueNotifier,
-      builder: (context, value, child) => WordWindow(
+      builder: (context, value, child) => WordList(
             words: valueNotifier.value,
             scrollBackOnUpdate: true,
           ),
@@ -107,7 +107,7 @@ void main() {
 
     Widget v = ValueListenableBuilder<List<WordDisplay>>(
       valueListenable: valueNotifier,
-      builder: (context, value, child) => WordWindow(
+      builder: (context, value, child) => WordList(
             words: valueNotifier.value,
             scrollBackOnUpdate: false,
           ),

@@ -16,8 +16,8 @@ import 'package:bnoggles/utils/gamelogic/solution.dart';
 /// The parent of this widget is responsible to call [setState] when the list
 /// needs to be updated, e.g. by wrapping this widget in a
 /// [ValueListenableBuilder].
-class WordWindow extends StatefulWidget {
-  WordWindow({
+class WordList extends StatefulWidget {
+  WordList({
     @required this.words,
     @required this.scrollBackOnUpdate,
   });
@@ -30,17 +30,17 @@ class WordWindow extends StatefulWidget {
   final bool scrollBackOnUpdate;
 
   @override
-  State<WordWindow> createState() => _WordWindowState();
+  State<WordList> createState() => _WordListState();
 }
 
-final _wordWindowHeightCalculator = Interpolator.fromDataPoints(
+final _wordListHeightCalculator = Interpolator.fromDataPoints(
   p1: const Point(592, 30),
   p2: const Point(683.4, 48),
   min: 28,
   max: 50,
 );
 
-class _WordWindowState extends State<WordWindow> {
+class _WordListState extends State<WordList> {
   ScrollController controller;
 
   @override
@@ -53,7 +53,7 @@ class _WordWindowState extends State<WordWindow> {
   }
 
   @override
-  void didUpdateWidget(WordWindow oldWidget) {
+  void didUpdateWidget(WordList oldWidget) {
     if (widget.scrollBackOnUpdate) {
       controller.animateTo(
         controller.position.minScrollExtent,
@@ -71,7 +71,7 @@ class _WordWindowState extends State<WordWindow> {
     double screenHeight = data.size.height;
 
     return Container(
-      height: _wordWindowHeightCalculator.y(x: screenHeight),
+      height: _wordListHeightCalculator.y(x: screenHeight),
       child: ListView(
           controller: controller,
           scrollDirection: Axis.horizontal,
