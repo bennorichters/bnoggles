@@ -9,7 +9,13 @@ import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:flutter/material.dart';
 
+/// A column of one or two [WordList]s
+///
+/// The first word list shows the words found by the user as contained by
+/// [GameInfo.userAnswer]. If [GameInfo.parameters.hints] is [true] a second
+/// WordList is created to show all correct words in a random order.
 class WordListWindow extends StatelessWidget {
+  /// Creates a WordListWindow.
   const WordListWindow();
 
   @override
