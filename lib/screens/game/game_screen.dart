@@ -11,7 +11,9 @@ import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/material.dart';
 
+/// The screen on which the game is played.
 class GameScreen extends StatefulWidget {
+  /// Creates an instance of [GameScreen].
   GameScreen({
     Key key,
     @required this.gameInfo,
@@ -20,32 +22,29 @@ class GameScreen extends StatefulWidget {
   final GameInfo gameInfo;
 
   @override
-  State createState() => _GameScreenState(gameInfo: gameInfo);
+  State createState() => _GameScreenState();
 }
 
 class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
-  _GameScreenState({@required this.gameInfo});
-
-  final GameInfo gameInfo;
-
-  AnimationController _controller;
+  AnimationController controller;
   bool controllerDisposed = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+    controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: gameInfo.parameters.time),
+      duration: Duration(seconds: widget.gameInfo.parameters.time),
     );
 
-    _controller.forward(from: 0.0);
+    controller.forward(from: 0.0);
 
-    gameInfo.userAnswer.addListener(checkDone);
+    widget.gameInfo.userAnswer.addListener(checkDone);
   }
 
   void checkDone() {
-    if ((gameInfo.solution.frequency - gameInfo.userAnswer.value.frequency)
+    if ((widget.gameInfo.solution.frequency -
+            widget.gameInfo.userAnswer.value.frequency)
         .isEmpty) {
       showResultScreen();
     }
@@ -57,7 +56,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute<Null>(
-        builder: (context) => ResultScreen(gameInfo: gameInfo),
+        builder: (context) => ResultScreen(gameInfo: widget.gameInfo),
       ),
     );
   }
@@ -79,12 +78,12 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
         ],
       ),
       body: Provider(
-        gameInfo: gameInfo,
+        gameInfo: widget.gameInfo,
         child: Column(
           children: [
             GameProgress(
-              _controller,
-              gameInfo.parameters.time,
+              controller,
+              widget.gameInfo.parameters.time,
               showResultScreen,
             ),
             Expanded(
@@ -99,14 +98,14 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    gameInfo.userAnswer.removeListener(checkDone);
+    widget.gameInfo.userAnswer.removeListener(checkDone);
     disposeController();
     super.dispose();
   }
 
   void disposeController() {
     if (!controllerDisposed) {
-      _controller.dispose();
+      controller.dispose();
       controllerDisposed = true;
     }
   }
