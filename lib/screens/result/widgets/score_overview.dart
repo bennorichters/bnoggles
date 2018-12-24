@@ -7,7 +7,9 @@ import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+/// Overview of number found words by user and number total words
 class ScoreOverview extends StatelessWidget {
+  /// Creates an instance of [ScoreOverview]
   ScoreOverview({
     Key key,
     @required this.scores,
