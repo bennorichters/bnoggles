@@ -69,13 +69,9 @@ Widget testableWidgetWithProvider({Widget child, GameInfo info}) {
 }
 
 class MockBoard extends Mock implements Board {}
-
 class MockChain extends Mock implements Chain {}
-
 class MockParameters extends Mock implements GameParameters {}
-
 class MockRandomLetterGenerator extends Mock implements SequenceGenerator {}
-
 class MockSolution extends Mock implements Solution {}
 
 GameInfo createGameInfo({
