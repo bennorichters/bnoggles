@@ -4,6 +4,9 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/screens/game/widgets/game_word_list_window.dart';
+import 'package:bnoggles/utils/game_info.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../widget_test_helper.dart';
@@ -43,5 +46,33 @@ void main() {
     expect(find.text('AAP'), findsNothing);
     expect(find.text('NOOT'), findsNothing);
     expect(find.text('MIES'), findsNothing);
+  });
+
+  testWidgets('find user words', (WidgetTester tester) async {
+    GameInfo info = createGameInfo(
+        words: [
+          'aap',
+          'noot',
+          'mies',
+        ],
+        hints: false,
+      );
+
+    await tester.pumpWidget(testableWidgetWithProvider(
+      child: WordListWindow(),
+      info: info,
+    ));
+
+    ValueNotifier<UserAnswer> userAnswer = info.userAnswer;
+
+    expect(find.text('AAP'), findsNothing);
+
+    userAnswer.value = userAnswer.value.add('aap', true);
+    await tester.pumpAndSettle();
+    expect(find.text('AAP'), findsOneWidget);
+
+    userAnswer.value = userAnswer.value.add('wim', false);
+    await tester.pumpAndSettle();
+    expect(find.text('WIM'), findsOneWidget);
   });
 }
