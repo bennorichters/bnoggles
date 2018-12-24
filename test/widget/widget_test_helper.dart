@@ -70,6 +70,8 @@ Widget testableWidgetWithProvider({Widget child, GameInfo info}) {
 
 class MockBoard extends Mock implements Board {}
 
+class MockChain extends Mock implements Chain {}
+
 class MockParameters extends Mock implements GameParameters {}
 
 class MockRandomLetterGenerator extends Mock implements SequenceGenerator {}
@@ -109,10 +111,20 @@ MockSolution createMockSolution(List<String> words) {
   var mockSolution = MockSolution();
 
   when(mockSolution.uniqueWords()).thenReturn(words.toSet());
+  when(mockSolution.uniqueWordsSorted()).thenReturn(List.from(words)..sort());
   when(mockSolution.minimalLength).thenReturn(2);
   when(mockSolution.isCorrect(argThat(inList(words)))).thenReturn(true);
   when(mockSolution.isCorrect(argThat(isNot(inList(words))))).thenReturn(false);
   when(mockSolution.frequency).thenReturn(Frequency.fromStrings(words));
+
+  var mockChain = MockChain();
+  when(mockChain.text).thenReturn('abc');
+  when(mockChain.chain).thenReturn([
+    Coordinate(0, 0),
+    Coordinate(0, 1),
+    Coordinate(0, 2),
+  ]);
+  when(mockSolution.chains).thenReturn(Set.from(<Chain>[mockChain]));
 
   return mockSolution;
 }
