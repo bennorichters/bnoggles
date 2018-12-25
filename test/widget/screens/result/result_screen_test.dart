@@ -7,7 +7,7 @@ import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/screens/result/widgets/result_all_words_list.dart';
 import 'package:bnoggles/screens/result/widgets/result_action_row.dart';
 import 'package:bnoggles/screens/result/widgets/result_board.dart';
-import 'package:bnoggles/screens/result/widgets/score_overview.dart';
+import 'package:bnoggles/screens/result/widgets/result_score_overview.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,7 +38,7 @@ void main() {
 
     expect(find.text("Bnoggles"), findsOneWidget);
     expect(find.byType(ResultAllWordsList), findsOneWidget);
-    expect(find.byType(ScoreOverview), findsOneWidget);
+    expect(find.byType(ResultScoreOverview), findsOneWidget);
     expect(find.byType(ResultBoard), findsOneWidget);
     expect(find.byType(ResultActionRow), findsOneWidget);
   });

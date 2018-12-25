@@ -3,7 +3,7 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import 'package:bnoggles/screens/result/widgets/score_overview.dart';
+import 'package:bnoggles/screens/result/widgets/result_score_overview.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -19,7 +19,7 @@ void main() {
     when(mockScoreSheet.foundWords).thenReturn(5);
 
     await tester.pumpWidget(testableWidget(
-      child: ScoreOverview(
+      child: ResultScoreOverview(
         scores: mockScoreSheet,
         fontSize: 10,
       ),
