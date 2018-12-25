@@ -11,15 +11,19 @@ import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:flutter/material.dart';
 
+/// Screen showing [AllWordsList], [ScoreOverview], [ResultBoard] and
+/// [ResultActionRow].
 class ResultScreen extends StatefulWidget {
+  /// Creates an instance of [ResultScreen].
   ResultScreen({@required this.gameInfo});
+
   final GameInfo gameInfo;
 
   @override
-  State<StatefulWidget> createState() => ResultScreenState();
+  State<StatefulWidget> createState() => _ResultScreenState();
 }
 
-class ResultScreenState extends State<ResultScreen> {
+class _ResultScreenState extends State<ResultScreen> {
   ValueNotifier<List<Coordinate>> highlightedTiles = ValueNotifier([]);
 
   @override
@@ -35,45 +39,49 @@ class ResultScreenState extends State<ResultScreen> {
         automaticallyImplyLeading: false,
       ),
       body: Center(
-        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-            width: wordViewWidth,
-            child: AllWordsList(
-              solution: widget.gameInfo.solution,
-              userAnswer: widget.gameInfo.userAnswer.value,
-              highlightedTiles: highlightedTiles,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.black)),
+              width: wordViewWidth,
+              child: AllWordsList(
+                solution: widget.gameInfo.solution,
+                userAnswer: widget.gameInfo.userAnswer.value,
+                highlightedTiles: highlightedTiles,
+              ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: ScoreOverview(
-                      scores: widget.gameInfo.scoreSheet,
-                      fontSize: secondColumnWidth / 20,
+            Expanded(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: ScoreOverview(
+                        scores: widget.gameInfo.scoreSheet,
+                        fontSize: secondColumnWidth / 20,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(10.0),
-                  child: ResultBoard(
-                    board: widget.gameInfo.board,
-                    highlightedTiles: highlightedTiles,
-                    cellWidth: cellWidth,
+                  Container(
+                    margin: const EdgeInsets.all(10.0),
+                    child: ResultBoard(
+                      board: widget.gameInfo.board,
+                      highlightedTiles: highlightedTiles,
+                      cellWidth: cellWidth,
+                    ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(20.0),
-                  child: ResultActionRow(
-                    parameters: () => widget.gameInfo.parameters,
-                  ),
-                )
-              ],
-            ),
-          )
-        ]),
+                  Container(
+                    padding: EdgeInsets.all(20.0),
+                    child: ResultActionRow(
+                      parameters: () => widget.gameInfo.parameters,
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
