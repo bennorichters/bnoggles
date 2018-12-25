@@ -8,7 +8,15 @@ import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+/// A list of all words present in the [solution]
+///
+/// Words that are also present in [userAnswer] are shown in a different colors
+/// than those that are not.
+///
+/// Tapping a word replaces the value of [highlightedTiles] with the coordinates
+/// that are associated with one of the [Chain]s for that word in the solution.
 class AllWordsList extends StatelessWidget {
+  /// Creates an instance of [AllWordsList].
   AllWordsList({
     @required this.solution,
     @required this.userAnswer,
