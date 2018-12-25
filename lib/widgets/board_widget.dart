@@ -7,17 +7,23 @@ import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:flutter/material.dart';
 
+/// Square Grid where all items represent an element of a [Board].
+///
+/// The [selectedPositions] determine which cells have a different layout.
 class BoardWidget extends StatelessWidget {
-  const BoardWidget(
-      {Key key,
-      @required this.selectedPositions,
-      @required this.board,
-      @required this.centeredCharacter})
-      : super(key: key);
+  /// Creates n instance of [BoardWidget].
+  const BoardWidget({
+    Key key,
+    @required this.selectedPositions,
+    @required this.board,
+    @required this.cellWidth,
+    this.centeredCharacter = defaultCellProvider,
+  }) : super(key: key);
 
   final List<Coordinate> selectedPositions;
   final Board board;
-  final CenteredCharacter centeredCharacter;
+  final double cellWidth;
+  final GridCharacterCellProvider centeredCharacter;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +50,8 @@ class BoardWidget extends StatelessWidget {
             border: Border.all(width: 5.0, color: Colors.blueAccent),
             color: (selected ? Colors.lightBlueAccent : Colors.white),
           ),
-          child: centeredCharacter.create(
+          child: centeredCharacter(
+            cellWidth: cellWidth,
             selected: selected,
             character: character,
             position: position,
@@ -61,23 +68,45 @@ class BoardWidget extends StatelessWidget {
   }
 }
 
-class CenteredCharacter {
-  CenteredCharacter(this.cellWidth);
-  final double cellWidth;
+/// A provider for a widget used by [BoardWidget] to create its items.
+typedef Widget GridCharacterCellProvider({
+  @required double cellWidth,
+  @required String character,
+  @required bool selected,
+  @required Coordinate position,
+});
 
-  Widget create({
-    @required String character,
-    @required bool selected,
-    Coordinate position,
-  }) =>
-      Center(
-        child: Text(
-          character.toUpperCase(),
-          style: TextStyle(
-            fontSize: cellWidth / 4,
-            fontWeight: FontWeight.bold,
-            color: (selected ? Colors.white : Colors.black),
-          ),
+/// The default [GridCharacterCellProvider]
+Widget defaultCellProvider({
+  double cellWidth,
+  String character,
+  bool selected,
+  Coordinate position,
+}) =>
+    _CenteredCharacter(cellWidth, character, selected);
+
+class _CenteredCharacter extends StatelessWidget {
+  _CenteredCharacter(
+    this.cellWidth,
+    this.character,
+    this.selected,
+  );
+
+  final double cellWidth;
+  final String character;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        character.toUpperCase(),
+        style: TextStyle(
+          fontSize: cellWidth / 4,
+          fontWeight: FontWeight.bold,
+          color: (selected ? Colors.white : Colors.black),
         ),
-      );
+      ),
+    );
+  }
 }

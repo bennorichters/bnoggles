@@ -15,22 +15,6 @@ void main() {
   final TestWidgetsFlutterBinding binding =
       TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('All letters present', (WidgetTester tester) async {
-    await binding.setSurfaceSize(Size(600, 800));
-    GameInfo info = createGameInfo();
-    await tester.pumpWidget(testableGameBoard(info));
-
-    expect(find.text('A'), findsOneWidget);
-    expect(find.text('B'), findsOneWidget);
-    expect(find.text('C'), findsOneWidget);
-    expect(find.text('D'), findsOneWidget);
-    expect(find.text('E'), findsOneWidget);
-    expect(find.text('F'), findsOneWidget);
-    expect(find.text('G'), findsOneWidget);
-    expect(find.text('H'), findsOneWidget);
-    expect(find.text('I'), findsOneWidget);
-  });
-
   testWidgets('Find word', (WidgetTester tester) async {
     await binding.setSurfaceSize(Size(600, 800));
     GameInfo info = createGameInfo();

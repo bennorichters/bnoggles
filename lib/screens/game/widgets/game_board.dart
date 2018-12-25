@@ -67,8 +67,8 @@ class _GameBoardState extends State<GameBoard> {
 
     bool canBeNext(Coordinate position) =>
         selectedPositions.isEmpty ||
-            (!selectedPositions.contains(position) &&
-                selectedPositions.last.isNeighbourOf(position));
+        (!selectedPositions.contains(position) &&
+            selectedPositions.last.isNeighbourOf(position));
 
     void startAndMove(PointerEvent event) {
       final RenderBox box = key.currentContext.findRenderObject();
@@ -98,8 +98,9 @@ class _GameBoardState extends State<GameBoard> {
         onPointerUp: finish,
         child: Container(
           child: BoardWidget(
+            cellWidth: cellWidth,
             board: board,
-            centeredCharacter: _HittableCenteredCharacter(cellWidth),
+            centeredCharacter: _hittableGridCellProvider,
             selectedPositions: selectedPositions,
           ),
         ),
@@ -108,18 +109,29 @@ class _GameBoardState extends State<GameBoard> {
   }
 }
 
-class _HittableCenteredCharacter extends CenteredCharacter {
-  _HittableCenteredCharacter(double cellWidth) : super(cellWidth);
+Widget _hittableGridCellProvider({
+  double cellWidth,
+  String character,
+  bool selected,
+  Coordinate position,
+}) =>
+    _HittableGridCell(cellWidth, character, selected, position);
+
+class _HittableGridCell extends StatelessWidget {
+  _HittableGridCell(
+    this.cellWidth,
+    this.character,
+    this.selected,
+    this.position,
+  );
+
+  final double cellWidth;
+  final String character;
+  final bool selected;
+  final Coordinate position;
 
   @override
-  Widget create({
-    String character,
-    bool selected,
-    Coordinate position,
-  }) {
-    Widget child = super
-        .create(character: character, selected: selected, position: position);
-
+  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(cellWidth / 8),
       child: _PositionedWidget(
@@ -128,7 +140,12 @@ class _HittableCenteredCharacter extends CenteredCharacter {
           // Without this line the interface is unresponsive. Not sure why.
           color: selected ? Colors.lightBlueAccent : Colors.white,
 
-          child: child,
+          child: defaultCellProvider(
+            cellWidth: cellWidth,
+            character: character,
+            selected: selected,
+            position: position,
+          ),
         ),
       ),
     );

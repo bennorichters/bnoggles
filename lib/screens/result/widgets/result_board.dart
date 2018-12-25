@@ -26,13 +26,14 @@ class ResultBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<List<Coordinate>>(
-        valueListenable: highlightedTiles,
-        builder: (context, value, child) {
-          return BoardWidget(
-            selectedPositions: highlightedTiles.value,
-            board: board,
-            centeredCharacter: CenteredCharacter(cellWidth),
-          );
-        });
+      valueListenable: highlightedTiles,
+      builder: (context, value, child) {
+        return BoardWidget(
+          selectedPositions: highlightedTiles.value,
+          board: board,
+          cellWidth: cellWidth,
+        );
+      },
+    );
   }
 }
