@@ -8,7 +8,11 @@ import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/widgets/board_widget.dart';
 import 'package:flutter/material.dart';
 
+/// A [BoardWidget] wrapped in a [ValueListenableBuilder]
+///
+/// ValueListenableBuilder responds to changes in [highlightedTiles].
 class ResultBoard extends StatelessWidget {
+  /// Creates an instance of [ResultBoard].
   ResultBoard({
     @required this.board,
     @required this.highlightedTiles,
