@@ -3,7 +3,7 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import 'package:bnoggles/screens/game/widgets/provider.dart';
+import 'package:bnoggles/screens/game/widgets/game_info_provider.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
@@ -61,7 +61,7 @@ Widget testableWidgetWithMediaQuery(
 
 Widget testableWidgetWithProvider({Widget child, GameInfo info}) {
   return testableWidget(
-    child: Provider(
+    child: GameInfoProvider(
       gameInfo: info ?? createGameInfo(),
       child: child,
     ),

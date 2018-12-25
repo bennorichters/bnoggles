@@ -5,7 +5,7 @@
 
 import 'package:bnoggles/screens/game/widgets/game_clock.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
-import 'package:bnoggles/screens/game/widgets/provider.dart';
+import 'package:bnoggles/screens/game/widgets/game_info_provider.dart';
 import 'package:bnoggles/screens/game/widgets/word_count_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,7 +19,7 @@ void main() {
     );
 
     var info = createGameInfo();
-    var widget = Provider(
+    var widget = GameInfoProvider(
       gameInfo: info,
       child: GameProgress(controller, 100, () {}),
     );

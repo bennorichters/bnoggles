@@ -3,7 +3,7 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import 'package:bnoggles/screens/game/widgets/provider.dart';
+import 'package:bnoggles/screens/game/widgets/game_info_provider.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,7 +17,7 @@ void main() {
 
     var text = TestWidget();
 
-    Provider provider = Provider(
+    GameInfoProvider provider = GameInfoProvider(
       gameInfo: info,
       child: text,
     );
@@ -42,7 +42,7 @@ void main() {
 class TestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var gameInfo = Provider.of(context);
+    var gameInfo = GameInfoProvider.of(context);
     var answer = gameInfo.userAnswer;
     return Text(answer.value.uniqueWords().length.toString());
   }

@@ -8,7 +8,7 @@ import 'package:bnoggles/widgets/board_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:bnoggles/screens/game/widgets/provider.dart';
+import 'package:bnoggles/screens/game/widgets/game_info_provider.dart';
 
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
@@ -17,7 +17,7 @@ import 'package:bnoggles/utils/gamelogic/solution.dart';
 /// Widget that allows the user to swipe through a grid of letters to find
 /// hidden words.
 ///
-/// This [GameBoard] needs to be a descendant of [Provider] which contains all
+/// This [GameBoard] needs to be a descendant of [GameInfoProvider] which contains all
 /// relevant information.
 class GameBoard extends StatefulWidget {
   /// Creates an instance of [GameBoard].
@@ -32,7 +32,7 @@ class _GameBoardState extends State<GameBoard> {
   final key = GlobalKey();
 
   void finish(PointerUpEvent event) {
-    GameInfo gameInfo = Provider.of(key.currentContext);
+    GameInfo gameInfo = GameInfoProvider.of(key.currentContext);
     Board board = gameInfo.board;
     Solution solution = gameInfo.solution;
 
@@ -60,7 +60,7 @@ class _GameBoardState extends State<GameBoard> {
 
   @override
   Widget build(BuildContext context) {
-    Board board = Provider.of(context).board;
+    Board board = GameInfoProvider.of(context).board;
 
     double mediaWidth = MediaQuery.of(context).size.width;
     double cellWidth = mediaWidth / board.width;

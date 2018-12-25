@@ -4,7 +4,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/screens/game/widgets/game_board.dart';
-import 'package:bnoggles/screens/game/widgets/provider.dart';
+import 'package:bnoggles/screens/game/widgets/game_info_provider.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -64,7 +64,7 @@ void main() {
 }
 
 Widget testableGameBoard(GameInfo info) => testableWidgetWithMediaQuery(
-      child: Provider(
+      child: GameInfoProvider(
         gameInfo: info,
         child: const GameBoard(),
       ),

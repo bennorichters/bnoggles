@@ -10,10 +10,10 @@ import 'package:bnoggles/utils/gamelogic/solution.dart';
 
 /// A widget that holds an instance of [GameInfo] that is accessible by its
 /// descendants.
-class Provider extends StatefulWidget {
-  /// Creates a [Provider]. The given [gameInfo] is accessible by [child] and
+class GameInfoProvider extends StatefulWidget {
+  /// Creates a [GameInfoProvider]. The given [gameInfo] is accessible by [child] and
   /// the children of child.
-  const Provider({this.gameInfo, this.child});
+  const GameInfoProvider({this.gameInfo, this.child});
 
   final GameInfo gameInfo;
   final Widget child;
@@ -26,10 +26,10 @@ class Provider extends StatefulWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => _ProviderState();
+  State<StatefulWidget> createState() => _GameInfoProviderState();
 }
 
-class _ProviderState extends State<Provider> {
+class _GameInfoProviderState extends State<GameInfoProvider> {
   @override
   void initState() {
     super.initState();

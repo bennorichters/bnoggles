@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:bnoggles/screens/game/widgets/provider.dart';
+import 'package:bnoggles/screens/game/widgets/game_info_provider.dart';
 
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 
@@ -15,7 +15,7 @@ const int _maxLength = 8;
 /// Overview of word lengths and the number of words still to be find in this
 /// category by the user.
 ///
-/// This widget should be a descendant of [Provider].
+/// This widget should be a descendant of [GameInfoProvider].
 class WordCountOverview extends StatelessWidget {
   /// Creates a [WordCountOverview]
   const WordCountOverview({this.fontSize});
@@ -24,7 +24,7 @@ class WordCountOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Solution solution = Provider.of(context).solution;
+    Solution solution = GameInfoProvider.of(context).solution;
 
     return GridView.builder(
       itemCount: ((_maxLength - 1) * 2),
@@ -115,7 +115,7 @@ class _UserAnswerNumberInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var gameInfo = Provider.of(context);
+    var gameInfo = GameInfoProvider.of(context);
     Solution solution = gameInfo.solution;
     Answer answer = gameInfo.userAnswer.value;
 
