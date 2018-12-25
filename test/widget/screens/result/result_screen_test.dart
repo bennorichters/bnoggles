@@ -4,7 +4,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/screens/result/result_screen.dart';
-import 'package:bnoggles/screens/result/widgets/all_words_list.dart';
+import 'package:bnoggles/screens/result/widgets/result_all_words_list.dart';
 import 'package:bnoggles/screens/result/widgets/result_action_row.dart';
 import 'package:bnoggles/screens/result/widgets/result_board.dart';
 import 'package:bnoggles/screens/result/widgets/score_overview.dart';
@@ -37,7 +37,7 @@ void main() {
     await tester.pumpWidget(w);
 
     expect(find.text("Bnoggles"), findsOneWidget);
-    expect(find.byType(AllWordsList), findsOneWidget);
+    expect(find.byType(ResultAllWordsList), findsOneWidget);
     expect(find.byType(ScoreOverview), findsOneWidget);
     expect(find.byType(ResultBoard), findsOneWidget);
     expect(find.byType(ResultActionRow), findsOneWidget);

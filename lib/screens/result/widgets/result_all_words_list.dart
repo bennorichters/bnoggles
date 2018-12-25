@@ -15,9 +15,9 @@ import 'package:flutter/rendering.dart';
 ///
 /// Tapping a word replaces the value of [highlightedTiles] with the coordinates
 /// that are associated with one of the [Chain]s for that word in the solution.
-class AllWordsList extends StatelessWidget {
-  /// Creates an instance of [AllWordsList].
-  AllWordsList({
+class ResultAllWordsList extends StatelessWidget {
+  /// Creates an instance of [ResultAllWordsList].
+  ResultAllWordsList({
     @required this.solution,
     @required this.userAnswer,
     @required this.highlightedTiles,

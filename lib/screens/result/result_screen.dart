@@ -3,7 +3,7 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import 'package:bnoggles/screens/result/widgets/all_words_list.dart';
+import 'package:bnoggles/screens/result/widgets/result_all_words_list.dart';
 import 'package:bnoggles/screens/result/widgets/result_action_row.dart';
 import 'package:bnoggles/screens/result/widgets/result_board.dart';
 import 'package:bnoggles/screens/result/widgets/score_overview.dart';
@@ -11,7 +11,7 @@ import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:flutter/material.dart';
 
-/// Screen showing [AllWordsList], [ScoreOverview], [ResultBoard] and
+/// Screen showing [ResultAllWordsList], [ScoreOverview], [ResultBoard] and
 /// [ResultActionRow].
 class ResultScreen extends StatefulWidget {
   /// Creates an instance of [ResultScreen].
@@ -46,7 +46,7 @@ class _ResultScreenState extends State<ResultScreen> {
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black)),
               width: wordViewWidth,
-              child: AllWordsList(
+              child: ResultAllWordsList(
                 solution: widget.gameInfo.solution,
                 userAnswer: widget.gameInfo.userAnswer.value,
                 highlightedTiles: highlightedTiles,

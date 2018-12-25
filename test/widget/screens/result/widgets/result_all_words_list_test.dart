@@ -3,7 +3,7 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import 'package:bnoggles/screens/result/widgets/all_words_list.dart';
+import 'package:bnoggles/screens/result/widgets/result_all_words_list.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ void main() {
     ValueNotifier<List<Coordinate>> highlightedTiles = ValueNotifier([]);
 
     await tester.pumpWidget(testableWidget(
-      child: AllWordsList(
+      child: ResultAllWordsList(
         solution: solution,
         userAnswer: answer,
         highlightedTiles: highlightedTiles,
@@ -36,7 +36,7 @@ void main() {
     ValueNotifier<List<Coordinate>> highlightedTiles = ValueNotifier([]);
 
     await tester.pumpWidget(testableWidget(
-      child: AllWordsList(
+      child: ResultAllWordsList(
         solution: solution,
         userAnswer: answer,
         highlightedTiles: highlightedTiles,
@@ -60,7 +60,7 @@ void main() {
     ValueNotifier<List<Coordinate>> highlightedTiles = ValueNotifier([]);
 
     await tester.pumpWidget(testableWidget(
-      child: AllWordsList(
+      child: ResultAllWordsList(
         solution: solution,
         userAnswer: answer,
         highlightedTiles: highlightedTiles,
