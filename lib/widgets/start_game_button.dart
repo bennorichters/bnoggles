@@ -10,6 +10,7 @@ import 'package:bnoggles/utils/language.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter/material.dart';
 
+/// Button to start the game with
 class StartGameButton extends StatefulWidget {
   StartGameButton(
       {Key key, @required this.parameterProvider, @required this.replaceScreen})
@@ -53,26 +54,22 @@ class _StartGameButtonState extends State<StartGameButton> {
             userAnswer: ValueNotifier(UserAnswer.start()),
           );
 
+          Widget gameScreenBuilder(BuildContext context) => GameScreen(
+                gameInfo: gameInfo,
+              );
+
           if (widget.replaceScreen) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute<Null>(
-                builder: (context) => GameScreen(
-                      gameInfo: gameInfo,
-                    ),
+                builder: gameScreenBuilder,
               ),
-            ).then((value) {
-              setState(() {
-                isLoading = false;
-              });
-            });
+            );
           } else {
             Navigator.push(
               context,
               MaterialPageRoute<Null>(
-                builder: (context) => GameScreen(
-                      gameInfo: gameInfo,
-                    ),
+                builder: gameScreenBuilder,
               ),
             ).then((value) {
               setState(() {
