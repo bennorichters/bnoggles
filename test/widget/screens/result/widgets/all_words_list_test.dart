@@ -13,7 +13,7 @@ import '../../../widget_test_helper.dart';
 
 void main() {
   testWidgets('all words in solution are shown', (WidgetTester tester) async {
-    Solution solution = createMockSolution(['abc', 'def']);
+    Solution solution = createMockSolution(['abc', 'def'], 2);
     UserAnswer answer = UserAnswer.start();
     ValueNotifier<List<Coordinate>> highlightedTiles = ValueNotifier([]);
 
@@ -31,7 +31,7 @@ void main() {
 
   testWidgets('found word by user is green, other is blue',
       (WidgetTester tester) async {
-    Solution solution = createMockSolution(['abc', 'def']);
+    Solution solution = createMockSolution(['abc', 'def'], 2);
     UserAnswer answer = UserAnswer.start().add('abc', true);
     ValueNotifier<List<Coordinate>> highlightedTiles = ValueNotifier([]);
 
@@ -55,7 +55,7 @@ void main() {
   });
 
   testWidgets('tapping words selects coordinates', (WidgetTester tester) async {
-    Solution solution = createMockSolution(['abc', 'def']);
+    Solution solution = createMockSolution(['abc', 'def'], 2);
     UserAnswer answer = UserAnswer.start();
     ValueNotifier<List<Coordinate>> highlightedTiles = ValueNotifier([]);
 

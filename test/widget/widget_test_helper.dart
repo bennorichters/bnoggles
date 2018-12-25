@@ -77,11 +77,12 @@ class MockSolution extends Mock implements Solution {}
 GameInfo createGameInfo({
   List<String> words = const ['abc'],
   bool hints = true,
+  int minimalWordLength = 2,
 }) {
   var mockParameters = createMockParameters(hints);
   var mockBoard = createMockBoard();
   var vua = ValueNotifier(UserAnswer.start());
-  var mockSolution = createMockSolution(words);
+  var mockSolution = createMockSolution(words, minimalWordLength);
 
   return GameInfo(
     parameters: mockParameters,
@@ -103,12 +104,12 @@ MockParameters createMockParameters(bool hints) {
   return mockParameters;
 }
 
-MockSolution createMockSolution(List<String> words) {
+MockSolution createMockSolution(List<String> words, int minimalLength) {
   var mockSolution = MockSolution();
 
   when(mockSolution.uniqueWords()).thenReturn(words.toSet());
   when(mockSolution.uniqueWordsSorted()).thenReturn(List.from(words)..sort());
-  when(mockSolution.minimalLength).thenReturn(2);
+  when(mockSolution.minimalLength).thenReturn(minimalLength);
   when(mockSolution.isCorrect(argThat(inList(words)))).thenReturn(true);
   when(mockSolution.isCorrect(argThat(isNot(inList(words))))).thenReturn(false);
   when(mockSolution.frequency).thenReturn(Frequency.fromStrings(words));

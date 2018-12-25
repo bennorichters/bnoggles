@@ -47,4 +47,16 @@ void main() {
       );
     }
   });
+
+  testWidgets('two x for word length 2 and 3', (WidgetTester tester) async {
+    await tester.pumpWidget(testableWidgetWithProvider(
+      child: WordCountOverview(),
+      info: createGameInfo(
+        words: ['1234567', '1234567890'],
+        minimalWordLength: 4,
+      ),
+    ));
+
+    expect(find.text('x'), findsNWidgets(2));
+ });
 }

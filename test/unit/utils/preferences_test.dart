@@ -26,12 +26,16 @@ void main() {
     expect(gp.minimalWordLength, 2);
     expect(gp.hints, false);
   });
+
+  test('toString does not throw exception', () async {
+    Preferences preferences = await getPreferences();
+    preferences.toString();
+  });
 }
 
 Future<Preferences> getPreferences() async {
   const MethodChannel('plugins.flutter.io/shared_preferences')
       .setMockMethodCallHandler((MethodCall methodCall) async {
-
     if (methodCall.method == 'getAll') {
       // Initial values can be set here. At the moment of writing they need to
       // be prefixed with the undocumented prefix 'flutter.'; for example:

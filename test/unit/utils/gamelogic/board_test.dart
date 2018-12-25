@@ -70,4 +70,16 @@ void main() {
     e(c(1, 2), [c(0, 1), c(1, 1), c(2, 1), c(0, 2), c(2, 2)]);
     e(c(2, 2), [c(1, 1), c(2, 1), c(1, 2)]);
   });
+
+  test('toString does not throw exception', () {
+    var rlg = MockRandomLetterGenerator();
+    when(rlg.next()).thenAnswer((s) => 'a');
+
+    Board b = Board(
+      width: 3,
+      generator: rlg,
+    );
+
+    b.toString();
+  });
 }

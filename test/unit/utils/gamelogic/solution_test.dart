@@ -86,6 +86,13 @@ void main() {
 
     expect(a.uniqueWords(), ["abc", "ghi"].toSet());
   });
+
+  test('toString does throw exception', () {
+    createSolution().toString();
+    UserAnswer.start().toString();
+    createSolution().chains.first.toString();
+    UserAnswer.start().add('abc', true).found[0].toString();
+  });
 }
 
 class MockRandomLetterGenerator extends Mock implements SequenceGenerator {}
