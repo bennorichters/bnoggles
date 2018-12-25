@@ -8,7 +8,9 @@ import 'package:bnoggles/widgets/start_game_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+/// Row with two buttons, one to play again and one to go to the settings screen
 class ResultActionRow extends StatelessWidget {
+  /// Creates an instance of [ResultActionRow]
   ResultActionRow({
     @required this.parameters,
   });
