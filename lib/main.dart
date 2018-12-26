@@ -21,9 +21,6 @@ void main() async {
 
   var preferences = await Preferences.load();
 
-  // preload previous language
-  // Language.forLanguageCode(preferences.toParameters().languageCode);
-
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
