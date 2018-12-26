@@ -24,7 +24,12 @@ void main() async {
   // preload previous language
   // Language.forLanguageCode(preferences.toParameters().languageCode);
 
-  runApp(Bnoggles(preferences));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(Bnoggles(preferences));
+  });
 }
 
 /// The main class for the app.
@@ -35,15 +40,11 @@ class Bnoggles extends StatelessWidget {
   ///
   /// [preferences] is used to set and save user settings.
   Bnoggles(this.preferences);
+
   final Preferences preferences;
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-
     return MaterialApp(
       title: 'Bnoggles',
       debugShowCheckedModeBanner: false,
