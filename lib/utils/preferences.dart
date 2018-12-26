@@ -14,8 +14,8 @@ class Preferences {
     @required this.time,
     @required this.boardWidth,
     @required this.minimalWordLength,
-    ValueNotifier<bool> hints,
-  }) : this.hints = hints ?? ValueNotifier(false);
+    @required this.hints,
+  });
 
   /// The code of the language in which the game is played.
   final ValueNotifier<int> language;
