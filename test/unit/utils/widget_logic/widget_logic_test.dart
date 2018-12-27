@@ -6,7 +6,7 @@
 import 'dart:math';
 
 import 'package:bnoggles/utils/widget_logic/widget_logic.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('formatTime', () {

@@ -3,13 +3,14 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:mockito/mockito.dart';
 
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/solution.dart' as solution;
 
 import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
@@ -17,7 +18,7 @@ class MockBoard extends Mock implements Board {}
 
 void main() {
   test('uniqueWordsSorted', () {
-    Solution s = createSolution();
+    solution.Solution s = createSolution();
     expect(s.uniqueWordsSorted().toSet(), Set.of(<String>['ab', 'bc', 'dab']));
   });
 
@@ -52,33 +53,33 @@ void main() {
   });
 
   test('userAnswer.found', () {
-    var a = UserAnswer.start();
+    var a = solution.UserAnswer.start();
     expect(a.found.length, 0);
 
     a = a.add("abc", true);
     expect(a.found.length, 1);
     expect(a.found[0].word, "abc");
-    expect(a.found[0].evaluation, Evaluation.good);
+    expect(a.found[0].evaluation, solution.Evaluation.good);
 
     a = a.add("def", false);
     expect(a.found.length, 2);
     expect(a.found[0].word, "abc");
-    expect(a.found[0].evaluation, Evaluation.good);
+    expect(a.found[0].evaluation, solution.Evaluation.good);
     expect(a.found[1].word, "def");
-    expect(a.found[1].evaluation, Evaluation.wrong);
+    expect(a.found[1].evaluation, solution.Evaluation.wrong);
 
     a = a.add("abc", true);
     expect(a.found.length, 3);
     expect(a.found[0].word, "abc");
-    expect(a.found[0].evaluation, Evaluation.good);
+    expect(a.found[0].evaluation, solution.Evaluation.good);
     expect(a.found[1].word, "def");
-    expect(a.found[1].evaluation, Evaluation.wrong);
+    expect(a.found[1].evaluation, solution.Evaluation.wrong);
     expect(a.found[2].word, "abc");
-    expect(a.found[2].evaluation, Evaluation.goodAgain);
+    expect(a.found[2].evaluation, solution.Evaluation.goodAgain);
   });
 
   test('userAnswer.uniqueWords', () {
-    UserAnswer a = UserAnswer.start();
+    solution.UserAnswer a = solution.UserAnswer.start();
     a = a.add("abc", true);
     a = a.add("def", false);
     a = a.add("abc", true);
@@ -89,15 +90,15 @@ void main() {
 
   test('toString does throw exception', () {
     createSolution().toString();
-    UserAnswer.start().toString();
+    solution.UserAnswer.start().toString();
     createSolution().chains.first.toString();
-    UserAnswer.start().add('abc', true).found[0].toString();
+    solution.UserAnswer.start().add('abc', true).found[0].toString();
   });
 }
 
 class MockRandomLetterGenerator extends Mock implements SequenceGenerator {}
 
-Solution createSolution({int minimalLength = 2}) {
+solution.Solution createSolution({int minimalLength = 2}) {
   var allCoordinates = [
     Coordinate(0, 0),
     Coordinate(0, 1),
@@ -126,5 +127,5 @@ Solution createSolution({int minimalLength = 2}) {
 
   Dictionary dict = Dictionary(['ab', 'bc', 'dab', 'xyz']);
 
-  return Solution(mockBoard, dict, minimalLength);
+  return solution.Solution(mockBoard, dict, minimalLength);
 }

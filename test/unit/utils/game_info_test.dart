@@ -2,6 +2,9 @@
 // Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
+
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/frequency.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
@@ -10,7 +13,6 @@ import 'package:flutter/foundation.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:bnoggles/utils/game_info.dart';
-import 'package:test/test.dart';
 
 class MockParameters extends Mock implements GameParameters {}
 

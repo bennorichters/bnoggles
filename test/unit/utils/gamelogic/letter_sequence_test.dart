@@ -4,7 +4,8 @@
 // license that can be found in the LICENSE file.
 
 import 'dart:math';
-import 'package:test/test.dart';
+
+import 'package:flutter_test/flutter_test.dart';
 
 import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 
