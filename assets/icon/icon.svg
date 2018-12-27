@@ -9,13 +9,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="460"
-   height="460"
-   viewBox="0 0 121.70832 121.70834"
+   width="490"
+   height="490"
+   viewBox="0 0 129.64581 129.64583"
    version="1.1"
    id="svg281"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="icon.svg">
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="/Users/bennorichters/dev/bnoggles/assets/icon/icon.png"
+   inkscape:export-xdpi="95.967743"
+   inkscape:export-ydpi="95.967743">
   <defs
      id="defs275" />
   <sodipodi:namedview
@@ -26,24 +29,24 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="-245.16061"
-     inkscape:cy="105.61036"
+     inkscape:cx="322.18225"
+     inkscape:cy="119.53037"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-width="1680"
+     inkscape:window-height="1005"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
      inkscape:window-maximized="1"
      showborder="true"
      borderlayer="false"
      inkscape:pagecheckerboard="false"
      units="px"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-top="13.92"
+     fit-margin-left="15.2"
+     fit-margin-right="15.2"
+     fit-margin-bottom="13.92" />
   <metadata
      id="metadata278">
     <rdf:RDF>
@@ -60,9 +63,9 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-44.463327,-49.710717)">
+     transform="translate(-40.441662,-45.456223)">
     <g
-       transform="matrix(2.7561974,0,0,3.0091404,9.840893,-49.571578)"
+       transform="matrix(2.7561974,0,0,3.0091404,10.37006,-49.571578)"
        id="g193">
       <path
          style="fill:#000080;stroke-width:0.11422472"
@@ -83,7 +86,7 @@
     </g>
     <g
        id="g198"
-       transform="matrix(2.7561974,0,0,3.0091404,-149.64331,-65.656607)">
+       transform="matrix(2.7561974,0,0,3.0091404,-149.11414,-65.656607)">
       <path
          style="fill:#000080;stroke-width:0.11422472"
          d="m 88.980232,38.14946 h 8.037644 c 1.105087,0 1.994743,0.889655 1.994743,1.994743 v 8.03764 c 0,1.105088 -0.889656,1.994743 -1.994743,1.994743 h -8.037644 c -1.105088,0 -1.994743,-0.889655 -1.994743,-1.994743 v -8.03764 c 0,-1.105088 0.889655,-1.994743 1.994743,-1.994743 z"
@@ -103,7 +106,7 @@
     </g>
     <g
        id="g213"
-       transform="matrix(2.7561974,0,0,3.0091404,-197.5254,-113.07511)">
+       transform="matrix(2.7561974,0,0,3.0091404,-196.99623,-113.07511)">
       <path
          style="fill:#000080;stroke-width:0.11422472"
          d="m 95.672714,82.516205 h 8.037646 c 1.10509,0 1.99474,0.889655 1.99474,1.994743 v 8.03764 c 0,1.105088 -0.88965,1.994743 -1.99474,1.994743 h -8.037646 c -1.105088,0 -1.994743,-0.889655 -1.994743,-1.994743 v -8.03764 c 0,-1.105088 0.889655,-1.994743 1.994743,-1.994743 z"
@@ -123,7 +126,7 @@
     </g>
     <g
        id="g221"
-       transform="matrix(2.7561974,0,0,3.0091404,-199.69093,-123.16059)">
+       transform="matrix(2.7561974,0,0,3.0091404,-199.16176,-123.16059)">
       <path
          style="fill:#000080;stroke-width:0.11422472"
          d="m 110.23891,85.055267 h 8.03764 c 1.10509,0 1.99474,0.889656 1.99474,1.994744 v 8.037639 c 0,1.105088 -0.88965,1.994744 -1.99474,1.994744 h -8.03764 c -1.10509,0 -1.99475,-0.889656 -1.99475,-1.994744 v -8.037639 c 0,-1.105088 0.88966,-1.994744 1.99475,-1.994744 z"
@@ -159,7 +162,7 @@
     </g>
     <g
        id="g226"
-       transform="matrix(2.7561974,0,0,3.0091404,-230.98362,-113.50958)">
+       transform="matrix(2.7561974,0,0,3.0091404,-230.45445,-113.50958)">
       <path
          style="fill:#000080;stroke-width:0.11422472"
          d="m 134.02589,73.028137 h 8.03764 c 1.10509,0 1.99474,0.889656 1.99474,1.994744 v 8.037639 c 0,1.105088 -0.88965,1.994744 -1.99474,1.994744 h -8.03764 c -1.10509,0 -1.99475,-0.889656 -1.99475,-1.994744 v -8.037639 c 0,-1.105088 0.88966,-1.994744 1.99475,-1.994744 z"
@@ -181,13 +184,13 @@
        id="rect24"
        width="69.613197"
        height="70.372002"
-       x="69.141006"
+       x="69.670174"
        y="72.061684"
        style="fill:#0000ff;stroke-width:0.66472793"
        ry="11.671456" />
     <g
        aria-label="B"
-       transform="scale(0.95704845,1.0448792)"
+       transform="matrix(0.95704845,0,0,1.0448792,0.52916659,0)"
        style="font-style:normal;font-weight:normal;font-size:30.47886848px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.76197171"
        id="text28">
       <path
@@ -198,7 +201,7 @@
     </g>
     <g
        id="g203"
-       transform="matrix(2.7561974,0,0,3.0091404,-21.098304,-129.19248)">
+       transform="matrix(2.7561974,0,0,3.0091404,-20.569137,-129.19248)">
       <path
          style="fill:#000080;stroke-width:0.11422472"
          d="m 55.248196,64.675964 h 8.037643 c 1.105088,0 1.994743,0.889656 1.994743,1.994744 v 8.037639 c 0,1.105088 -0.889655,1.994744 -1.994743,1.994744 h -8.037643 c -1.105088,0 -1.994744,-0.889656 -1.994744,-1.994744 v -8.037639 c 0,-1.105088 0.889656,-1.994744 1.994744,-1.994744 z"
@@ -218,7 +221,7 @@
     </g>
     <g
        id="g208"
-       transform="matrix(2.7561974,0,0,3.0091404,-148.17002,-132.81161)">
+       transform="matrix(2.7561974,0,0,3.0091404,-147.64085,-132.81161)">
       <path
          style="fill:#000080;stroke-width:0.11422472"
          d="m 71.885727,76.50264 h 8.037643 c 1.105088,0 1.994744,0.889655 1.994744,1.994743 v 8.03764 c 0,1.105088 -0.889656,1.994743 -1.994744,1.994743 h -8.037643 c -1.105088,0 -1.994743,-0.889655 -1.994743,-1.994743 v -8.03764 c 0,-1.105088 0.889655,-1.994743 1.994743,-1.994743 z"
