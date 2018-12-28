@@ -9,6 +9,7 @@ import 'package:bnoggles/screens/result/widgets/result_action_row.dart';
 import 'package:bnoggles/screens/result/widgets/result_board.dart';
 import 'package:bnoggles/screens/result/widgets/result_score_overview.dart';
 import 'package:bnoggles/utils/game_info.dart';
+import 'package:bnoggles/utils/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -42,4 +43,41 @@ void main() {
     expect(find.byType(ResultBoard), findsOneWidget);
     expect(find.byType(ResultActionRow), findsOneWidget);
   });
+
+  testWidgets('tap play button', (WidgetTester tester) async {
+    await binding.setSurfaceSize(Size(768, 1024));
+
+    _registerLanguageLoader();
+
+    GameInfo info = createGameInfo();
+    ResultScreen screen = ResultScreen(
+      gameInfo: info,
+    );
+
+    Widget w = testableWidgetWithMediaQuery(
+      child: screen,
+      width: 768,
+      height: 1024,
+    );
+    await tester.pumpWidget(w);
+
+    tester.tap(find.byIcon(Icons.play_arrow));
+  });
+}
+
+void _registerLanguageLoader() {
+  Map<String, String> frequencies = {
+    'nl': '{"a": 1, "b": 1, "c": 1}',
+  };
+
+  Map<String, String> words = {
+    'nl': 'ab\nac\nbc\ncbabc',
+  };
+
+  var loader = LanguageLoader(
+    characterSequenceFrequencies: (c) => Future<String>.value(frequencies[c]),
+    availableWords: (c) => Future<String>.value(words[c]),
+  );
+
+  Language.registerLoader(loader);
 }
