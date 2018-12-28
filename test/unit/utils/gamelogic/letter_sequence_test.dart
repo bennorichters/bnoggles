@@ -117,6 +117,17 @@ void main() {
     expect(gen.next().length, 1);
     expect(gen.next().length, 1);
   });
+
+  test('bad random generator throws state error', () {
+    Map<String, int> freq = {
+      'a': 1,
+    };
+
+    var info = LetterSequenceInfo(freq);
+    var gen = info.createSequenceGenerator(BadRandom());
+
+    expect(() => gen.next(), throwsStateError);
+  });
 }
 
 class MyRandom implements Random {
@@ -132,5 +143,18 @@ class MyRandom implements Random {
   int nextInt(int max) {
     count++;
     return count % max;
+  }
+}
+
+class BadRandom implements Random {
+  @override
+  bool nextBool() => throw UnsupportedError('only nextInt implemented');
+
+  @override
+  double nextDouble() => throw UnsupportedError('only nextInt implemented');
+
+  @override
+  int nextInt(int max) {
+    return max;
   }
 }

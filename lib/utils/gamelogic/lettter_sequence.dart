@@ -119,7 +119,7 @@ class SequenceGenerator {
   /// available length has been reached already, this method will throw a
   /// [StateError].
   void decreaseLength() {
-    if (_lengths.length < 2) throw StateError("cannot decrease length anymore");
+    if (_lengths.length < 2) throw StateError('cannot decrease length anymore');
 
     _lengths.removeLast();
     _totalValue = _info._totalValue(_lengths.last);
