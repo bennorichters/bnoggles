@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 class SettingsScreen extends StatelessWidget {
   /// Creates a [SettingsScreen].
   ///
-  /// The passed in [preferences] hold the initial settings.s
+  /// The passed in [preferences] hold the initial settings.
   SettingsScreen({Key key, @required this.preferences}) : super(key: key);
 
   final Preferences preferences;
