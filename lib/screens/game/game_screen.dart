@@ -67,7 +67,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Clock clock = Clock(
-      showResultScreen: showResultScreen,
+      timeOutAction: showResultScreen,
       controller: controller,
       startTime: widget.gameInfo.parameters.time,
     );

@@ -10,12 +10,12 @@ import 'package:flutter/material.dart';
 class Clock extends StatelessWidget {
   /// Creates the [Clock]
   Clock({
-    this.showResultScreen,
+    this.timeOutAction,
     this.controller,
     this.startTime,
   });
 
-  final VoidCallback showResultScreen;
+  final VoidCallback timeOutAction;
   final AnimationController controller;
   final int startTime;
 
@@ -31,7 +31,7 @@ class Clock extends StatelessWidget {
 
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        showResultScreen();
+        timeOutAction();
       }
     });
 

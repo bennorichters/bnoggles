@@ -16,7 +16,7 @@ void main() {
     );
 
     Clock clock = Clock(
-      showResultScreen: () {},
+      timeOutAction: () {},
       controller: controller,
       startTime: 100,
     );
@@ -41,7 +41,7 @@ void main() {
     );
 
     Clock clock = Clock(
-      showResultScreen: () {
+      timeOutAction: () {
         finished = true;
       },
       controller: controller,
