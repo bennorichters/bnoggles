@@ -5,6 +5,9 @@
 
 import 'package:flutter/material.dart';
 
+/// Creates a [String] based on the given [value].
+typedef String LabelRenderer(int value);
+
 /// Creates a list of three or four widgets; an [Icon], a [Text], optionally a
 /// [Switch] and a [Slider].
 ///
@@ -96,9 +99,6 @@ class _DisableableSliderState extends State<_DisableableSlider> {
     );
   }
 }
-
-/// Creates a [String] based on the given [value].
-typedef String LabelRenderer(int value);
 
 class _Label extends StatefulWidget {
   _Label({
