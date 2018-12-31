@@ -69,17 +69,25 @@ Widget testableWidgetWithProvider({Widget child, GameInfo info}) {
 }
 
 class MockBoard extends Mock implements Board {}
+
 class MockChain extends Mock implements Chain {}
+
 class MockParameters extends Mock implements GameParameters {}
+
 class MockRandomLetterGenerator extends Mock implements SequenceGenerator {}
+
 class MockSolution extends Mock implements Solution {}
 
 GameInfo createGameInfo({
   List<String> words = const ['abc'],
+  bool hasTimeLimit = true,
   bool hints = true,
   int minimalWordLength = 2,
 }) {
-  var mockParameters = createMockParameters(hints);
+  var mockParameters = createMockParameters(
+    hasTimeLimit: hasTimeLimit,
+    hints: hints,
+  );
   var mockBoard = createMockBoard();
   var vua = ValueNotifier(UserAnswer.start());
   var mockSolution = createMockSolution(words, minimalWordLength);
@@ -92,13 +100,17 @@ GameInfo createGameInfo({
   );
 }
 
-MockParameters createMockParameters(bool hints) {
+MockParameters createMockParameters({
+  bool hasTimeLimit = true,
+  bool hints = false,
+}) {
   var mockParameters = MockParameters();
 
   when(mockParameters.hints).thenReturn(hints);
   when(mockParameters.minimalWordLength).thenReturn(2);
   when(mockParameters.boardWidth).thenReturn(3);
   when(mockParameters.languageCode).thenReturn('nl');
+  when(mockParameters.hasTimeLimit).thenReturn(hasTimeLimit);
   when(mockParameters.time).thenReturn(150);
 
   return mockParameters;
@@ -130,6 +142,7 @@ Matcher inList(List<String> strings) => _InList(strings);
 
 class _InList extends Matcher {
   _InList(this.strings);
+
   final List<String> strings;
 
   @override

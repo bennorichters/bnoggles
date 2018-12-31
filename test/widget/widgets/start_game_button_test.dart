@@ -19,7 +19,7 @@ void main() {
       TestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('finds play button', (WidgetTester tester) async {
-    GameParameters p = createMockParameters(false);
+    GameParameters p = createMockParameters(hints: false);
     await tester.pumpWidget(testableWidget(
       child: StartGameButton(
         parameterProvider: () => p,
@@ -36,7 +36,7 @@ void main() {
 
     _registerLanguageLoader();
 
-    GameParameters p = createMockParameters(false);
+    GameParameters p = createMockParameters(hints: false);
 
     final mockObserver = MockNavigatorObserver();
     await tester.pumpWidget(
@@ -61,7 +61,7 @@ void main() {
 
     _registerLanguageLoader();
 
-    GameParameters p = createMockParameters(false);
+    GameParameters p = createMockParameters(hints: false);
 
     final mockObserver = MockNavigatorObserver();
     await tester.pumpWidget(

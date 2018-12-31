@@ -33,14 +33,17 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
-      vsync: this,
-      duration: Duration(
-        seconds: widget.gameInfo.parameters.time,
-      ),
-    );
 
-    controller.forward(from: 0.0);
+    if (widget.gameInfo.parameters.hasTimeLimit) {
+      controller = AnimationController(
+        vsync: this,
+        duration: Duration(
+          seconds: widget.gameInfo.parameters.time,
+        ),
+      );
+
+      controller.forward(from: 0.0);
+    }
 
     widget.gameInfo.userAnswer.addListener(checkDone);
   }
@@ -66,11 +69,18 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Clock clock = Clock(
-      timeOutAction: showResultScreen,
-      controller: controller,
-      startTime: widget.gameInfo.parameters.time,
-    );
+    Widget timeWidget = true || widget.gameInfo.parameters.hasTimeLimit
+        ? Clock(
+            timeOutAction: showResultScreen,
+            controller: controller,
+            startTime: widget.gameInfo.parameters.time,
+          )
+        : Container(
+            color: Colors.lightBlueAccent,
+            child: Center(
+              child: Text('–:––'),
+            ),
+          );
 
     return Scaffold(
       appBar: AppBar(
@@ -91,7 +101,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
         child: Column(
           children: [
             GameProgress(
-              timeWidget: clock,
+              timeWidget: timeWidget,
             ),
             Expanded(
               child: const WordListWindow(),
@@ -111,7 +121,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   }
 
   void disposeController() {
-    if (!controllerDisposed) {
+    if (widget.gameInfo.parameters.hasTimeLimit && !controllerDisposed) {
       controller.dispose();
       controllerDisposed = true;
     }
