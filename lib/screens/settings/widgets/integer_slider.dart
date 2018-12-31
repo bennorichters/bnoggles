@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 
-/// Creates a list of three or four widgets; an [Icon], a [Text], possibly a
+/// Creates a list of three or four widgets; an [Icon], a [Text], optionally a
 /// [Switch] and a [Slider].
 ///
 /// The user can use the slider to set the value of [sliderNotifier].
