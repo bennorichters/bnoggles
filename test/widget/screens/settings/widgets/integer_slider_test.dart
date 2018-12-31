@@ -13,7 +13,7 @@ void main() {
   testWidgets('find icon and label', (WidgetTester tester) async {
     ValueNotifier<int> v = ValueNotifier(0);
     var list = intSlider(
-      notifier: v,
+      sliderNotifier: v,
       icon: Icons.ac_unit,
       label: (i) => 'txt',
       min: 0,
@@ -31,7 +31,7 @@ void main() {
   testWidgets('tap slider', (WidgetTester tester) async {
     ValueNotifier<int> v = ValueNotifier(8);
     var list = intSlider(
-      notifier: v,
+      sliderNotifier: v,
       icon: Icons.ac_unit,
       label: (i) => i.toString(),
       min: 8,
@@ -54,5 +54,48 @@ void main() {
     expect(v.value, 12);
     var label = find.text('12');
     expect(label, findsOneWidget);
+  });
+
+  testWidgets('switch disables slider', (WidgetTester tester) async {
+    ValueNotifier<int> sliderValue = ValueNotifier(8);
+    ValueNotifier<bool> switchValue = ValueNotifier(true);
+
+    var list = intSlider(
+      sliderNotifier: sliderValue,
+      icon: Icons.ac_unit,
+      switchNotifier: switchValue,
+      label: (i) => i.toString(),
+      min: 8,
+      max: 16,
+      stepSize: 2,
+    );
+
+    Widget w = Container(
+      padding: EdgeInsets.all(15.0),
+      margin: EdgeInsets.all(5.0),
+      child: Table(
+          columnWidths: {
+            0: FixedColumnWidth(50.0),
+            1: FixedColumnWidth(60.0),
+            2: FlexColumnWidth(),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: [
+            TableRow(children: list),
+          ]),
+    );
+
+    await tester.pumpWidget(testableWidget(child: w));
+
+    expect(find.text('8'), findsOneWidget);
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+
+    expect(find.text('8'), findsNothing);
+
+    await tester.tapAt(tester.getCenter(find.byType(Slider)));
+    await tester.pumpAndSettle();
+
+    expect(find.text('12'), findsNothing);
   });
 }

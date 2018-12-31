@@ -67,7 +67,7 @@ class SettingsGrid extends StatelessWidget {
           _emptyLine(emptyLineHeight),
           TableRow(
             children: intSlider(
-              notifier: _preferences.time,
+              sliderNotifier: _preferences.time,
               icon: Icons.timer,
               label: formatTime,
               min: 30,
@@ -78,7 +78,7 @@ class SettingsGrid extends StatelessWidget {
           _emptyLine(emptyLineHeight),
           TableRow(
             children: intSlider(
-              notifier: _preferences.boardWidth,
+              sliderNotifier: _preferences.boardWidth,
               icon: Icons.grid_on,
               label: (i) => '$i x $i',
               min: 3,
@@ -88,7 +88,7 @@ class SettingsGrid extends StatelessWidget {
           _emptyLine(emptyLineHeight),
           TableRow(
             children: intSlider(
-              notifier: _preferences.minimalWordLength,
+              sliderNotifier: _preferences.minimalWordLength,
               icon: Icons.text_rotation_none,
               label: (i) => '$i+',
               min: 2,
