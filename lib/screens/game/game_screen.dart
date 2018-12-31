@@ -4,6 +4,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/screens/game/widgets/game_board.dart';
+import 'package:bnoggles/screens/game/widgets/game_clock.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_list_window.dart';
 import 'package:bnoggles/screens/game/widgets/game_info_provider.dart';
@@ -34,7 +35,9 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: widget.gameInfo.parameters.time),
+      duration: Duration(
+        seconds: widget.gameInfo.parameters.time,
+      ),
     );
 
     controller.forward(from: 0.0);
@@ -63,6 +66,12 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Clock clock = Clock(
+      showResultScreen: showResultScreen,
+      controller: controller,
+      startTime: widget.gameInfo.parameters.time,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Bnoggles"),
@@ -82,9 +91,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
         child: Column(
           children: [
             GameProgress(
-              controller,
-              widget.gameInfo.parameters.time,
-              showResultScreen,
+              timeWidget: clock,
             ),
             Expanded(
               child: const WordListWindow(),

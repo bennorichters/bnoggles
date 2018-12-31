@@ -15,7 +15,11 @@ void main() {
       vsync: tester,
     );
 
-    Clock clock = Clock(() {}, controller, 100);
+    Clock clock = Clock(
+      showResultScreen: () {},
+      controller: controller,
+      startTime: 100,
+    );
     await tester.pumpWidget(testableWidget(child: clock));
 
     expect(find.text('1:41'), findsOneWidget);
@@ -36,9 +40,13 @@ void main() {
       vsync: tester,
     );
 
-    Clock clock = Clock(() {
-      finished = true;
-    }, controller, 100);
+    Clock clock = Clock(
+      showResultScreen: () {
+        finished = true;
+      },
+      controller: controller,
+      startTime: 100,
+    );
     await tester.pumpWidget(testableWidget(child: clock));
 
     expect(finished, false);

@@ -32,11 +32,8 @@ final _fontSizeCalculator = Interpolator.fromDataPoints(
 ///
 /// This widget should be a descendant of [Provider].
 class GameProgress extends StatelessWidget {
-  GameProgress(this._controller, this._startValue, this._showResultScreen);
-
-  final AnimationController _controller;
-  final int _startValue;
-  final VoidCallback _showResultScreen;
+  GameProgress({this.timeWidget});
+  final Widget timeWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +56,7 @@ class GameProgress extends StatelessWidget {
         Expanded(
           child: Container(
             height: blockHeight * 2,
-            child: Clock(_showResultScreen, _controller, _startValue),
+            child: timeWidget,
           ),
         ),
       ],

@@ -21,11 +21,13 @@ void main() {
     var info = createGameInfo();
     var widget = GameInfoProvider(
       gameInfo: info,
-      child: GameProgress(controller, 100, () {}),
+      child: GameProgress(
+        timeWidget: Text('just testing'),
+      ),
     );
     await tester.pumpWidget(testableWidget(child: widget));
 
-    expect(find.byType(Clock), findsOneWidget);
+    expect(find.text('just testing'), findsOneWidget);
     expect(find.byType(WordCountOverview), findsOneWidget);
   });
 }
