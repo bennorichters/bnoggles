@@ -4,6 +4,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/screens/game/game_screen.dart';
+import 'package:bnoggles/screens/player/player_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:bnoggles/utils/language.dart';
@@ -60,22 +61,31 @@ class _StartGameButtonState extends State<StartGameButton> {
             userAnswer: ValueNotifier(UserAnswer.start()),
           );
 
-          Widget gameScreenBuilder(BuildContext context) => GameScreen(
-                gameInfo: gameInfo,
-              );
+          int numberOfPlayers = 1;
+
+          Widget screenBuilder(BuildContext context) {
+            return numberOfPlayers > 1
+                ? PlayerScreen(
+                    gameInfo: gameInfo,
+                    playerNumber: 1,
+                  )
+                : GameScreen(
+                    gameInfo: gameInfo,
+                  );
+          }
 
           if (widget.replaceScreen) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute<Null>(
-                builder: gameScreenBuilder,
+                builder: screenBuilder,
               ),
             );
           } else {
             Navigator.push(
               context,
               MaterialPageRoute<Null>(
-                builder: gameScreenBuilder,
+                builder: screenBuilder,
               ),
             ).then((value) {
               setState(() {
