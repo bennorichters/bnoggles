@@ -8,7 +8,7 @@ import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter/cupertino.dart';
 
-/// Information about an ongoing game.
+/// Information about an ongoing game
 class GameInfo {
   /// Creates an instance of [GameInfo]
   GameInfo({
@@ -31,7 +31,7 @@ class GameInfo {
   /// The number of the player who is currently playing
   final int currentPlayer;
 
-  /// A list of [ValueNotifier]s holding a [UserAnswer] for each player.
+  /// A list of [ValueNotifier]s holding a [UserAnswer] for each player
   final List<ValueNotifier<UserAnswer>> allUserAnswers;
 
   /// A list all unique words contained by [Solution] in a random order
