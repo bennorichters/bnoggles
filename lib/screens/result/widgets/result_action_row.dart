@@ -14,6 +14,7 @@ class ResultActionRow extends StatelessWidget {
   ResultActionRow({
     @required this.parameters,
   });
+
   final ParameterProvider parameters;
 
   @override
@@ -21,15 +22,19 @@ class ResultActionRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        FloatingActionButton(
-          heroTag: "settings",
-          onPressed: () {
-            Navigator.popUntil(
-              context,
-              ModalRoute.withName(Navigator.defaultRouteName),
-            );
-          },
-          child: Icon(Icons.settings),
+        Container(
+          width: 50,
+          height: 50,
+          child: FloatingActionButton(
+            heroTag: "settings",
+            onPressed: () {
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName(Navigator.defaultRouteName),
+              );
+            },
+            child: Icon(Icons.settings),
+          ),
         ),
         Container(
           width: 20.0,

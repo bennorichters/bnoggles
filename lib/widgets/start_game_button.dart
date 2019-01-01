@@ -27,13 +27,19 @@ class _StartGameButtonState extends State<StartGameButton> {
   bool isLoading = false;
 
   @override
-  Widget build(BuildContext context) => isLoading
-      ? CircularProgressIndicator()
-      : FloatingActionButton(
-          heroTag: "playgame",
-          onPressed: _pressPlayButton(context),
-          child: Icon(Icons.play_arrow),
-        );
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50,
+      height: 50,
+      child: isLoading
+          ? CircularProgressIndicator()
+          : FloatingActionButton(
+              heroTag: "playgame",
+              onPressed: _pressPlayButton(context),
+              child: Icon(Icons.play_arrow),
+            ),
+    );
+  }
 
   VoidCallback _pressPlayButton(BuildContext context) => () {
         setState(() {
