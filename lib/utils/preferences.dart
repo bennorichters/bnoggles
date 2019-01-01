@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Preferences {
   Preferences._({
     @required this.language,
+    @required this.numberOfPlayers,
     @required this.hasTimeLimit,
     @required this.time,
     @required this.boardWidth,
@@ -20,6 +21,9 @@ class Preferences {
 
   /// The code of the language in which the game is played.
   final ValueNotifier<int> language;
+
+  /// The number of players
+  final ValueNotifier<int> numberOfPlayers;
 
   /// Flag for having a limited time for the game
   final ValueNotifier<bool> hasTimeLimit;
@@ -58,6 +62,7 @@ class Preferences {
 
     return Preferences._(
       language: intNotifier('language', 0),
+      numberOfPlayers: intNotifier('numberOfPlayers', 1),
       hasTimeLimit: boolNotifier('hasTimeLimit', true),
       time: intNotifier('time', 150),
       boardWidth: intNotifier('size', 3),
@@ -69,6 +74,7 @@ class Preferences {
   /// Creates [GameParameters] based on these Preferences
   GameParameters toParameters() => GameParameters._(
         languageCode: const ['nl', 'en', 'hu'][language.value],
+        numberOfPlayers: numberOfPlayers.value,
         hasTimeLimit: hasTimeLimit.value,
         time: time.value,
         boardWidth: boardWidth.value,
@@ -86,6 +92,7 @@ class Preferences {
 class GameParameters {
   const GameParameters._({
     @required this.languageCode,
+    @required this.numberOfPlayers,
     @required this.hasTimeLimit,
     @required this.time,
     @required this.boardWidth,
@@ -93,8 +100,11 @@ class GameParameters {
     @required this.hints,
   });
 
-  /// The code of the language in which the game is played.
+  /// The code of the language in which the game is played
   final String languageCode;
+
+  /// The number of players
+  final int numberOfPlayers;
 
   /// Flag for having a limited time for the game
   final bool hasTimeLimit;

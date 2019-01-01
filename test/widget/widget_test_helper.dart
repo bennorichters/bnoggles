@@ -80,11 +80,13 @@ class MockSolution extends Mock implements Solution {}
 
 GameInfo createGameInfo({
   List<String> words = const ['abc'],
+  int numberOfPlayers = 1,
   bool hasTimeLimit = true,
   bool hints = true,
   int minimalWordLength = 2,
 }) {
   var mockParameters = createMockParameters(
+    numberOfPlayers: numberOfPlayers,
     hasTimeLimit: hasTimeLimit,
     hints: hints,
   );
@@ -101,6 +103,7 @@ GameInfo createGameInfo({
 }
 
 MockParameters createMockParameters({
+  int numberOfPlayers = 1,
   bool hasTimeLimit = true,
   bool hints = false,
 }) {
@@ -112,6 +115,7 @@ MockParameters createMockParameters({
   when(mockParameters.languageCode).thenReturn('nl');
   when(mockParameters.hasTimeLimit).thenReturn(hasTimeLimit);
   when(mockParameters.time).thenReturn(150);
+  when(mockParameters.numberOfPlayers).thenReturn(numberOfPlayers);
 
   return mockParameters;
 }

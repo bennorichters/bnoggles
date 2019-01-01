@@ -12,6 +12,7 @@ void main() {
   test('default values', () async {
     Preferences preferences = await getPreferences();
     expect(preferences.language.value, 0);
+    expect(preferences.numberOfPlayers.value, 1);
     expect(preferences.hasTimeLimit.value, true);
     expect(preferences.time.value, 150);
     expect(preferences.boardWidth.value, 3);
@@ -23,6 +24,7 @@ void main() {
     Preferences preferences = await getPreferences();
     GameParameters gp = preferences.toParameters();
     expect(gp.languageCode, 'nl');
+    expect(gp.numberOfPlayers, 1);
     expect(gp.hasTimeLimit, true);
     expect(gp.time, 150);
     expect(gp.boardWidth, 3);
