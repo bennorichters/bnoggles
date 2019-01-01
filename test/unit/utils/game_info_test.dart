@@ -31,9 +31,10 @@ void main() {
 
     GameInfo info = GameInfo(
       parameters: mockParameters,
+      currentPlayer: 0,
       board: mockBoard,
       solution: mockSolution,
-      userAnswer: vua,
+      allUserAnswers: [vua],
     );
 
     expect(info.parameters, mockParameters);
@@ -54,9 +55,10 @@ void main() {
 
     GameInfo info = GameInfo(
       parameters: null,
+      currentPlayer: 0,
       board: null,
       solution: mockSolution,
-      userAnswer: vua,
+      allUserAnswers: [vua],
     );
 
     expect(info.randomWords.toList()..sort(), words);
@@ -75,13 +77,14 @@ void main() {
 
     GameInfo info = GameInfo(
       parameters: null,
+      currentPlayer: 0,
       board: null,
       solution: mockSolution,
-      userAnswer: vua,
+      allUserAnswers: [vua],
     );
 
-    expect(info.scoreSheet.availableWords, 3);
-    expect(info.scoreSheet.foundWords, 1);
+    expect(info.scoreSheet(0).availableWords, 3);
+    expect(info.scoreSheet(0).foundWords, 1);
   });
 
   test('answer listeners', () async {
@@ -97,9 +100,10 @@ void main() {
 
     GameInfo info = GameInfo(
       parameters: null,
+      currentPlayer: 0,
       board: null,
       solution: mockSolution,
-      userAnswer: vua,
+      allUserAnswers: [vua],
     );
 
     var flag = false;

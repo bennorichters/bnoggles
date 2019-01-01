@@ -56,16 +56,17 @@ class _StartGameButtonState extends State<StartGameButton> {
 
           GameInfo gameInfo = GameInfo(
             parameters: parameters,
+            currentPlayer: 0,
             board: game.board,
             solution: game.solution,
-            userAnswer: ValueNotifier(UserAnswer.start()),
+            allUserAnswers: [ValueNotifier(UserAnswer.start())],
           );
 
           Widget screenBuilder(BuildContext context) {
             return parameters.numberOfPlayers > 1
                 ? PlayerScreen(
                     gameInfo: gameInfo,
-                    playerNumber: 1,
+                    playerNumber: 0,
                   )
                 : GameScreen(
                     gameInfo: gameInfo,

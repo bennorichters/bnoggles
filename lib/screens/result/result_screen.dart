@@ -58,7 +58,8 @@ class _ResultScreenState extends State<ResultScreen> {
                   Expanded(
                     child: Center(
                       child: ResultScoreOverview(
-                        scores: widget.gameInfo.scoreSheet,
+                        scores: widget.gameInfo
+                            .scoreSheet(widget.gameInfo.currentPlayer),
                         fontSize: secondColumnWidth / 20,
                       ),
                     ),

@@ -96,9 +96,10 @@ GameInfo createGameInfo({
 
   return GameInfo(
     parameters: mockParameters,
+    currentPlayer: 0,
     board: mockBoard,
     solution: mockSolution,
-    userAnswer: vua,
+    allUserAnswers: [vua],
   );
 }
 

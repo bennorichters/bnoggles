@@ -15,7 +15,8 @@ class GameInfo {
     @required this.parameters,
     @required this.board,
     @required this.solution,
-    @required this.userAnswer,
+    @required this.currentPlayer,
+    @required this.allUserAnswers,
   }) : randomWords = solution.uniqueWords().toList()..shuffle();
 
   /// The [GameParameters]
@@ -27,26 +28,34 @@ class GameInfo {
   /// The [Solution]
   final Solution solution;
 
-  /// A [ValueNotifier] holding a [userAnswer].
-  final ValueNotifier<UserAnswer> userAnswer;
+  /// The number of the player who is currently playing
+  final int currentPlayer;
+
+  /// A list of [ValueNotifier]s holding a [UserAnswer] for each player.
+  final List<ValueNotifier<UserAnswer>> allUserAnswers;
 
   /// A list all unique words contained by [Solution] in a random order
   final List<String> randomWords;
 
-  /// Returns the [ScoreSheet]
-  ScoreSheet get scoreSheet => ScoreSheet._(
+  /// Returns the user answer for the current player
+  ValueNotifier<UserAnswer> get userAnswer => allUserAnswers[currentPlayer];
+
+  /// Returns the [ScoreSheet] for the given player
+  ScoreSheet scoreSheet(int player) => ScoreSheet._(
         availableWords: solution.frequency.count,
-        foundWords: userAnswer.value.frequency.count,
+        foundWords: allUserAnswers[player].value.frequency.count,
       );
 
-  /// Adds a listener for the [GameInfo.userAnswer]
+  /// Adds the listener for the element in [GameInfo.allUserAnswers] that has
+  /// [currentPlayer] as the index.
   void addUserAnswerListener(VoidCallback listener) {
-    userAnswer.addListener(listener);
+    allUserAnswers[currentPlayer].addListener(listener);
   }
 
-  /// Removes a listener for the [GameInfo.userAnswer]
+  /// Removes the listener for the element in [GameInfo.allUserAnswers] that has
+  /// [currentPlayer] as the index.
   void removeUserAnswerListener(VoidCallback listener) {
-    userAnswer.removeListener(listener);
+    allUserAnswers[currentPlayer].removeListener(listener);
   }
 }
 
