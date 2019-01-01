@@ -30,6 +30,7 @@ final emptyLineHeightCalculator = Interpolator.fromDataPoints(
 class SettingsGrid extends StatelessWidget {
   /// Creates a [SettingsGrid] based on the given [Preferences].
   SettingsGrid(this._preferences);
+
   final Preferences _preferences;
 
   TableRow _emptyLine(double emptyLineHeight) => TableRow(
@@ -62,6 +63,17 @@ class SettingsGrid extends StatelessWidget {
             children: languageOptions(
               notifier: _preferences.language,
               icon: Icons.language,
+            ),
+          ),
+          _emptyLine(emptyLineHeight),
+          TableRow(
+            children: intSlider(
+              sliderNotifier: _preferences.numberOfPlayers,
+              icon: Icons.people,
+              label: (i) => '$i',
+              min: 1,
+              max: 4,
+              stepSize: 1,
             ),
           ),
           _emptyLine(emptyLineHeight),

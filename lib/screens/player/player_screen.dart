@@ -30,7 +30,7 @@ class PlayerScreen extends StatelessWidget {
                 size: 100,
               ),
               Text(
-                gameInfo.currentPlayer.toString(),
+                (gameInfo.currentPlayer + 1).toString(),
                 style: TextStyle(
                   fontSize: 40,
                 ),
