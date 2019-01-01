@@ -67,6 +67,7 @@ class SettingsGrid extends StatelessWidget {
           _emptyLine(emptyLineHeight),
           TableRow(
             children: intSlider(
+              switchNotifier: _preferences.hasTimeLimit,
               sliderNotifier: _preferences.time,
               icon: Icons.timer,
               label: formatTime,
