@@ -51,8 +51,14 @@ class MultiPlayerScore extends StatelessWidget {
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: [
             TableRow(children: [
-              Icon(Icons.person, size: 20,),
-              Icon(Icons.done, size: 20, ),
+              Icon(
+                Icons.person,
+                size: 20,
+              ),
+              Icon(
+                Icons.done,
+                size: 20,
+              ),
             ])
           ]..addAll(playerScores()),
         )
@@ -62,8 +68,8 @@ class MultiPlayerScore extends StatelessWidget {
 
   List<TableRow> playerScores() {
     var asMap = scores.asMap();
-    return (asMap.keys.toList()..sort())
-        .reversed
+    return (asMap.keys.toList()
+          ..sort((a, b) => asMap[b].foundWords - asMap[a].foundWords))
         .map((k) => TableRow(
               children: [
                 Center(
