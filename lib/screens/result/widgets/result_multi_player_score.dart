@@ -28,7 +28,7 @@ class MultiPlayerScore extends StatelessWidget {
           children: [
             Icon(
               Icons.done_all,
-              size: 40.0,
+              size: 30.0,
               color: Colors.black,
             ),
             Text(
@@ -41,7 +41,7 @@ class MultiPlayerScore extends StatelessWidget {
           ],
         ),
         Container(
-          height: 10,
+          height: 5,
         ),
         Table(
           columnWidths: {
@@ -51,8 +51,8 @@ class MultiPlayerScore extends StatelessWidget {
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: [
             TableRow(children: [
-              Icon(Icons.person),
-              Icon(Icons.done),
+              Icon(Icons.person, size: 20,),
+              Icon(Icons.done, size: 20, ),
             ])
           ]..addAll(playerScores()),
         )
@@ -67,7 +67,12 @@ class MultiPlayerScore extends StatelessWidget {
         .map((k) => TableRow(
               children: [
                 Center(
-                  child: Text((k + 1).toString()),
+                  child: Text(
+                    (k + 1).toString(),
+                    style: TextStyle(
+                      fontSize: fontSize,
+                    ),
+                  ),
                 ),
                 Center(
                   child: Text(

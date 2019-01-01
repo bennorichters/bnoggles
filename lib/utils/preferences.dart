@@ -74,7 +74,8 @@ class Preferences {
   /// Creates [GameParameters] based on these Preferences
   GameParameters toParameters() => GameParameters._(
         languageCode: const ['nl', 'en', 'hu'][language.value],
-        numberOfPlayers: numberOfPlayers.value,
+//        numberOfPlayers: numberOfPlayers.value,
+        numberOfPlayers: 4,
         hasTimeLimit: hasTimeLimit.value,
         time: time.value,
         boardWidth: boardWidth.value,

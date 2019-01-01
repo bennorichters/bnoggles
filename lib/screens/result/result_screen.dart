@@ -67,7 +67,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             )
                           : MultiPlayerScore(
                               scores: widget.gameInfo.scoreSheets(),
-                              fontSize: secondColumnWidth / 20,
+                              fontSize: secondColumnWidth / 30,
                             ),
                     ),
                   ),
@@ -80,7 +80,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.all(10.0),
                     child: ResultActionRow(
                       parameters: () => widget.gameInfo.parameters,
                     ),
