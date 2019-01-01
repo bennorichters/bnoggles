@@ -44,7 +44,7 @@ void main() {
     expect(find.byType(GameBoard), findsOneWidget);
   });
 
-  testWidgets('Stop button is present and triggers navigation after tapped',
+  testWidgets('stop button is present and triggers navigation after tapped',
       (WidgetTester tester) async {
     await binding.setSurfaceSize(Size(900, 1200));
     GameInfo info = createGameInfo();
@@ -67,7 +67,7 @@ void main() {
     expect(find.byType(ResultScreen), findsOneWidget);
   });
 
-  testWidgets('Navigates to result screen when all words have been found',
+  testWidgets('navigates to result screen when all words have been found',
       (WidgetTester tester) async {
     await binding.setSurfaceSize(Size(900, 1200));
     GameInfo info = createGameInfo(words: ['abc']);
@@ -91,7 +91,7 @@ void main() {
   });
 
   testWidgets(
-      'Do not navigate to result screen when not all words have been found',
+      'do not navigate to result screen when not all words have been found',
       (WidgetTester tester) async {
     await binding.setSurfaceSize(Size(900, 1200));
     GameInfo info = createGameInfo(words: ['abc', 'def']);
@@ -114,7 +114,7 @@ void main() {
     expect(find.byType(ResultScreen), findsNothing);
   });
 
-  testWidgets('Navigate to result screen when time runs out',
+  testWidgets('navigate to result screen when time runs out',
       (WidgetTester tester) async {
     await binding.setSurfaceSize(Size(900, 1200));
     GameInfo info = createGameInfo(words: ['abc', 'def']);
@@ -132,5 +132,24 @@ void main() {
 
     await tester.pumpAndSettle();
     expect(find.byType(ResultScreen), findsOneWidget);
+  });
+
+  testWidgets('game screen does not time out when no time limit',
+      (WidgetTester tester) async {
+    await binding.setSurfaceSize(Size(900, 1200));
+
+    await tester.pumpWidget(testableWidgetWithMediaQuery(
+      child: GameScreen(
+        gameInfo: createGameInfo(
+          hasTimeLimit: false,
+        ),
+      ),
+      width: 768,
+      height: 1024,
+    ));
+
+    expect(find.text('–:––'), findsOneWidget);
+    await tester.pumpAndSettle();
+    expect(find.text('–:––'), findsOneWidget);
   });
 }

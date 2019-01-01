@@ -3,6 +3,7 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
+import 'package:bnoggles/screens/game/game_screen.dart';
 import 'package:bnoggles/utils/language.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:bnoggles/widgets/start_game_button.dart';
@@ -61,7 +62,10 @@ void main() {
 
     _registerLanguageLoader();
 
-    GameParameters p = createMockParameters(hints: false);
+    GameParameters p = createMockParameters(
+      hints: false,
+      hasTimeLimit: false,
+    );
 
     final mockObserver = MockNavigatorObserver();
     await tester.pumpWidget(
@@ -80,6 +84,8 @@ void main() {
       newRoute: anyNamed('newRoute'),
       oldRoute: anyNamed('oldRoute'),
     ));
+
+    expect(find.byType(GameScreen), findsOneWidget);
   });
 }
 

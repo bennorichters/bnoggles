@@ -69,7 +69,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Widget timeWidget = true || widget.gameInfo.parameters.hasTimeLimit
+    Widget timeWidget = widget.gameInfo.parameters.hasTimeLimit
         ? Clock(
             timeOutAction: showResultScreen,
             controller: controller,
@@ -78,7 +78,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
         : Container(
             color: Colors.lightBlueAccent,
             child: Center(
-              child: Text('–:––'),
+              child: const Text('–:––'),
             ),
           );
 
