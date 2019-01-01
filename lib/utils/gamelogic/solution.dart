@@ -58,7 +58,7 @@ class UserWord {
   String toString() => "$word - $evaluation";
 }
 
-/// An [Answer] is produced by a player of the game.
+/// An [Answer] as produced by a player of the game.
 class UserAnswer extends Answer {
   UserAnswer._(List<UserWord> found)
       : this.found = found,
