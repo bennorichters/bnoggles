@@ -13,9 +13,11 @@ import 'package:flutter/material.dart';
 
 /// Button to start the game with
 class StartGameButton extends StatefulWidget {
-  StartGameButton(
-      {Key key, @required this.parameterProvider, @required this.replaceScreen})
-      : super(key: key);
+  StartGameButton({
+    Key key,
+    @required this.parameterProvider,
+    @required this.replaceScreen,
+  }) : super(key: key);
 
   final ParameterProvider parameterProvider;
   final bool replaceScreen;
@@ -59,14 +61,16 @@ class _StartGameButtonState extends State<StartGameButton> {
             currentPlayer: 0,
             board: game.board,
             solution: game.solution,
-            allUserAnswers: [ValueNotifier(UserAnswer.start())],
+            allUserAnswers: List.generate(
+              parameters.numberOfPlayers,
+              (_) => ValueNotifier(UserAnswer.start()),
+            ),
           );
 
           Widget screenBuilder(BuildContext context) {
             return parameters.numberOfPlayers > 1
                 ? PlayerScreen(
                     gameInfo: gameInfo,
-                    playerNumber: 0,
                   )
                 : GameScreen(
                     gameInfo: gameInfo,

@@ -19,12 +19,12 @@ class ResultAllWordsList extends StatelessWidget {
   /// Creates an instance of [ResultAllWordsList].
   ResultAllWordsList({
     @required this.solution,
-    @required this.userAnswer,
+    @required this.userAnswers,
     @required this.highlightedTiles,
   });
 
   final Solution solution;
-  final UserAnswer userAnswer;
+  final List<UserAnswer> userAnswers;
   final ValueNotifier<List<Coordinate>> highlightedTiles;
 
   @override
@@ -42,18 +42,19 @@ class ResultAllWordsList extends StatelessWidget {
                   margin: EdgeInsets.fromLTRB(3.0, 5.0, 3.0, 5.0),
                   padding: EdgeInsets.all(5.0),
                   decoration: BoxDecoration(
-                    color: userAnswer.contains(word)
+                    color: foundByEveryone(word)
                         ? Colors.green
-                        : Colors.lightBlueAccent,
+                        : foundBySome(word)
+                            ? Colors.lightGreenAccent
+                            : Colors.lightBlueAccent,
                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   ),
                   child: Text(
-                    word.toUpperCase(),
+                    wordText(word),
                     style: TextStyle(
                       fontSize: 10.0,
-                      color: userAnswer.contains(word)
-                          ? Colors.white
-                          : Colors.black,
+                      color:
+                          foundByEveryone(word) ? Colors.white : Colors.black,
                     ),
                   ),
                 ),
@@ -66,4 +67,26 @@ class ResultAllWordsList extends StatelessWidget {
 
     return ListView(children: tiles);
   }
+
+  String wordText(String word) {
+    StringBuffer result = StringBuffer(word.toUpperCase());
+    if (userAnswers.length > 1) {
+      result.write('\n');
+
+      for (int i = 0; i < userAnswers.length; i++) {
+        result.write(userAnswers[i].contains(word) ? (i + 1).toString() : '_');
+
+        if (i < userAnswers.length - 1) {
+          result.write(' ');
+        }
+      }
+    }
+
+    return result.toString();
+  }
+
+  bool foundByEveryone(String word) =>
+      !userAnswers.any((a) => !a.contains(word));
+
+  bool foundBySome(String word) => userAnswers.any((a) => a.contains(word));
 }

@@ -6,13 +6,14 @@
 import 'package:bnoggles/screens/result/widgets/result_all_words_list.dart';
 import 'package:bnoggles/screens/result/widgets/result_action_row.dart';
 import 'package:bnoggles/screens/result/widgets/result_board.dart';
+import 'package:bnoggles/screens/result/widgets/result_multi_player_score.dart';
 import 'package:bnoggles/screens/result/widgets/result_score_overview.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:flutter/material.dart';
 
-/// Screen showing [ResultAllWordsList], [ResultScoreOverview], [ResultBoard] and
-/// [ResultActionRow].
+/// Screen showing [ResultAllWordsList], [ResultScoreOverview], [ResultBoard]
+/// and [ResultActionRow].
 class ResultScreen extends StatefulWidget {
   /// Creates an instance of [ResultScreen].
   ResultScreen({@required this.gameInfo});
@@ -48,7 +49,8 @@ class _ResultScreenState extends State<ResultScreen> {
               width: wordViewWidth,
               child: ResultAllWordsList(
                 solution: widget.gameInfo.solution,
-                userAnswer: widget.gameInfo.userAnswer.value,
+                userAnswers:
+                    widget.gameInfo.allUserAnswers.map((v) => v.value).toList(),
                 highlightedTiles: highlightedTiles,
               ),
             ),
@@ -57,11 +59,16 @@ class _ResultScreenState extends State<ResultScreen> {
                 children: [
                   Expanded(
                     child: Center(
-                      child: ResultScoreOverview(
-                        scores: widget.gameInfo
-                            .scoreSheet(widget.gameInfo.currentPlayer),
-                        fontSize: secondColumnWidth / 20,
-                      ),
+                      child: widget.gameInfo.parameters.numberOfPlayers == 1
+                          ? ResultScoreOverview(
+                              scoreSheet: widget.gameInfo
+                                  .scoreSheet(widget.gameInfo.currentPlayer),
+                              fontSize: secondColumnWidth / 20,
+                            )
+                          : MultiPlayerScore(
+                              scores: widget.gameInfo.scoreSheets(),
+                              fontSize: secondColumnWidth / 20,
+                            ),
                     ),
                   ),
                   Container(

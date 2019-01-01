@@ -8,6 +8,7 @@ import 'package:bnoggles/screens/game/widgets/game_clock.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_list_window.dart';
 import 'package:bnoggles/screens/game/widgets/game_info_provider.dart';
+import 'package:bnoggles/screens/player/player_screen.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/material.dart';
@@ -52,26 +53,36 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     if ((widget.gameInfo.solution.frequency -
             widget.gameInfo.userAnswer.value.frequency)
         .isEmpty) {
-      showResultScreen();
+      nextScreen();
     }
   }
 
-  void showResultScreen() {
+  void nextScreen() {
     disposeController();
 
+    var gameInfo = widget.gameInfo;
+
+    bool finished = false;
+    if (gameInfo.currentPlayer == gameInfo.parameters.numberOfPlayers - 1) {
+      finished = true;
+    } else {
+      gameInfo.currentPlayer++;
+    }
+
     Navigator.pushReplacement(
-      context,
-      MaterialPageRoute<Null>(
-        builder: (context) => ResultScreen(gameInfo: widget.gameInfo),
-      ),
-    );
+        context,
+        MaterialPageRoute<Null>(
+          builder: (finished)
+              ? (context) => ResultScreen(gameInfo: gameInfo)
+              : (context) => PlayerScreen(gameInfo: gameInfo),
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
     Widget timeWidget = widget.gameInfo.parameters.hasTimeLimit
         ? Clock(
-            timeOutAction: showResultScreen,
+            timeOutAction: nextScreen,
             controller: controller,
             startTime: widget.gameInfo.parameters.time,
           )
@@ -91,7 +102,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
             icon: Icon(Icons.stop),
             color: Colors.red,
             onPressed: () {
-              showResultScreen();
+              nextScreen();
             },
           ),
         ],

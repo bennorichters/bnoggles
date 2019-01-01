@@ -29,7 +29,7 @@ class GameInfo {
   final Solution solution;
 
   /// The number of the player who is currently playing
-  final int currentPlayer;
+  int currentPlayer;
 
   /// A list of [ValueNotifier]s holding a [UserAnswer] for each player
   final List<ValueNotifier<UserAnswer>> allUserAnswers;
@@ -39,6 +39,13 @@ class GameInfo {
 
   /// Returns the user answer for the current player
   ValueNotifier<UserAnswer> get userAnswer => allUserAnswers[currentPlayer];
+
+  List<ScoreSheet> scoreSheets() => allUserAnswers
+      .map((a) => ScoreSheet._(
+            availableWords: solution.frequency.count,
+            foundWords: a.value.frequency.count,
+          ))
+      .toList();
 
   /// Returns the [ScoreSheet] for the given player
   ScoreSheet scoreSheet(int player) => ScoreSheet._(

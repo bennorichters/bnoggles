@@ -20,7 +20,7 @@ void main() {
     await tester.pumpWidget(testableWidget(
       child: ResultAllWordsList(
         solution: solution,
-        userAnswer: answer,
+        userAnswers: [answer],
         highlightedTiles: highlightedTiles,
       ),
     ));
@@ -38,7 +38,7 @@ void main() {
     await tester.pumpWidget(testableWidget(
       child: ResultAllWordsList(
         solution: solution,
-        userAnswer: answer,
+        userAnswers: [answer],
         highlightedTiles: highlightedTiles,
       ),
     ));
@@ -62,7 +62,7 @@ void main() {
     await tester.pumpWidget(testableWidget(
       child: ResultAllWordsList(
         solution: solution,
-        userAnswer: answer,
+        userAnswers: [answer],
         highlightedTiles: highlightedTiles,
       ),
     ));

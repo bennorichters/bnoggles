@@ -12,11 +12,11 @@ class ResultScoreOverview extends StatelessWidget {
   /// Creates an instance of [ResultScoreOverview]
   ResultScoreOverview({
     Key key,
-    @required this.scores,
+    @required this.scoreSheet,
     @required this.fontSize,
   }) : super(key: key);
 
-  final ScoreSheet scores;
+  final ScoreSheet scoreSheet;
   final double fontSize;
 
   @override
@@ -31,7 +31,7 @@ class ResultScoreOverview extends StatelessWidget {
           Container(
             width: 20.0,
           ),
-          buildText('${scores.foundWords}', Colors.green),
+          buildText('${scoreSheet.foundWords}', Colors.green),
           Container(
             width: 10.0,
           ),
@@ -39,7 +39,7 @@ class ResultScoreOverview extends StatelessWidget {
           Container(
             width: 10.0,
           ),
-          buildText('${scores.availableWords}', Colors.blue),
+          buildText('${scoreSheet.availableWords}', Colors.blue),
         ],
       );
 

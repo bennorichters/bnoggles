@@ -11,11 +11,9 @@ class PlayerScreen extends StatelessWidget {
   PlayerScreen({
     Key key,
     @required this.gameInfo,
-    @required this.playerNumber,
   }) : super(key: key);
 
   final GameInfo gameInfo;
-  final int playerNumber;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -32,7 +30,7 @@ class PlayerScreen extends StatelessWidget {
                 size: 100,
               ),
               Text(
-                playerNumber.toString(),
+                gameInfo.currentPlayer.toString(),
                 style: TextStyle(
                   fontSize: 40,
                 ),

@@ -20,7 +20,7 @@ void main() {
 
     await tester.pumpWidget(testableWidget(
       child: ResultScoreOverview(
-        scores: mockScoreSheet,
+        scoreSheet: mockScoreSheet,
         fontSize: 10,
       ),
     ));
