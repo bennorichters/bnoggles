@@ -16,13 +16,12 @@ void main() {
   testWidgets('all words in solution are shown', (WidgetTester tester) async {
     Solution solution = createMockSolution(['abc', 'def'], 2);
     UserAnswer answer = UserAnswer.start();
-    ValueNotifier<List<Coordinate>> highlightedTiles = ValueNotifier([]);
 
     await tester.pumpWidget(testableWidget(
       child: ResultAllWordsList(
         solution: solution,
         userAnswers: [answer],
-        highlightedTiles: highlightedTiles,
+        highlightedTiles: ValueNotifier([]),
       ),
     ));
 
@@ -34,25 +33,44 @@ void main() {
       (WidgetTester tester) async {
     Solution solution = createMockSolution(['abc', 'def'], 2);
     UserAnswer answer = UserAnswer.start().add('abc', true);
-    ValueNotifier<List<Coordinate>> highlightedTiles = ValueNotifier([]);
 
     await tester.pumpWidget(testableWidget(
       child: ResultAllWordsList(
         solution: solution,
         userAnswers: [answer],
-        highlightedTiles: highlightedTiles,
+        highlightedTiles: ValueNotifier([]),
       ),
     ));
 
-    Container containerAbc =
-        tester.element(find.text("ABC")).ancestorWidgetOfExactType(Container);
-    BoxDecoration decorationAbc = containerAbc.decoration;
-    expect(decorationAbc.color, Colors.green);
+    testColor(tester, find.text("ABC"), Colors.green);
+    testColor(tester, find.text("DEF"), Colors.lightBlueAccent);
+  });
 
-    Container containerDef =
-        tester.element(find.text("DEF")).ancestorWidgetOfExactType(Container);
-    BoxDecoration decorationDef = containerDef.decoration;
-    expect(decorationDef.color, Colors.lightBlueAccent);
+  testWidgets('show words with info of who found those words with right color',
+      (WidgetTester tester) async {
+    Solution solution = createMockSolution(['abc', 'def', 'ghi'], 2);
+    UserAnswer answer1 = UserAnswer.start().add('abc', true);
+    UserAnswer answer2 = UserAnswer.start().add('abc', true).add('def', true);
+
+    await tester.pumpWidget(testableWidget(
+      child: ResultAllWordsList(
+        solution: solution,
+        userAnswers: [answer1, answer2],
+        highlightedTiles: ValueNotifier([]),
+      ),
+    ));
+
+    var abc = find.text('ABC\n1 2');
+    expect(abc, findsOneWidget);
+    testColor(tester, abc, Colors.green);
+
+    var def = find.text('DEF\n_ 2');
+    expect(def, findsOneWidget);
+    testColor(tester, def, Colors.lightGreenAccent);
+
+    var ghi = find.text('GHI\n_ _');
+    expect(ghi, findsOneWidget);
+    testColor(tester, ghi, Colors.lightBlueAccent);
   });
 
   testWidgets('tapping words selects coordinates', (WidgetTester tester) async {
@@ -79,4 +97,11 @@ void main() {
       Coordinate(0, 2),
     ]);
   });
+}
+
+void testColor(WidgetTester tester, Finder finder, Color color) {
+  Container container =
+      tester.element(finder).ancestorWidgetOfExactType(Container);
+  BoxDecoration decoration = container.decoration;
+  expect(decoration.color, color);
 }
