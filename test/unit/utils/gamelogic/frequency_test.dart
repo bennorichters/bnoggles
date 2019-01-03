@@ -53,6 +53,11 @@ void main() {
     expect(Frequency.fromStrings(['a', 'aaa', 'aaa']).atLeast(4), 0);
   });
 
+  test('count', () {
+    expect(Frequency.fromStrings(['a']).count, 1);
+    expect(Frequency.fromStrings(['a', 'aaa', 'aaa']).count, 3);
+  });
+
   test('longest', () {
     expect(Frequency.fromStrings(['']).longest, 0);
     expect(Frequency.fromStrings(['a']).longest, 1);
