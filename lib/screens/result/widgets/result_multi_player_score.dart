@@ -23,6 +23,7 @@ final iconSizeCalculator = Interpolator.fromDataPoints(
   max: 50,
 );
 
+/// Screen showing the results for all players.
 class ResultMultiPlayerScore extends StatelessWidget {
   ResultMultiPlayerScore({
     Key key,
