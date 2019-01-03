@@ -83,6 +83,11 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
 
+  fonts:
+    - family: CustomIconProvider
+      fonts:
+        - asset: fonts/CustomIconProvider.ttf
+
   assets:
     - assets/
     - assets/lang/

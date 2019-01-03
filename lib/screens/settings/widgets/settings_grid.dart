@@ -13,13 +13,16 @@ import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+const IconData _lightBulb =
+    const IconData(0xe800, fontFamily: 'CustomIconProvider');
+
 // The height of an empty line should decrease for smaller screen sizes. The
 // maximum height is 50. Empirically found values for the height of some
 // devices are:
 //
 // - for screen height 592.0 (e.g. Nexus 4) the empty line height is 20
 // - for screen height 683.4 (e.g. Pixel) the empty line height is 50
-final emptyLineHeightCalculator = Interpolator.fromDataPoints(
+final _emptyLineHeightCalculator = Interpolator.fromDataPoints(
   p1: const Point(592, 20),
   p2: const Point(683.4, 50),
   min: 0,
@@ -46,7 +49,7 @@ class SettingsGrid extends StatelessWidget {
     // See above
     MediaQueryData data = MediaQuery.of(context);
     double screenHeight = data.size.height;
-    double emptyLineHeight = emptyLineHeightCalculator.y(x: screenHeight);
+    double emptyLineHeight = _emptyLineHeightCalculator.y(x: screenHeight);
 
     return Container(
       padding: EdgeInsets.all(15.0),
@@ -111,7 +114,7 @@ class SettingsGrid extends StatelessWidget {
           _emptyLine(emptyLineHeight),
           TableRow(
             children: toggleSetting(
-              icon: Icons.assistant,
+              icon: _lightBulb,
               notifier: _preferences.hints,
             ),
           ),
