@@ -7,6 +7,7 @@ import 'package:bnoggles/screens/game/game_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/material.dart';
 
+/// Screen in which the player whose turn it is can start the game.
 class PlayerScreen extends StatelessWidget {
   PlayerScreen({
     Key key,

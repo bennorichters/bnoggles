@@ -68,19 +68,37 @@ Widget testableWidgetWithProvider({Widget child, GameInfo info}) {
   );
 }
 
-class MockBoard extends Mock implements Board {}
-
 class MockChain extends Mock implements Chain {}
 
+class MockBoard extends Mock implements Board {}
+
 class MockParameters extends Mock implements GameParameters {}
+
+class MockPreferences extends Mock implements Preferences {}
 
 class MockRandomLetterGenerator extends Mock implements SequenceGenerator {}
 
 class MockSolution extends Mock implements Solution {}
 
+Preferences createMockPreferences({
+  int numberOfPlayers = 1,
+}) {
+  Preferences mp = MockPreferences();
+  when(mp.language).thenAnswer((s) => ValueNotifier(0));
+  when(mp.numberOfPlayers).thenAnswer((s) => ValueNotifier(numberOfPlayers));
+  when(mp.hasTimeLimit).thenAnswer((s) => ValueNotifier(true));
+  when(mp.time).thenAnswer((s) => ValueNotifier(300));
+  when(mp.boardWidth).thenAnswer((s) => ValueNotifier(3));
+  when(mp.minimalWordLength).thenAnswer((s) => ValueNotifier(2));
+  when(mp.hints).thenAnswer((s) => ValueNotifier(false));
+
+  return mp;
+}
+
 GameInfo createGameInfo({
   List<String> words = const ['abc'],
   int numberOfPlayers = 1,
+  int currentPlayer = 0,
   bool hasTimeLimit = true,
   bool hints = true,
   int minimalWordLength = 2,
@@ -91,15 +109,17 @@ GameInfo createGameInfo({
     hints: hints,
   );
   var mockBoard = createMockBoard();
-  var vua = ValueNotifier(UserAnswer.start());
   var mockSolution = createMockSolution(words, minimalWordLength);
 
   return GameInfo(
     parameters: mockParameters,
-    currentPlayer: 0,
+    currentPlayer: currentPlayer,
     board: mockBoard,
     solution: mockSolution,
-    allUserAnswers: [vua],
+    allUserAnswers: List.generate(
+      numberOfPlayers,
+      (_) => ValueNotifier(UserAnswer.start()),
+    ),
   );
 }
 
