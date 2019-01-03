@@ -47,29 +47,28 @@ void main() {
   test('randomWords', () async {
     var words = ['abc', 'def', 'ghi'];
 
-    ValueNotifier<UserAnswer> vua = ValueNotifier(UserAnswer.start());
-
     GameInfo info = GameInfo(
       parameters: null,
       currentPlayer: 0,
       board: null,
       solution: createMockSolution(words, 2),
-      allUserAnswers: [vua],
+      allUserAnswers: [
+        ValueNotifier(UserAnswer.start()),
+      ],
     );
 
     expect(info.randomWords.toList()..sort(), words);
   });
 
   test('scoreSheet', () async {
-    ValueNotifier<UserAnswer> vua =
-        ValueNotifier(UserAnswer.start().add('abc', true));
-
     GameInfo info = GameInfo(
       parameters: null,
       currentPlayer: 0,
       board: null,
       solution: createMockSolution(['abc', 'def', 'ghi'], 2),
-      allUserAnswers: [vua],
+      allUserAnswers: [
+        ValueNotifier(UserAnswer.start().add('abc', true)),
+      ],
     );
 
     expect(info.scoreSheet(0).availableWords, 3);
@@ -100,5 +99,43 @@ void main() {
     info.removeUserAnswerListener(toggleFlag);
     vua.value = vua.value.add('e', false);
     expect(flag, true);
+  });
+
+  test('availableWords', () {
+    GameInfo info = GameInfo(
+      parameters: null,
+      currentPlayer: 0,
+      board: null,
+      solution: createMockSolution(['abc', 'def', 'ghi'], 2),
+      allUserAnswers: [
+        ValueNotifier(UserAnswer.start().add('abc', true)),
+      ],
+    );
+
+    expect(info.availableWords(), 3);
+  });
+
+  test('list of number of found words for each player', () {
+    GameInfo info = GameInfo(
+      parameters: null,
+      currentPlayer: 0,
+      board: null,
+      solution: createMockSolution(['abc', 'def', 'ghi'], 2),
+      allUserAnswers: [
+        ValueNotifier(UserAnswer.start().add('abc', true)),
+        ValueNotifier(UserAnswer.start().add('abc', true).add('def', true)),
+        ValueNotifier(UserAnswer.start()
+            .add('abc', true)
+            .add('def', true)
+            .add('aaa', false)),
+        ValueNotifier(UserAnswer.start()
+            .add('abc', true)
+            .add('def', true)
+            .add('aaa', false)
+            .add('ghi', true)),
+      ],
+    );
+
+    expect(info.playersFoundCount(), [1, 2, 2, 3]);
   });
 }

@@ -53,6 +53,13 @@ class GameInfo {
         foundWords: allUserAnswers[player].value.frequency.count,
       );
 
+  /// Returns the the number of unique words the [solution] has.
+  int availableWords() => solution.uniqueWords().length;
+
+  /// Returns the number of found and correct words for each player.
+  List<int> playersFoundCount() =>
+      allUserAnswers.map((a) => a.value.uniqueWords().length).toList();
+
   /// Adds the listener for the element in [GameInfo.allUserAnswers] that has
   /// [currentPlayer] as the index.
   void addUserAnswerListener(VoidCallback listener) {
