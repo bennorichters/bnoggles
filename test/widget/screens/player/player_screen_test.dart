@@ -8,6 +8,7 @@ import 'package:bnoggles/screens/player/player_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../test_helper.dart';
 import '../../widget_test_helper.dart';
 
 void main() {

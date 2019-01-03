@@ -7,6 +7,7 @@ import 'package:bnoggles/screens/settings/widgets/settings_grid.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../../test_helper.dart';
 import '../../../widget_test_helper.dart';
 
 void main() {
