@@ -67,7 +67,6 @@ class _ResultScreenState extends State<ResultScreen> {
                             )
                           : MultiPlayerScore(
                               scores: widget.gameInfo.scoreSheets(),
-                              fontSize: secondColumnWidth / 30,
                             ),
                     ),
                   ),
