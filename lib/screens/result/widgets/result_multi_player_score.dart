@@ -24,8 +24,8 @@ final iconSizeCalculator = Interpolator.fromDataPoints(
   max: 50,
 );
 
-class MultiPlayerScore extends StatelessWidget {
-  MultiPlayerScore({
+class ResultMultiPlayerScore extends StatelessWidget {
+  ResultMultiPlayerScore({
     Key key,
     @required this.scores,
   }) : super(key: key);

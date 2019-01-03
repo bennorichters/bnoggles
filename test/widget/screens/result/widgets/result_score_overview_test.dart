@@ -19,7 +19,7 @@ void main() {
     when(mockScoreSheet.foundWords).thenReturn(5);
 
     await tester.pumpWidget(testableWidget(
-      child: ResultScoreOverview(
+      child: ResultSinglePlayerScore(
         scoreSheet: mockScoreSheet,
         fontSize: 10,
       ),

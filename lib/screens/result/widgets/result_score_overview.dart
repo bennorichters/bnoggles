@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 /// Overview of number found words by user and number total words
-class ResultScoreOverview extends StatelessWidget {
-  /// Creates an instance of [ResultScoreOverview]
-  ResultScoreOverview({
+class ResultSinglePlayerScore extends StatelessWidget {
+  /// Creates an instance of [ResultSinglePlayerScore]
+  ResultSinglePlayerScore({
     Key key,
     @required this.scoreSheet,
     @required this.fontSize,

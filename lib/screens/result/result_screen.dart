@@ -12,7 +12,7 @@ import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:flutter/material.dart';
 
-/// Screen showing [ResultAllWordsList], [ResultScoreOverview], [ResultBoard]
+/// Screen showing [ResultAllWordsList], [ResultSinglePlayerScore], [ResultBoard]
 /// and [ResultActionRow].
 class ResultScreen extends StatefulWidget {
   /// Creates an instance of [ResultScreen].
@@ -60,12 +60,12 @@ class _ResultScreenState extends State<ResultScreen> {
                   Expanded(
                     child: Center(
                       child: widget.gameInfo.parameters.numberOfPlayers == 1
-                          ? ResultScoreOverview(
+                          ? ResultSinglePlayerScore(
                               scoreSheet: widget.gameInfo
                                   .scoreSheet(widget.gameInfo.currentPlayer),
                               fontSize: secondColumnWidth / 20,
                             )
-                          : MultiPlayerScore(
+                          : ResultMultiPlayerScore(
                               scores: widget.gameInfo.scoreSheets(),
                             ),
                     ),

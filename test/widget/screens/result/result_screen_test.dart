@@ -39,7 +39,7 @@ void main() {
 
     expect(find.text("Bnoggles"), findsOneWidget);
     expect(find.byType(ResultAllWordsList), findsOneWidget);
-    expect(find.byType(ResultScoreOverview), findsOneWidget);
+    expect(find.byType(ResultSinglePlayerScore), findsOneWidget);
     expect(find.byType(ResultBoard), findsOneWidget);
     expect(find.byType(ResultActionRow), findsOneWidget);
   });
