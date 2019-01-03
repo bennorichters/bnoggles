@@ -4,6 +4,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/screens/game/game_screen.dart';
+import 'package:bnoggles/screens/player/player_screen.dart';
 import 'package:bnoggles/utils/language.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:bnoggles/widgets/start_game_button.dart';
@@ -87,6 +88,35 @@ void main() {
     ));
 
     expect(find.byType(GameScreen), findsOneWidget);
+  });
+
+  testWidgets('tap play button goes to player screen for muli player',
+      (WidgetTester tester) async {
+    await binding.setSurfaceSize(Size(768, 1024));
+
+    _registerLanguageLoader();
+
+    GameParameters p = createMockParameters(
+      hints: false,
+      hasTimeLimit: false,
+      numberOfPlayers: 2,
+    );
+
+    final mockObserver = MockNavigatorObserver();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: StartGameButton(
+          parameterProvider: () => p,
+          replaceScreen: true,
+        ),
+        navigatorObservers: [mockObserver],
+      ),
+    );
+
+    await tester.tap(find.byIcon(Icons.play_arrow));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(PlayerScreen), findsOneWidget);
   });
 }
 
