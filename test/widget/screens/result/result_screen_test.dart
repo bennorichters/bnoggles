@@ -7,6 +7,7 @@ import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/screens/result/widgets/result_all_words_list.dart';
 import 'package:bnoggles/screens/result/widgets/result_action_row.dart';
 import 'package:bnoggles/screens/result/widgets/result_board.dart';
+import 'package:bnoggles/screens/result/widgets/result_multi_player_score.dart';
 import 'package:bnoggles/screens/result/widgets/result_single_player_score.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/language.dart';
@@ -20,9 +21,7 @@ void main() {
   final TestWidgetsFlutterBinding binding =
       TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets(
-      'find '
-      'Bnoggles, AllWordsList, ScoreOviewview, ResultBoard, ResultActionRow',
+  testWidgets('find all elements for single player',
       (WidgetTester tester) async {
     await binding.setSurfaceSize(Size(768, 1024));
 
@@ -43,6 +42,26 @@ void main() {
     expect(find.byType(ResultSinglePlayerScore), findsOneWidget);
     expect(find.byType(ResultBoard), findsOneWidget);
     expect(find.byType(ResultActionRow), findsOneWidget);
+  });
+
+  testWidgets('find multi mlayer overview for multi playera',
+      (WidgetTester tester) async {
+    await binding.setSurfaceSize(Size(768, 1024));
+
+    ResultScreen screen = ResultScreen(
+      gameInfo: createGameInfo(
+        numberOfPlayers: 2,
+      ),
+    );
+
+    Widget w = testableWidgetWithMediaQuery(
+      child: screen,
+      width: 768,
+      height: 1024,
+    );
+    await tester.pumpWidget(w);
+
+    expect(find.byType(ResultMultiPlayerScore), findsOneWidget);
   });
 
   testWidgets('tap play button', (WidgetTester tester) async {
