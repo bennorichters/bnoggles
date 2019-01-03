@@ -6,13 +6,14 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:bnoggles/utils/gamelogic/board.dart';
-import 'package:bnoggles/utils/gamelogic/frequency.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:bnoggles/utils/game_info.dart';
+
+import '../../test_helper.dart';
 
 class MockParameters extends Mock implements GameParameters {}
 
@@ -45,11 +46,6 @@ void main() {
 
   test('randomWords', () async {
     var words = ['abc', 'def', 'ghi'];
-    Frequency frequency = Frequency.fromStrings(words);
-    MockSolution mockSolution = MockSolution();
-
-    when(mockSolution.frequency).thenReturn(frequency);
-    when(mockSolution.uniqueWords()).thenReturn(words.toSet());
 
     ValueNotifier<UserAnswer> vua = ValueNotifier(UserAnswer.start());
 
@@ -57,7 +53,7 @@ void main() {
       parameters: null,
       currentPlayer: 0,
       board: null,
-      solution: mockSolution,
+      solution: createMockSolution(words, 2),
       allUserAnswers: [vua],
     );
 
@@ -65,13 +61,6 @@ void main() {
   });
 
   test('scoreSheet', () async {
-    var words = ['abc', 'def', 'ghi'];
-    Frequency frequency = Frequency.fromStrings(words);
-    MockSolution mockSolution = MockSolution();
-
-    when(mockSolution.frequency).thenReturn(frequency);
-    when(mockSolution.uniqueWords()).thenReturn(words.toSet());
-
     ValueNotifier<UserAnswer> vua =
         ValueNotifier(UserAnswer.start().add('abc', true));
 
@@ -79,7 +68,7 @@ void main() {
       parameters: null,
       currentPlayer: 0,
       board: null,
-      solution: mockSolution,
+      solution: createMockSolution(['abc', 'def', 'ghi'], 2),
       allUserAnswers: [vua],
     );
 
@@ -88,13 +77,6 @@ void main() {
   });
 
   test('answer listeners', () async {
-    var words = ['abc', 'def', 'ghi'];
-    Frequency frequency = Frequency.fromStrings(words);
-    MockSolution mockSolution = MockSolution();
-
-    when(mockSolution.frequency).thenReturn(frequency);
-    when(mockSolution.uniqueWords()).thenReturn(words.toSet());
-
     ValueNotifier<UserAnswer> vua =
         ValueNotifier(UserAnswer.start().add('abc', true));
 
@@ -102,7 +84,7 @@ void main() {
       parameters: null,
       currentPlayer: 0,
       board: null,
-      solution: mockSolution,
+      solution: createMockSolution(['abc', 'def', 'ghi'], 2),
       allUserAnswers: [vua],
     );
 
