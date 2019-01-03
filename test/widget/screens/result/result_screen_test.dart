@@ -7,7 +7,7 @@ import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/screens/result/widgets/result_all_words_list.dart';
 import 'package:bnoggles/screens/result/widgets/result_action_row.dart';
 import 'package:bnoggles/screens/result/widgets/result_board.dart';
-import 'package:bnoggles/screens/result/widgets/result_score_overview.dart';
+import 'package:bnoggles/screens/result/widgets/result_single_player_score.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/language.dart';
 import 'package:flutter/material.dart';
