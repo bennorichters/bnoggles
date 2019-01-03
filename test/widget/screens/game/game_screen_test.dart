@@ -7,6 +7,7 @@ import 'package:bnoggles/screens/game/game_screen.dart';
 import 'package:bnoggles/screens/game/widgets/game_board.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
 import 'package:bnoggles/screens/game/widgets/game_word_list_window.dart';
+import 'package:bnoggles/screens/player/player_screen.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
@@ -152,5 +153,30 @@ void main() {
     expect(find.text('–:––'), findsOneWidget);
     await tester.pumpAndSettle();
     expect(find.text('–:––'), findsOneWidget);
+  });
+
+  testWidgets(
+      'navigate to next player screen when time runs out '
+      'but not all players played', (WidgetTester tester) async {
+    await binding.setSurfaceSize(Size(900, 1200));
+
+    GameScreen screen = GameScreen(
+      gameInfo: createGameInfo(
+        words: ['abc', 'def'],
+        numberOfPlayers: 3,
+        currentPlayer: 1,
+      ),
+    );
+
+    final mockObserver = MockNavigatorObserver();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: screen,
+        navigatorObservers: [mockObserver],
+      ),
+    );
+
+    await tester.pumpAndSettle();
+    expect(find.byType(PlayerScreen), findsOneWidget);
   });
 }
