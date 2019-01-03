@@ -9,14 +9,14 @@ import 'package:bnoggles/utils/widget_logic/widget_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-final fontSizeCalculator = Interpolator.fromDataPoints(
+final _fontSizeCalculator = Interpolator.fromDataPoints(
   p1: const Point(592, 15),
   p2: const Point(1224, 35),
   min: 10,
   max: 40,
 );
 
-final iconSizeCalculator = Interpolator.fromDataPoints(
+final _iconSizeCalculator = Interpolator.fromDataPoints(
   p1: const Point(592, 20),
   p2: const Point(1224, 45),
   min: 15,
@@ -39,8 +39,8 @@ class ResultMultiPlayerScore extends StatelessWidget {
     MediaQueryData data = MediaQuery.of(context);
     double screenHeight = data.size.height;
 
-    double fontSize = fontSizeCalculator.y(x:screenHeight);
-    double iconSize = iconSizeCalculator.y(x:screenHeight);
+    double fontSize = _fontSizeCalculator.y(x:screenHeight);
+    double iconSize = _iconSizeCalculator.y(x:screenHeight);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

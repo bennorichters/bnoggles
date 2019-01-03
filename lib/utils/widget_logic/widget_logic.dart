@@ -12,7 +12,10 @@ String formatTime(int seconds) {
   return '$minutes:$restSeconds';
 }
 
-/// Calculator that finds y for a given value x based on two linear data points
+/// Calculator that finds y for a given value x based on two linear data points.
+///
+/// This class can typically be used to calculate different dimensions for
+/// widgets based on the screen size.
 class Interpolator {
   factory Interpolator.fromDataPoints({
     Math.Point p1,
