@@ -40,21 +40,11 @@ class GameInfo {
   /// Returns the user answer for the current player
   ValueNotifier<UserAnswer> get userAnswer => allUserAnswers[currentPlayer];
 
-  List<ScoreSheet> scoreSheets() => allUserAnswers
-      .map((a) => ScoreSheet._(
-            availableWords: solution.frequency.count,
-            foundWords: a.value.frequency.count,
-          ))
-      .toList();
-
-  /// Returns the [ScoreSheet] for the given player
-  ScoreSheet scoreSheet(int player) => ScoreSheet._(
-        availableWords: solution.frequency.count,
-        foundWords: allUserAnswers[player].value.frequency.count,
-      );
-
   /// Returns the the number of unique words the [solution] has.
-  int availableWords() => solution.uniqueWords().length;
+  int availableWordsCount() => solution.uniqueWords().length;
+
+  /// Returns the found and correct words by the current player.
+  int currentPlayerFoundCount() => userAnswer.value.uniqueWords().length;
 
   /// Returns the number of found and correct words for each player.
   List<int> playersFoundCount() =>
@@ -73,13 +63,3 @@ class GameInfo {
   }
 }
 
-/// Information about the available and found words
-class ScoreSheet {
-  ScoreSheet._({this.availableWords, this.foundWords});
-
-  /// The available words
-  final int availableWords;
-
-  /// The found words
-  final int foundWords;
-}

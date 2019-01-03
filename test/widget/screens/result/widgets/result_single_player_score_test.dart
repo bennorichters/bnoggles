@@ -4,23 +4,16 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/screens/result/widgets/result_single_player_score.dart';
-import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 
 import '../../../widget_test_helper.dart';
 
-class MockScoreSheet extends Mock implements ScoreSheet {}
-
 void main() {
   testWidgets('find numbers', (WidgetTester tester) async {
-    MockScoreSheet mockScoreSheet = MockScoreSheet();
-    when(mockScoreSheet.availableWords).thenReturn(10);
-    when(mockScoreSheet.foundWords).thenReturn(5);
-
     await tester.pumpWidget(testableWidget(
       child: ResultSinglePlayerScore(
-        scoreSheet: mockScoreSheet,
+        maxScore: 10,
+        score: 5,
         fontSize: 10,
       ),
     ));

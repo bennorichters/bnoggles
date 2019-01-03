@@ -12,11 +12,13 @@ class ResultSinglePlayerScore extends StatelessWidget {
   /// Creates an instance of [ResultSinglePlayerScore]
   ResultSinglePlayerScore({
     Key key,
-    @required this.scoreSheet,
+    @required this.maxScore,
+    @required this.score,
     @required this.fontSize,
   }) : super(key: key);
 
-  final ScoreSheet scoreSheet;
+  final int maxScore;
+  final int score;
   final double fontSize;
 
   @override
@@ -31,7 +33,7 @@ class ResultSinglePlayerScore extends StatelessWidget {
           Container(
             width: 20.0,
           ),
-          buildText('${scoreSheet.foundWords}', Colors.green),
+          buildText('$score', Colors.green),
           Container(
             width: 10.0,
           ),
@@ -39,7 +41,7 @@ class ResultSinglePlayerScore extends StatelessWidget {
           Container(
             width: 10.0,
           ),
-          buildText('${scoreSheet.availableWords}', Colors.blue),
+          buildText('$maxScore', Colors.blue),
         ],
       );
 

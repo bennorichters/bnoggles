@@ -4,35 +4,16 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/screens/result/widgets/result_multi_player_score.dart';
-import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 
 import '../../../widget_test_helper.dart';
 
-class MockScoreSheet extends Mock implements ScoreSheet {}
-
 void main() {
   testWidgets('find numbers', (WidgetTester tester) async {
-    MockScoreSheet m1 = MockScoreSheet();
-    when(m1.availableWords).thenReturn(10);
-    when(m1.foundWords).thenReturn(6);
-
-    MockScoreSheet m2 = MockScoreSheet();
-    when(m2.availableWords).thenReturn(10);
-    when(m2.foundWords).thenReturn(9);
-
-    MockScoreSheet m3 = MockScoreSheet();
-    when(m3.availableWords).thenReturn(10);
-    when(m3.foundWords).thenReturn(7);
-
-    MockScoreSheet m4 = MockScoreSheet();
-    when(m4.availableWords).thenReturn(10);
-    when(m4.foundWords).thenReturn(8);
-
     await tester.pumpWidget(testableWidget(
       child: ResultMultiPlayerScore(
-        scores: [m1, m2, m3, m4],
+        maxScore: 10,
+        scores: [6, 9, 7, 8],
       ),
     ));
 

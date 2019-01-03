@@ -60,21 +60,6 @@ void main() {
     expect(info.randomWords.toList()..sort(), words);
   });
 
-  test('scoreSheet', () async {
-    GameInfo info = GameInfo(
-      parameters: null,
-      currentPlayer: 0,
-      board: null,
-      solution: createMockSolution(['abc', 'def', 'ghi'], 2),
-      allUserAnswers: [
-        ValueNotifier(UserAnswer.start().add('abc', true)),
-      ],
-    );
-
-    expect(info.scoreSheet(0).availableWords, 3);
-    expect(info.scoreSheet(0).foundWords, 1);
-  });
-
   test('answer listeners', () async {
     ValueNotifier<UserAnswer> vua =
         ValueNotifier(UserAnswer.start().add('abc', true));
@@ -101,7 +86,7 @@ void main() {
     expect(flag, true);
   });
 
-  test('availableWords', () {
+  test('availableWordsCount', () {
     GameInfo info = GameInfo(
       parameters: null,
       currentPlayer: 0,
@@ -112,7 +97,7 @@ void main() {
       ],
     );
 
-    expect(info.availableWords(), 3);
+    expect(info.availableWordsCount(), 3);
   });
 
   test('list of number of found words for each player', () {
@@ -137,5 +122,19 @@ void main() {
     );
 
     expect(info.playersFoundCount(), [1, 2, 2, 3]);
+  });
+
+  test('found words current user', (){
+    GameInfo info = GameInfo(
+      parameters: null,
+      currentPlayer: 0,
+      board: null,
+      solution: createMockSolution(['abc', 'def', 'ghi'], 2),
+      allUserAnswers: [
+        ValueNotifier(UserAnswer.start().add('abc', true)),
+      ],
+    );
+
+    expect(info.currentPlayerFoundCount(), 1);
   });
 }
