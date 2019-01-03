@@ -5,7 +5,6 @@
 
 import 'dart:math';
 
-import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/widget_logic/widget_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
