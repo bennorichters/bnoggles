@@ -18,6 +18,8 @@ void main() {
   testWidgets('bnoggles in app bar', (WidgetTester tester) async {
     Preferences mp = MockPreferences();
     when(mp.language).thenAnswer((s) => ValueNotifier(0));
+    when(mp.numberOfPlayers).thenAnswer((s) => ValueNotifier(1));
+    when(mp.hasTimeLimit).thenAnswer((s) => ValueNotifier(true));
     when(mp.time).thenAnswer((s) => ValueNotifier(300));
     when(mp.boardWidth).thenAnswer((s) => ValueNotifier(3));
     when(mp.minimalWordLength).thenAnswer((s) => ValueNotifier(2));
