@@ -6,7 +6,7 @@
 import 'dart:math';
 import 'package:collection/collection.dart';
 
-const _eq = const MapEquality<int, int>();
+const _eq = MapEquality<int, int>();
 
 /// A frequency to map the number of words per word length.
 ///

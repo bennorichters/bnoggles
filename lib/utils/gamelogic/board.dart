@@ -26,19 +26,19 @@ class Board {
   /// determines the order in which the coordinates are mapped. [List.shuffle]
   /// is used when [shuffler] is omitted. If [word] is given it will be added
   /// to the board.
-  factory Board(
-          {@required int width,
-          @required SequenceGenerator generator,
-          Shuffler shuffler,
-          String word}) =>
+  factory Board({
+    @required int width,
+    @required SequenceGenerator generator,
+    Shuffler shuffler,
+    String word,
+  }) =>
       _BoardFactory(
         width,
         generator,
         shuffler ?? (list) => list..shuffle(),
       ).build(word);
 
-  factory Board._unmodifiable(
-          Map<Coordinate, String> tiles) =>
+  factory Board._unmodifiable(Map<Coordinate, String> tiles) =>
       Board._(Map.unmodifiable(tiles));
 
   Board._(this._tiles);
