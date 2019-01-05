@@ -8,7 +8,7 @@ import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/frequency.dart';
 import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/answer.dart';
 import 'package:bnoggles/utils/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

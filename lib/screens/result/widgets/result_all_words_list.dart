@@ -4,7 +4,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/answer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 

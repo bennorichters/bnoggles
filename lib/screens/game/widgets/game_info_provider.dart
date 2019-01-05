@@ -6,7 +6,7 @@
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/answer.dart';
 
 /// A widget that holds an instance of [GameInfo] that is accessible by its
 /// descendants.

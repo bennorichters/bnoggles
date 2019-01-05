@@ -6,7 +6,7 @@
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
 import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/answer.dart';
 
 /// A container for both a [Board] and a [Solution].
 ///

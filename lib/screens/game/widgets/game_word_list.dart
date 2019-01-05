@@ -9,7 +9,7 @@ import 'package:bnoggles/utils/widget_logic/widget_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/answer.dart';
 
 final _wordListHeightCalculator = Interpolator.fromDataPoints(
   p1: const Point(592, 30),

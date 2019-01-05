@@ -13,7 +13,7 @@ import 'package:bnoggles/screens/game/widgets/game_info_provider.dart';
 
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/answer.dart';
 
 /// Widget that allows the user to swipe through a grid of letters to find
 /// hidden words.

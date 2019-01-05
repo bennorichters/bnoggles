@@ -10,7 +10,7 @@ import 'package:flutter/rendering.dart';
 
 import 'package:bnoggles/screens/game/widgets/game_info_provider.dart';
 
-import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/answer.dart';
 
 const int _maxLength = 8;
 

@@ -4,7 +4,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/screens/game/widgets/game_word_list.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart' as Solution;
+import 'package:bnoggles/utils/gamelogic/answer.dart' as Solution;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';

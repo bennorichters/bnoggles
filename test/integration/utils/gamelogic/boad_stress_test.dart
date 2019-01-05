@@ -6,7 +6,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/answer.dart';
 import 'package:trotter/trotter.dart';
 
 import 'package:bnoggles/utils/gamelogic/board.dart';

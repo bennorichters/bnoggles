@@ -10,7 +10,7 @@ import 'package:mockito/mockito.dart';
 import 'package:bnoggles/utils/gamelogic/board.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
 import 'package:bnoggles/utils/gamelogic/dictionary.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart' as solution;
+import 'package:bnoggles/utils/gamelogic/answer.dart' as solution;
 
 import 'package:bnoggles/utils/gamelogic/lettter_sequence.dart';
 

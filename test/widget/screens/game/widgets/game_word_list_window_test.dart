@@ -5,7 +5,7 @@
 
 import 'package:bnoggles/screens/game/widgets/game_word_list_window.dart';
 import 'package:bnoggles/utils/game_info.dart';
-import 'package:bnoggles/utils/gamelogic/solution.dart';
+import 'package:bnoggles/utils/gamelogic/answer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
