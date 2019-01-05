@@ -14,7 +14,10 @@ void main() {
     ValueNotifier<int> v = ValueNotifier(0);
     var list = intSlider(
       sliderNotifier: v,
-      icon: Icons.ac_unit,
+      icon: const Icon(
+        Icons.ac_unit,
+        size: 40,
+      ),
       label: (i) => 'txt',
       min: 0,
       max: 9,
@@ -32,7 +35,10 @@ void main() {
     ValueNotifier<int> v = ValueNotifier(8);
     var list = intSlider(
       sliderNotifier: v,
-      icon: Icons.ac_unit,
+      icon: const Icon(
+        Icons.ac_unit,
+        size: 40,
+      ),
       label: (i) => i.toString(),
       min: 8,
       max: 16,
@@ -62,7 +68,10 @@ void main() {
 
     var list = intSlider(
       sliderNotifier: sliderValue,
-      icon: Icons.ac_unit,
+      icon: const Icon(
+        Icons.ac_unit,
+        size: 40,
+      ),
       switchNotifier: switchValue,
       label: (i) => i.toString(),
       min: 8,

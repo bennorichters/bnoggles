@@ -12,10 +12,10 @@ import 'package:flutter/material.dart';
 /// user can change the value of [notifier] by tapping on the flags.
 List<Widget> languageOptions({
   @required ValueNotifier<int> notifier,
-  @required IconData icon,
+  @required Icon icon,
 }) =>
     [
-      Icon(icon, size: 40.0),
+      icon,
       Container(),
       _LanguageOptions(notifier: notifier),
     ];

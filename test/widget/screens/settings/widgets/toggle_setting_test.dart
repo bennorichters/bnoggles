@@ -14,7 +14,10 @@ void main() {
     ValueNotifier<bool> v = ValueNotifier(false);
     var list = toggleSetting(
       notifier: v,
-      icon: Icons.ac_unit,
+      icon: const Icon(
+        Icons.ac_unit,
+        size: 40,
+      ),
     );
     await tester.pumpWidget(testableRow(children: list));
 
@@ -26,7 +29,10 @@ void main() {
     ValueNotifier<bool> v = ValueNotifier(false);
     var list = toggleSetting(
       notifier: v,
-      icon: Icons.ac_unit,
+      icon: const Icon(
+        Icons.ac_unit,
+        size: 40,
+      ),
     );
     await tester.pumpWidget(testableRow(children: list));
 

@@ -65,14 +65,20 @@ class SettingsGrid extends StatelessWidget {
           TableRow(
             children: languageOptions(
               notifier: _preferences.language,
-              icon: Icons.language,
+              icon: const Icon(
+                Icons.language,
+                size: 40,
+              ),
             ),
           ),
           _emptyLine(emptyLineHeight),
           TableRow(
             children: intSlider(
               sliderNotifier: _preferences.numberOfPlayers,
-              icon: Icons.people,
+              icon: const Icon(
+                Icons.people,
+                size: 40,
+              ),
               label: (i) => '$i',
               min: 1,
               max: 4,
@@ -84,7 +90,10 @@ class SettingsGrid extends StatelessWidget {
             children: intSlider(
               switchNotifier: _preferences.hasTimeLimit,
               sliderNotifier: _preferences.time,
-              icon: Icons.timer,
+              icon: const Icon(
+                Icons.timer,
+                size: 40,
+              ),
               label: formatTime,
               min: 30,
               max: 600,
@@ -95,7 +104,10 @@ class SettingsGrid extends StatelessWidget {
           TableRow(
             children: intSlider(
               sliderNotifier: _preferences.boardWidth,
-              icon: Icons.grid_on,
+              icon: const Icon(
+                Icons.grid_on,
+                size: 40,
+              ),
               label: (i) => '$i x $i',
               min: 3,
               max: 6,
@@ -105,7 +117,10 @@ class SettingsGrid extends StatelessWidget {
           TableRow(
             children: intSlider(
               sliderNotifier: _preferences.minimalWordLength,
-              icon: Icons.text_rotation_none,
+              icon: const Icon(
+                Icons.text_rotation_none,
+                size: 40,
+              ),
               label: (i) => '$i+',
               min: 2,
               max: 4,
@@ -114,7 +129,10 @@ class SettingsGrid extends StatelessWidget {
           _emptyLine(emptyLineHeight),
           TableRow(
             children: toggleSetting(
-              icon: _lightBulb,
+              icon: const Icon(
+                _lightBulb,
+                size: 40,
+              ),
               notifier: _preferences.hints,
             ),
           ),

@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 ///
 /// The user can toggle the value of [notifier] by tapping the switch.
 List<Widget> toggleSetting({
-  @required IconData icon,
+  @required Icon icon,
   @required ValueNotifier<bool> notifier,
 }) =>
     [
-      Icon(icon, size: 40.0),
+      icon,
       Container(),
       Row(
         mainAxisSize: MainAxisSize.min,

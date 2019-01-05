@@ -24,7 +24,7 @@ typedef String LabelRenderer(int value);
 /// the switch is 'off' the slider is disabled and the text widget shows an
 /// empty text.
 List<Widget> intSlider({
-  @required IconData icon,
+  @required Icon icon,
   @required ValueNotifier<int> sliderNotifier,
   @required LabelRenderer label,
   @required int min,
@@ -48,7 +48,7 @@ List<Widget> intSlider({
   );
 
   return [
-    Icon(icon, size: 40.0),
+    icon,
     _Label(
       label: label,
       sliderNotifier: sliderNotifier,
