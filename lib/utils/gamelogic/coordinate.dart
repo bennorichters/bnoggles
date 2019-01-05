@@ -46,7 +46,7 @@ class Coordinate {
   /// this coordinates and it is not equal to this coordinate. The x and y
   /// values of the returned neighbours are both between min and max, both
   /// inclusive.
-  Iterable<Coordinate> allNeighbours(num min, num max) => _Direction.values
+  Iterable<Coordinate> allNeighbours(int min, int max) => _Direction.values
       .map((d) => _neighbour(d))
       .where((c) => _withinBoundaries(c, min, max));
 
@@ -57,7 +57,7 @@ class Coordinate {
   bool isNeighbourOf(Coordinate other) =>
       (((x - other.x).abs() == 1) || ((y - other.y).abs() == 1));
 
-  bool _withinBoundaries(Coordinate coordinate, num min, num max) =>
+  bool _withinBoundaries(Coordinate coordinate, int min, int max) =>
       ((coordinate.x >= min) &&
           (coordinate.x <= max) &&
           (coordinate.y >= min) &&
