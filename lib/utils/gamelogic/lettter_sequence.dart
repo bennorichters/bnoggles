@@ -72,7 +72,7 @@ class LetterSequenceInfo {
 /// generates sequences. When an instance of this class is first created,
 /// calling next will generate a sequence that is chosen from the available
 /// sequences that have the longest length. After calling
-/// [SequenceGenerator.decreaseLength] the next method will choose from
+/// [SequenceGenerator.decreaseLength] this [next] method will choose from
 /// sequences that have the one but highest length. Further calls to
 /// decreaseLength will behave similarly until the shortest available length has
 /// been reached.
