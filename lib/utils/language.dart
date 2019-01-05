@@ -38,24 +38,21 @@ class Language {
   }
 
   static Future<Language> _load(String code) async {
-    // var start = DateTime.now();
     return Future.wait<String>([
       _loader.characterSequenceFrequencies(code),
       _loader.availableWords(code),
-    ]).then((var files) {
+    ]).then((List<String> files) {
       return Language._(
         LetterSequenceInfo(_getFrequencies(files[0])),
         Dictionary(files[1].split("\n")..sort()),
       );
     }).then((Language language) {
-      // var time = DateTime.now().difference(start).inMilliseconds;
-      // print("Loading '$code' took ${time}ms");
       return language;
     });
   }
 
   static Map<String, int> _getFrequencies(String frequencies) {
-    var result = <String, int>{};
+    Map<String, int> result = {};
     Map<String, dynamic> m = json.decode(frequencies);
     m.forEach((k, dynamic e) => result[k] = e as int);
     return result;

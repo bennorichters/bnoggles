@@ -3,6 +3,8 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
+import 'package:bnoggles/utils/game_info.dart';
+import 'package:bnoggles/utils/gamelogic/frequency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -115,11 +117,11 @@ class _UserAnswerNumberInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var gameInfo = GameInfoProvider.of(context);
+    GameInfo gameInfo = GameInfoProvider.of(context);
     Solution solution = gameInfo.solution;
     Answer answer = gameInfo.userAnswer.value;
 
-    var todo = solution.frequency - answer.frequency;
+    Frequency todo = solution.frequency - answer.frequency;
     int remaining = length == _maxLength ? todo.atLeast(length) : todo[length];
 
     return Container(

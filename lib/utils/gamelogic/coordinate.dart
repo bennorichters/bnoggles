@@ -10,7 +10,7 @@
 class Coordinate {
   /// Creates a [Coordinate] with the given [x] and [y] values.
   factory Coordinate(int x, int y) {
-    var containsX = _cache.containsKey(x);
+    bool containsX = _cache.containsKey(x);
 
     if (containsX && _cache[x].containsKey(y)) return _cache[x][y];
 

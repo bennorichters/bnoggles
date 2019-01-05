@@ -94,7 +94,7 @@ class ResultMultiPlayerScore extends StatelessWidget {
   }
 
   List<TableRow> playerScores(double fontSize) {
-    var asMap = scores.asMap();
+    Map<int, int> asMap = scores.asMap();
     return (asMap.keys.toList()..sort((a, b) => asMap[b] - asMap[a]))
         .map((k) => TableRow(
               children: [

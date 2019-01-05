@@ -36,13 +36,13 @@ class _GameBoardState extends State<GameBoard> {
     Board board = gameInfo.board;
     Solution solution = gameInfo.solution;
 
-    var word = StringBuffer();
+    StringBuffer word = StringBuffer();
     for (Coordinate position in selectedPositions) {
       word.write(board[position]);
     }
 
     if (word.length >= gameInfo.solution.minimalLength) {
-      var candidate = word.toString();
+      String candidate = word.toString();
 
       UserAnswer old = gameInfo.userAnswer.value;
       gameInfo.userAnswer.value =

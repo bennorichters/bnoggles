@@ -61,7 +61,7 @@ class Board {
   /// 1 and both coordinates are not equal and x and y are both between zero
   /// (inclusive) and width (exclusive).
   Map<Coordinate, Iterable<Coordinate>> mapNeighbours() {
-    var contents = <Coordinate, Iterable<Coordinate>>{};
+    Map<Coordinate, Iterable<Coordinate>> contents = {};
     allCoordinates()
         .forEach((c) => contents[c] = c.allNeighbours(0, width - 1));
     return Map.unmodifiable(contents);
@@ -69,10 +69,10 @@ class Board {
 
   @override
   String toString() {
-    var result = <String>[];
-    for (var y = 0; y < width; y++) {
-      var line = StringBuffer();
-      for (var x = 0; x < width; x++) {
+    List<String> result = [];
+    for (int y = 0; y < width; y++) {
+      StringBuffer line = StringBuffer();
+      for (int x = 0; x < width; x++) {
         line.write(_tiles[Coordinate(x, y)]);
       }
       result.add(line.toString());
@@ -108,8 +108,8 @@ class _BoardFactory {
 
   int addLetterSequence([String letterSequence]) {
     letterSequence ??= gen.next();
-    List<Coordinate> chain;
 
+    List<Coordinate> chain;
     while (chain == null) {
       chain = freeChain(
         shuffler(tiles.keys.where((k) => tiles[k] == null).toList()),
@@ -130,8 +130,8 @@ class _BoardFactory {
   }
 
   void emptyBoard() {
-    for (var x = 0; x < width; x++) {
-      for (var y = 0; y < width; y++) {
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < width; y++) {
         tiles[Coordinate(x, y)] = null;
       }
     }
@@ -149,7 +149,7 @@ class _BoardFactory {
           .where((c) => (tiles[c] == null) && !found.contains(c))
           .toList());
 
-      var result = freeChain(
+      List<Coordinate> result = freeChain(
         nextCandidates,
         length - 1,
         List.of(found)..add(candidate),

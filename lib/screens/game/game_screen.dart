@@ -60,7 +60,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   void nextScreen() {
     disposeController();
 
-    var gameInfo = widget.gameInfo;
+    GameInfo gameInfo = widget.gameInfo;
 
     bool finished = false;
     if (gameInfo.currentPlayer == gameInfo.parameters.numberOfPlayers - 1) {

@@ -136,7 +136,7 @@ class Solution extends Answer {
       words.map((e) => e.text).toSet();
 
   int _compareWords(String a, String b) {
-    var compareLength = a.length.compareTo(b.length);
+    int compareLength = a.length.compareTo(b.length);
     return (compareLength == 0) ? a.compareTo(b) : compareLength;
   }
 
@@ -167,8 +167,8 @@ class _Problem {
     words = Set();
 
     while (candidates.isNotEmpty) {
-      var candidate = candidates.removeFirst();
-      var last = candidate._coordinates.last;
+      Chain candidate = candidates.removeFirst();
+      Coordinate last = candidate._coordinates.last;
       Iterable<Coordinate> allNeighbours = neighbours[last];
       allNeighbours
           .where((c) => !candidate._coordinates.contains(c))
@@ -180,17 +180,17 @@ class _Problem {
 
   void initialCandidates() {
     candidates = ListQueue();
-    var blank = Chain._blank();
+    Chain blank = Chain._blank();
     board.allCoordinates().forEach((c) => evaluateCandidate(blank, c));
   }
 
   void evaluateCandidate(Chain baseCandidate, Coordinate coordinate) {
-    var character = board[coordinate];
+    String character = board[coordinate];
     StringBuffer word = (StringBuffer(baseCandidate._text)..write(character));
-    var info = dict.getInfo(word.toString());
+    WordInfo info = dict.getInfo(word.toString());
 
     if (info.canStartWith) {
-      var nextCandidate = Chain._extend(baseCandidate, coordinate, word);
+      Chain nextCandidate = Chain._extend(baseCandidate, coordinate, word);
       candidates.add(nextCandidate);
 
       if (info.found && word.length >= minimalLength) {

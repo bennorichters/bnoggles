@@ -40,7 +40,7 @@ class BoardWidget extends StatelessWidget {
         mainAxisSpacing: 5.0,
       ),
       itemBuilder: (context, index) {
-        var xy = _indexToXY(index, width);
+        List<int> xy = _indexToXY(index, width);
         Coordinate position = Coordinate(xy[0], xy[1]);
         bool selected = selectedPositions.contains(position);
         String character = board[position];

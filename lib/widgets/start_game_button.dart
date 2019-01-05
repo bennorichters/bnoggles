@@ -6,6 +6,7 @@
 import 'package:bnoggles/screens/game/game_screen.dart';
 import 'package:bnoggles/screens/player/player_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
+import 'package:bnoggles/utils/gamelogic/game.dart';
 import 'package:bnoggles/utils/gamelogic/solution.dart';
 import 'package:bnoggles/utils/language.dart';
 import 'package:bnoggles/utils/preferences.dart';
@@ -49,9 +50,9 @@ class _StartGameButtonState extends State<StartGameButton> {
           isLoading = true;
         });
 
-        var parameters = widget.parameterProvider();
+        GameParameters parameters = widget.parameterProvider();
         Language.forLanguageCode(parameters.languageCode).then((language) {
-          var game = language.createGame(
+          Game game = language.createGame(
             parameters.boardWidth,
             parameters.minimalWordLength,
           );

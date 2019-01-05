@@ -24,7 +24,7 @@ class Clock extends StatelessWidget {
     MediaQueryData data = MediaQuery.of(context);
     double clockFontSize = data.size.width < 375.0 ? 15.0 : 30.0;
 
-    var animation = StepTween(
+    Animation<int> animation = StepTween(
       begin: startTime + 1,
       end: 1,
     ).animate(controller);

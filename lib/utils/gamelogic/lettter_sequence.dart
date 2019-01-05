@@ -36,8 +36,8 @@ class LetterSequenceInfo {
   /// The given [random] is used to choose sequences. If this is omitted an
   /// instance of [Random] will be used.
   SequenceGenerator createSequenceGenerator([Random random]) {
-    List<int> lengths = _lengths();
     random ??= Random();
+    List<int> lengths = _lengths();
 
     return SequenceGenerator._(
       lengths,

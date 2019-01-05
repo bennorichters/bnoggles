@@ -47,15 +47,15 @@ class Preferences {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     ValueNotifier<int> intNotifier(String name, int defaultValue) {
-      var value = prefs.getInt(name) ?? defaultValue;
-      var result = ValueNotifier(value);
+      int value = prefs.getInt(name) ?? defaultValue;
+      ValueNotifier<int> result = ValueNotifier(value);
       result.addListener(() => prefs.setInt(name, result.value));
       return result;
     }
 
     ValueNotifier<bool> boolNotifier(String name, bool defaultValue) {
-      var value = prefs.getBool(name) ?? defaultValue;
-      var result = ValueNotifier(value);
+      bool value = prefs.getBool(name) ?? defaultValue;
+      ValueNotifier<bool> result = ValueNotifier(value);
       result.addListener(() => prefs.setBool(name, result.value));
       return result;
     }

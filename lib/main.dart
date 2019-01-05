@@ -19,7 +19,7 @@ void main() async {
         rootBundle.loadString('assets/lang/$code/words.dic'),
   ));
 
-  var preferences = await Preferences.load();
+  Preferences preferences = await Preferences.load();
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
