@@ -5,7 +5,8 @@
 
 import 'dart:math' as Math;
 
-/// Returns a String representing the time in the format MM:SS
+/// Returns a String representing the time in the format mm:ss, where m stands
+/// for minute and s for second.
 String formatTime(int seconds) {
   int minutes = (seconds / 60).floor();
   String restSeconds = (seconds - 60 * minutes).toString().padLeft(2, '0');
