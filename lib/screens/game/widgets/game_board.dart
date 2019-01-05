@@ -5,6 +5,7 @@
 
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/widgets/board_widget.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -58,36 +59,36 @@ class _GameBoardState extends State<GameBoard> {
     });
   }
 
+  bool canBeNext(Coordinate position) =>
+      selectedPositions.isEmpty ||
+      (!selectedPositions.contains(position) &&
+          selectedPositions.last.isNeighbourOf(position));
+
+  void startAndMove(PointerEvent event) {
+    RenderBox box = key.currentContext.findRenderObject();
+    HitTestResult result = HitTestResult();
+    Offset local = box.globalToLocal(event.position);
+    if (box.hitTest(result, position: local)) {
+      for (HitTestEntry hit in result.path) {
+        HitTestTarget target = hit.target;
+        if (target is _PositionedRenderObject) {
+          Coordinate position = target.position;
+          if (canBeNext(position)) {
+            setState(() {
+              selectedPositions.add(position);
+            });
+          }
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Board board = GameInfoProvider.of(context).board;
 
     double mediaWidth = MediaQuery.of(context).size.width;
     double cellWidth = mediaWidth / board.width;
-
-    bool canBeNext(Coordinate position) =>
-        selectedPositions.isEmpty ||
-        (!selectedPositions.contains(position) &&
-            selectedPositions.last.isNeighbourOf(position));
-
-    void startAndMove(PointerEvent event) {
-      final RenderBox box = key.currentContext.findRenderObject();
-      final result = HitTestResult();
-      Offset local = box.globalToLocal(event.position);
-      if (box.hitTest(result, position: local)) {
-        for (final hit in result.path) {
-          final target = hit.target;
-          if (target is _PositionedRenderObject) {
-            Coordinate position = target.position;
-            if (canBeNext(position)) {
-              setState(() {
-                selectedPositions.add(position);
-              });
-            }
-          }
-        }
-      }
-    }
 
     return Container(
       key: key,
@@ -157,8 +158,11 @@ class _HittableGridCell extends StatelessWidget {
 }
 
 class _PositionedWidget extends SingleChildRenderObjectWidget {
-  _PositionedWidget({Widget child, this.position, Key key})
-      : super(child: child, key: key);
+  _PositionedWidget({
+    Widget child,
+    this.position,
+    Key key,
+  }) : super(child: child, key: key);
 
   final Coordinate position;
 
@@ -168,7 +172,9 @@ class _PositionedWidget extends SingleChildRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, _PositionedRenderObject renderObject) {
+    BuildContext context,
+    _PositionedRenderObject renderObject,
+  ) {
     renderObject.position = position;
   }
 }
