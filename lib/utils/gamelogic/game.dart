@@ -20,8 +20,12 @@ class Game {
   ///
   /// It is guaranteed that the generated board has a solution that contains at
   /// least one word.
-  factory Game(int boardWidth, SequenceGenerator generator,
-      Dictionary dictionary, int minimalWordLength) {
+  factory Game(
+    int boardWidth,
+    SequenceGenerator generator,
+    Dictionary dictionary,
+    int minimalWordLength,
+  ) {
     Board board = Board(
       width: boardWidth,
       generator: generator,
