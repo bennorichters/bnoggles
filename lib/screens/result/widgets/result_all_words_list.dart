@@ -39,15 +39,15 @@ class ResultAllWordsList extends StatelessWidget {
         .map(
           (word) => GestureDetector(
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(3.0, 5.0, 3.0, 5.0),
-                  padding: EdgeInsets.all(5.0),
+                  margin: const EdgeInsets.fromLTRB(3.0, 5.0, 3.0, 5.0),
+                  padding: const EdgeInsets.all(5.0),
                   decoration: BoxDecoration(
                     color: foundByEveryone(word)
                         ? Colors.green
                         : foundBySome(word)
                             ? Colors.lightGreenAccent
                             : Colors.lightBlueAccent,
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   ),
                   child: Text(
                     wordText(word),

@@ -39,8 +39,8 @@ class ResultMultiPlayerScore extends StatelessWidget {
     MediaQueryData data = MediaQuery.of(context);
     double screenHeight = data.size.height;
 
-    double fontSize = _fontSizeCalculator.y(x:screenHeight);
-    double iconSize = _iconSizeCalculator.y(x:screenHeight);
+    double fontSize = _fontSizeCalculator.y(x: screenHeight);
+    double iconSize = _iconSizeCalculator.y(x: screenHeight);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +54,9 @@ class ResultMultiPlayerScore extends StatelessWidget {
               size: iconSize + 5,
               color: Colors.black,
             ),
-            Container(width: 10,),
+            Container(
+              width: 10,
+            ),
             Text(
               maxScore.toString(),
               style: TextStyle(
@@ -69,7 +71,7 @@ class ResultMultiPlayerScore extends StatelessWidget {
           height: 5,
         ),
         Table(
-          columnWidths: {
+          columnWidths: const {
             0: FixedColumnWidth(50.0),
             1: FixedColumnWidth(50.0),
           },
@@ -93,8 +95,7 @@ class ResultMultiPlayerScore extends StatelessWidget {
 
   List<TableRow> playerScores(double fontSize) {
     var asMap = scores.asMap();
-    return (asMap.keys.toList()
-          ..sort((a, b) => asMap[b] - asMap[a]))
+    return (asMap.keys.toList()..sort((a, b) => asMap[b] - asMap[a]))
         .map((k) => TableRow(
               children: [
                 Center(

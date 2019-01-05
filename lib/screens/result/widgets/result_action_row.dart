@@ -33,7 +33,7 @@ class ResultActionRow extends StatelessWidget {
                 ModalRoute.withName(Navigator.defaultRouteName),
               );
             },
-            child: Icon(Icons.settings),
+            child: const Icon(Icons.settings),
           ),
         ),
         Container(

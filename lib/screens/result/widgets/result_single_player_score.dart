@@ -24,7 +24,7 @@ class ResultSinglePlayerScore extends StatelessWidget {
   Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(
+          const Icon(
             Icons.done,
             size: 40.0,
             color: Colors.black,

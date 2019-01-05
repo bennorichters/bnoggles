@@ -36,7 +36,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bnoggles"),
+        title: const Text("Bnoggles"),
         automaticallyImplyLeading: false,
       ),
       body: Center(
@@ -44,8 +44,9 @@ class _ResultScreenState extends State<ResultScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+              ),
               width: wordViewWidth,
               child: ResultAllWordsList(
                 solution: widget.gameInfo.solution,
@@ -80,7 +81,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: ResultActionRow(
                       parameters: () => widget.gameInfo.parameters,
                     ),

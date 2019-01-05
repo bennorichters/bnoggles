@@ -28,7 +28,7 @@ class WordCountOverview extends StatelessWidget {
 
     return GridView.builder(
       itemCount: ((_maxLength - 1) * 2),
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: (_maxLength - 1),
         childAspectRatio: 1.0,

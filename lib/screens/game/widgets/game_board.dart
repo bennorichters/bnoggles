@@ -91,7 +91,11 @@ class _GameBoardState extends State<GameBoard> {
 
     return Container(
       key: key,
-      margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 2.0),
+      margin: const EdgeInsets.only(
+        left: 4.0,
+        right: 4.0,
+        bottom: 2.0,
+      ),
       child: Listener(
         onPointerDown: startAndMove,
         onPointerMove: startAndMove,

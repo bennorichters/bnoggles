@@ -95,11 +95,11 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bnoggles"),
+        title: const Text("Bnoggles"),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(Icons.stop),
+            icon: const Icon(Icons.stop),
             color: Colors.red,
             onPressed: () {
               nextScreen();

@@ -67,7 +67,7 @@ class _WordListState extends State<WordList> {
   @override
   void initState() {
     super.initState();
-    controller = new ScrollController(
+    controller = ScrollController(
       initialScrollOffset: 0.0,
       keepScrollOffset: true,
     );

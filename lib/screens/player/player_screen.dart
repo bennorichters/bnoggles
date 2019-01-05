@@ -19,20 +19,20 @@ class PlayerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text("Bnoggles"),
+          title: const Text("Bnoggles"),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.person,
                 size: 100,
               ),
               Text(
                 (gameInfo.currentPlayer + 1).toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 40,
                 ),
               ),
@@ -49,7 +49,7 @@ class PlayerScreen extends StatelessWidget {
                     ),
                   );
                 },
-                child: Icon(Icons.play_arrow),
+                child: const Icon(Icons.play_arrow),
               ),
             ],
           ),

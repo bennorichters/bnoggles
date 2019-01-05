@@ -32,7 +32,7 @@ class BoardWidget extends StatelessWidget {
     return GridView.builder(
       shrinkWrap: true,
       itemCount: (width * width),
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: width,
         childAspectRatio: 1.0,
