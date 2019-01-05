@@ -36,7 +36,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Bnoggles"),
+        title: const Text('Bnoggles'),
         automaticallyImplyLeading: false,
       ),
       body: Center(

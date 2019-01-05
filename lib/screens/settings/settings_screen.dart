@@ -22,7 +22,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text("Bnoggles"),
+          title: const Text('Bnoggles'),
         ),
         body: Center(
           child: Container(

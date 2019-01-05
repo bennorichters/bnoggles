@@ -64,7 +64,7 @@ class Coordinate {
           (coordinate.y <= max));
 
   @override
-  String toString() => "[$x,$y]";
+  String toString() => '[$x,$y]';
 }
 
 enum _Direction {

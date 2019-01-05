@@ -26,7 +26,7 @@ class ResultActionRow extends StatelessWidget {
           width: 50,
           height: 50,
           child: FloatingActionButton(
-            heroTag: "settings",
+            heroTag: 'settings',
             onPressed: () {
               Navigator.popUntil(
                 context,

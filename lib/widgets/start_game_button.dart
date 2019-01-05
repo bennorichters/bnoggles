@@ -38,7 +38,7 @@ class _StartGameButtonState extends State<StartGameButton> {
       child: isLoading
           ? const CircularProgressIndicator()
           : FloatingActionButton(
-              heroTag: "playgame",
+              heroTag: 'playgame',
               onPressed: _pressPlayButton(context),
               child: Icon(Icons.play_arrow),
             ),
