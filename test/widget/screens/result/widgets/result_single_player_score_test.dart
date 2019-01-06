@@ -12,7 +12,7 @@ void main() {
   testWidgets('find numbers', (WidgetTester tester) async {
     await tester.pumpWidget(testableWidget(
       child: ResultSinglePlayerScore(
-        availabelWordsCount: 10,
+        availableWordsCount: 10,
         foundWords: 5,
         fontSize: 10,
       ),

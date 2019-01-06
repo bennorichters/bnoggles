@@ -11,12 +11,12 @@ class ResultSinglePlayerScore extends StatelessWidget {
   /// Creates an instance of [ResultSinglePlayerScore]
   ResultSinglePlayerScore({
     Key key,
-    @required this.availabelWordsCount,
+    @required this.availableWordsCount,
     @required this.foundWords,
     @required this.fontSize,
   }) : super(key: key);
 
-  final int availabelWordsCount;
+  final int availableWordsCount;
   final int foundWords;
   final double fontSize;
 
@@ -40,7 +40,7 @@ class ResultSinglePlayerScore extends StatelessWidget {
           Container(
             width: 10.0,
           ),
-          buildText('$availabelWordsCount', Colors.blue),
+          buildText('$availableWordsCount', Colors.blue),
         ],
       );
 

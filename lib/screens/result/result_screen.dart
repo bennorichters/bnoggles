@@ -62,7 +62,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     child: Center(
                       child: widget.gameInfo.parameters.numberOfPlayers == 1
                           ? ResultSinglePlayerScore(
-                              availabelWordsCount: widget.gameInfo.availableWordsCount(),
+                              availableWordsCount: widget.gameInfo.availableWordsCount(),
                               foundWords: widget.gameInfo.currentPlayerFoundCount(),
                               fontSize: secondColumnWidth / 20,
                             )
