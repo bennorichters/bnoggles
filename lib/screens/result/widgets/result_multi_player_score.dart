@@ -27,12 +27,12 @@ final _iconSizeCalculator = Interpolator.fromDataPoints(
 class ResultMultiPlayerScore extends StatelessWidget {
   ResultMultiPlayerScore({
     Key key,
-    @required this.maxScore,
-    @required this.scores,
+    @required this.availableWordsCount,
+    @required this.foundWords,
   }) : super(key: key);
 
-  final int maxScore;
-  final List<int> scores;
+  final int availableWordsCount;
+  final List<int> foundWords;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class ResultMultiPlayerScore extends StatelessWidget {
               width: 10,
             ),
             Text(
-              maxScore.toString(),
+              availableWordsCount.toString(),
               style: TextStyle(
                 color: Colors.blue,
                 fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class ResultMultiPlayerScore extends StatelessWidget {
   }
 
   List<TableRow> playerScores(double fontSize) {
-    Map<int, int> asMap = scores.asMap();
+    Map<int, int> asMap = foundWords.asMap();
     return (asMap.keys.toList()..sort((a, b) => asMap[b] - asMap[a]))
         .map((k) => TableRow(
               children: [

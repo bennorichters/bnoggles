@@ -76,8 +76,8 @@ class _ResultScreenState extends State<ResultScreen> {
                               fontSize: secondColumnWidth / 20,
                             )
                           : ResultMultiPlayerScore(
-                              maxScore: widget.gameInfo.availableWordsCount(),
-                              scores: widget.gameInfo.playersFoundCount(),
+                              availableWordsCount: widget.gameInfo.availableWordsCount(),
+                              foundWords: widget.gameInfo.playersFoundCount(),
                             ),
                     ),
                   ),
