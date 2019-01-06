@@ -10,20 +10,19 @@ import 'package:flutter/material.dart';
 class Clock extends StatelessWidget {
   /// Creates the [Clock]
   Clock({
-    this.timeOutAction,
-    this.controller,
-    this.startTime,
+    @required this.timeOutAction,
+    @required this.controller,
+    @required this.startTime,
+    @required this.fontSize,
   });
 
   final VoidCallback timeOutAction;
   final AnimationController controller;
   final int startTime;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData data = MediaQuery.of(context);
-    double clockFontSize = data.size.width < 375.0 ? 15.0 : 30.0;
-
     Animation<int> animation = StepTween(
       begin: startTime + 1,
       end: 1,
@@ -35,7 +34,10 @@ class Clock extends StatelessWidget {
       }
     });
 
-    return _Countdown(animation: animation, fontSize: clockFontSize);
+    return _Countdown(
+      animation: animation,
+      fontSize: fontSize,
+    );
   }
 }
 

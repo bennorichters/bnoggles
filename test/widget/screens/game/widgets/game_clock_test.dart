@@ -19,6 +19,7 @@ void main() {
       timeOutAction: () {},
       controller: controller,
       startTime: 100,
+      fontSize: 30,
     );
     await tester.pumpWidget(testableWidget(child: clock));
 
@@ -46,6 +47,7 @@ void main() {
       },
       controller: controller,
       startTime: 100,
+      fontSize: 30,
     );
     await tester.pumpWidget(testableWidget(child: clock));
 

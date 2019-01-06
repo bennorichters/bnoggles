@@ -3,6 +3,8 @@
 // All rights reserved. Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
+import 'dart:math';
+
 import 'package:bnoggles/screens/game/widgets/game_board.dart';
 import 'package:bnoggles/screens/game/widgets/game_clock.dart';
 import 'package:bnoggles/screens/game/widgets/game_progress.dart';
@@ -11,7 +13,22 @@ import 'package:bnoggles/screens/game/widgets/game_info_provider.dart';
 import 'package:bnoggles/screens/player/player_screen.dart';
 import 'package:bnoggles/screens/result/result_screen.dart';
 import 'package:bnoggles/utils/game_info.dart';
+import 'package:bnoggles/utils/widget_logic/widget_logic.dart';
 import 'package:flutter/material.dart';
+
+final _blockHeightCalculator = Interpolator.fromDataPoints(
+  p1: const Point(592, 25),
+  p2: const Point(683.4, 40),
+  min: 25,
+  max: 40,
+);
+
+final _fontSizeCalculator = Interpolator.fromDataPoints(
+  p1: const Point(592, 10),
+  p2: const Point(683.4, 14),
+  min: 8,
+  max: 14,
+);
 
 /// The screen on which the game is played.
 class GameScreen extends StatefulWidget {
@@ -80,16 +97,30 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData data = MediaQuery.of(context);
+    double screenHeight = data.size.height;
+    double blockHeight = _blockHeightCalculator.y(x: screenHeight);
+    double wordCountFontSize = _fontSizeCalculator.y(x: screenHeight);
+
+    print('GameScreen.build: ${data.size}, ${blockHeight * .7}');
+    // 384.0, 592.0 -> 17.5
+    // 411.4, 683.4 -> 28
+
     Widget timeWidget = widget.gameInfo.parameters.hasTimeLimit
         ? Clock(
             timeOutAction: nextScreen,
             controller: controller,
             startTime: widget.gameInfo.parameters.time,
+            fontSize: blockHeight * .7,
           )
         : Container(
             color: Colors.lightBlueAccent,
             child: Center(
-              child: const Text('–:––'),
+              child: Text('–:––',
+                  style: TextStyle(
+                    fontFamily: 'Inconsolata',
+                    fontSize: blockHeight * .7,
+                  )),
             ),
           );
 
@@ -112,6 +143,8 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
         child: Column(
           children: [
             GameProgress(
+              blockHeight: blockHeight,
+              wordCountFontSize: wordCountFontSize,
               timeWidget: timeWidget,
             ),
             Expanded(

@@ -13,15 +13,17 @@ import '../../../../test_helper.dart';
 import '../../../widget_test_helper.dart';
 
 void main() {
-  testWidgets('finds Clock and WordCountOverview', (WidgetTester tester) async {
-    var info = createGameInfo();
-    var widget = GameInfoProvider(
-      gameInfo: info,
+  testWidgets('finds time widget and WordCountOverview',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(testableWidget(
+        child: GameInfoProvider(
+      gameInfo: createGameInfo(),
       child: GameProgress(
+        blockHeight: 20,
+        wordCountFontSize: 10,
         timeWidget: Text('just testing'),
       ),
-    );
-    await tester.pumpWidget(testableWidget(child: widget));
+    )));
 
     expect(find.text('just testing'), findsOneWidget);
     expect(find.byType(WordCountOverview), findsOneWidget);
