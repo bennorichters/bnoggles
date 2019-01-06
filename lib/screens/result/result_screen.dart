@@ -10,6 +10,7 @@ import 'package:bnoggles/screens/result/widgets/result_multi_player_score.dart';
 import 'package:bnoggles/screens/result/widgets/result_single_player_score.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
+import 'package:bnoggles/utils/gamelogic/frequency.dart';
 import 'package:bnoggles/utils/gamelogic/score.dart';
 import 'package:flutter/material.dart';
 
@@ -33,10 +34,15 @@ class _ResultScreenState extends State<ResultScreen> {
     double mediaWidth = MediaQuery.of(context).size.width;
     double wordViewWidth = mediaWidth / 6;
     double secondColumnWidth = mediaWidth - wordViewWidth;
-    double cellWidth = secondColumnWidth / widget.gameInfo.board.width;
 
-    var maxScore = calculateScore(widget.gameInfo.solution.frequency,
-        widget.gameInfo.solution.frequency.count);
+    GameInfo gameInfo = widget.gameInfo;
+
+    double cellWidth = secondColumnWidth / gameInfo.board.width;
+
+    Frequency solutionFrequency = gameInfo.solution.frequency;
+    int availableWordsCount = gameInfo.availableWordsCount();
+    int maxScore = calculateScore(solutionFrequency, availableWordsCount);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bnoggles'),
@@ -52,9 +58,9 @@ class _ResultScreenState extends State<ResultScreen> {
               ),
               width: wordViewWidth,
               child: ResultAllWordsList(
-                solution: widget.gameInfo.solution,
+                solution: gameInfo.solution,
                 userAnswers:
-                    widget.gameInfo.allUserAnswers.map((v) => v.value).toList(),
+                    gameInfo.allUserAnswers.map((v) => v.value).toList(),
                 highlightedTiles: highlightedTiles,
               ),
             ),
@@ -63,26 +69,23 @@ class _ResultScreenState extends State<ResultScreen> {
                 children: [
                   Expanded(
                     child: Center(
-                      child: widget.gameInfo.parameters.numberOfPlayers == 1
+                      child: gameInfo.parameters.numberOfPlayers == 1
                           ? ResultSinglePlayerScore(
-                              foundWords:
-                                  widget.gameInfo.currentPlayerFoundCount(),
-                              availableWordsCount:
-                                  widget.gameInfo.availableWordsCount(),
-                              score: calculateScore(
-                                  widget.gameInfo.userAnswer.value.frequency,
-                                  widget.gameInfo.solution.frequency.count),
+                              availableWordsCount: availableWordsCount,
+                              foundWords: gameInfo.currentPlayerFoundCount(),
                               maxScore: maxScore,
+                              score: calculateScore(
+                                  gameInfo.userAnswer.value.frequency,
+                                  availableWordsCount),
                               fontSize: secondColumnWidth / 20,
                             )
                           : ResultMultiPlayerScore(
-                              availableWordsCount:
-                                  widget.gameInfo.availableWordsCount(),
-                              foundWords: widget.gameInfo.playersFoundCount(),
+                              availableWordsCount: availableWordsCount,
+                              foundWords: gameInfo.playersFoundCount(),
                               maxScore: maxScore,
-                              scores: widget.gameInfo.allUserAnswers
-                                  .map((a) => calculateScore(a.value.frequency,
-                                      widget.gameInfo.solution.frequency.count))
+                              scores: gameInfo.allUserAnswers
+                                  .map((a) => calculateScore(
+                                      a.value.frequency, availableWordsCount))
                                   .toList(),
                             ),
                     ),
@@ -90,7 +93,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   Container(
                     margin: const EdgeInsets.all(10.0),
                     child: ResultBoard(
-                      board: widget.gameInfo.board,
+                      board: gameInfo.board,
                       highlightedTiles: highlightedTiles,
                       cellWidth: cellWidth,
                     ),
@@ -98,7 +101,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   Container(
                     padding: const EdgeInsets.all(10.0),
                     child: ResultActionRow(
-                      parameters: () => widget.gameInfo.parameters,
+                      parameters: () => gameInfo.parameters,
                     ),
                   )
                 ],
