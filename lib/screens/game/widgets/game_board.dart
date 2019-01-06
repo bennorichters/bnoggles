@@ -18,8 +18,8 @@ import 'package:bnoggles/utils/gamelogic/answer.dart';
 /// Widget that allows the user to swipe through a grid of letters to find
 /// hidden words.
 ///
-/// This [GameBoard] needs to be a descendant of [GameInfoProvider] which contains all
-/// relevant information.
+/// This [GameBoard] needs to be a descendant of [GameInfoProvider] which
+/// contains all relevant information.
 class GameBoard extends StatefulWidget {
   /// Creates an instance of [GameBoard].
   const GameBoard();
