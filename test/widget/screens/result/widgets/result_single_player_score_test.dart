@@ -12,8 +12,8 @@ void main() {
   testWidgets('find numbers', (WidgetTester tester) async {
     await tester.pumpWidget(testableWidget(
       child: ResultSinglePlayerScore(
-        maxScore: 10,
-        score: 5,
+        availabelWordsCount: 10,
+        foundWords: 5,
         fontSize: 10,
       ),
     ));
