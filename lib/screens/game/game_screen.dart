@@ -102,10 +102,6 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     double blockHeight = _blockHeightCalculator.y(x: screenHeight);
     double wordCountFontSize = _fontSizeCalculator.y(x: screenHeight);
 
-    print('GameScreen.build: ${data.size}, ${blockHeight * .7}');
-    // 384.0, 592.0 -> 17.5
-    // 411.4, 683.4 -> 28
-
     Widget timeWidget = widget.gameInfo.parameters.hasTimeLimit
         ? Clock(
             timeOutAction: nextScreen,
