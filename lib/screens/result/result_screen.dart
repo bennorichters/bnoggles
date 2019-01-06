@@ -14,6 +14,12 @@ import 'package:bnoggles/utils/gamelogic/frequency.dart';
 import 'package:bnoggles/utils/gamelogic/score.dart';
 import 'package:flutter/material.dart';
 
+const Map<int, TableColumnWidth> _columnWidths = {
+  0: FixedColumnWidth(50.0),
+  1: FixedColumnWidth(50.0),
+  2: FixedColumnWidth(100.0),
+};
+
 /// Screen showing [ResultAllWordsList], [ResultSinglePlayerScore], [ResultBoard]
 /// and [ResultActionRow].
 class ResultScreen extends StatefulWidget {
@@ -78,6 +84,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                   gameInfo.userAnswer.value.frequency,
                                   availableWordsCount),
                               fontSize: secondColumnWidth / 20,
+                              columnWidths: _columnWidths,
                             )
                           : ResultMultiPlayerScore(
                               availableWordsCount: availableWordsCount,
@@ -87,6 +94,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                   .map((a) => calculateScore(
                                       a.value.frequency, availableWordsCount))
                                   .toList(),
+                              columnWidths: _columnWidths,
                             ),
                     ),
                   ),

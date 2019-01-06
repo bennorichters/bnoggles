@@ -16,6 +16,7 @@ class ResultSinglePlayerScore extends StatelessWidget {
     @required this.score,
     @required this.maxScore,
     @required this.fontSize,
+    @required this.columnWidths,
   }) : super(key: key);
 
   final int foundWords;
@@ -23,15 +24,12 @@ class ResultSinglePlayerScore extends StatelessWidget {
   final int score;
   final int maxScore;
   final double fontSize;
+  final Map<int, TableColumnWidth> columnWidths;
 
   @override
   Widget build(BuildContext context) {
     return Table(
-      columnWidths: const {
-        0: FixedColumnWidth(90.0),
-        1: FixedColumnWidth(50.0),
-        2: FixedColumnWidth(110.0),
-      },
+      columnWidths: columnWidths,
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
         TableRow(

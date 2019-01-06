@@ -31,12 +31,14 @@ class ResultMultiPlayerScore extends StatelessWidget {
     @required this.foundWords,
     @required this.maxScore,
     @required this.scores,
+    @required this.columnWidths,
   }) : super(key: key);
 
   final int availableWordsCount;
   final List<int> foundWords;
   final int maxScore;
   final List<int> scores;
+  final Map<int, TableColumnWidth> columnWidths;
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +49,7 @@ class ResultMultiPlayerScore extends StatelessWidget {
     double iconSize = _iconSizeCalculator.y(x: screenHeight);
 
     return Table(
-      columnWidths: const {
-        0: FixedColumnWidth(50.0),
-        1: FixedColumnWidth(50.0),
-        2: FixedColumnWidth(100.0),
-      },
+      columnWidths: columnWidths,
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
         TableRow(children: [

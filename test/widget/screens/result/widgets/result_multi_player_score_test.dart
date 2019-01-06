@@ -4,9 +4,16 @@
 // license that can be found in the LICENSE file.
 
 import 'package:bnoggles/screens/result/widgets/result_multi_player_score.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../widget_test_helper.dart';
+
+const Map<int, TableColumnWidth> _columnWidths = {
+  0: FixedColumnWidth(50.0),
+  1: FixedColumnWidth(50.0),
+  2: FixedColumnWidth(100.0),
+};
 
 void main() {
   testWidgets('find numbers', (WidgetTester tester) async {
@@ -16,6 +23,7 @@ void main() {
         foundWords: [6, 9, 7, 8],
         maxScore: 101,
         scores: [60, 90, 70, 80],
+        columnWidths: _columnWidths,
       ),
     ));
 
