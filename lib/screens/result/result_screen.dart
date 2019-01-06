@@ -35,6 +35,8 @@ class _ResultScreenState extends State<ResultScreen> {
     double secondColumnWidth = mediaWidth - wordViewWidth;
     double cellWidth = secondColumnWidth / widget.gameInfo.board.width;
 
+    var maxScore = calculateScore(widget.gameInfo.solution.frequency,
+        widget.gameInfo.solution.frequency.count);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bnoggles'),
@@ -70,14 +72,18 @@ class _ResultScreenState extends State<ResultScreen> {
                               score: calculateScore(
                                   widget.gameInfo.userAnswer.value.frequency,
                                   widget.gameInfo.solution.frequency.count),
-                              maxScore: calculateScore(
-                                  widget.gameInfo.solution.frequency,
-                                  widget.gameInfo.solution.frequency.count),
+                              maxScore: maxScore,
                               fontSize: secondColumnWidth / 20,
                             )
                           : ResultMultiPlayerScore(
-                              availableWordsCount: widget.gameInfo.availableWordsCount(),
+                              availableWordsCount:
+                                  widget.gameInfo.availableWordsCount(),
                               foundWords: widget.gameInfo.playersFoundCount(),
+                              maxScore: maxScore,
+                              scores: widget.gameInfo.allUserAnswers
+                                  .map((a) => calculateScore(a.value.frequency,
+                                      widget.gameInfo.solution.frequency.count))
+                                  .toList(),
                             ),
                     ),
                   ),

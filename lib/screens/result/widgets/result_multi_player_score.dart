@@ -29,10 +29,14 @@ class ResultMultiPlayerScore extends StatelessWidget {
     Key key,
     @required this.availableWordsCount,
     @required this.foundWords,
+    @required this.maxScore,
+    @required this.scores,
   }) : super(key: key);
 
   final int availableWordsCount;
   final List<int> foundWords;
+  final int maxScore;
+  final List<int> scores;
 
   @override
   Widget build(BuildContext context) {
@@ -42,59 +46,56 @@ class ResultMultiPlayerScore extends StatelessWidget {
     double fontSize = _fontSizeCalculator.y(x: screenHeight);
     double iconSize = _iconSizeCalculator.y(x: screenHeight);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Table(
+      columnWidths: const {
+        0: FixedColumnWidth(50.0),
+        1: FixedColumnWidth(50.0),
+        2: FixedColumnWidth(100.0),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.done_all,
-              size: iconSize + 5,
-              color: Colors.black,
-            ),
-            Container(
-              width: 10,
-            ),
-            Text(
-              availableWordsCount.toString(),
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-                fontSize: fontSize,
-              ),
-            )
-          ],
-        ),
-        Container(
-          height: 5,
-        ),
-        Table(
-          columnWidths: const {
-            0: FixedColumnWidth(50.0),
-            1: FixedColumnWidth(50.0),
-          },
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: [
-            TableRow(children: [
-              Icon(
-                Icons.person,
-                size: iconSize,
-              ),
-              Icon(
-                Icons.done,
-                size: iconSize,
-              ),
-            ])
-          ]..addAll(playerScores(fontSize)),
-        )
-      ],
+        TableRow(children: [
+          Icon(
+            Icons.done_all,
+            size: iconSize + 5,
+            color: Colors.black,
+          ),
+          totalText(availableWordsCount, fontSize),
+          totalText(maxScore, fontSize),
+        ]),
+        TableRow(children: [
+          Icon(
+            Icons.person,
+            size: iconSize,
+          ),
+          Icon(
+            Icons.done,
+            size: iconSize,
+          ),
+          Icon(
+            Icons.flag,
+            size: iconSize,
+          ),
+        ])
+      ]..addAll(playerScores(fontSize)),
     );
   }
 
+  Widget totalText(int number, double fontSize) {
+    return Center(
+          child: Text(
+            number.toString(),
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+              fontSize: fontSize,
+            ),
+          ),
+        );
+  }
+
   List<TableRow> playerScores(double fontSize) {
-    Map<int, int> asMap = foundWords.asMap();
+    Map<int, int> asMap = scores.asMap();
     return (asMap.keys.toList()..sort((a, b) => asMap[b] - asMap[a]))
         .map((k) => TableRow(
               children: [
@@ -108,7 +109,16 @@ class ResultMultiPlayerScore extends StatelessWidget {
                 ),
                 Center(
                   child: Text(
-                    asMap[k].toString(),
+                    foundWords[k].toString(),
+                    style: TextStyle(
+                      fontSize: fontSize,
+                      color: Colors.green,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    scores[k].toString(),
                     style: TextStyle(
                       fontSize: fontSize,
                       color: Colors.green,

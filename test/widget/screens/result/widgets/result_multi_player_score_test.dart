@@ -14,12 +14,15 @@ void main() {
       child: ResultMultiPlayerScore(
         availableWordsCount: 10,
         foundWords: [6, 9, 7, 8],
+        maxScore: 101,
+        scores: [60, 90, 70, 80],
       ),
     ));
 
     expect(find.text('10'), findsOneWidget);
+    expect(find.text('101'), findsOneWidget);
 
-    // Scores
+    // Found Words
     var high = find.text('9');
     expect(high, findsOneWidget);
 
@@ -34,6 +37,14 @@ void main() {
     high = numberTest(tester, 4, high);
     high = numberTest(tester, 3, high);
     high = numberTest(tester, 1, high);
+
+    // Scores
+    high = find.text('90');
+    expect(high, findsOneWidget);
+
+    high = numberTest(tester, 80, high);
+    high = numberTest(tester, 70, high);
+    high = numberTest(tester, 60, high);
   });
 }
 
