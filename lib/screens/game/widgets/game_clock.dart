@@ -57,6 +57,7 @@ class _Countdown extends AnimatedWidget {
                 ? 0
                 : animation.value),
             style: TextStyle(
+                fontFamily: 'Inconsolata',
                 fontSize: fontSize,
                 color: animation.value <= 10 ? Colors.white : Colors.black),
           ),
