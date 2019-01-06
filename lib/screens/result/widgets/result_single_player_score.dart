@@ -29,7 +29,7 @@ class ResultSinglePlayerScore extends StatelessWidget {
     return Table(
       columnWidths: const {
         0: FixedColumnWidth(90.0),
-        1: FixedColumnWidth(110.0),
+        1: FixedColumnWidth(50.0),
         2: FixedColumnWidth(110.0),
       },
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
