@@ -60,8 +60,8 @@ class ResultMultiPlayerScore extends StatelessWidget {
             size: iconSize + 5,
             color: Colors.black,
           ),
-          totalText(availableWordsCount, fontSize),
-          totalText(maxScore, fontSize),
+          _totalText(availableWordsCount, fontSize),
+          _totalText(maxScore, fontSize),
         ]),
         TableRow(children: [
           Icon(
@@ -77,56 +77,45 @@ class ResultMultiPlayerScore extends StatelessWidget {
             size: iconSize,
           ),
         ])
-      ]..addAll(playerScores(fontSize)),
+      ]..addAll(_playerScores(fontSize)),
     );
   }
 
-  Widget totalText(int number, double fontSize) {
+  Widget _totalText(int number, double fontSize) {
     return Center(
-          child: Text(
-            number.toString(),
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-              fontSize: fontSize,
-            ),
-          ),
-        );
+      child: Text(
+        number.toString(),
+        style: TextStyle(
+          color: Colors.blue,
+          fontWeight: FontWeight.bold,
+          fontSize: fontSize,
+        ),
+      ),
+    );
   }
 
-  List<TableRow> playerScores(double fontSize) {
+  List<TableRow> _playerScores(double fontSize) {
     Map<int, int> asMap = scores.asMap();
     return (asMap.keys.toList()..sort((a, b) => asMap[b] - asMap[a]))
         .map((k) => TableRow(
               children: [
-                Center(
-                  child: Text(
-                    (k + 1).toString(),
-                    style: TextStyle(
-                      fontSize: fontSize,
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    foundWords[k].toString(),
-                    style: TextStyle(
-                      fontSize: fontSize,
-                      color: Colors.green,
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    scores[k].toString(),
-                    style: TextStyle(
-                      fontSize: fontSize,
-                      color: Colors.green,
-                    ),
-                  ),
-                ),
+                _playerNumberText(k + 1, fontSize, Colors.black),
+                _playerNumberText(foundWords[k], fontSize, Colors.green),
+                _playerNumberText(scores[k], fontSize, Colors.green),
               ],
             ))
         .toList();
+  }
+
+  Center _playerNumberText(int number, double fontSize, Color color) {
+    return Center(
+      child: Text(
+        number.toString(),
+        style: TextStyle(
+          fontSize: fontSize,
+          color: color,
+        ),
+      ),
+    );
   }
 }
