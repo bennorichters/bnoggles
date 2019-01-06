@@ -12,13 +12,17 @@ void main() {
   testWidgets('find numbers', (WidgetTester tester) async {
     await tester.pumpWidget(testableWidget(
       child: ResultSinglePlayerScore(
-        availableWordsCount: 10,
         foundWords: 5,
+        availableWordsCount: 10,
+        score: 99,
+        maxScore: 101,
         fontSize: 10,
       ),
     ));
 
     expect(find.text('5'), findsOneWidget);
     expect(find.text('10'), findsOneWidget);
+    expect(find.text('99'), findsOneWidget);
+    expect(find.text('101'), findsOneWidget);
   });
 }

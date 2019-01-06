@@ -10,6 +10,7 @@ import 'package:bnoggles/screens/result/widgets/result_multi_player_score.dart';
 import 'package:bnoggles/screens/result/widgets/result_single_player_score.dart';
 import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/coordinate.dart';
+import 'package:bnoggles/utils/gamelogic/score.dart';
 import 'package:flutter/material.dart';
 
 /// Screen showing [ResultAllWordsList], [ResultSinglePlayerScore], [ResultBoard]
@@ -62,8 +63,16 @@ class _ResultScreenState extends State<ResultScreen> {
                     child: Center(
                       child: widget.gameInfo.parameters.numberOfPlayers == 1
                           ? ResultSinglePlayerScore(
-                              availableWordsCount: widget.gameInfo.availableWordsCount(),
-                              foundWords: widget.gameInfo.currentPlayerFoundCount(),
+                              foundWords:
+                                  widget.gameInfo.currentPlayerFoundCount(),
+                              availableWordsCount:
+                                  widget.gameInfo.availableWordsCount(),
+                              score: calculateScore(
+                                  widget.gameInfo.userAnswer.value.frequency,
+                                  widget.gameInfo.solution.frequency.count),
+                              maxScore: calculateScore(
+                                  widget.gameInfo.solution.frequency,
+                                  widget.gameInfo.solution.frequency.count),
                               fontSize: secondColumnWidth / 20,
                             )
                           : ResultMultiPlayerScore(
