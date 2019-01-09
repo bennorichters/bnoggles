@@ -44,7 +44,7 @@ enum Evaluation {
   goodAgain,
 }
 
-/// An sequence of characters as found by a player of the game.
+/// A sequence of characters as found by a player of the game.
 class UserWord {
   UserWord._(this.word, this.evaluation);
 
