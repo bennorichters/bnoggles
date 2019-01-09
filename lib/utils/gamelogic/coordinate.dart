@@ -52,7 +52,7 @@ class Coordinate {
 
   /// Returns [true] if [other] is a neighbour of this, [false] otherwise.
   ///
-  /// A neighbour is not the same object is [this] and either its x value
+  /// A neighbour is not the same object as [this] and either its x value
   /// or its y value or both, differ exactly one from this x and y values.
   bool isNeighbourOf(Coordinate other) =>
       (((x - other.x).abs() == 1) || ((y - other.y).abs() == 1));
