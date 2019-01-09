@@ -8,6 +8,8 @@ import 'package:bnoggles/utils/game_info.dart';
 import 'package:bnoggles/utils/gamelogic/score.dart';
 import 'package:flutter/material.dart';
 
+const Color _shade100LightBlueAccent = Color(0xFF80D8FF);
+
 /// A widget showing the current score of the current player
 ///
 /// This widget should be a descendant of [GameInfoProvider].
@@ -24,7 +26,7 @@ class GameScore extends StatelessWidget {
 
     return Container(
       height: height,
-      color: Color(0xFF80D8FF),
+      color: _shade100LightBlueAccent,
       child: Center(
         child: Text(
           score.toString(),
