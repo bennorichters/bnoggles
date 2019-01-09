@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 ///
 /// The [selectedPositions] determine which cells have a different layout.
 class BoardWidget extends StatelessWidget {
-  /// Creates n instance of [BoardWidget].
+  /// Creates an instance of [BoardWidget].
   const BoardWidget({
     Key key,
     @required this.selectedPositions,
