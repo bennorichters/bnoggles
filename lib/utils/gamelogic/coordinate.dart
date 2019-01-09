@@ -38,16 +38,14 @@ class Coordinate {
   Coordinate operator +(Coordinate other) =>
       Coordinate(x + other.x, y + other.y);
 
-  Coordinate _neighbour(_Direction dir) => this + _neighbourVector[dir];
-
   /// Returns an iterable over all neighbours this coordinate has. A
   /// [Coordinate] is considered a neighbour of this if its [x] and its [y]
   /// values at most have a difference of 1 compared to the x and y values of
   /// this coordinates and it is not equal to this coordinate. The x and y
   /// values of the returned neighbours are both between min and max, both
   /// inclusive.
-  Iterable<Coordinate> allNeighbours(int min, int max) => _Direction.values
-      .map((d) => _neighbour(d))
+  Iterable<Coordinate> allNeighbours(int min, int max) => _neighbourVectors
+      .map((v) => this + v)
       .where((c) => _withinBoundaries(c, min, max));
 
   /// Returns [true] if [other] is a neighbour of this, [false] otherwise.
@@ -67,24 +65,13 @@ class Coordinate {
   String toString() => '[$x,$y]';
 }
 
-enum _Direction {
-  north,
-  northEast,
-  east,
-  southEast,
-  south,
-  southWest,
-  west,
-  northWest
-}
-
-final _neighbourVector = {
-  _Direction.north: Coordinate(0, -1),
-  _Direction.northEast: Coordinate(1, -1),
-  _Direction.east: Coordinate(1, 0),
-  _Direction.southEast: Coordinate(1, 1),
-  _Direction.south: Coordinate(0, 1),
-  _Direction.southWest: Coordinate(-1, 1),
-  _Direction.west: Coordinate(-1, 0),
-  _Direction.northWest: Coordinate(-1, -1),
-};
+final Set<Coordinate> _neighbourVectors = [
+  Coordinate(0, -1),
+  Coordinate(1, -1),
+  Coordinate(1, 0),
+  Coordinate(1, 1),
+  Coordinate(0, 1),
+  Coordinate(-1, 1),
+  Coordinate(-1, 0),
+  Coordinate(-1, -1),
+].toSet();
