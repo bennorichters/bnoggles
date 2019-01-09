@@ -11,8 +11,8 @@ import 'package:bnoggles/utils/gamelogic/answer.dart';
 /// A widget that holds an instance of [GameInfo] that is accessible by its
 /// descendants.
 class GameInfoProvider extends StatefulWidget {
-  /// Creates a [GameInfoProvider]. The given [gameInfo] is accessible by [child] and
-  /// the children of child.
+  /// Creates a [GameInfoProvider]. The given [gameInfo] is accessible by
+  /// [child] and the children of child.
   const GameInfoProvider({this.gameInfo, this.child});
 
   final GameInfo gameInfo;
