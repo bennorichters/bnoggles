@@ -41,7 +41,7 @@ class Coordinate {
   /// Returns an iterable over all neighbours this coordinate has. A
   /// [Coordinate] is considered a neighbour of this if its [x] and its [y]
   /// values at most have a difference of 1 compared to the x and y values of
-  /// this coordinates and it is not equal to this coordinate. The x and y
+  /// this coordinate and it is not equal to this coordinate. The x and y
   /// values of the returned neighbours are both between min and max, both
   /// inclusive.
   Iterable<Coordinate> allNeighbours(int min, int max) => _neighbourVectors
