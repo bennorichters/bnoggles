@@ -19,7 +19,7 @@ void main() {
         250,
         (i) => WordDisplay.neutral(
               word: i.toString(),
-              screenHeight: 600,
+              verticalSpaceLeft: 600,
             ));
 
     Widget w = WordList(
@@ -37,7 +37,7 @@ void main() {
         250,
         (i) => WordDisplay.neutral(
               word: i.toString(),
-              screenHeight: 600,
+              verticalSpaceLeft: 600,
             ));
     ValueNotifier<List<WordDisplay>> valueNotifier = ValueNotifier(words);
 
@@ -54,7 +54,7 @@ void main() {
         0,
         WordDisplay.neutral(
           word: 'abcde',
-          screenHeight: 600,
+          verticalSpaceLeft: 600,
         ));
     valueNotifier.value = words.toList();
     await tester.pumpAndSettle();
@@ -67,7 +67,7 @@ void main() {
         250,
         (i) => WordDisplay.neutral(
               word: i.toString(),
-              screenHeight: 600,
+              verticalSpaceLeft: 600,
             ));
     ValueNotifier<List<WordDisplay>> valueNotifier = ValueNotifier(words);
 
@@ -87,7 +87,7 @@ void main() {
         0,
         WordDisplay.neutral(
           word: 'abcde',
-          screenHeight: 600,
+          verticalSpaceLeft: 600,
         ));
     valueNotifier.value = words.toList();
     await tester.pumpAndSettle();
@@ -101,7 +101,7 @@ void main() {
         250,
         (i) => WordDisplay.neutral(
               word: i.toString(),
-              screenHeight: 600,
+              verticalSpaceLeft: 600,
             ));
     ValueNotifier<List<WordDisplay>> valueNotifier = ValueNotifier(words);
 
@@ -121,7 +121,7 @@ void main() {
         0,
         WordDisplay.neutral(
           word: 'abcde',
-          screenHeight: 600,
+          verticalSpaceLeft: 600,
         ));
     valueNotifier.value = words.toList();
     await tester.pumpAndSettle();
@@ -133,7 +133,7 @@ void main() {
       (WidgetTester tester) async {
     WordDisplay.neutral(
       word: "abc",
-      screenHeight: 600,
+      verticalSpaceLeft: 600,
     ).toString();
 
     MockUserWord mockUserWord = MockUserWord();
@@ -142,7 +142,7 @@ void main() {
 
     WordDisplay.fromUser(
       userWord: mockUserWord,
-      screenHeight: 600,
+      verticalSpaceLeft: 600,
     ).toString();
   });
 }

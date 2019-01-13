@@ -17,15 +17,15 @@ import 'package:bnoggles/utils/widget_logic/widget_logic.dart';
 import 'package:flutter/material.dart';
 
 final _blockHeightCalculator = Interpolator.fromDataPoints(
-  p1: const Point(592, 25),
-  p2: const Point(683.4, 40),
+  p1: const Point(208, 25),
+  p2: const Point(272, 40),
   min: 25,
   max: 40,
 );
 
 final _fontSizeCalculator = Interpolator.fromDataPoints(
-  p1: const Point(592, 10),
-  p2: const Point(683.4, 14),
+  p1: const Point(208, 10),
+  p2: const Point(272, 14),
   min: 8,
   max: 14,
 );
@@ -98,9 +98,9 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     MediaQueryData data = MediaQuery.of(context);
-    double screenHeight = data.size.height;
-    double blockHeight = _blockHeightCalculator.y(x: screenHeight);
-    double wordCountFontSize = _fontSizeCalculator.y(x: screenHeight);
+    double verticalSpaceLeft = data.size.height - data.size.width;
+    double blockHeight = _blockHeightCalculator.y(x: verticalSpaceLeft);
+    double wordCountFontSize = _fontSizeCalculator.y(x: verticalSpaceLeft);
 
     Widget timeWidget = widget.gameInfo.parameters.hasTimeLimit
         ? Clock(

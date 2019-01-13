@@ -12,31 +12,31 @@ import 'package:flutter/rendering.dart';
 import 'package:bnoggles/utils/gamelogic/answer.dart';
 
 final _wordListHeightCalculator = Interpolator.fromDataPoints(
-  p1: const Point(592, 30),
-  p2: const Point(683.4, 48),
+  p1: const Point(208, 30),
+  p2: const Point(272, 48),
   min: 28,
-  max: 48,
+  max: 60,
 );
 
 final _marginCalculator = Interpolator.fromDataPoints(
-  p1: const Point(592, 2),
-  p2: const Point(683.4, 4),
+  p1: const Point(208, 2),
+  p2: const Point(272, 4),
   min: 2,
-  max: 4,
+  max: 6,
 );
 
 final _paddingCalculator = Interpolator.fromDataPoints(
-  p1: const Point(592, 5),
-  p2: const Point(683.4, 10),
+  p1: const Point(208, 5),
+  p2: const Point(272, 10),
   min: 4,
-  max: 10,
+  max: 15,
 );
 
 final _fontSizeCalculator = Interpolator.fromDataPoints(
-  p1: const Point(592, 10),
-  p2: const Point(683.4, 20),
+  p1: const Point(208, 10),
+  p2: const Point(272, 20),
   min: 8,
-  max: 20,
+  max: 30,
 );
 
 /// A list of words
@@ -89,15 +89,15 @@ class _WordListState extends State<WordList> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData data = MediaQuery.of(context);
-    double screenHeight = data.size.height;
+    double verticalSpaceLeft = data.size.height - data.size.width;
 
     return Container(
-      height: _wordListHeightCalculator.y(x: screenHeight),
+      height: _wordListHeightCalculator.y(x: verticalSpaceLeft),
       child: ListView(
           controller: controller,
           scrollDirection: Axis.horizontal,
           children: widget.words
-              .map((w) => _UserWordFeedback(w, screenHeight))
+              .map((w) => _UserWordFeedback(w, verticalSpaceLeft))
               .toList()),
     );
   }
@@ -111,24 +111,24 @@ class WordDisplay {
   /// [UserWord.evaluation].
   WordDisplay.fromUser({
     @required UserWord userWord,
-    @required double screenHeight,
+    @required double verticalSpaceLeft,
   }) : this._(
           userWord.word,
           _colors[userWord.evaluation],
           _createTextStyles(_fontSizeCalculator.y(
-            x: screenHeight,
+            x: verticalSpaceLeft,
           ))[userWord.evaluation],
         );
 
   /// Creates an instance of [WordDisplay] with a 'neutral' style.
   WordDisplay.neutral({
     @required String word,
-    @required double screenHeight,
+    @required double verticalSpaceLeft,
   }) : this._(
           word,
           Colors.blue,
           createNeutralStyle(_fontSizeCalculator.y(
-            x: screenHeight,
+            x: verticalSpaceLeft,
           )),
         );
 
@@ -163,18 +163,19 @@ const Map<Evaluation, Color> _colors = {
 };
 
 class _UserWordFeedback extends StatelessWidget {
-  const _UserWordFeedback(this.word, this.screenHeight);
+  const _UserWordFeedback(this.word, this.verticalSpaceLeft);
+
   final WordDisplay word;
-  final double screenHeight;
+  final double verticalSpaceLeft;
 
   @override
   Widget build(BuildContext context) {
-    double margin = _marginCalculator.y(x: screenHeight);
-    double padding = _paddingCalculator.y(x: screenHeight);
+    double margin = _marginCalculator.y(x: verticalSpaceLeft);
+    double padding = _paddingCalculator.y(x: verticalSpaceLeft);
 
     return Container(
       margin: EdgeInsets.all(margin),
-      padding: EdgeInsets.all(padding),
+      padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
         color: word._color,

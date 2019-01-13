@@ -21,7 +21,7 @@ class WordListWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MediaQueryData data = MediaQuery.of(context);
-    double screenHeight = data.size.height;
+    double verticalSpaceLeft = data.size.height - data.size.width;
 
     GameInfo gameInfo = GameInfoProvider.of(context);
 
@@ -30,17 +30,17 @@ class WordListWindow extends StatelessWidget {
         builder: (context, value, child) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: wordLines(gameInfo, screenHeight),
+            children: wordLines(gameInfo, verticalSpaceLeft),
           );
         });
   }
 
-  List<Widget> wordLines(GameInfo gameInfo, double screenHeight) {
+  List<Widget> wordLines(GameInfo gameInfo, double verticalSpaceLeft) {
     WordList userWordList = WordList(
       words: gameInfo.userAnswer.value.found.reversed
           .map((a) => WordDisplay.fromUser(
                 userWord: a,
-                screenHeight: screenHeight,
+                verticalSpaceLeft: verticalSpaceLeft,
               ))
           .toList(),
       scrollBackOnUpdate: true,
@@ -58,7 +58,7 @@ class WordListWindow extends StatelessWidget {
                 !gameInfo.userAnswer.value.found.map((w) => w.word).contains(w))
             .map((a) => WordDisplay.neutral(
                   word: a,
-                  screenHeight: screenHeight,
+                  verticalSpaceLeft: verticalSpaceLeft,
                 ))
             .toList(),
         scrollBackOnUpdate: false,
