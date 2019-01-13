@@ -24,7 +24,7 @@ const IconData _lightBulb =
 // - for screen height 683.4 (e.g. Pixel) the empty line height is 50
 final _emptyLineHeightCalculator = Interpolator.fromDataPoints(
   p1: const Point(592, 20),
-  p2: const Point(683.4, 50),
+  p2: const Point(683.4, 45),
   min: 0,
   max: 50,
 );
