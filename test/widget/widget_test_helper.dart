@@ -25,21 +25,6 @@ Widget testableWidget({Widget child}) => MaterialApp(
       ),
     );
 
-Widget testableConstrainedWidget({Widget child, double width, double height}) =>
-    testableWidgetWithMediaQuery(
-      child: Center(
-        child: Container(
-          width: width,
-          height: height,
-          child: UnconstrainedBox(
-            child: child,
-          ),
-        ),
-      ),
-      width: width,
-      height: height,
-    );
-
 Widget testableWidgetWithMediaQuery(
         {Widget child, double width, double height}) =>
     MaterialApp(
