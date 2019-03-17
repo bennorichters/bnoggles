@@ -1,7 +1,4 @@
 analyzer:
-  strong-mode:
-    implicit-casts: false
-    implicit-dynamic: false
   errors:
     # treat missing required parameters as a warning (not a hint)
     missing_required_param: warning
@@ -37,7 +34,6 @@ linter:
     - recursive_getters
     - slash_for_doc_comments
     - sort_constructors_first
-    - super_goes_last
     - test_types_in_equals
     - throw_in_finally
     - type_init_formals
