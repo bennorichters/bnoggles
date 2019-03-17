@@ -65,7 +65,7 @@ class Coordinate {
   String toString() => '[$x,$y]';
 }
 
-final Set<Coordinate> _neighbourVectors = [
+final Set<Coordinate> _neighbourVectors = {
   Coordinate(0, -1),
   Coordinate(1, -1),
   Coordinate(1, 0),
@@ -74,4 +74,4 @@ final Set<Coordinate> _neighbourVectors = [
   Coordinate(-1, 1),
   Coordinate(-1, 0),
   Coordinate(-1, -1),
-].toSet();
+};
