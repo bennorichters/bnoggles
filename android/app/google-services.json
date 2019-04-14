@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "367505105245",
+    "firebase_url": "https://bnoggles-e809d.firebaseio.com",
+    "project_id": "bnoggles-e809d",
+    "storage_bucket": "bnoggles-e809d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367505105245:android:ddc48e2f2092c04f",
+        "android_client_info": {
+          "package_name": "com.github.bennorichters.bnoggles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367505105245-t3oakm23opk14m1n3ofdqq6uf07vuqv0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOkIFm_l4jjXECWvh2K5Lm_3NcTbIOvIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367505105245-t3oakm23opk14m1n3ofdqq6uf07vuqv0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "367505105245-5bm9jp7ulqcqm1s1o125e1a4d2fnrbgh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.github.bennorichters.bnoggles"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
