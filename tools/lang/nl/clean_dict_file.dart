@@ -43,10 +43,10 @@ void main(List<String> arguments) async {
 }
 
 void process() async {
-  List<String> contents = await linesFromFile('tools/nl/assets/index.dic');
+  List<String> contents = await linesFromFile('tools/lang/nl/assets/index.dic');
 
   List<String> extraWords =
-      await linesFromFile('tools/nl/assets/extraWords.txt');
+      await linesFromFile('tools/lang/nl/assets/extraWords.txt');
 
   contents.addAll(extraWords);
 
@@ -64,7 +64,7 @@ void process() async {
 
   print(result.keys.length);
 
-  var output = File('tools/nl/assets/index_nl_clean.dic');
+  var output = File('tools/lang/nl/assets/index_nl_clean.dic');
   var sink = output.openWrite();
 
   for (String word in result.keys.toList()..sort()) {

@@ -16,7 +16,7 @@ void main(List<String> arguments) async {
 
 void processDic() async {
   List<String> words =
-      await linesFromFile('tools/nl/assets/index_nl_clean.dic');
+      await linesFromFile('tools/lang/nl/assets/index_nl_clean.dic');
 
   List<Map<String, Set<Affix>>> affixes = await processAff();
   Map<String, Set<Affix>> prefixes = affixes[0];
@@ -60,9 +60,9 @@ Future writeToFile(List<String> all) async {
 
 Future<List<String>> twoAndThreeLetterWords() async {
   List<String> result =
-      await linesFromFile('tools/nl/assets/tweeletterwoorden.txt');
+      await linesFromFile('tools/lang/nl/assets/tweeletterwoorden.txt');
   result.addAll(
-      await linesFromFile('tools/nl/assets/drieletterwoorden.txt'));
+      await linesFromFile('tools/lang/nl/assets/drieletterwoorden.txt'));
 
   return result;
 }

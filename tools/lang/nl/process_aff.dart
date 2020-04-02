@@ -17,7 +17,7 @@ void main(List<String> arguments) async {
 }
 
 Future<List<Map<String, Set<Affix>>>> processAff() async {
-  List<String> contents = await linesFromFile('tools/nl/assets/index.aff');
+  List<String> contents = await linesFromFile('tools/lang/nl/assets/index.aff');
 
   var interpreter = _AffixInterpreter(contents.iterator);
   interpreter.process();
@@ -101,7 +101,8 @@ class _AffixInterpreter {
     var headerInfo = parseHeader(header);
 
     for (int i = 0; i < (headerInfo["linesToFollow"] as int); i++) {
-      assert(_lines.moveNext(), "not enough lines below header '$header'");
+      bool moved = _lines.moveNext();
+      assert(moved, "not enough lines below header '$header'");
       var elements = splitLine(_lines.current);
       assert(elements[0] == headerInfo["type"],
           "unexpected line header '$header', line ${_lines.current}");
